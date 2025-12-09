@@ -179,7 +179,7 @@ class Action extends Client {
             if ($base === '') {
                 $base = 'layout';
             }
-            $layout_name = uniqid($base . '-');
+            $layout_name = strtolower(uniqid($base));
         } else {
             $layout_name = $filename;
         }
