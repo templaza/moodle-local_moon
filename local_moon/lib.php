@@ -9,6 +9,15 @@ $autoload = __DIR__ . '/vendor/autoload.php';
 if (file_exists($autoload)) {
     require_once($autoload);
 }
+function local_moon_extend_navigation(global_navigation $nav) {
+    $node = $nav->add(
+        'Custom Layout',
+        new moodle_url('/local/moon/index.php'),
+        navigation_node::TYPE_CUSTOM,
+        null,
+        'customlayoutmenu'
+    );
+}
 function local_moon_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
     if ($context->contextlevel != CONTEXT_SYSTEM) {
         return false;

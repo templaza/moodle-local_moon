@@ -163,7 +163,7 @@ class Action extends Client {
     public function saveLayout(): void
     {
         $filename = optional_param('name', '', PARAM_ALPHANUMEXT);
-        $layoutType = optional_param('layout', 'standard', PARAM_ALPHANUMEXT);
+        $layoutType = optional_param('layout', '', PARAM_ALPHANUMEXT);
 
         $layout = [
             'title'     => optional_param('title', 'layout', PARAM_TEXT),
@@ -172,8 +172,7 @@ class Action extends Client {
             'thumbnail' => optional_param('thumbnail_old', '', PARAM_TEXT),
             'data'      => json_decode(optional_param('data', '{"sections":[]}', PARAM_RAW), true),
         ];
-
-        if ($layoutType !== 'custom') {
+        if (!empty($layoutType) && $layoutType !== 'custom') {
             $layout_name = $layoutType;
         } elseif (!$filename) {
             $base = clean_param($layout['title'] ?? '', PARAM_ALPHANUMEXT);
