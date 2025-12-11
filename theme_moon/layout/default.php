@@ -7,4 +7,5 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+
 require_once($CFG->dirroot . '/local/moon/layout/default.php');

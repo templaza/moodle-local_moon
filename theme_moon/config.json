@@ -28,7 +28,22 @@
         "bottom-4",
         "footer"
       ],
-      "defaultregion": "side-pre"
+      "defaultregion": "main-top"
+    },
+    "mydashboard": {
+      "regions": [
+        "side-pre",
+        "main-top",
+        "main-bottom",
+        "right-sidebar",
+        "bottom-1",
+        "bottom-2",
+        "bottom-3",
+        "bottom-4",
+        "footer"
+      ],
+      "defaultregion": "side-pre",
+      "options": {"nonavbar":true,"langmenu":true}
     }
   }
 }
