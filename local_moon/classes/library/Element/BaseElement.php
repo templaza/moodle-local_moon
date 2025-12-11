@@ -6,6 +6,7 @@
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
  */
 namespace local_moon\library\Element;
+use context_system;
 use local_moon\library\Framework;
 use local_moon\library\Helper\Registry;
 use local_moon\library\Helper\Text;
@@ -24,11 +25,13 @@ class BaseElement
     public string $role = '';
     public bool $isRoot = false;
     public bool $has_maxwidth = false;
+    public mixed $context = '';
     public function __construct($data, $devices, $options = array(), $role = '')
     {
         $this->_data    = $data;
         $this->devices  = $devices;
         $this->options  = $options;
+        $this->context  = context_system::instance();
         $this->role     = $role;
         $this->id       = $data['id'];
         $this->unqid    = $data['id'];

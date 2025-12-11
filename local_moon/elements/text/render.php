@@ -8,6 +8,7 @@ $html_element   = $params->get('html_element', 'h2');
 $font_style     = $params->get('font_style');
 $heading_margin = $params->get('heading_margin', '');
 $content        = Video::getVideoFromContent($params->get('content', ''));
+$content        = format_text($content, FORMAT_HTML, ['context' => $this->context]);
 
 $content_font_style= $params->get('content_font_style');
 
