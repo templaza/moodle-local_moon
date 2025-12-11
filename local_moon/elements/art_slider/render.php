@@ -87,7 +87,8 @@ foreach ($slides->getData() as $key => $slide) {
         echo '<div class="moon-meta">' . $slide->params->get('meta') . '</div>';
     }
     if (!empty($slide->params->get('description'))) {
-        echo '<div class="moon-text">' . $slide->params->get('description') . '</div>';
+        $content        = format_text($slide->params->get('description', ''), FORMAT_HTML, ['context' => $this->context]);
+        echo '<div class="moon-text">' . $content . '</div>';
     }
     $target = !empty($slide->params->get('link_target')) ? ' target="'.$slide->params->get('link_target').'"' : '';
     if (!empty($slide->params->get('link'))) {

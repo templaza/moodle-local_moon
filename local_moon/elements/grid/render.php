@@ -204,7 +204,8 @@ foreach ($grids->data as $key => $grid) {
         echo '<div class="moon-meta">' . $grid->params->get('meta', '') . '</div>';
     }
     if (!empty($grid->params->get('description', ''))) {
-        echo '<div class="moon-text">' . $grid->params->get('description', '') . '</div>';
+        $content        = format_text($grid->params->get('description', ''), FORMAT_HTML, ['context' => $this->context]);
+        echo '<div class="moon-text">' . $content . '</div>';
     }
     if (!empty($grid->params->get('link', '')) && !empty($grid->params->get('link_title', ''))) {
         $button_class   =   $button_style !== 'text' ? 'btn btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius : 'as-btn-text text-uppercase text-reset';
