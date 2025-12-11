@@ -49,7 +49,7 @@
         "addblockbutton": ""
     }
 }}
-{{> theme_boost/head }}
+{{> local_moon/head }}
 
 <body {{{ bodyattributes }}}>
 {{> core/local/toast/wrapper}}
@@ -141,6 +141,7 @@
             </div>
         </div>
         {{{ output.standard_footer_html }}}
+        {{{ document.renderFooter }}}
         <div class="footer-content-debugging footer-dark bg-dark text-light">
             <div class="container-fluid footer-dark-inner">
                 {{{ output.debug_footer_html }}}

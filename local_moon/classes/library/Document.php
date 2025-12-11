@@ -96,6 +96,10 @@ class Document {
         return $this->loadPreloader() . $this->loadBackToTop();
     }
 
+    public function getThemeMode() : string{
+        return Framework::getTheme()->getColorMode();
+    }
+
     public function customCss(): void
     {
         $css = $this->renderCss();
