@@ -176,7 +176,7 @@ foreach ($grids->data as $key => $grid) {
         }
     }
 
-    echo '<div id="grid-'. $grid -> id .'" class="as-grid"><div class="card' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
+    echo '<div id="grid-'. $grid -> id .'" class="moon-grid"><div class="card' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
     if ($media_position == 'left' || $media_position == 'right') {
         echo '<div class="row g-0'.($vertical_middle ? ' align-items-center' : '').'">';
         echo '<div class="'.$media_width_cls.'">';
@@ -254,16 +254,16 @@ if ($enable_image_cover) {
 }
 if ($params->get('card_style', '') == 'custom') {
     $text_color     =   Style::getColor($params->get('text_color', ''));
-    $style->child('.as-grid > .card')->addCss('color', $text_color['light']);
-    $style_dark->child('.as-grid > .card')->addCss('color', $text_color['dark']);
+    $style->child('.moon-grid > .card')->addCss('color', $text_color['light']);
+    $style_dark->child('.moon-grid > .card')->addCss('color', $text_color['dark']);
 
     $bg_color       =   Style::getColor($params->get('bg_color', ''));
-    $style->child('.as-grid > .card')->addCss('background-color', $bg_color['light']);
-    $style_dark->child('.as-grid > .card')->addCss('background-color', $bg_color['dark']);
+    $style->child('.moon-grid > .card')->addCss('background-color', $bg_color['light']);
+    $style_dark->child('.moon-grid > .card')->addCss('background-color', $bg_color['dark']);
 
     $card_border    =   json_decode($params->get('card_border', ''), true);
     if (!empty($card_border)) {
-        Style::addBorderStyle('#'. $element->id . ' .as-grid > .card', $card_border, 'global', $element->isRoot);
+        Style::addBorderStyle('#'. $element->id . ' .moon-grid > .card', $card_border, 'global', $element->isRoot);
     }
 }
 switch ($overlay_type) {

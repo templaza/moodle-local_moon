@@ -18,10 +18,10 @@ $background_color_hover = Style::getColor($params->get('background_color_hover',
 $border_color           = Style::getColor($params->get('border_color', ''));
 
 if (!empty($url)) {
-    echo '<a class="video-button button-ripple d-inline-flex align-items-center justify-content-center rounded-pill" href="'.$url.'" title="'.$title.'" data-fancybox="astroid-'.$this->id.'"><span class="d-inline-flex justify-content-center align-items-center"><i class="fas fa-play"></i></span></a>';
+    echo '<a class="video-button button-ripple d-inline-flex align-items-center justify-content-center rounded-pill" href="'.$url.'" title="'.$title.'" data-fancybox="moon-'.$this->id.'"><span class="d-inline-flex justify-content-center align-items-center"><i class="fas fa-play"></i></span></a>';
     $document = Framework::getDocument();
     $document->loadFancyBox();
-    $document->addScriptDeclaration("Fancybox.bind('[data-fancybox=\"astroid-{$this->id}\"]');");
+    $document->addScriptDeclaration("Fancybox.bind('[data-fancybox=\"moon-{$this->id}\"]');");
     $style = $this->style;
     $style_dark = $this->style_dark;
 

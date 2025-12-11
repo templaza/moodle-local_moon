@@ -16,7 +16,6 @@ $slider_scrollbar   =   $params->get('slider_scrollbar', 0);
 $nav_position       =   $params->get('nav_position', '');
 $nav_position       =   $nav_position !== '' ? ' ' . $nav_position : $nav_position;
 $slider_dotnav      =   $params->get('slider_dotnav', 0);
-$dot_alignment      =   $params->get('dot_alignment', '');
 $interval           =   $params->get('interval', 3);
 $slide_settings     =   array();
 $slide_responsive   =   array();
@@ -192,7 +191,7 @@ $use_masonry        =   $params->get('use_masonry', 0);
 if ($enable_slider) {
     echo '<div class="swiper"'.(!empty($dir) ? ' dir="'.$dir.'"' : '').'>';
 }
-echo '<div class="astroid-grid '.($enable_slider ? 'swiper-wrapper' : $row_column_cls.$gutter_cls . ($use_masonry ? ' as-masonry as-loading' : '')).$overlay_text_color.'">';
+echo '<div class="moon-grid '.($enable_slider ? 'swiper-wrapper' : $row_column_cls.$gutter_cls . ($use_masonry ? ' as-masonry as-loading' : '')).$overlay_text_color.'">';
 foreach ($testimonials->getData() as $key => $testimonial) {
     $avatar =   $testimonial->params->get('avatar', '');
     $rating =   $testimonial->params->get('rating', 5);
@@ -305,9 +304,6 @@ if (!empty($content_margin)) {
 }
 if (!empty($image_border)) {
     Style::addBorderStyle('#'. $element->id . ' .as-author-avatar', $image_border);
-}
-if (!empty($dot_alignment)) {
-    $element->style->child('.astroid-slick .slick-dots')->addCss('text-align', $dot_alignment);
 }
 if (!empty($enable_rating)) {
     $rating_color   =   Style::getColor($params->get('rating_color', ''));

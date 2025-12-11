@@ -43,7 +43,8 @@ if (!$courseindex) {
 }
 
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);
-$forceblockdraweropen = $OUTPUT->firstview_fakeblocks();
+// In `local/moon/layout/default.php`
+$forceblockdraweropen = method_exists($OUTPUT, 'firstview_fakeblocks') ? $OUTPUT->firstview_fakeblocks() : false;
 
 $buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions() && !$PAGE->has_secondary_navigation();
 // If the settings menu will be included in the header then don't add it here.

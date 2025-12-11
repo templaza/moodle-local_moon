@@ -682,6 +682,7 @@ $string['TPL_ASTROID_SELECT_VIDEOS'] = 'Select Video';
 $string['TPL_ASTROID_SELECT_VIDEO'] = 'Select Video';
 $string['TPL_ASTROID_CHANGE_VIDEOS'] = 'Change Video';
 $string['TPL_ASTROID_CHANGE_VIDEO'] = 'Change Video';
+$string['ASTROID_DRAFT'] = 'Draft';
 
 // Contact information
 $string['miscellaneous'] = 'Miscellaneous';

@@ -26,21 +26,21 @@ $xs_column              =   $params->get('text_column_xs', '');
 $text_column_cls        .=  $xs_column ? ' as-column-' . $xs_column : '';
 
 if (!empty($title)) {
-    echo '<'.$html_element.' class="astroid-content-heading">'. $title . '</'.$html_element.'>';
+    echo '<'.$html_element.' class="moon-content-heading">'. $title . '</'.$html_element.'>';
 }
 if (!empty($content)) {
-    echo '<div class="astroid-content-text'.$text_column_cls.'">'. $content . '</div>';
+    echo '<div class="moon-content-text'.$text_column_cls.'">'. $content . '</div>';
 }
 
 if (!empty($font_style)) {
-    Style::renderTypography('#'.$this->id.' .astroid-content-heading', $font_style, null, $this->isRoot);
+    Style::renderTypography('#'.$this->id.' .moon-content-heading', $font_style, null, $this->isRoot);
 }
 if (!empty($heading_margin)) {
-    $heading_style = $this->style->child('.astroid-content-heading');
+    $heading_style = $this->style->child('.moon-content-heading');
     Style::setSpacingStyle($heading_style, $heading_margin, 'margin');
 }
 
 if (!empty($content_font_style)) {
-    Style::renderTypography('#'.$this->id.' .astroid-content-text', $content_font_style, null, $this->isRoot);
-    Style::renderTypography('#'.$this->id.' .astroid-content-text *', $content_font_style, null, $this->isRoot);
+    Style::renderTypography('#'.$this->id.' .moon-content-text', $content_font_style, null, $this->isRoot);
+    Style::renderTypography('#'.$this->id.' .moon-content-text *', $content_font_style, null, $this->isRoot);
 }
