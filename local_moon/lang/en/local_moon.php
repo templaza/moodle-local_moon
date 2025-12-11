@@ -176,6 +176,7 @@ $string['lg'] = 'Large';
 $string['xl'] = 'X-Large';
 $string['xxl'] = '2X-Large';
 $string['widget_styles'] = 'Widget Styles';
+$string['advanced'] = 'Advanced';
 
 // Design Options
 $string['spacing_settings'] = 'Spacing';
@@ -761,3 +762,32 @@ $string['xs_column_avatar_width'] = 'Avatar Width in Extra Small Screen';
 $string['enable_rating'] = 'Enable Rating';
 $string['rating_color'] = 'Rating Color';
 $string['slides_per_group'] = 'Slides Per Group';
+
+// Map
+$string['apis'] = 'APIs';
+$string['google_map'] = 'Google Map';
+$string['google_map_desc'] = 'These settings control the Google Map.';
+$string['gmap_api'] = 'Google Map API Key';
+$string['gmap_api_desc'] = 'Enter your Google Map API Key.';
+$string['map_options'] = 'Map Options';
+$string['multiple_maps'] = 'Multiple Maps';
+$string['location'] = 'Location';
+$string['location_desc'] = 'Enter the location.';
+$string['address_location'] = 'Address Location';
+$string['address_location_desc'] = "Enter latitude and longitude value of the location with comma separated. eg. 40.7324319, -73.82480799999996 Use this <a href=\"http://www.latlong.net/\">website</a> to get your location latitude and longitude values.";
+$string['infowindow'] = 'Info Window';
+$string['infowindow_desc'] = 'Enter the info window content.';
+$string['map_type'] = 'Map Type';
+$string['map_type_desc'] = 'Select the map type.';
+$string['zoom'] = 'Zoom';
+$string['zoom_desc'] = 'Enter the zoom level.';
+$string['map_height'] = 'Map Height';
+$string['map_height_desc'] = 'Enter the map height.';
+$string['mousescroll'] = 'Mouse Scroll';
+$string['mousescroll_desc'] = 'Enable or disable mouse scroll on the map.';
+$string['show_controllers'] = 'Show Controllers';
+$string['show_controllers_desc'] = 'Enable or disable the map controllers.';
+$string['multi_location'] = 'Multiple Locations';
+$string['multi_location_desc'] = 'Enable or disable multiple locations on the map.';
+$string['multi_location_items'] = 'Multiple Location Items';
+$string['multi_location_items_desc'] = 'Add multiple location items for the map.';

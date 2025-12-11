@@ -11,7 +11,7 @@ defined('MOODLE_INTERNAL') || die();
 use local_moon\library\Helper\Utilities;
 use local_moon\library\Helper\Style;
 use local_moon\library\Helper\Media;
-use local_moon\library\Helper\Constants;
+use moodle_url;
 
 /**
  * Main Theme Framework class
@@ -116,6 +116,19 @@ class Document {
     public function addLayoutPath($path): void
     {
         self::$_layout_paths[] = $path;
+    }
+
+    public function addScript($url, $attrs = [], $inHead = false): void
+    {
+        if (empty($url)) {
+            return;
+        }
+        global $PAGE;
+        $link = new moodle_url(
+            $url,
+            $attrs
+        );
+        $PAGE->requires->js($link, $inHead);
     }
 
     public function addScriptDeclaration($content): void
