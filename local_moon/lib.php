@@ -10,13 +10,28 @@ if (file_exists($autoload)) {
     require_once($autoload);
 }
 function local_moon_extend_navigation(global_navigation $nav) {
-    $node = $nav->add(
-        'Custom Layout',
-        new moodle_url('/local/moon/index.php'),
-        navigation_node::TYPE_CUSTOM,
-        null,
-        'customlayoutmenu'
-    );
+    // Tìm node Home (trong Moodle 5.0 id vẫn là 'home')
+    $homenode = $nav->find('home', navigation_node::TYPE_ROOTNODE);
+//var_dump($homenode); die();
+    if ($homenode) {
+        // Thêm Submenu 1
+        $homenode->add(
+            'submenu1',
+            new moodle_url('/local/home_moon/page1.php'),
+            navigation_node::TYPE_CUSTOM,
+            null,
+            'subpage1'
+        );
+
+        // Thêm Submenu 2
+        $homenode->add(
+            'submenu2',
+            new moodle_url('/local/home_moon/page2.php'),
+            navigation_node::TYPE_CUSTOM,
+            null,
+            'subpage2'
+        );
+    }
 }
 function local_moon_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
     if ($context->contextlevel != CONTEXT_SYSTEM) {
