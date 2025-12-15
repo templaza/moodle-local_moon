@@ -33,6 +33,16 @@ class MoonElementBreadcrumb extends MoonElement {
             "label"   => "show_heading",
         ]);
 
+        $this->addField('show_page_button', [
+            "group"   => "general",
+            "type"    => "radio",
+            "default" => "1",
+            "attributes" => [
+                "role" => "switch"
+            ],
+            "label"   => "show_page_button",
+        ]);
+
         $this->addField('heading_font_style', [
             "group"   => "general",
             "type"    => "typography",

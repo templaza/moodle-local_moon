@@ -3,7 +3,12 @@ defined('MOODLE_INTERNAL') || die;
 use local_moon\library\Helper\Style;
 global $PAGE;
 $show_heading = (int) $this->params->get('show_heading', 1);
-$pagetitle = $show_heading ? '<h2 class="breadcrumb-heading">' . $PAGE->heading . '</h2>' : '';
+$show_page_button = (int) $this->params->get('show_page_button', 1);
+$heading_content = $show_heading ? '<h2 class="breadcrumb-heading">' . $PAGE->heading . '</h2>' : '';
+$heading_content .= $show_page_button ? $PAGE->button : '';
+if (!empty($heading_content)) {
+    $heading_content = '<div class="pagetitle d-flex justify-content-between">' . $heading_content . '</div>';
+}
 $breadcrumbs = $PAGE->navbar->get_items();
 $breadcrumb_html = '<nav aria-label="breadcrumb">';
 $breadcrumb_html .= '<ol class="breadcrumb">';
@@ -18,7 +23,7 @@ foreach ($breadcrumbs as $key => $item) {
 }
 $breadcrumb_html .= '</ol>';
 $breadcrumb_html .= '</nav>';
-echo "<div class='pageinfo-block'>{$pagetitle}{$breadcrumb_html}</div>";
+echo "<div class='pageinfo-block'>{$heading_content}{$breadcrumb_html}</div>";
 
 $heading_font_style   =   $this->params->get('heading_font_style');
 if (!empty($heading_font_style)) {
