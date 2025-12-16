@@ -30,6 +30,10 @@ class MoonElementList extends MoonElement {
             "type"  => "group",
             "label" => "title_options",
         ]);
+        $this->addField('icon_options', [
+            'type'  => 'group',
+            'label' => 'icon_options',
+        ]);
 
         $this->addField('content_options', [
             "group" => "general",
@@ -167,6 +171,16 @@ class MoonElementList extends MoonElement {
             "group" => "title_options",
             "type"  => "spacing",
             "label"  => "title_heading_margin",
+        ]);
+        $this->addField('icon_color', [
+            'group' => 'icon_options',
+            'type'  => 'color',
+            'label' => 'icon_color',
+        ]);
+        $this->addField('icon_padding', [
+            "group" => "icon_options",
+            "type"  => "spacing",
+            "label"  => "icon_padding",
         ]);
 
         $this->addField('content_font_style', [

@@ -85,3 +85,11 @@ if (!empty($item_margin)) {
 if (!empty($item_padding)) {
     Style::setSpacingStyle($element->style->child('.list-item'), $item_padding);
 }
+$icon_color   =   Style::getColor($params->get('icon_color', ''));
+$element->style->child('.as-list-title i')->addCss('color', $icon_color['light']);
+$element->style_dark->child('.as-list-title i')->addCss('color', $icon_color['dark']);
+
+$icon_margin=  $params->get('icon_padding', '');
+if (!empty($icon_margin)) {
+    Style::setSpacingStyle($element->style->child('.as-list-title i'), $icon_margin, 'padding');
+}
