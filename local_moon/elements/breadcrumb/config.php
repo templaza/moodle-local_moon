@@ -22,6 +22,15 @@ class MoonElementBreadcrumb extends MoonElement {
             'type'  => 'group',
             'label' => 'content_options',
         ]);
+        $this->addField('show_admin', [
+            "group"   => "general",
+            "type"    => "radio",
+            "default" => "0",
+            "attributes" => [
+                "role" => "switch"
+            ],
+            "label"   => "show_admin",
+        ]);
 
         $this->addField('show_heading', [
             "group"   => "general",

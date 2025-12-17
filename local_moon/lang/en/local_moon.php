@@ -278,6 +278,7 @@ $string['color_hover'] = 'Color Hover';
 $string['color_hover_desc'] = 'Select the hover color for the element.';
 $string['meta_options'] = 'Meta Options';
 $string['show_heading'] = 'Show Heading';
+$string['show_admin'] = 'Show in Admin';
 $string['show_page_button'] = 'Show Page Button';
 
 // Hover transition

@@ -2,6 +2,10 @@
 defined('MOODLE_INTERNAL') || die;
 use local_moon\library\Helper\Style;
 global $PAGE;
+$show_admin = (int) $this->params->get('show_admin', 1);
+if (is_siteadmin() && $show_admin==0) {
+    return;
+}
 $heading = '';
 $breadcrumbs = $PAGE->navbar->get_items();
 $show_heading = (int) $this->params->get('show_heading', 1);
