@@ -21,3 +21,11 @@
   background-color: var(--mf-offcanvas-backgroundcolor);
   color: var(--mf-offcanvas-toggle-color);
 }
+#moon-header {
+  .navbar-toggler[data-target="theme_boost-drawers-primary"] {
+    transform: translateX(0) !important;
+  }
+  #theme_boost-drawers-primary.show {
+    transform: translateX(0) !important;
+  }
+}
