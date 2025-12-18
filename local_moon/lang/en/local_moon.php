@@ -793,3 +793,4 @@ $string['multi_location'] = 'Multiple Locations';
 $string['multi_location_desc'] = 'Enable or disable multiple locations on the map.';
 $string['multi_location_items'] = 'Multiple Location Items';
 $string['multi_location_items_desc'] = 'Add multiple location items for the map.';
+$string['local_gallery'] = 'Gallery';
