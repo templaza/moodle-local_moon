@@ -556,4 +556,12 @@ class Document {
             $this->addScriptDeclaration('new Swiper(\''.$obj.'\', {'.$config.'});');
         }
     }
+
+    public function loadVideoBG(): void
+    {
+        if (!isset($this->_is_loaded['video_bg'])) {
+            $this->addScript('/local/moon/assets/videobg/videobg.min.js');
+            $this->_is_loaded['video_bg'] = true;
+        }
+    }
 }

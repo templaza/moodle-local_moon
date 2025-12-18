@@ -95,6 +95,7 @@ class BaseElement
         }
 //        Helper::triggerEvent('onMoonPrepareContent', [&$this, 'layout.element.content']);
         $this->_animation();
+        $this->_background();
         $content    =   '';
         if ($class_maxwidth) {
             if ($this->type === 'row') {
@@ -236,7 +237,6 @@ class BaseElement
 
     protected function _styles(): void
     {
-        $this->_background();
         $this->_border();
         $this->_marginPadding();
         $this->_sticky();
