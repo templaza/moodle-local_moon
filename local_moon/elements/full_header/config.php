@@ -14,4 +14,22 @@ class MoonElementFull_Header extends MoonElement {
             'multiple' => false,
         ]);
     }
+    public function setFields(): void {
+        $this->setFieldSet('general-settings');
+
+        $this->addField('content_options', [
+            'type'  => 'group',
+            'label' => 'content_options',
+        ]);
+        $this->addField('only_admin', [
+            "group"   => "general",
+            "type"    => "radio",
+            "default" => "1",
+            "attributes" => [
+                "role" => "switch"
+            ],
+            "label"   => "only_admin",
+        ]);
+
+    }
 }
