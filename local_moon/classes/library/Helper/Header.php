@@ -59,10 +59,10 @@ class Header {
             $block_2 .= '</div>';
         }
 
-        $class = ['astroid-header', 'astroid-horizontal-header', 'astroid-horizontal-' . $mode . '-header'];
-        $navClass = ['nav', 'astroid-nav', 'd-none', 'd-'.$header_breakpoint.'-flex'];
+        $class = ['moon-header', 'moon-horizontal-header', 'moon-horizontal-' . $mode . '-header'];
+        $navClass = ['nav', 'moon-nav', 'd-none', 'd-'.$header_breakpoint.'-flex'];
         $navWrapperClass = ['align-self-center', 'd-none', 'd-'.$header_breakpoint.'-block'];
-        $headAttrs = ' data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="'.($params->get('dropdown_arrow', 0) ? 'true' : 'false').'" data-header-offset="true" data-transition-speed="'.$params->get('dropdown_animation_speed', 300).'" data-megamenu-animation="'.$params->get('dropdown_animation_type', 'fade').'" data-easing="'.$params->get('dropdown_animation_ease', 'linear').'" data-astroid-trigger="'.$params->get('dropdown_trigger', 'hover').'" data-megamenu-submenu-class=".nav-submenu,.nav-submenu-static"';
+        $headAttrs = ' data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="'.($params->get('dropdown_arrow', 0) ? 'true' : 'false').'" data-header-offset="true" data-transition-speed="'.$params->get('dropdown_animation_speed', 300).'" data-megamenu-animation="'.$params->get('dropdown_animation_type', 'fade').'" data-easing="'.$params->get('dropdown_animation_ease', 'linear').'" data-moon-trigger="'.$params->get('dropdown_trigger', 'hover').'" data-megamenu-submenu-class=".nav-submenu,.nav-submenu-static"';
         $burgerClass = ['d-flex d-'.$header_breakpoint.'-none justify-content-start'];
         return [
             'class' => implode(' ', $class),
@@ -85,23 +85,32 @@ class Header {
         $template = Framework::getTheme();
         $params = $template->getParams();
         $mode = $params->get('header_stacked_menu_mode', 'center');
+        $block_1_type = $params->get('header_block_1_type', 'blank');
+        $block_1_position = $params->get('header_block_1_position', '');
+        $block_1_custom = $params->get('header_block_1_custom', '');
+        $block_2_type = $params->get('header_block_2_type', 'blank');
+        $block_2_position = $params->get('header_block_2_position', '');
+        $block_2_custom = $params->get('header_block_2_custom', '');
+        $block_3_type = $params->get('header_block_3_type', 'blank');
+        $block_3_position = $params->get('header_block_3_position', '');
+        $block_3_custom = $params->get('header_block_3_custom', '');
         $header_breakpoint = $params->get('header_breakpoint', 'lg');
         $odd_menu_items = $params->get('odd_menu_items', 'left');
         $divided_logo_width = $params->get('divided_logo_width', 200);
-        $class = ['astroid-header', 'astroid-stacked-header', 'astroid-stacked-' . $mode . '-header'];
-        $navClass = ['nav', 'astroid-nav', 'justify-content-center', 'd-flex', 'align-items-center'];
-        $navClassLeft = ['nav', 'astroid-nav', 'justify-content-left', 'd-flex', 'align-items-left'];
-        $navClassDivided = ['nav', 'astroid-nav'];
-        $headAttrs = ' data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="'.($params->get('dropdown_arrow', 0) ? 'true' : 'false').'" data-header-offset="true" data-transition-speed="'.$params->get('dropdown_animation_speed', 300).'" data-megamenu-animation="'.$params->get('dropdown_animation_type', 'fade').'" data-easing="'.$params->get('dropdown_animation_ease', 'linear').'" data-astroid-trigger="'.$params->get('dropdown_trigger', 'hover').'" data-megamenu-submenu-class=".nav-submenu,.nav-submenu-static"';
+        $class = ['moon-header', 'moon-stacked-header', 'moon-stacked-' . $mode . '-header'];
+        $navClass = ['nav', 'moon-nav', 'justify-content-center', 'd-flex', 'align-items-center'];
+        $navClassLeft = ['nav', 'moon-nav', 'justify-content-left', 'd-flex', 'align-items-left'];
+        $navClassDivided = ['nav', 'moon-nav'];
+        $headAttrs = ' data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="'.($params->get('dropdown_arrow', 0) ? 'true' : 'false').'" data-header-offset="true" data-transition-speed="'.$params->get('dropdown_animation_speed', 300).'" data-megamenu-animation="'.$params->get('dropdown_animation_type', 'fade').'" data-easing="'.$params->get('dropdown_animation_ease', 'linear').'" data-moon-trigger="'.$params->get('dropdown_trigger', 'hover').'" data-megamenu-submenu-class=".nav-submenu,.nav-submenu-static"';
 
         $burgerClass = match($mode) {
             'center-balance' => ['w-100 d-flex d-'.$header_breakpoint.'-none justify-content-start'],
             default => ['d-flex d-'.$header_breakpoint.'-none justify-content-center']
         };
         if ($mode == 'divided-logo-left') {
-            $navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'd-none', 'd-'.$header_breakpoint.'-block', 'w-100'];
+            $navWrapperClass = ['moon-nav-wraper', 'moon-nav-' . $mode, 'align-self-center', 'd-none', 'd-'.$header_breakpoint.'-block', 'w-100'];
         } else {
-            $navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'px-2', 'd-none', 'd-'.$header_breakpoint.'-block', 'w-100'];
+            $navWrapperClass = ['moon-nav-wraper', 'moon-nav-' . $mode, 'align-self-center', 'px-2', 'd-none', 'd-'.$header_breakpoint.'-block', 'w-100'];
         }
         if ($mode == 'divided-logo-left') {
             $device = match($header_breakpoint) {
@@ -113,6 +122,48 @@ class Header {
                 default => 'global',
             };
             $document->addStyleDeclaration('.col-divided-logo{width: '.$divided_logo_width.'px;', $device ?? 'global');
+        }
+
+        // Block 1 Content
+        $block_1 = '';
+        if ($block_1_type != 'blank') {
+            $block_1 .= '<div class="w-100 header-block-item d-flex justify-content-start align-items-center">';
+            if ($block_1_type == 'position') {
+                $block_1 .= Utilities::loadRegion($block_1_position, [], 'div');
+            }
+            if ($block_1_type == 'custom') {
+                $block_1 .= $block_1_custom;
+            }
+            $block_1 .= '</div>';
+        }
+
+        // Block 2 options
+        $block_2 = '';
+        if ($block_2_type != 'blank') {
+            $block_2 .= '<div class="header-block-item d-none d-'.$header_breakpoint.'-flex justify-content-end align-items-center">';
+            if ($block_2_type == 'position') {
+                $block_2 .= Utilities::loadRegion($block_2_position, [], 'div');
+            }
+            if ($block_2_type == 'custom') {
+                $block_2 .= $block_2_custom;
+            }
+            $block_2 .= '</div>';
+        }
+        if (empty($block_2)) {
+            $block_2 = '<div class="w-100"></div>';
+        }
+
+        // Block 3 options
+        $block_3 = '';
+        if ($block_3_type != 'blank') {
+            $block_3 .= '<div class="header-left-block d-none d-'.$header_breakpoint.'-block align-self-center ms-4">';
+            if ($block_3_type == 'position') {
+                $block_3 .= '<div class="header-block-item d-flex justify-content-start align-items-center">'. Utilities::loadRegion($block_3_position, [], 'div') .'</div>';
+            }
+            if ($block_3_type == 'custom') {
+                $block_3 .= '<div class="header-block-item d-flex justify-content-start align-items-center">'. $block_3_custom .'</div>';
+            }
+            $block_3 .= '</div>';
         }
         return [
             'class' => implode(' ', $class),
@@ -129,6 +180,9 @@ class Header {
             'is_center' => $mode == 'center',
             'is_divided' => $mode == 'divided',
             'is_divided_logo_left' => $mode == 'divided-logo-left',
+            'block_1' => $block_1,
+            'block_2' => $block_2,
+            'block_3' => $block_3,
         ];
     }
 }

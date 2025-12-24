@@ -1,9 +1,34 @@
 <header id="moon-header" class="{{header.class}}">
-    <nav class="header-stacked-section navbar navbar-expand justify-content-between flex-column w-100">
+    <nav class="header-stacked-section navbar navbar-expand justify-content-between flex-column w-100 shadow-none">
     {{#header.is_center_balance}}
-    <div class="astroid-header-center-balance w-100 d-flex justify-content-center">
-        {{> local_moon/header/includes/burger }}
-    </div>
+        <div class="moon-header-center-balance w-100 d-flex justify-content-center">
+            {{> local_moon/header/includes/burger }}
+            <div class="w-100 d-none d-{{header.header_breakpoint}}-flex justify-content-start align-items-center">
+                {{{ output.navbar_plugin_output }}}
+                {{{ header.block_1 }}}
+            </div>
+            <div class="d-flex w-100 justify-content-center">{{> local_moon/header/includes/logo }}</div>
+            <div class="w-100 d-flex justify-content-end align-items-center">
+                {{{ header.block_2 }}}
+                <div id="usernavigation" class="navbar-nav h-100">
+                    {{# output.search_box }}
+                        {{{ output.search_box }}}
+                        <div class="divider border-start h-75 align-self-center mx-1"></div>
+                    {{/output.search_box}}
+                    {{#langmenu}}
+                        {{> theme_boost/language_menu }}
+                        <div class="divider border-start h-75 align-self-center mx-1"></div>
+                    {{/langmenu}}
+                    <div class="d-flex align-items-stretch usermenu-container" data-region="usermenu">
+                        {{#usermenu}}
+                            {{> core/user_menu }}
+                        {{/usermenu}}
+                    </div>
+                    {{{ output.edit_switch }}}
+                </div>
+            </div>
+        </div>
+        {{> local_moon/header/includes/primary_menu }}
     {{/header.is_center_balance}}
     </nav>
 </header>
