@@ -1,0 +1,47 @@
+.editmode-switch-form {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #fff;
+  border: 1px solid #efefef;
+  border-radius: 10px;
+  padding: 7px 12px;
+  box-shadow: 0 4px 15px rgb(0 0 0 / .07);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgb(0 0 0 / .2)
+  }
+  label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #63667D!important;
+    margin: 0;
+    line-height: 2.3
+  }
+  .form-check-input {
+    width: 32px;
+    height: 17px;
+    cursor: pointer;
+    background-color: #ddd;
+    border: none;
+    transition: all 0.3s ease
+  }
+  .form-check-input:checked {
+    background-color: $primary;
+  }
+  .form-check-input:focus {
+    box-shadow: none
+  }
+}
+[data-bs-theme="dark"] {
+  .editmode-switch-form {
+    .form-check-input:not(:checked) {
+      background-color: #888;
+    }
+  }
+}
