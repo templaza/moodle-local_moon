@@ -1031,9 +1031,12 @@ class MoonElementGrid extends MoonElement {
             "default" => "",
             "options" => [
                 ""        => "default",
-                "light-up" => "light_up",
-                "flash"    => "flash",
-                "unveil"   => "unveil",
+                "as-effect-light-up" => "light_up",
+                "as-effect-flash"    => "flash",
+                "as-effect-unveil"   => "unveil",
+                "uk-transition-scale-up"   => "scale_up",
+                "uk-transition-scale-down"   => "scale_down",
+
             ],
         ]);
 
@@ -1118,11 +1121,28 @@ class MoonElementGrid extends MoonElement {
                 'value' => Font::$get_default_font_value,
             ],
         ]);
+        $this->addField('meta_heading_bg', [
+            "group"      => "meta_options",
+            "type"       => "color",
+            "label"      => "background_color",
+        ]);
 
         $this->addField('meta_heading_margin', [
             "group" => "meta_options",
             "type"  => "spacing",
             "label" => "margin",
+        ]);
+
+        $this->addField('meta_heading_padding', [
+            "group" => "meta_options",
+            "type"  => "spacing",
+            "label" => "padding",
+        ]);
+
+        $this->addField('meta_heading_radius', [
+            "group" => "meta_options",
+            "type"  => "spacing",
+            "label" => "radius",
         ]);
 
         $this->addField('meta_position', [
@@ -1132,7 +1152,15 @@ class MoonElementGrid extends MoonElement {
             "default" => "before",
             "options" => [
                 "before" => "before_title",
-                "after"  => "after_title",
+                "uk-position-top-left"  => "top_left",
+                "uk-position-top-center"  => "top_center",
+                "uk-position-top-right"  => "top_right",
+                "uk-position-center-left"  => "center_left",
+                "uk-position-center"  => "center_center",
+                "uk-position-center-right"  => "center_right",
+                "uk-position-bottom-left"  => "bottom_left",
+                "uk-position-bottom-center"  => "bottom_center",
+                "uk-position-bottom-right"  => "bottom_right",
             ],
         ]);
 
