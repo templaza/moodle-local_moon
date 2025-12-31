@@ -498,6 +498,22 @@ class Document {
         }
     }
 
+    public function loadUIKit(): void
+    {
+        if (!isset($this->_is_loaded['uikit'])) {
+            global $PAGE;
+            if ($PAGE->rtl) {
+                $PAGE->requires->css('/local/moon/assets/uikit/css/uikit.rtl.min.css');
+            } else {
+                $PAGE->requires->css('/local/moon/assets/uikit/css/uikit.min.css');
+            }
+
+            $PAGE->requires->js('/local/moon/assets/uikit/js/uikit.min.js', true);
+            $PAGE->requires->js('/local/moon/assets/uikit/js/uikit-icons.min.js', true);
+            $this->_is_loaded['uikit'] = true;
+        }
+    }
+
     public function loadGSAP($plugin = ''): void
     {
         global $PAGE;

@@ -149,9 +149,6 @@ class Header {
             }
             $block_2 .= '</div>';
         }
-        if (empty($block_2)) {
-            $block_2 = '<div class="w-100"></div>';
-        }
 
         // Block 3 options
         $block_3 = '';
