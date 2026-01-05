@@ -217,7 +217,12 @@ class Action extends Client {
         }
         $layout['name'] = $layout_name;
         Media::create_from_string(\json_encode($layout), $layout_name . '.json', '/', $this->filearea, $this->itemid);
-        $this->response($layout);
+        $this->response([
+            'title'     => $layout['title'],
+            'desc'      => $layout['desc'],
+            'layout'    => $layout['layout'],
+            'thumbnail' => $layout['thumbnail']
+        ]);
     }
 
     public function getLayout() : void {
