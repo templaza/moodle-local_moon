@@ -4,7 +4,8 @@
 */
 namespace local_moon\library\Blocks;
 defined('MOODLE_INTERNAL') || die();
-
+use core\url;
+use local_moon\library\Framework;
 require_once($CFG->dirroot. '/course/renderer.php');
 include_once($CFG->dirroot . '/course/lib.php');
 
@@ -95,18 +96,23 @@ class CourseHandler {
 
 
         // @moonComm: Process first image
-        $contentimages = $contentfiles = $CFG->wwwroot . '/theme/moon/pix/category.jpg';
-        foreach ($courseElement->get_course_overviewfiles() as $file) {
-            $isimage = $file->is_valid_image();
-            $url = file_encode_url("{$CFG->wwwroot}/pluginfile.php",
-                    '/'. $file->get_contextid(). '/'. $file->get_component(). '/'.
-                    $file->get_filearea(). $file->get_filepath(). $file->get_filename(), !$isimage);
-            if ($isimage) {
-                $contentimages = $url;
-            } else {
-                $contentfiles = $CFG->wwwroot . '/theme/moon/pix/category.jpg';
+            $theme = Framework::getTheme();
+            $contentimages = $CFG->wwwroot . '/theme/'.$theme->name.'/pix/category.jpg';
+            foreach ($courseElement->get_course_overviewfiles() as $file) {
+                if ($file->is_valid_image()) {
+                    $url = url::make_pluginfile_url(
+                        $file->get_contextid(),
+                        $file->get_component(),
+                        $file->get_filearea(),
+                        $file->get_filepath(),
+                        $file->get_filename(),
+                        false
+                    );
+
+                    $contentimages = $url->out();
+                    break;
+                }
             }
-        }
 
         /* Map data */
         $moonCourse->courseId = $courseId;
@@ -117,7 +123,6 @@ class CourseHandler {
         $moonCourse->shortName = $courseShortName;
         $moonCourse->fullName = format_text($courseFullName, FORMAT_HTML, array('filter' => true));
         $moonCourse->summary = $courseSummary;
-        $moonCourse->imageUrl = $contentimages;
         $moonCourse->format = $courseFormat;
         $moonCourse->announcements = $courseAnnouncements;
         $moonCourse->startDate = userdate($courseStartDate, get_string('strftimedatefullshort', 'langconfig'));
