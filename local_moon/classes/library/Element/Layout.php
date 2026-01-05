@@ -150,6 +150,14 @@ class Layout
             $default = Framework::getTheme()->getParams()->get('layout', '');
             if (Media::exists($filename . '.json', '/', $type, 0)) {
                 $json = Media::data($filename . '.json', '/', $type, 0);
+                if (empty($json)) {
+                    if (Media::exists($filename . '.bak.json', '/draft/', $type, 0)) {
+                        $json = Media::data($filename . '.bak.json', '/draft/', $type, 0);
+                    }
+                }
+                return \json_decode($json, true);
+            } elseif (Media::exists($filename . '.bak.json', '/draft/', $type, 0)) {
+                $json = Media::data($filename . '.bak.json', '/draft/', $type, 0);
                 return \json_decode($json, true);
             } elseif (file_exists(Path::clean($CFG->dirroot . "/theme/{$template}/params/{$type}/" . $filename . '.json'))){
                 $layout_path = Path::clean($CFG->dirroot . "/theme/{$template}/params/{$type}/" . $filename . '.json');

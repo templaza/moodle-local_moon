@@ -216,13 +216,17 @@ class Action extends Client {
             }
         }
         $layout['name'] = $layout_name;
-        Media::create_from_string(\json_encode($layout), $layout_name . '.json', '/', $this->filearea, $this->itemid);
-        $this->response([
-            'title'     => $layout['title'],
-            'desc'      => $layout['desc'],
-            'layout'    => $layout['layout'],
-            'thumbnail' => $layout['thumbnail']
-        ]);
+        $bakFile = null;
+        if (Media::exists($layout_name . '.json', '/', $this->filearea, $this->itemid)) {
+            $oldlayout = Media::data($layout_name . '.json', '/', $this->filearea, $this->itemid);
+            if ($oldlayout) {
+                $bakFile = Media::create_from_string($oldlayout, $layout_name . '.bak.json', '/draft/', $this->filearea, $this->itemid);
+            }
+        }
+        if (Media::create_from_string(\json_encode($layout), $layout_name . '.json', '/', $this->filearea, $this->itemid)) {
+            $bakFile?->delete();
+        }
+        $this->response($layout);
     }
 
     public function getLayout() : void {
