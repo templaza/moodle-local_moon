@@ -151,4 +151,92 @@ class Theme {
     {
         return $this->config['regions'] ?? [];
     }
+    public function getThemeVariables()
+    {
+        $variables = [];
+        $variables['blue'] = $this->params->get('theme_blue', '#007bff');
+        $variables['indigo'] = $this->params->get('theme_indigo', '#6610f2');
+        $variables['purple'] = $this->params->get('theme_purple', '#6f42c1');
+        $variables['pink'] = $this->params->get('theme_pink', '#e83e8c');
+        $variables['red'] = $this->params->get('theme_red', '#dc3545');
+        $variables['orange'] = $this->params->get('theme_orange', '#fd7e14');
+        $variables['yellow'] = $this->params->get('theme_yellow', '#ffc107');
+        $variables['green'] = $this->params->get('theme_green', '#28a745');
+        $variables['teal'] = $this->params->get('theme_teal', '#20c997');
+        $variables['cyan'] = $this->params->get('theme_cyan', '#17a2b8');
+        $variables['white'] = $this->params->get('theme_white', '#fff');
+        $variables['gray100'] = $this->params->get('theme_gray100', '#f8f9fa');
+        $variables['gray600'] = $this->params->get('theme_gray600', '#6c757d');
+        $variables['gray800'] = $this->params->get('theme_gray800', '#343a40');
+
+        $primary = $this->params->get('theme_primary', '');
+        if (!empty($primary)) {
+            $variables['primary'] = ($primary == 'custom' ? $this->params->get('theme_primary_custom', $variables['blue']) : $variables[$primary]);
+        }
+
+        $secondary = $this->params->get('theme_secondary', '');
+        if (!empty($secondary)) {
+            $variables['secondary'] = ($secondary == 'custom' ? $this->params->get('theme_secondary_custom', $variables['gray600']) : $variables[$secondary]);
+        }
+
+        $success = $this->params->get('theme_success', '');
+        if (!empty($success)) {
+            $variables['success'] = ($success == 'custom' ? $this->params->get('theme_success_custom', $variables['green']) : $variables[$success]);
+        }
+
+        $info = $this->params->get('theme_info', '');
+        if (!empty($info)) {
+            $variables['info'] = ($info == 'custom' ? $this->params->get('theme_info_custom', $variables['cyan']) : $variables[$info]);
+        }
+
+        $warning = $this->params->get('theme_warning', '');
+        if (!empty($warning)) {
+            $variables['warning'] = ($warning == 'custom' ? $this->params->get('theme_warning_custom', $variables['yellow']) : $variables[$warning]);
+        }
+
+        $danger = $this->params->get('theme_danger', '');
+        if (!empty($danger)) {
+            $variables['danger'] = ($danger == 'custom' ? $this->params->get('theme_danger_custom', $variables['red']) : $variables[$danger]);
+        }
+
+        $light = $this->params->get('theme_light', '');
+        if (!empty($light)) {
+            $variables['light'] = ($light == 'custom' ? $this->params->get('theme_light_custom', $variables['gray100']) : $variables[$light]);
+        }
+
+        $dark = $this->params->get('theme_dark', '');
+        if (!empty($dark)) {
+            $variables['dark'] = ($dark == 'custom' ? $this->params->get('theme_dark_custom', $variables['gray800']) : $variables[$dark]);
+        }
+
+        $variables = $this->_variableOverrides($variables);
+
+        return $variables;
+    }
+
+    protected function _variableOverrides($variables)
+    {
+        $sass_overrides = $this->params->get('sass_overrides', '{}');
+        $sass_overrides = \json_decode($sass_overrides, true);
+        if (empty($sass_overrides)) {
+            return $variables;
+        }
+
+        foreach ($sass_overrides as $sass_override) {
+            $variable = $sass_override['variable'];
+            if (!empty($variable) && !empty($sass_override['value'])) {
+                if (substr($variable, 0, 1) === "$") {
+                    $variable = ltrim($variable, '$');
+                }
+                $variables[$variable] = $sass_override['value'];
+            }
+        }
+        return $variables;
+    }
+
+    public function getActualColorMode(): string
+    {
+        $colorMode = $this->getColorMode();
+        return ($colorMode == 'auto') ? 'light' : $colorMode;
+    }
 }

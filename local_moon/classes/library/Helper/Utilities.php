@@ -10,6 +10,8 @@ defined('MOODLE_INTERNAL') || die;
 
 use context_system;
 use local_moon\library\Framework;
+use ScssPhp\ScssPhp\Exception\SassException;
+
 class Utilities
 {
     public static function getThemeConfigs($theme = ''): array|null
@@ -249,12 +251,39 @@ class Utilities
         return preg_match('/^\s*(\{.*\}|\[.*\])\s*$/s', $string) === 1;
     }
 
+    /**
+     * @throws SassException
+     */
     public static function getMoonCss(): string
     {
         global $CFG;
         $scss = new \ScssPhp\ScssPhp\Compiler();
         $scss->setImportPaths($CFG->dirroot . '/local/moon/assets/scss/');
-        return $scss->compileString('@import "style";')->getCss();
+        $content = static::getMoonSCSSVariables() . '@import "style";';
+        return $scss->compileString($content)->getCss();
+    }
+
+    public static function getMoonSCSSVariables(): string
+    {
+        $template = Framework::getTheme();
+        $variables = $template->getThemeVariables();
+        $content = '';
+        if (!empty($variables)) {
+            $colorMode =   $template->getActualColorMode();
+            foreach ($variables as $key => $variable) {
+                $result = json_decode($variable);
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    if (!empty($result->{$colorMode})) {
+                        $content .= '$' . $key . ': ' . $result->{$colorMode} . ' !default;';
+                    } else {
+                        unset($variables[$key]);
+                    }
+                } else {
+                    $content .= '$' . $key . ': ' . $variable . ' !default;';
+                }
+            }
+        }
+        return $content;
     }
 
     public static function typography(): void

@@ -744,22 +744,22 @@ class Constants
     }
 
     public static $bootstrap_colors = [
-        '' => 'TPL_COLOR_DEFAULT',
-        'blue' => 'TPL_COLOR_BLUE',
-        'indigo' => 'TPL_COLOR_INDIGO',
-        'purple' => 'TPL_COLOR_PURPLE',
-        'pink' => 'TPL_COLOR_PINK',
-        'red' => 'TPL_COLOR_RED',
-        'orange' => 'TPL_COLOR_ORANGE',
-        'yellow' => 'TPL_COLOR_YELLOW',
-        'green' => 'TPL_COLOR_GREEN',
-        'teal' => 'TPL_COLOR_TEAL',
-        'cyan' => 'TPL_COLOR_CYAN',
-        'white' => 'TPL_COLOR_WHITE',
-        'gray100' => 'TPL_COLOR_LIGHT_GREY',
-        'gray600' => 'TPL_COLOR_GREY',
-        'gray800' => 'TPL_COLOR_GREY_DARK',
-        'custom' => 'TPL_COLOR_CUSTOM'
+        '' => 'default',
+        'blue' => 'blue',
+        'indigo' => 'indigo',
+        'purple' => 'purple',
+        'pink' => 'pink',
+        'red' => 'red',
+        'orange' => 'orange',
+        'yellow' => 'yellow',
+        'green' => 'green',
+        'teal' => 'teal',
+        'cyan' => 'cyan',
+        'white' => 'white',
+        'gray100' => 'light_gray',
+        'gray600' => 'gray',
+        'gray800' => 'gray_dark',
+        'custom' => 'custom'
     ];
 
     public static function getAnimations() : array
