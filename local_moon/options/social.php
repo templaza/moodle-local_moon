@@ -6,7 +6,7 @@ Framework::getTheme()->addFields(
     'social_profile',
     [
         'label' => 'social_profiles',
-        'icon' => 'as-icon as-icon-palette',
+        'icon' => 'as-icon as-icon-share2',
         'order' => 6,
         'fields' => [
             'social_profile' => ["type" => "group", "label" => "social_profiles", "description" => "social_profiles_desc"],

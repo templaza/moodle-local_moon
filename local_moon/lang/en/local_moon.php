@@ -290,6 +290,28 @@ $string['show_heading'] = 'Show Heading';
 $string['show_admin'] = 'Show in Admin';
 $string['show_page_button'] = 'Show Page Button';
 
+// Colors
+$string['theming'] = 'Theming';
+$string['all_colors'] = 'All Colors';
+$string['all_colors_desc'] = 'All colors available in Bootstrap';
+$string['theme_colors'] = 'Theme Colors';
+$string['theme_colors_desc'] = 'Theme colors available in Bootstrap';
+$string['white']       = 'White';
+$string['blue']        = 'Blue';
+$string['indigo']      = 'Indigo';
+$string['purple']      = 'Purple';
+$string['pink']        = 'Pink';
+$string['red']         = 'Red';
+$string['orange']      = 'Orange';
+$string['yellow']      = 'Yellow';
+$string['green']       = 'Green';
+$string['teal']        = 'Teal';
+$string['cyan']        = 'Cyan';
+$string['light_gray']  = 'Light Gray';
+$string['gray']        = 'Gray';
+$string['gray_dark']   = 'Gray Dark';
+$string['sass_overrides'] = 'Sass Overrides';
+
 // Hover transition
 $string['scale_up'] = 'Scale Up';
 $string['scale_down'] = 'Scale Down';
@@ -463,7 +485,6 @@ $string['sub_layout'] = 'Sub Layouts';
 $string['sub_layout_desc'] = 'Select the sub layout for the theme.';
 $string['system'] = 'System';
 $string['design'] = 'Design';
-$string['custom'] = 'Custom';
 $string['general'] = 'General';
 $string['title'] = 'Title';
 $string['custom_class'] = 'Custom Class';

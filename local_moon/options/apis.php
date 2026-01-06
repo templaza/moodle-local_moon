@@ -5,8 +5,8 @@ Framework::getTheme()->addFields(
     'apis',
     [
         'label' => 'apis',
-        'icon' => 'as-icon as-icon-palette',
-        'order' => 8,
+        'icon' => 'as-icon as-icon-puzzle',
+        'order' => 9,
         'fields' => [
             'google_map' => ["type" => "group", "label" => "google_map", "description" => "google_map_desc"],
 

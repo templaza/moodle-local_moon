@@ -5,8 +5,8 @@ Framework::getTheme()->addFields(
     'miscellaneous',
     [
         'label' => 'miscellaneous',
-        'icon' => 'as-icon as-icon-palette',
-        'order' => 7,
+        'icon' => 'as-icon as-icon-cog',
+        'order' => 8,
         'fields' => [
             'contact_info' => ["type" => "group", "label" => "contact_info", "description" => "contact_info_desc"],
             'contact_details' => [
