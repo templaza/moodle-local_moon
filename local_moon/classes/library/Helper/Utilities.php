@@ -772,4 +772,34 @@ class Utilities
         }
         return $params_data;
     }
+
+    public static function saveLayoutPreset($filearea, $itemid = 0, $theme_name = ''): bool
+    {
+        global $CFG;
+        if (empty($theme_name)) {
+            $theme_name = Framework::getTheme()->name;
+        }
+        $presets_path = $CFG -> dirroot . "/theme/{$theme_name}/moon/{$filearea}/";
+        if (!is_dir($presets_path)) {
+            if (!mkdir($presets_path, 0755, true) && !is_dir($presets_path)) {
+                return false;
+            }
+        }
+        $context = context_system::instance();
+        $fs = get_file_storage();
+
+        $files = $fs->get_area_files($context->id, 'theme_'.$theme_name, $filearea, $itemid, 'timemodified DESC', false);
+        foreach ($files as $file) {
+            if ($file->get_filepath() !== '/') {
+                continue;
+            }
+            if (!$file->is_directory() && str_contains($file->get_mimetype(), 'json')) {
+                $file_url = $presets_path . $file->get_filename();
+                if (file_put_contents($file_url, $file->get_content()) === false) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

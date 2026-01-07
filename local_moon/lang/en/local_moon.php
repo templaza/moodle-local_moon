@@ -646,6 +646,10 @@ $string['css_selectors_desc'] = 'Input the CSS selectors for the typography. <co
 $string['typography_properties'] = 'Typography Properties';
 $string['typography_properties_desc'] = "Choose typography properties for this section. If <code>Default</code> selected then properties will inherit from CSS code.";
 
+// Presets
+$string['presets'] = 'Preset Profiles';
+$string['presets_desc'] = 'Select a preset profile to quickly configure the theme.';
+
 // Astroid Framework String
 $string['ASTROID_SAVE'] = 'Save';
 $string['ASTROID_TEMPLATE_SAVING'] = 'Saving';

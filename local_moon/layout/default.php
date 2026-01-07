@@ -12,7 +12,6 @@ require_once($CFG->libdir . '/behat/lib.php');
 require_once($CFG->dirroot . '/course/lib.php');
 use local_moon\library\Element\Layout;
 use local_moon\library\Framework;
-
 // Moon Asset Manager.
 $document = Framework::getDocument();
 

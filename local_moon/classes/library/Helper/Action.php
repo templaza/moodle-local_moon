@@ -217,14 +217,17 @@ class Action extends Client {
         }
         $layout['name'] = $layout_name;
         $bakFile = null;
-        if (Media::exists($layout_name . '.json', '/', $this->filearea, $this->itemid)) {
+        $fileIsExist = Media::exists($layout_name . '.json', '/', $this->filearea, $this->itemid);
+        if ($fileIsExist) {
             $oldlayout = Media::data($layout_name . '.json', '/', $this->filearea, $this->itemid);
             if ($oldlayout) {
                 $bakFile = Media::create_from_string($oldlayout, $layout_name . '.bak.json', '/draft/', $this->filearea, $this->itemid);
             }
         }
-        if (Media::create_from_string(\json_encode($layout), $layout_name . '.json', '/', $this->filearea, $this->itemid)) {
-            $bakFile?->delete();
+        if ($fileIsExist && !empty($bakFile)) {
+            if (Media::create_from_string(\json_encode($layout), $layout_name . '.json', '/', $this->filearea, $this->itemid)) {
+                $bakFile->delete();
+            }
         }
         $this->response($layout);
     }
@@ -268,5 +271,31 @@ class Action extends Client {
     {
         theme_reset_all_caches();
         $this->response(['message' => Text::_('theme_cache_cleared')]);
+    }
+
+    public function getPresets() : void
+    {
+        $theme = Framework::getTheme();
+        $presets = $theme->getPresets();
+        $data       =   array();
+        for ($i = 0; $i<count($presets); $i++) {
+            $preset     =   $presets[$i];
+            $item       =   array();
+            $item['title']  =   $preset['title'];
+            $item['desc']   =   $preset['desc'];
+            $arrName        =   explode(' ',$preset['title']);
+            $avaName        =   '';
+            for ($j=0; $j<count($arrName) && $j<3; $j++){
+                if ($word = trim($arrName[$j])) {
+                    $avaName.=$word[0];
+                }
+            }
+            $item['keyword']    = $avaName;
+            $item['thumbnail']  = $preset['thumbnail'];
+            $item['demo']       = !empty($preset['demo']) ? $preset['demo'] : '';
+            $item['name']       = $preset['name'];
+            $data[]             = $item;
+        }
+        $this->response($data);
     }
 }

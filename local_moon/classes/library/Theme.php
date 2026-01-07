@@ -12,6 +12,8 @@ use local_moon\library\Helper\Path;
 use local_moon\library\Helper\Registry;
 use local_moon\library\Helper\Utilities;
 use theme_config;
+use local_moon\library\Helper\Text;
+
 class Theme {
     public string $name = 'moon';
     public object $theme;
@@ -238,5 +240,38 @@ class Theme {
     {
         $colorMode = $this->getColorMode();
         return ($colorMode == 'auto') ? 'light' : $colorMode;
+    }
+    public function getPresets(): array
+    {
+        global $CFG;
+        $presets_path = $CFG -> dirroot . "/theme/{$this->name}/moon/presets/";
+
+        if (!file_exists($presets_path)) {
+            return [];
+        }
+        $files = array_filter(glob($presets_path . '*.json'), 'is_file');
+        $presets    =   [];
+        foreach ($files as $file) {
+            $json = file_get_contents($file);
+            $data = \json_decode($json, true);
+            $preset = ['title' => pathinfo($file)['filename'], 'desc' => '', 'thumbnail' => '', 'demo' => '', 'preset' => [], 'name' => pathinfo($file)['filename']];
+            if (!empty($data['title'])) {
+                $preset['title'] = Text::_($data['title']);
+            }
+            if (isset($data['desc'])) {
+                $preset['desc'] = Text::_($data['desc']);
+            }
+            if (!empty($data['thumbnail'])) {
+                $preset['thumbnail'] = $CFG -> wwwroot . '/theme/' . $this->name . '/' . $data['thumbnail'];
+            }
+            if (isset($data['demo'])) {
+                $preset['demo'] = $data['demo'];
+            }
+            if (isset($data['preset'])) {
+                $preset['preset'] = $data['preset'];
+            }
+            $presets[] = $preset;
+        }
+        return $presets;
     }
 }

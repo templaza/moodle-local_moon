@@ -132,16 +132,17 @@ class Layout
     public static function getDataLayout($filename = '', $type = '') : array
     {
         global $CFG;
-        $template   =   Framework::getTheme()->getName();
+        $template   =   Framework::getTheme()->name;
         if (!$filename) {
             if ($type == 'article_layouts') {
                 if (Media::exists('default.json', '/', $type, 0)) {
                     $json = Media::data('default.json', '/', $type, 0);
-                    return \json_decode($json, true);
-                } elseif (file_exists(Path::clean($CFG->dirroot . "/theme/{$template}/params/{$type}/default.json"))) {
-                    $layout_path = Path::clean($CFG->dirroot . "/theme/{$template}/params/{$type}/default.json");
+                } elseif (file_exists(Path::clean($CFG->dirroot . "/theme/{$template}/moon/{$type}/default.json"))) {
+                    $layout_path = Path::clean($CFG->dirroot . "/theme/{$template}/moon/{$type}/default.json");
+                    $json = file_get_contents($layout_path);
                 } else {
-                    $layout_path = Path::clean($CFG->dirroot . '/local/moon/assets/json/article_layouts/default.json');
+                    $layout_path = Path::clean($CFG->dirroot . '/local/moon/assets/json/'.$type.'/default.json');
+                    $json = file_get_contents($layout_path);
                 }
             } else {
                 return [];
@@ -155,24 +156,16 @@ class Layout
                         $json = Media::data($filename . '.bak.json', '/draft/', $type, 0);
                     }
                 }
-                return \json_decode($json, true);
             } elseif (Media::exists($filename . '.bak.json', '/draft/', $type, 0)) {
                 $json = Media::data($filename . '.bak.json', '/draft/', $type, 0);
-                return \json_decode($json, true);
-            } elseif (file_exists(Path::clean($CFG->dirroot . "/theme/{$template}/params/{$type}/" . $filename . '.json'))){
-                $layout_path = Path::clean($CFG->dirroot . "/theme/{$template}/params/{$type}/" . $filename . '.json');
+            } elseif (file_exists(Path::clean($CFG->dirroot . "/theme/{$template}/moon/{$type}/" . $filename . '.json'))){
+                $json = file_get_contents(Path::clean($CFG->dirroot . "/theme/{$template}/moon/{$type}/" . $filename . '.json'));
             } elseif (Media::exists($default . '.json', '/', $type, 0)) {
                 $json = Media::data($default . '.json', '/', $type, 0);
-                return \json_decode($json, true);
             } else {
                 return [];
             }
         }
-
-        if (!file_exists($layout_path)) {
-            return [];
-        }
-        $json = file_get_contents($layout_path);
         return \json_decode($json, true);
     }
 

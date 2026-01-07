@@ -19,7 +19,7 @@ use local_moon\library\Helper\Client;
 header('Content-Type: application/json; charset=utf-8');
 
 $jsondata = required_param('params', PARAM_RAW);
-$theme_name = optional_param('theme', $PAGE->theme, PARAM_ALPHANUMEXT);
+$theme_name = optional_param('theme', $PAGE->theme->name, PARAM_ALPHANUMEXT);
 $client = new Client();
 $data = \json_decode($jsondata, true);
 
@@ -27,10 +27,44 @@ try {
     if (!is_array($data)) {
         throw new Exception('Invalid JSON data');
     }
-    foreach ($data as $field => $value) {
-        Utilities::saveConfig($field, $value, 'theme_' . $theme_name);
+    $astroid_preset = optional_param('astroid-preset', 0, PARAM_INT);
+    if ($astroid_preset) {
+        $params = $data;
+        $preset = [
+            'title' => optional_param('astroid-preset-name', '', PARAM_RAW),
+            'desc' => optional_param('astroid-preset-desc', '', PARAM_RAW),
+            'thumbnail' => '',
+            'preset' => $params
+        ];
+        $preset_name = uniqid('preset-');
+
+        global $CFG;
+        $presets_path = $CFG -> dirroot . "/theme/{$theme_name}/moon/presets/";
+        if (!is_dir($presets_path)) {
+            if (!mkdir($presets_path, 0755, true) && !is_dir($presets_path)) {
+                throw new Exception('Failed to create presets directory: ' . $presets_path);
+            }
+        }
+
+        $file = $presets_path . $preset_name . '.json';
+        if (file_put_contents($file, \json_encode($preset)) === false) {
+            throw new Exception('Failed to write preset file: ' . $file);
+        }
+
+        // Save Main Layout Preset
+        Utilities::saveLayoutPreset('main_layouts', 0, $theme_name);
+
+        // Save Sub-layouts Preset
+        Utilities::saveLayoutPreset('layouts', 0, $theme_name);
+
+        $client->response($preset_name);
+    } else {
+        foreach ($data as $field => $value) {
+            Utilities::saveConfig($field, $value, 'theme_' . $theme_name);
+        }
+        $client->response('Theme Saved');
     }
-    $client->response('Theme Saved');
+
 } catch (Exception $e) {
     $client->errorResponse($e);
 }
