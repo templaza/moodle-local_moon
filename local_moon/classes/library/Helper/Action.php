@@ -224,8 +224,11 @@ class Action extends Client {
                 $bakFile = Media::create_from_string($oldlayout, $layout_name . '.bak.json', '/draft/', $this->filearea, $this->itemid);
             }
         }
-        if ($fileIsExist && !empty($bakFile)) {
-            if (Media::create_from_string(\json_encode($layout), $layout_name . '.json', '/', $this->filearea, $this->itemid)) {
+        $json = \json_encode($layout);
+        $shouldCreate = !$fileIsExist || !empty($bakFile);
+
+        if ($shouldCreate && Media::create_from_string($json, $layout_name . '.json', '/', $this->filearea, $this->itemid)) {
+            if ($fileIsExist && !empty($bakFile)) {
                 $bakFile->delete();
             }
         }
