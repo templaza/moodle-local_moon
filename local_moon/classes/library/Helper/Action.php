@@ -301,4 +301,129 @@ class Action extends Client {
         }
         $this->response($data);
     }
+
+    public function loadPreset() : void
+    {
+        global $CFG;
+        try {
+            $theme = Framework::getTheme();
+            $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
+            $file           = optional_param('name', '', PARAM_ALPHANUMEXT);
+            $file_name      = $presets_path.$file.'.json';
+            if (file_exists($file_name)) {
+                $json           = file_get_contents($presets_path.$file.'.json');
+                if (!$json) {
+                    throw new \Exception(Text::_('error_loading_presets').': '.$presets_path.$file.'.json');
+                }
+                $data = \json_decode($json, true);
+                if (!isset($data['preset']) || empty($data['preset'])) {
+                    throw new \Exception(Text::_('error_data_json_invalid'));
+                }
+                $this->response($data['preset']);
+            } else {
+                throw new \Exception(Text::_('error_file_not_found').': '.$presets_path.$file.'.json');
+            }
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
+        }
+    }
+
+    public function importPreset() : void
+    {
+        global $CFG;
+        try {
+            $theme = Framework::getTheme();
+            $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
+            $preset = [
+                'title' => required_param('title', PARAM_RAW),
+                'desc' => optional_param('desc', '', PARAM_RAW),
+                'thumbnail' => '', 'demo' => '',
+                'preset' => ''
+            ];
+            $preset_name = uniqid('preset-');
+
+            $file = $_FILES['file'] ?? null;
+            if (empty($file)) {
+                throw new \Exception(Text::_('ASTROID_ERROR_NO_FILE'));
+            }
+
+            // Ensure PHP file uploads are enabled and tmp dir exists.
+            if (!(bool) \ini_get('file_uploads')) {
+                throw new \Exception('File upload is not enabled in PHP', 400);
+            }
+            if (!empty($file['error']) && $file['error'] == UPLOAD_ERR_NO_TMP_DIR) {
+                throw new \Exception('There was an error uploading this file to the server.', 400);
+            }
+
+            $fileError = $file['error'] ?? UPLOAD_ERR_NO_FILE;
+            if ($fileError > 0) {
+                switch ($fileError) {
+                    case UPLOAD_ERR_INI_SIZE:
+                        throw new \Exception(Text::_('ASTROID_ERROR_LARGE_FILE'));
+                    case UPLOAD_ERR_FORM_SIZE:
+                        throw new \Exception(Text::_('ASTROID_ERROR_FILE_HTML_ALLOW'));
+                    case UPLOAD_ERR_PARTIAL:
+                        throw new \Exception(Text::_('ASTROID_ERROR_FILE_PARTIAL_ALLOW'));
+                    case UPLOAD_ERR_NO_FILE:
+                        throw new \Exception(Text::_('ASTROID_ERROR_NO_FILE'));
+                    default:
+                        throw new \Exception('File upload error code: ' . $fileError, 400);
+                }
+            }
+
+            $pathinfo = pathinfo($file['name']);
+            $uploadedFileExtension = $pathinfo['extension'];
+            $uploadedFileExtension = strtolower($uploadedFileExtension);
+            if ($uploadedFileExtension != 'json') {
+                throw new \Exception(Text::_('INVALID EXTENSION'));
+            }
+
+            $fileTemp = $file['tmp_name'];
+            $json           = file_get_contents($fileTemp);
+            $config         = json_decode($json, true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                if (!isset($config['preset'])) {
+                    $preset['preset'] = $json;
+                } else {
+                    $preset['preset'] = $config['preset'];
+                }
+            } else {
+                throw new \Exception(Text::_('INVALID FILETYPE'));
+            }
+
+            $uploadPath = $presets_path . $preset_name . '.json';
+            if (!is_dir($presets_path)) {
+                if (!mkdir($presets_path, 0755, true) && !is_dir($presets_path)) {
+                    throw new \Exception('Failed to create presets directory: ' . $presets_path);
+                }
+            }
+            if (file_put_contents($uploadPath, \json_encode($preset)) === false) {
+                throw new \Exception('Failed to write preset file: ' . $uploadPath);
+            }
+            unlink($fileTemp);
+            $this->response($preset_name);
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
+        }
+    }
+
+    public function deletePreset() : void
+    {
+        global $CFG;
+        try {
+            // Check for request forgeries.
+            $theme = Framework::getTheme();
+            $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
+            $file           = optional_param('name', '', PARAM_ALPHANUMEXT);
+            $file_name      = $presets_path.$file.'.json';
+            if (file_exists($file_name)) {
+                if (!@unlink($file_name)) {
+                    throw new \Exception('Failed to delete preset file: ' . $file_name);
+                }
+            }
+            $this->response('Preset Removed!');
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
+        }
+    }
 }

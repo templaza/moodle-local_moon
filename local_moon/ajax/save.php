@@ -29,12 +29,11 @@ try {
     }
     $astroid_preset = optional_param('astroid-preset', 0, PARAM_INT);
     if ($astroid_preset) {
-        $params = $data;
         $preset = [
             'title' => optional_param('astroid-preset-name', '', PARAM_RAW),
             'desc' => optional_param('astroid-preset-desc', '', PARAM_RAW),
             'thumbnail' => '',
-            'preset' => $params
+            'preset' => $data
         ];
         $preset_name = uniqid('preset-');
 
