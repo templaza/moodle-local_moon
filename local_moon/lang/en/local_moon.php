@@ -749,10 +749,11 @@ $string['social_search'] = 'Search Brand';
 $string['add_profile'] = 'Add Profile';
 $string['add_custom_profile'] = 'Add Custom Profile';
 
-// Preset
+// Errors
 $string['error_loading_presets'] = 'Error loading presets';
 $string['error_data_json_invalid'] = 'Error: Invalid JSON data';
 $string['error_file_not_found'] = 'Error: File not found';
+$string['error_layout_is_empty'] = 'Error: Layout is empty';
 
 // Slideshow
 $string['slideshow'] = 'Slideshow';

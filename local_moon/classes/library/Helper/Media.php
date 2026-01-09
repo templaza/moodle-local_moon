@@ -73,7 +73,8 @@ class Media {
 
         // Chuẩn hóa tên và đường dẫn
         $filename = clean_param($filename, PARAM_FILE);
-        $filepath = '/' . trim($filepath, '/') . '/';
+        $filepath = trim($filepath, '/');
+        $filepath = empty($filepath) ? '/' : '/' . $filepath . '/';
 
         // Nếu file đã tồn tại thì xóa trước khi ghi mới
         if ($fs->file_exists($context->id, $component, $filearea, $itemid, $filepath, $filename)) {
@@ -131,7 +132,8 @@ class Media {
         $fs = get_file_storage();
 
         // Chuẩn hóa đường dẫn
-        $filepath = '/' . trim($folderpath, '/') . '/';
+        $folderpath = trim($folderpath, '/');
+        $filepath = empty($folderpath) ? '/' : '/' . $folderpath . '/';
 
         // Kiểm tra đã tồn tại chưa
         if ($fs->file_exists($context->id, Framework::getTheme()->getName(), $filearea, $itemid, $filepath, '.')) {
@@ -155,7 +157,8 @@ class Media {
         $fs = get_file_storage();
 
         // Chuẩn hóa đường dẫn folder
-        $filepath = '/' . trim($folderpath, '/') . '/';
+        $folderpath = trim($folderpath, '/');
+        $filepath = empty($folderpath) ? '/' : '/' . $folderpath . '/';
 
         // Lấy tất cả file trong folder này (bao gồm subfolder)
         $files = $fs->get_area_files($context->id, Framework::getTheme()->getName(), $filearea, $itemid, '', false);
@@ -179,6 +182,53 @@ class Media {
             'deleted' => $deleted,
             'folder' => $filepath,
             'message' => "Folder '{$folderpath}' and {$deleted} files deleted."
+        ];
+    }
+
+    /**
+     * Xóa toàn bộ file trong folder nhưng không xóa chính folder đó.
+     *
+     * @param string $folderpath Đường dẫn folder (vd: gallery/sub)
+     * @param string $filearea
+     * @param int $itemid
+     * @return array
+     */
+    public static function empty_folder(string $folderpath, string $filearea = 'media', int $itemid = 0): array {
+        $context = \context_system::instance();
+        $fs = get_file_storage();
+        $component = Framework::getTheme()->getName();
+
+        // Chuẩn hóa đường dẫn
+        $folderpath = trim($folderpath, '/');
+        $filepath = empty($folderpath) ? '/' : '/' . $folderpath . '/';
+
+        // Kiểm tra folder tồn tại
+        if (!$fs->file_exists($context->id, $component, $filearea, $itemid, $filepath, '.')) {
+            return [
+                'success' => false,
+                'message' => "Folder '{$folderpath}' does not exist"
+            ];
+        }
+        $files = $fs->get_area_files($context->id, $component, $filearea, $itemid, '', false);
+        $deleted = 0;
+
+        foreach ($files as $file) {
+            // Bỏ qua record folder (.)
+            if ($file->get_filename() === '.') {
+                continue;
+            }
+
+            if (strpos($file->get_filepath(), $filepath) === 0) {
+                $file->delete();
+                $deleted++;
+            }
+        }
+
+        return [
+            'success' => true,
+            'deleted' => $deleted,
+            'folder' => $filepath,
+            'message' => "Folder '{$folderpath}' emptied ({$deleted} files removed)"
         ];
     }
 
@@ -268,8 +318,8 @@ class Media {
     ): array {
         $context = \context_system::instance();
         $fs = get_file_storage();
-
-        $filepath = '/' . trim($folderpath, '/') . '/';
+        $filepath = trim($folderpath, '/');
+        $filepath = empty($filepath) ? '/' : '/' . $filepath . '/';
         $oldname = clean_param($oldname, PARAM_FILE);
         $newname = clean_param($newname, PARAM_FILE);
 

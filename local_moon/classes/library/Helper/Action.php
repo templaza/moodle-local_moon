@@ -164,14 +164,24 @@ class Action extends Client {
     {
         $filename = optional_param('name', '', PARAM_ALPHANUMEXT);
         $layoutType = optional_param('layout', '', PARAM_ALPHANUMEXT);
+        $layoutData = required_param('data', PARAM_RAW);
+        if (!Utilities::isJsonString($layoutData)) {
+            throw new \moodle_exception('error_data_json_invalid', 'local_moon');
+        }
 
         $layout = [
             'title'     => optional_param('title', 'layout', PARAM_TEXT),
             'desc'      => optional_param('desc', '', PARAM_TEXT),
             'layout'    => $layoutType,
             'thumbnail' => optional_param('thumbnail_old', '', PARAM_TEXT),
-            'data'      => json_decode(optional_param('data', '{"sections":[]}', PARAM_RAW), true),
+            'data'      => json_decode($layoutData, true),
         ];
+
+        // Validate layout data
+        if (empty($layout['data']['devices']) || empty($layout['data']['sections'])) {
+            throw new \moodle_exception('error_layout_is_empty', 'local_moon');
+        }
+
         if (!empty($layoutType) && $layoutType !== 'custom') {
             $layout_name = $layoutType;
         } elseif (!$filename) {
@@ -273,6 +283,7 @@ class Action extends Client {
     public function clearCache() : void
     {
         theme_reset_all_caches();
+        Media::empty_folder('/', 'css');
         $this->response(['message' => Text::_('theme_cache_cleared')]);
     }
 

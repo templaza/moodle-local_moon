@@ -28,9 +28,17 @@ class Document {
     protected static array $_layout_paths = [];
     protected array $scriptOptions = [];
     protected array $_is_loaded = [];
+    public bool $rtl = false;
 
     public function __construct() {
         global $CFG;
+        if (function_exists('right_to_left') && right_to_left()) {
+            // RTL language
+            $this->rtl = true;
+        } else {
+            // LTR language
+            $this->rtl = false;
+        }
         $this->addLayoutPath($CFG->dirroot . '/theme/'.Framework::getTheme()->name.'/layout/');
     }
 
@@ -502,14 +510,23 @@ class Document {
     {
         if (!isset($this->_is_loaded['uikit'])) {
             global $PAGE;
-            if ($PAGE->rtl) {
+            if ($this->rtl) {
                 $PAGE->requires->css('/local/moon/assets/uikit/css/uikit.rtl.min.css');
             } else {
                 $PAGE->requires->css('/local/moon/assets/uikit/css/uikit.min.css');
             }
-
             $PAGE->requires->js('/local/moon/assets/uikit/js/uikit.min.js', true);
             $PAGE->requires->js('/local/moon/assets/uikit/js/uikit-icons.min.js', true);
+
+            // Override default uikit colors
+            $heading = new Style('.uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, .uk-heading-2xlarge, .uk-heading-3xlarge, .uk-heading-large, .uk-heading-medium, .uk-heading-small, .uk-heading-xlarge, h1, h2, h3, h4, h5, h6');
+            $heading->addCss('color', 'var(--bs-heading-color)');
+            $heading->render();
+            $link = new Style('.uk-link, a');
+            $link->addCss('color', 'rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1))');
+            $link->hover()->addCss('color', 'rgba(255, 0, 202, 1)');
+            $link->render();
+
             $this->_is_loaded['uikit'] = true;
         }
     }
