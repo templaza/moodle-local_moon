@@ -524,7 +524,7 @@ class Document {
             $heading->render();
             $link = new Style('.uk-link, a');
             $link->addCss('color', 'rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1))');
-            $link->hover()->addCss('color', 'rgba(255, 0, 202, 1)');
+            $link->hover()->addCss('color', 'var(--bs-link-hover-color)');
             $link->render();
 
             $this->_is_loaded['uikit'] = true;
