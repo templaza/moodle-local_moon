@@ -2,7 +2,7 @@
     <nav class="header-stacked-section navbar navbar-expand justify-content-between flex-column w-100 shadow-none">
     {{#header.is_center_balance}}
         <div class="moon-header-center-balance w-100 d-flex justify-content-center">
-            {{> local_moon/header/includes/burger }}
+            {{> local_moon/header/includes/boots_burger }}
             <div class="w-100 d-none d-{{header.header_breakpoint}}-flex justify-content-start align-items-center">
                 {{{ output.navbar_plugin_output }}}
                 {{{ header.block_1 }}}
@@ -29,5 +29,19 @@
         </div>
         {{> local_moon/header/includes/primary_menu }}
     {{/header.is_center_balance}}
+    {{#header.is_center}}
+        <div class="w-100 d-flex justify-content-center">
+            <div class="d-{{header.header_breakpoint}}-none">
+                {{> local_moon/header/includes/boots_burger }}
+            </div>
+            <div class="w-100 d-flex justify-content-center">
+                {{> local_moon/header/includes/logo }}
+            </div>
+            <div class="d-{{header.header_breakpoint}}-none" style="min-width: 30px;"></div>
+        </div>
+        {{> local_moon/header/includes/primary_menu }}
+        {{{ header.block_1 }}}
+    {{/header.is_center}}
     </nav>
+    {{> theme_boost/primary-drawer-mobile }}
 </header>
