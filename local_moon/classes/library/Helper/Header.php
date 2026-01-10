@@ -127,7 +127,11 @@ class Header {
         // Block 1 Content
         $block_1 = '';
         if ($block_1_type != 'blank') {
-            $block_align = $mode == 'center' ? 'center' : 'start';
+            $block_align = match($mode) {
+                'center' => 'center',
+                'divided' => 'end',
+                default => 'start',
+            };
             $block_1 .= '<div class="w-100 header-block-item d-flex justify-content-'.$block_align.' align-items-center">';
             if ($block_1_type == 'position') {
                 $block_1 .= Utilities::loadRegion($block_1_position, [], 'div');
