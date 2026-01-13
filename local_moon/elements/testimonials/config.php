@@ -482,7 +482,28 @@ class MoonElementTestimonials extends MoonElement {
                 'light'     => 'Light',
                 'dark'      => 'Dark',
                 'none'      => 'None',
+                "custom"    => "custom",
             ],
+        ]);
+        $this->addField('text_color', [
+            "group"      => "card_options",
+            "type"       => "color",
+            "label"      => "color",
+            "conditions" => "[card_style]=='custom'",
+        ]);
+
+        $this->addField('bg_color', [
+            "group"      => "card_options",
+            "type"       => "color",
+            "label"      => "background_color",
+            "conditions" => "[card_style]=='custom'",
+        ]);
+
+        $this->addField('card_border', [
+            "group"      => "card_options",
+            "type"       => "border",
+            "label"      => "border",
+            "conditions" => "[card_style]=='custom'",
         ]);
 
         $this->addField('card_size', [
@@ -1141,6 +1162,11 @@ class MoonElementTestimonials extends MoonElement {
             'group' => 'rating_options',
             'type'  => 'color',
             'label' => 'rating_color',
+        ]);
+        $this->addField('rating_margin', [
+            'group' => 'rating_options',
+            'type'  => 'spacing',
+            'label' => 'margin',
         ]);
     }
 }

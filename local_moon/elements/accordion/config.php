@@ -141,6 +141,37 @@ class MoonElementAccordion extends MoonElement {
             'label'      => 'background_color',
             'conditions' => "[color_settings]=='active'",
         ]);
+        $this->addField('box_shadow', [
+            'group'   => 'widget_styles',
+            'type'    => 'list',
+            'name'    => 'box_shadow',
+            'label'   => 'box_shadow',
+            'description' => 'box_shadow_desc',
+            'default' => '',
+            'options' => [
+                ''            => 'default',
+                'shadow-none' => 'none',
+                'shadow-sm'   => 'small',
+                'shadow'      => 'regular',
+                'shadow-lg'   => 'large',
+            ],
+        ]);
+
+        $this->addField('box_shadow_hover', [
+            'group'   => 'widget_styles',
+            'type'    => 'list',
+            'name'    => 'box_shadow_hover',
+            'label'   => 'box_shadow_hover',
+            'description' => 'box_shadow_hover_desc',
+            'default' => '',
+            'options' => [
+                ''                   => 'default',
+                'shadow-hover-none'  => 'none',
+                'shadow-hover-sm'    => 'small',
+                'shadow-hover'       => 'regular',
+                'shadow-hover-lg'    => 'large',
+            ],
+        ]);
 
         $this->addField('title_font_style', [
             'group'   => 'title_options',
@@ -167,6 +198,11 @@ class MoonElementAccordion extends MoonElement {
                 'value' => Font::$get_default_font_value,
             ],
         ]);
+        $this->addField('title_padding', [
+            "group"      => "title_options",
+            "type"       => "spacing",
+            "label"      => "padding",
+        ]);
 
         $this->addField('content_font_style', [
             'group'   => 'content_options',
@@ -192,6 +228,16 @@ class MoonElementAccordion extends MoonElement {
                 'lang' => Font::font_properties(),
                 'value' => Font::$get_default_font_value,
             ],
+        ]);
+        $this->addField('content_padding', [
+            "group"      => "content_options",
+            "type"       => "spacing",
+            "label"      => "padding",
+        ]);
+        $this->addField('bgcolor_content', [
+            'group'      => 'content_options',
+            'type'       => 'color',
+            'label'      => 'background_color',
         ]);
     }
 }

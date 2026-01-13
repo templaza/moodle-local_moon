@@ -9,6 +9,9 @@ $testimonials     = new SubForm($params->get('testimonials', ''));
 if (!count($testimonials->getData())) {
     return false;
 }
+$style = $element->style;
+$style_dark = $element->style_dark;
+
 $enable_slider      =   $params->get('enable_slider', 0);
 $slider_autoplay    =   $params->get('slider_autoplay', 0);
 $slider_nav         =   $params->get('slider_nav', 1);
@@ -218,42 +221,73 @@ foreach ($testimonials->getData() as $key => $testimonial) {
     echo '<div class="order-1 card-body'.$card_size.'">'; // Start Card-Body
 
     if ($avatar_position == 'top') {
+        echo '<div class="d-flex align-items-start">';
         echo $media;
+        if (!empty($testimonial->params->get('designation', '')) && $designation_position == 'before') {
+            echo '<div class="as-author-designation">' . $testimonial->params->get('designation', '') . '</div>';
+        }
+        echo '<div class="top-name">';
+            if (!empty($testimonial->params->get('title', ''))) {
+                echo '<'.$title_html_element.' class="as-author-name">'. $testimonial->params->get('title', '') . '</'.$title_html_element.'>';
+            }
+            if (!empty($testimonial->params->get('designation', '')) && $designation_position == 'after') {
+                echo '<div class="as-author-designation">' . $testimonial->params->get('designation', '') . '</div>';
+            }
+            if (!empty($testimonial->params->get('link', '')) && !empty($testimonial->params->get('link_title', ''))) {
+                echo '<a class="as-author-url" href="'.$testimonial->params->get('link', '').'" target="_blank">' . $testimonial->params->get('link_title', '') . '</a>';
+            }
+        echo '</div>';
+        echo '</div>';
+        if (!empty($enable_rating)) {
+            echo '<div class="as-rating-block row row-cols-auto gx-2'.$alignment.'">';
+            for ($i = 0; $i < 5 ; $i++) {
+                if ($i < $rating) {
+                    if ($rating - $i >= 1) {
+                        echo '<div class="as-star"><i class="fa-solid fa-star"></i></div>';
+                    } else {
+                        echo '<div class="as-star"><i class="fa-solid fa-star-half-stroke"></i></div>';
+                    }
+                } else {
+                    echo '<div class="as-star"><i class="fa-regular fa-star"></i></div>';
+                }
+            }
+            echo '</div>';
+        }
     }
     if (!empty($testimonial->params->get('message', ''))) {
         echo '<div class="as-author-message">' . $testimonial->params->get('message', '') . '</div>';
     }
     if ($avatar_position == 'bottom') {
         echo $media;
-    }
-    if (!empty($enable_rating)) {
-        echo '<div class="as-rating-block row row-cols-auto gx-2'.$alignment.'">';
-        for ($i = 0; $i < 5 ; $i++) {
-            if ($i < $rating) {
-                if ($rating - $i >= 1) {
-                    echo '<div class="as-star"><i class="fa-solid fa-star"></i></div>';
-                } else {
-                    echo '<div class="as-star"><i class="fa-solid fa-star-half-stroke"></i></div>';
-                }
-            } else {
-                echo '<div class="as-star"><i class="fa-regular fa-star"></i></div>';
-            }
-        }
-        echo '</div>';
-    }
-    if (!empty($testimonial->params->get('designation', '')) && $designation_position == 'before') {
-        echo '<div class="as-author-designation">' . $testimonial->params->get('designation', '') . '</div>';
-    }
-    if (!empty($testimonial->params->get('title', ''))) {
-        echo '<'.$title_html_element.' class="as-author-name">'. $testimonial->params->get('title', '') . '</'.$title_html_element.'>';
-    }
-    if (!empty($testimonial->params->get('designation', '')) && $designation_position == 'after') {
-        echo '<div class="as-author-designation">' . $testimonial->params->get('designation', '') . '</div>';
-    }
-    if (!empty($testimonial->params->get('link', '')) && !empty($testimonial->params->get('link_title', ''))) {
-        echo '<a class="as-author-url" href="'.$testimonial->params->get('link', '').'" target="_blank">' . $testimonial->params->get('link_title', '') . '</a>';
-    }
 
+        if (!empty($enable_rating)) {
+            echo '<div class="as-rating-block row row-cols-auto gx-2'.$alignment.'">';
+            for ($i = 0; $i < 5 ; $i++) {
+                if ($i < $rating) {
+                    if ($rating - $i >= 1) {
+                        echo '<div class="as-star"><i class="fa-solid fa-star"></i></div>';
+                    } else {
+                        echo '<div class="as-star"><i class="fa-solid fa-star-half-stroke"></i></div>';
+                    }
+                } else {
+                    echo '<div class="as-star"><i class="fa-regular fa-star"></i></div>';
+                }
+            }
+            echo '</div>';
+        }
+        if (!empty($testimonial->params->get('designation', '')) && $designation_position == 'before') {
+            echo '<div class="as-author-designation">' . $testimonial->params->get('designation', '') . '</div>';
+        }
+        if (!empty($testimonial->params->get('title', ''))) {
+            echo '<'.$title_html_element.' class="as-author-name">'. $testimonial->params->get('title', '') . '</'.$title_html_element.'>';
+        }
+        if (!empty($testimonial->params->get('designation', '')) && $designation_position == 'after') {
+            echo '<div class="as-author-designation">' . $testimonial->params->get('designation', '') . '</div>';
+        }
+        if (!empty($testimonial->params->get('link', '')) && !empty($testimonial->params->get('link_title', ''))) {
+            echo '<a class="as-author-url" href="'.$testimonial->params->get('link', '').'" target="_blank">' . $testimonial->params->get('link_title', '') . '</a>';
+        }
+    }
     echo '</div>'; // End Card-Body
 
     if ($avatar_position == 'left' || $avatar_position == 'right') {
@@ -307,6 +341,24 @@ if (!empty($image_border)) {
 }
 if (!empty($enable_rating)) {
     $rating_color   =   Style::getColor($params->get('rating_color', ''));
+    $rating_margin=   $params->get('rating_margin', '');
     $element->style->child('.as-rating-block')->addCss('color', $rating_color['light']);
     $element->style_dark->child('.as-rating-block')->addCss('color', $rating_color['dark']);
+    if (!empty($rating_margin)) {
+        Style::setSpacingStyle($element->style->child('.as-rating-block'), $rating_margin, 'margin');
+    }
+}
+if ($params->get('card_style', '') == 'custom') {
+    $text_color     =   Style::getColor($params->get('text_color', ''));
+    $style->child('.card')->addCss('color', $text_color['light']);
+    $style_dark->child('.card')->addCss('color', $text_color['dark']);
+
+    $bg_color       =   Style::getColor($params->get('bg_color', ''));
+    $style->child('.card')->addCss('background-color', $bg_color['light']);
+    $style_dark->child('.card')->addCss('background-color', $bg_color['dark']);
+
+    $card_border    =   json_decode($params->get('card_border', ''), true);
+    if (!empty($card_border)) {
+        Style::addBorderStyle('#'. $element->id . ' .card', $card_border, 'global', $element->isRoot);
+    }
 }

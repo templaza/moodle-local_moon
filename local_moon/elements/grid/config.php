@@ -1152,6 +1152,7 @@ class MoonElementGrid extends MoonElement {
             "default" => "before",
             "options" => [
                 "before" => "before_title",
+                "after" => "after_title",
                 "uk-position-top-left"  => "top_left",
                 "uk-position-top-center"  => "top_center",
                 "uk-position-top-right"  => "top_right",
