@@ -15,7 +15,7 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_boost/drawers
+    @template local_moon/default
 
     Boost drawer template.
 
@@ -135,7 +135,12 @@
                             <div> {{{ regionmainsettingsmenu }}} </div>
                         </div>
                     {{/hasregionmainsettingsmenu}}
-                    {{{ layoutbuilder }}}
+                    <div class="{{layout_container_class}}">
+                        {{{sidebar_content}}}
+                        <div class="{{layout_content_class}}">
+                            {{{ layoutbuilder }}}
+                        </div>
+                    </div>
                 </div>
                 {{{ output.standard_after_main_region_html }}}
             </div>

@@ -5,3 +5,210 @@
     }
   }
 }
+
+/* Sidebar Header */
+.moon-header {
+  color: var(--as-header-text-color);
+  h1,h2,h3,h4,h5,h6 {
+    color: var(--as-header-heading-color);
+  }
+  a {
+    color: var(--as-header-link-color);
+    &:hover {
+      --as-header-link-color: var(--as-header-link-hover-color);
+    }
+  }
+  &.has-sidebar {
+    z-index: 1;
+    transition: .1s linear all;
+    &.sidebar-dir-left {
+      border-right: 1px solid var(--bs-border-color);
+      @media (max-width: 1200px) {
+        border-right: none;
+      }
+    }
+    &.sidebar-dir-right {
+      border-left: 1px solid var(--bs-border-color);
+      @media (max-width: 1200px) {
+        border-left: none;
+      }
+    }
+    > .moon-sidebar-content {
+      min-height: 100vh;
+      @include media-breakpoint-up(xl) {
+        width: $sidebar-header-width;
+      }
+      @media (max-width: 1200px) {
+        min-height: auto;
+      }
+    }
+
+    >.container {
+      height: 100%;
+
+      >.row {
+        height: 100%;
+
+        .moon-column {
+          >div {
+            height: 100%;
+          }
+        }
+      }
+    }
+
+    .moon-logo {
+      margin: 0 auto !important;
+    }
+
+    .moon-sidebar-mobile-menu {
+      display: none;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .moon-sidebar-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .moon-sidebar-block {
+      &:not(.moon-sidebar-block-1) {
+        margin-top: auto;
+      }
+    }
+
+    .moon-sidebar-block-1 {
+      margin-bottom: auto;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    &.has-sidebar {
+      .moon-sidebar-content {
+        display: block;
+        width: 100%;
+        position: relative;
+        padding: 15px 20px;
+      }
+      .moon-sidebar-mobile-menu {
+        display: block;
+      }
+
+      .moon-sidebar-logo {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+  .dropdown-menus {
+    max-width: $sidebar-header-width;
+  }
+
+  .moon-sidebar-content {
+    background-color: var(--as-header-bg);
+    > * {
+      background-color: var(--as-header-bg);
+    }
+    overflow-y: auto;
+    @media(min-width: 1200px) {
+      padding: 20px;
+    }
+
+    @media(min-width: 1400px) {
+      padding: 30px;
+    }
+  }
+
+  .moon-sidebar-collapsable {
+    padding: 1rem;
+    font-size: 24px;
+    justify-content: flex-end;
+    cursor: pointer;
+    display: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    >i {
+      width: 22px;
+      text-align: center;
+      display: block;
+
+      &:before {
+        content: "\f0c9";
+      }
+    }
+  }
+
+  @media(max-width: 1200px) {
+    .moon-sidebar-content {
+      >div.moon-sidebar-menu-wrap {
+        display: none;
+      }
+
+      >div.moon-sidebar-block {
+        display: none;
+      }
+    }
+
+    &.expanded {
+      width: $sidebar-header-width !important;
+      -webkit-transition: .1s linear all;
+      -moz-transition: .1s linear all;
+      -ms-transition: .1s linear all;
+      -o-transition: .1s linear all;
+      transition: .1s linear all;
+
+      .moon-sidebar-collapsable {
+        >i {
+          &:before {
+            content: "\f00d";
+          }
+        }
+      }
+
+      .moon-sidebar-logo {
+        display: block;
+      }
+
+      .moon-sidebar-content>div.moon-sidebar-menu {
+        display: block;
+      }
+
+      .moon-sidebar-content>div.moon-sidebar-block {
+        display: block;
+      }
+    }
+  }
+}
+
+.moon-header-sidebar-topbar {
+  .moon-sidebar-header-topbar {
+    background-color: var(--as-header-bg);
+    position: sticky;
+    top: 0;
+    z-index: 1021;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--bs-border-color);
+    @media (max-width: 1200px) {
+      position: relative;
+    }
+    @media (min-width: 1400px) {
+      padding: 15px 30px;
+    }
+    .moon-sidebar-mobile-menu {
+      display: none;
+      @media (max-width: 1200px) {
+        display: block;
+      }
+    }
+  }
+  .moon-sidebar-content {
+    @media (max-width: 1200px) {
+      display: none !important;
+    }
+  }
+}

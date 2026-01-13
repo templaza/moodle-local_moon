@@ -1,0 +1,36 @@
+{{#is_topbar}}
+    <div class="astroid-header astroid-sidebar-header astroid-sidebar-header-topbar">
+        <div class="astroid-sidebar-header-inner row">
+            <div class="astroid-sidebar-logo col-12 col-lg-auto d-flex align-items-center">
+                {{> local_moon/header/includes/boots_burger }}
+                <div class="flex-grow-1">{{> local_moon/header/includes/logo }}</div>
+                <div class="d-{{header.header_breakpoint}}-none" style="min-width: 30px;"></div>
+            </div>
+            {{{ block_1 }}}
+        </div>
+    </div>
+{{/is_topbar}}
+<div class="{{class}}">
+    <div class="moon-sidebar-content sticky-top">
+        {{^is_topbar}}
+            <div class="moon-sidebar-logo mb-xl-4">
+                {{> local_moon/header/includes/boots_burger }}
+                <div class="flex-grow-1">{{> local_moon/header/includes/logo }}</div>
+                <div class="d-{{header.header_breakpoint}}-none" style="min-width: 30px;"></div>
+            </div>
+            {{{ block_1 }}}
+        {{/is_topbar}}
+        {{#is_topbar}}
+            {{{ block_2 }}}
+        {{/is_topbar}}
+        <nav class="moon-sidebar-menu-wrap navbar navbar-expand shadow-none">
+            {{> local_moon/header/includes/primary_menu }}
+        </nav>
+        {{#is_topbar}}
+            {{{ block_3 }}}
+        {{/is_topbar}}
+        {{^is_topbar}}
+            {{{ block_2 }}}
+        {{/is_topbar}}
+    </div>
+</div>

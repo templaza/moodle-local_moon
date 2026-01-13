@@ -121,7 +121,8 @@ class Header {
                 'xxl' => 'larger_desktop',
                 default => 'global',
             };
-            $document->addStyleDeclaration('.col-divided-logo{width: '.$divided_logo_width.'px;', $device ?? 'global');
+            $document->addStyleDeclaration('.col-divided-logo{width: '.$divided_logo_width.'px;}');
+            $document->addStyleDeclaration('.col-divided-logo{width: 100%;}', $device);
         }
 
         // Block 1 Content
@@ -132,7 +133,7 @@ class Header {
                 'divided' => 'end',
                 default => 'start',
             };
-            $block_1 .= '<div class="w-100 header-block-item d-flex justify-content-'.$block_align.' align-items-center">';
+            $block_1 .= '<div class="header-block-item d-flex justify-content-'.$block_align.' align-items-center'.($mode == 'divided-logo-left' ? '' : ' w-100').'">';
             if ($block_1_type == 'position') {
                 $block_1 .= Utilities::loadRegion($block_1_position, [], 'div');
             }

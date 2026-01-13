@@ -55,8 +55,33 @@
                 <div class="d-flex col-auto">{{{ header.block_2 }}}</div>
             </div>
         </div>
-
     {{/header.is_divided}}
+    {{#header.is_divided_logo_left}}
+        <div class="row g-0 divided-logo-left w-100">
+            <div class="col-{{header.header_breakpoint}}-12 col-divided-logo">
+                <div class="w-100 h-100 d-flex justify-content-center">
+                    {{> local_moon/header/includes/boots_burger }}
+                    <div class="d-flex w-100 w-auto@{{header.header_breakpoint}} justify-content-center justify-content-{{header.header_breakpoint}}-start">{{> local_moon/header/includes/logo }}</div>
+                    <div class="d-{{header.header_breakpoint}}-none" style="min-width: 30px;"></div>
+                </div>
+            </div>
+            <div class="col d-none d-{{header.header_breakpoint}}-flex flex-column justify-content-center">
+                <div class="divided-menu-block">
+                    <div class="header-block-items d-flex">
+                        <div class="d-flex justify-content-between w-100 row row-cols-2">
+                            {{{ header.block_1 }}}{{{ header.block_2 }}}
+                        </div>
+                    </div>
+                </div>
+                <div class="megamenu-block d-flex w-100 h-100">
+                    <div class="moon-stacked-divided-logo-left-menu d-flex justify-content-start flex-{{header.header_breakpoint}}-grow-1">
+                        {{> local_moon/header/includes/primary_menu }}
+                    </div>
+                    {{{ header.block_3 }}}
+                </div>
+            </div>
+        </div>
+    {{/header.is_divided_logo_left}}
     </nav>
     {{> theme_boost/primary-drawer-mobile }}
 </header>
