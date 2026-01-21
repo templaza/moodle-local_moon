@@ -74,7 +74,7 @@ class Layout
             $template = Framework::getTheme()->getName();
         }
         $layouts = array_merge(
-            self::readLayoutsFromPath($CFG->dirroot . "/theme/{$template}/params/{$type}/", $template, $type),
+            self::readLayoutsFromPath($CFG->dirroot . "/theme/{$template}/moon/{$type}/", $template, $type),
             self::readLayoutsFromData($type, 0)
         );
         return self::mergeLayouts($layouts);
@@ -177,7 +177,7 @@ class Layout
         }
         $template = Framework::getTheme()->getName();
 
-        $layouts_path = Path::clean($CFG->dirroot . "/theme/{$template}/params/{$type}/");
+        $layouts_path = Path::clean($CFG->dirroot . "/theme/{$template}/moon/{$type}/");
         $images_path = Path::clean($CFG->dirroot . "/theme/{$template}/images/{$type}/");
 
         $deleteFile = function ($path, $layout) use ($images_path) {
