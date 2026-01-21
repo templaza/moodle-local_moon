@@ -21,7 +21,7 @@ class Theme {
     protected object|null $params = null;
     protected array|null $config = null;
     public function __construct($theme = null) {
-        global $PAGE;
+        global $PAGE, $CFG;
         if (!defined('CLI_SCRIPT')) {
             // Nếu $PAGE tồn tại nhưng chưa có context, đặt fallback là system context
             if (isset($PAGE) && empty($PAGE->context)) {
@@ -38,6 +38,15 @@ class Theme {
         }
         $this->config = $this->getThemeConfigs();
         $this->params = new Registry($this->theme->settings);
+        if (empty($this->params->get('layout')) && empty($this->params->get('header'))) {
+            $preset_path = $CFG -> dirroot . "/theme/{$this->name}/moon/presets/default.json";
+            if (file_exists($preset_path)) {
+                $preset = \json_decode(\file_get_contents($preset_path), true);
+                if (!empty($preset['preset'])) {
+                    $this->params->loadArray($preset['preset']);
+                }
+            }
+        }
     }
     public function getName() : string
     {

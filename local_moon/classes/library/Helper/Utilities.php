@@ -45,7 +45,7 @@ class Utilities
         $context = context_system::instance();
         $fs = get_file_storage();
 
-        $files = $fs->get_area_files($context->id, $theme, $filearea, $itemid, 'timemodified DESC', false);
+        $files = $fs->get_area_files($context->id, 'theme_' . $theme, $filearea, $itemid, 'timemodified DESC', false);
         $list = self::readLayoutsFromPath($CFG->dirroot . "/theme/{$theme}/moon/{$filearea}/");
 
         foreach ($files as $file) {
@@ -57,9 +57,19 @@ class Utilities
     }
     public static function getLayouts($theme): array
     {
+        global $CFG;
         $layouts = self::getLayoutsByType($theme);
         $configs = self::getThemeConfigs($theme);
         $default = get_config('theme_'. $theme, 'layout');
+        if (empty($default)) {
+            $preset_path = $CFG -> dirroot . "/theme/{$theme}/moon/presets/default.json";
+            if (file_exists($preset_path)) {
+                $preset = \json_decode(\file_get_contents($preset_path), true);
+                if (!empty($preset['preset']) && !empty($preset['preset']['layout']) && \file_exists($CFG -> dirroot . "/theme/{$theme}/moon/main_layouts/{$preset['preset']['layout']}.json")) {
+                    $default = $preset['preset']['layout'];
+                }
+            }
+        }
         $return = [];
         if (!empty($default)) {
             foreach (Constants::$layouts as $layout) {
