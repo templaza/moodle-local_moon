@@ -835,3 +835,13 @@ $string['multi_location_items'] = 'Multiple Location Items';
 $string['multi_location_items_desc'] = 'Add multiple location items for the map.';
 $string['only_admin'] = 'Show admin only';
 $string['light_up'] = 'Light Up';
+
+// Course Tab
+
+$string['course-free'] = 'Free';
+$string['course-learners'] = 'Learners';
+$string['course-lectures'] = 'Lectures';
+$string['title_options'] = 'Title Options';
+$string['tab_options'] = 'Tab Options';
+$string['choose_category'] = 'Choose Category';
+$string['course_limit'] = 'Course Limit';

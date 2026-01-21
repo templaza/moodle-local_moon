@@ -189,10 +189,11 @@ if ($text_alignment) {
 } else {
     $alignment              =   '';
 }
-
+$item_cl = ' testimonial-item';
 $use_masonry        =   $params->get('use_masonry', 0);
 if ($enable_slider) {
     echo '<div class="swiper"'.(!empty($dir) ? ' dir="'.$dir.'"' : '').'>';
+    $item_cl = 'swiper-slide';
 }
 echo '<div class="moon-grid '.($enable_slider ? 'swiper-wrapper' : $row_column_cls.$gutter_cls . ($use_masonry ? ' as-masonry as-loading' : '')).$overlay_text_color.'">';
 foreach ($testimonials->getData() as $key => $testimonial) {
@@ -205,7 +206,7 @@ foreach ($testimonials->getData() as $key => $testimonial) {
         $media      .=  '</div>';
     }
 
-    echo '<div id="testimonial-'. $testimonial -> id .'" class="swiper-slide"><div class="card' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
+    echo '<div id="testimonial-'. $testimonial -> id .'" class="'.$item_cl.'"><div class="card' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
     if ($avatar_position == 'left' || $avatar_position == 'right') {
         echo '<div class="row g-0">';
         echo '<div class="'.$avatar_width_cls.'">';
