@@ -41,8 +41,8 @@ class Constants
         $enable_widget  =   1;
         $tinyMceLicense =   '';
         return [
-            'site_url'              =>  parse_url($CFG->wwwroot, PHP_URL_PATH) . '/',
-            'base_url'              =>  parse_url($CFG->wwwroot, PHP_URL_PATH),
+            'site_url'              =>  $CFG->wwwroot . '/',
+            'base_url'              =>  $CFG->wwwroot,
             'root_url'              =>  $CFG->wwwroot . '/',
             'template_id'           => $theme->name,
             'template_name'         => $theme->name,
