@@ -9,6 +9,7 @@ namespace local_moon\library\Helper;
 defined('MOODLE_INTERNAL') || die;
 
 use context_system;
+use local_moon\library\Element\Layout;
 use local_moon\library\Framework;
 use ScssPhp\ScssPhp\Exception\SassException;
 
@@ -22,23 +23,41 @@ class Utilities
         }
         return json_decode(file_get_contents($CFG->dirroot . '/theme/' . $theme . '/config.json'), true);
     }
+    public static function readLayoutsFromPath($path): array
+    {
+        if (!file_exists($path)) {
+            return [];
+        }
+        $files = array_filter(glob($path . '*.json'), 'is_file');
+        if (empty($files)) {
+            return [];
+        }
+        $list = [];
+        foreach ($files as $key => $file) {
+            $json = file_get_contents($file);
+            $list[pathinfo($file, PATHINFO_FILENAME)] = \json_decode($json, true);
+        }
+        return $list;
+    }
     public static function getLayoutsByType($theme, $filearea = 'main_layouts', $itemid = 0): array
     {
+        global $CFG;
         $context = context_system::instance();
         $fs = get_file_storage();
 
         $files = $fs->get_area_files($context->id, $theme, $filearea, $itemid, 'timemodified DESC', false);
-        $list = [];
+        $list = self::readLayoutsFromPath($CFG->dirroot . "/theme/{$theme}/moon/{$filearea}/");
+
         foreach ($files as $file) {
             if (str_contains($file->get_mimetype(), 'json')) {
-                $list[$file->get_filename()] = json_decode($file->get_content(), true);
+                $list[$file->get_filename()] = \json_decode($file->get_content(), true);
             }
         }
         return $list;
     }
     public static function getLayouts($theme): array
     {
-        $layouts = self::getLayoutsByType('theme_' . $theme);
+        $layouts = self::getLayoutsByType($theme);
         $configs = self::getThemeConfigs($theme);
         $default = get_config('theme_'. $theme, 'layout');
         $return = [];

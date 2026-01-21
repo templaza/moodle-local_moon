@@ -152,7 +152,7 @@ class Action extends Client {
     // Layout Actions
     public function getLayouts(): void
     {
-        $return = Layout::getDatalayouts(Framework::getTheme()->getName(), $this->filearea);
+        $return = Layout::getDatalayouts(Framework::getTheme()->name, $this->filearea);
         $this->response($return);
     }
 

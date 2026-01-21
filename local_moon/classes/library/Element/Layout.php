@@ -71,7 +71,7 @@ class Layout
     {
         global $CFG;
         if (!$template) {
-            $template = Framework::getTheme()->getName();
+            $template = Framework::getTheme()->name;
         }
         $layouts = array_merge(
             self::readLayoutsFromPath($CFG->dirroot . "/theme/{$template}/moon/{$type}/", $template, $type),
@@ -175,7 +175,7 @@ class Layout
         if (empty($layouts)) {
             return false;
         }
-        $template = Framework::getTheme()->getName();
+        $template = Framework::getTheme()->name;
 
         $layouts_path = Path::clean($CFG->dirroot . "/theme/{$template}/moon/{$type}/");
         $images_path = Path::clean($CFG->dirroot . "/theme/{$template}/images/{$type}/");
