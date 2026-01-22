@@ -158,10 +158,12 @@ class Layout
                 }
             } elseif (Media::exists($filename . '.bak.json', '/draft/', $type, 0)) {
                 $json = Media::data($filename . '.bak.json', '/draft/', $type, 0);
-            } elseif (file_exists(Path::clean($CFG->dirroot . "/theme/{$template}/moon/{$type}/" . $filename . '.json'))){
-                $json = file_get_contents(Path::clean($CFG->dirroot . "/theme/{$template}/moon/{$type}/" . $filename . '.json'));
             } elseif (Media::exists($default . '.json', '/', $type, 0)) {
                 $json = Media::data($default . '.json', '/', $type, 0);
+            } elseif (file_exists(Path::clean($CFG->dirroot . "/theme/{$template}/moon/{$type}/" . $filename . '.json'))){
+                $json = file_get_contents(Path::clean($CFG->dirroot . "/theme/{$template}/moon/{$type}/" . $filename . '.json'));
+            } elseif (file_exists(Path::clean($CFG->dirroot . "/theme/{$template}/moon/{$type}/" . $default . '.json'))){
+                $json = file_get_contents(Path::clean($CFG->dirroot . "/theme/{$template}/moon/{$type}/" . $default . '.json'));
             } else {
                 return [];
             }

@@ -16,19 +16,17 @@ class CourseHandler {
 
         $courseId = (int)$courseId;
         if ($DB->record_exists('course', array('id' => $courseId))) {
-        // @moonComm: Initiate
         $moonCourse = new \stdClass();
-        $chelper = new \coursecat_helper();
+        $cathelper = new \coursecat_helper();
         $courseContext = \context_course::instance($courseId);
 
         $courseRecord = $DB->get_record('course', array('id' => $courseId));
         $courseElement = new \core_course_list_element($courseRecord);
 
-        /* @moonBreak */
         $courseId = $courseRecord->id;
         $courseShortName = $courseRecord->shortname;
         $courseFullName = $courseRecord->fullname;
-        $courseSummary = $chelper->get_course_formatted_summary($courseElement, array('noclean' => true, 'para' => false));
+        $courseSummary = $cathelper->get_course_formatted_summary($courseElement, array('noclean' => true, 'para' => false));
         $courseFormat = $courseRecord->format;
         $courseAnnouncements = $courseRecord->newsitems;
         $courseStartDate = $courseRecord->startdate;
@@ -40,7 +38,6 @@ class CourseHandler {
         $courseEnrolmentCount = count_enrolled_users($courseContext);
         $course_is_enrolled = is_enrolled($courseContext, $USER->id, '', true);
 
-        /* @moonBreak */
         $categoryId = $courseRecord->category;
 
         try {
@@ -53,10 +50,8 @@ class CourseHandler {
             $categoryUrl = "";
         }
 
-        /* @moonBreak */
         $enrolmentLink = $CFG->wwwroot . '/enrol/index.php?id=' . $courseId;
         $courseUrl = new \moodle_url('/course/view.php', array('id' => $courseId));
-        // @moonComm: Start Payment
         $enrolInstances = enrol_get_instances($courseId, true);
 
         $course_price = '';
@@ -95,7 +90,6 @@ class CourseHandler {
             }
 
 
-        // @moonComm: Process first image
             $theme = Framework::getTheme();
             $contentimages = $CFG->wwwroot . '/theme/'.$theme->name.'/pix/category.jpg';
             foreach ($courseElement->get_course_overviewfiles() as $file) {
@@ -114,7 +108,6 @@ class CourseHandler {
                 }
             }
 
-        /* Map data */
         $moonCourse->courseId = $courseId;
         $moonCourse->enrolments = $courseEnrolmentCount;
         $moonCourse->categoryId = $categoryId;
@@ -138,7 +131,6 @@ class CourseHandler {
         $moonCourse->course_currency = $course_currency;
         $moonCourse->course_is_enrolled = $course_is_enrolled;
 
-        /* Render object */
         $moonRender = new \stdClass();
         $moonRender->enrolmentIcon = '';
         $moonRender->enrolmentIcon1 = '';
@@ -149,7 +141,6 @@ class CourseHandler {
         $moonRender->title             =     '<h3><a href="'. $moonCourse->url .'">'. $moonCourse->fullName .'</a></h3>';
         $moonRender->coverImage = '<img class="img-whp" src="'. $contentimages .'" alt="'.strip_tags($moonCourse->fullName).'">';
         $moonRender->ImageUrl = $contentimages;
-        /* @moonBreak */
         $moonCourse->moonRender = $moonRender;
         return $moonCourse;
         }
@@ -160,14 +151,14 @@ class CourseHandler {
         global $CFG, $COURSE, $USER, $DB, $SESSION, $SITE, $PAGE, $OUTPUT;
     
         if ($DB->record_exists('course', array('id' => $courseId))) {
-        $chelper = new \coursecat_helper();
+        $cathelper = new \coursecat_helper();
         $courseContext = \context_course::instance($courseId);
     
         $courseRecord = $DB->get_record('course', array('id' => $courseId));
         $courseElement = new \core_course_list_element($courseRecord);
     
         if ($courseElement->has_summary()) {
-            $courseSummary = $chelper->get_course_formatted_summary($courseElement, array('noclean' => false, 'para' => false));
+            $courseSummary = $cathelper->get_course_formatted_summary($courseElement, array('noclean' => false, 'para' => false));
             if($maxLength != null) {
             if (strlen($courseSummary) > $maxLength) {
                 $courseSummary = wordwrap($courseSummary, $maxLength);
@@ -202,14 +193,14 @@ class CourseHandler {
     
         $categoryRecord = $DB->get_record('course_categories', array('id' => $categoryId));
     
-        $chelper = new \coursecat_helper();
+        $cathelper = new \coursecat_helper();
         $categoryObject = \core_course_category::get($categoryId);
     
         $moonCategory = new \stdClass();
     
         $categoryId = $categoryRecord->id;
         $categoryName = format_text($categoryRecord->name, FORMAT_HTML, array('filter' => true));
-        $categoryDescription = $chelper->get_category_formatted_description($categoryObject);
+        $categoryDescription = $cathelper->get_category_formatted_description($categoryObject);
     
         $categorySummary = format_string($categoryRecord->description, $striplinks = true,$options = null);
         $isVisible = $categoryRecord->visible;
@@ -219,8 +210,8 @@ class CourseHandler {
     
         $categoryGetSubcategories = [];
         $categorySubcategories = [];
-        if (!$chelper->get_categories_display_option('nodisplay')) {
-            $categoryGetSubcategories = $categoryObject->get_children($chelper->get_categories_display_options());
+        if (!$cathelper->get_categories_display_option('nodisplay')) {
+            $categoryGetSubcategories = $categoryObject->get_children($cathelper->get_categories_display_options());
         }
         foreach($categoryGetSubcategories as $k=>$moonSubcategory) {
             $moonSubcat = new \stdClass();
@@ -237,7 +228,7 @@ class CourseHandler {
         /* Do image */
         $outputimage = '';
         //moonComm: Fetching the image manually added to the coursecat description via the editor.
-        $description = $chelper->get_category_formatted_description($categoryObject);
+        $description = $cathelper->get_category_formatted_description($categoryObject);
         $src = "";
         if ($description) {
             $dom = new DOMDocument();
@@ -263,7 +254,6 @@ class CourseHandler {
             }
         }
     
-        /* Map data */
         $moonCategory->categoryId = $categoryId;
         $moonCategory->categoryName = $categoryName;
         $moonCategory->categoryDescription = $categoryDescription;
