@@ -350,4 +350,33 @@ class CourseHandler {
 
         return $count;
     }
+    function moonCoursePopular(int $limit = 10): array {
+        global $DB;
+
+        $sql = "
+        SELECT
+            c.id,
+            c.fullname,
+            c.shortname,
+            c.summary,
+            COUNT(ue.id) AS enrolcount
+        FROM {course} c
+        JOIN {enrol} e ON e.courseid = c.id
+        JOIN {user_enrolments} ue ON ue.enrolid = e.id
+        WHERE c.visible = 1
+          AND c.id <> 1
+        GROUP BY c.id, c.fullname, c.shortname, c.summary
+        ORDER BY enrolcount DESC
+    ";
+
+        return $DB->get_records_sql($sql, null, 0, $limit);
+    }
+    function moonCourseAllCategory(): array {
+        $categories = \core_course_category::get_all();
+        $cat_arr = array();
+        foreach ($categories as $category) {
+            $cat_arr[$category->id] = $category->name;
+        }
+        return $cat_arr;
+    }
 }
