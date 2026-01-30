@@ -845,3 +845,23 @@ $string['title_options'] = 'Title Options';
 $string['tab_options'] = 'Tab Options';
 $string['choose_category'] = 'Choose Category';
 $string['course_limit'] = 'Course Limit';
+
+//uk slideshow
+
+$string['interval_desc'] = 'Set the autoplay interval in seconds.';
+$string['kenburns_label'] = 'Ken Burns Effect';
+$string['kenburns_duration'] = 'Ken Burns Duration';
+$string['kenburns_duration_desc'] = 'Set the duration for the Ken Burns effect in seconds.';
+$string['overlay_position'] = 'Overlay Position';
+$string['overlay_color'] = 'Overlay background color';
+$string['video_url'] = 'Youtube or Vimeo Url';
+$string['dot_options'] = 'Dot Options';
+$string['dot_option'] = 'Dot Options';
+$string['dot_below'] = 'Show below slideshow';
+$string['dot_vertical'] = 'Dot Vertical';
+$string['border_color'] = 'Border Color';
+
+//uk slideshow
+
+$string['blog_recent_time'] = 'Interval of time considered recent';
+

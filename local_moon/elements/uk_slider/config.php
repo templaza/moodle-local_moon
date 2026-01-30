@@ -23,6 +23,14 @@ class MoonElementUk_Slider extends MoonElement {
             'type'  => 'group',
             'label' => 'slideshow',
         ]);
+        $this->addField('navigation_options', [
+            'type'  => 'group',
+            'label' => 'Navigation',
+        ]);
+        $this->addField('dot_options', [
+            'type'  => 'group',
+            'label' => 'dot_options',
+        ]);
 
         $this->addField('overlay_options', [
             'type'  => 'group',
@@ -56,10 +64,29 @@ class MoonElementUk_Slider extends MoonElement {
             'general-settings' => [
                 'label' => 'general',
                 'fields' => [
+                    'image_type' => [
+                        'type'       => 'list',
+                        'label'      => 'image_type',
+                        'default'    => '',
+                        'options'    => [
+                            ''       => 'Image',
+                            'video' => 'Video',
+                        ],
+                    ],
                     'image' => [
                         'type'    => 'media',
                         'label'   => 'TPL_ASTROID_SELECT_IMAGE',
                         'dynamic' => true,
+                        "conditions" => "[image_type]==''",
+                    ],
+                    'video' => [
+                        'type'    => 'text',
+                        'label'   => 'video_url',
+                        "attributes" => [
+                            'hint'    => 'https://www.youtube.com/watch?v=gEbbIlMXE1Y',
+                            'dynamic' => true,
+                        ],
+                        "conditions" => "[image_type]=='video'",
                     ],
                     'title' => [
                         'type'    => 'text',
@@ -118,6 +145,18 @@ class MoonElementUk_Slider extends MoonElement {
             ],
         ]);
 
+
+        $this->addField('slider_style', [
+            'group'      => 'slideshow_options',
+            'type'    => 'list',
+            'label'      => 'Style',
+            'options'         => array(
+                'style1' => 'Style1',
+                'style2' => 'Style2',
+            ),
+            'default'    => 'style1',
+        ]);
+
         $this->addField('slider_height', [
             'group'      => 'slideshow_options',
             'type'    => 'list',
@@ -159,6 +198,11 @@ class MoonElementUk_Slider extends MoonElement {
             ],
             'default' => 800,
         ]);
+        $this->addField('slideshow_padding', [
+            'group'      => 'slideshow_options',
+            'type'       => 'spacing',
+            'label'      => 'padding',
+        ]);
 
         $this->addField('slideshow_transition', [
             'group'   => 'slideshow_options',
@@ -183,6 +227,213 @@ class MoonElementUk_Slider extends MoonElement {
             ],
             'default' => '0',
             'label'   => 'autoplay',
+        ]);
+        $this->addField('autoplay_interval',  [
+            "group" => "slideshow_options",
+            "type" => "text",
+            "label" => "Interval",
+            "description" => "interval_desc",
+            "conditions" => "[autoplay]==1",
+        ]);
+        $this->addField('kenburns_transition', [
+            'group'   => 'slideshow_options',
+            'type'    => 'list',
+            'label'   => 'kenburns_label',
+            'options'         => array(
+                '' =>  'None',
+                'top-left' => 'top_left',
+                'top-center' => 'top_center',
+                'top-right' => 'top_right',
+                'center-left' => 'center_left',
+                'center-center' => 'center_center',
+                'center-right' => 'center_right',
+                'bottom-left' => 'bottom_left',
+                'bottom-center' => 'bottom_center',
+                'bottom-right' => 'bottom_right',
+            ),
+        ]);
+        $this->addField('kenburns_duration', [
+            'group'      => 'slideshow_options',
+            'type'       => 'range',
+            'label'      => 'kenburns_duration',
+            'description'      => 'kenburns_duration_desc',
+            "attributes" => [
+                'min'        => 1,
+                'max'        => 30,
+                'step'       => 1,
+                'responsive' => false,
+                'postfix'    => '',
+            ],
+            'default'    => 9,
+            "conditions" => "[kenburns_transition] !==''",
+        ]);
+
+        $this->addField('navigation', [
+            'group'   => 'navigation_options',
+            'type'    => 'radio',
+            "attributes" => [
+                "role" => "switch"
+            ],
+            'default' => '0',
+            'label'   => 'Nav Enable',
+        ]);
+        $this->addField('navigation_color', [
+            "group"      => "navigation_options",
+            "type"       => "color",
+            "label"      => "color",
+            "conditions" => "[navigation]==1",
+        ]);
+        $this->addField('navigation_bg_color', [
+            "group"      => "navigation_options",
+            "type"       => "color",
+            "label"      => "background_color",
+            "conditions" => "[navigation]==1",
+        ]);
+        $this->addField('navigation_color_hover', [
+            "group"      => "navigation_options",
+            "type"       => "color",
+            "label"      => "color_hover",
+            "conditions" => "[navigation]==1",
+        ]);
+        $this->addField('navigation_bg_color_hover', [
+            "group"      => "navigation_options",
+            "type"       => "color",
+            "label"      => "background_hover_color",
+            "conditions" => "[navigation]==1",
+        ]);
+        $this->addField('navigation_padding', [
+            'group'      => 'navigation_options',
+            'type'       => 'spacing',
+            'label'      => 'padding',
+            'conditions' => "[navigation]==1",
+        ]);
+        $this->addField('dot_style', [
+            'group'   => 'dot_options',
+            'type'    => 'list',
+            'label'   => 'dot_option',
+            'options'         => array(
+                '' => 'None',
+                'dotnav' => 'Dotnav',
+                'thumbnav' => 'Thumbnav',
+                'title' => 'Title'
+            ),
+        ]);
+        $this->addField('dot_position', [
+            'group'   => 'dot_options',
+            'type'    => 'list',
+            'label'   => 'position',
+            'options'         => array(
+                '' =>  'None',
+                'uk-position-top-left' => 'top_left',
+                'uk-position-top-center' => 'top_center',
+                'uk-position-top-right' => 'top_right',
+                'uk-position-center-left' => 'center_left',
+                'uk-position-center' => 'center_center',
+                'uk-position-center-right' => 'center_right',
+                'uk-position-bottom-left' => 'bottom_left',
+                'uk-position-bottom-center' => 'bottom_center',
+                'uk-position-bottom-right' => 'bottom_right',
+            ),
+        ]);
+        $this->addField('dot_margin', [
+            'group' => 'dot_options',
+            'type'  => 'spacing',
+            'name'  => 'dot_margin',
+            'label' => 'margin',
+        ]);
+        $this->addField('dot_border_color', [
+            'group'      => 'dot_options',
+            'type'       => 'color',
+            'label'      => 'border_color',
+        ]);
+        $this->addField('dot_color', [
+            'group'      => 'dot_options',
+            'type'       => 'color',
+            'label'      => 'color',
+        ]);
+        $this->addField('dot_hover_color', [
+            'group'      => 'dot_options',
+            'type'       => 'color',
+            'label'      => 'color_hover',
+        ]);
+        $this->addField('dot_below', [
+            'group'   => 'dot_options',
+            'type'    => 'radio',
+            "attributes" => [
+                "role" => "switch"
+            ],
+            'default' => '0',
+            'label'   => 'dot_below',
+            'conditions' => "[dot_positions]=='dotnav' OR [dot_positions]=='thumbnav'",
+        ]);
+        $this->addField('dot_vertical', [
+            'group'   => 'dot_options',
+            'type'    => 'radio',
+            "attributes" => [
+                "role" => "switch"
+            ],
+            'default' => '0',
+            'label'   => 'dot_vertical',
+            'conditions' => "[dot_positions]=='dotnav' OR [dot_positions]=='thumbnav' AND [dot_below]=='0'",
+        ]);
+        $this->addField('overlay_max_width', [
+            'group'       => 'overlay_options',
+            'type'        => 'list',
+            'name'        => 'overlay_max_width',
+            'label'       => 'max_width',
+            'description' => 'max_width_desc',
+            'default'     => '',
+            'options'     => [
+                ''        => 'inherit',
+                'xxsmall' => 'xxsmall',
+                'xsmall'  => 'xsmall',
+                'small'   => 'small',
+                'medium'  => 'medium',
+                'large'   => 'large',
+                'xlarge'  => 'xlarge',
+                'xxlarge' => 'xxlarge',
+            ],
+        ]);
+
+        $this->addField('overlay_padding', [
+            'group' => 'overlay_options',
+            'type'  => 'spacing',
+            'name'  => 'overlay_padding',
+            'label' => 'padding',
+        ]);
+        $this->addField('overlay_align', [
+            'group'   => 'overlay_options',
+            'type'    => 'list',
+            'label'   => 'text_alignment',
+            'options'         => array(
+                '' =>  'Left',
+                'uk-text-center' => 'Center',
+                'uk-text-right' => 'Right',
+                'uk-text-justify' => 'Justifies',
+            ),
+        ]);
+        $this->addField('overlay_positions', [
+            'group'   => 'overlay_options',
+            'type'    => 'list',
+            'label'   => 'overlay_position',
+            'options'         => array(
+                '' =>  'None',
+                'top-left' => 'top_left',
+                'top-center' => 'top_center',
+                'top-right' => 'top_right',
+                'center-left' => 'center_left',
+                'center-center' => 'center_center',
+                'center-right' => 'center_right',
+                'bottom-left' => 'bottom_left',
+                'bottom-center' => 'bottom_center',
+                'bottom-right' => 'bottom_right',
+            ),
+        ]);
+        $this->addField('overlay_color', [
+            'group'      => 'overlay_options',
+            'type'       => 'color',
+            'name'       => 'overlay_color',
+            'label'      => 'overlay_color',
         ]);
 
         $this->addField('title_html_element', [
