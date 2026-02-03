@@ -34,6 +34,13 @@ Framework::getTheme()->addFields(
                     "boxed" => "boxed"
                 ]
             ],
+            'body_padding' => [
+                "group" => "page_settings",
+                "type" => "spacing",
+                "label" => "body_padding",
+                "description" => "",
+            ],
+
             'layout_background_image' => [
                 "group" => "page_settings",
                 "type" => "media",

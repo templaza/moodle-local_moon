@@ -860,8 +860,23 @@ $string['dot_option'] = 'Dot Options';
 $string['dot_below'] = 'Show below slideshow';
 $string['dot_vertical'] = 'Dot Vertical';
 $string['border_color'] = 'Border Color';
+$string['next_text'] = 'Next text';
+$string['preview_text'] = 'Preview text';
 
 //uk slideshow
 
 $string['blog_recent_time'] = 'Interval of time considered recent';
 
+// gallery
+$string['slide_top'] = 'Slide Top';
+$string['slide_bottom'] = 'Slide Bottom';
+$string['slide_left'] = 'Slide Left';
+$string['slide_right'] = 'Slide Right';
+$string['slide_top_small'] = 'Slide Top Small';
+$string['slide_bottom_small'] = 'Slide Bottom Small';
+$string['slide_left_small'] = 'Slide Left Small';
+$string['slide_right_small'] = 'Slide Right Small';
+$string['slide_top_medium'] = 'Slide Top Medium';
+$string['slide_bottom_medium'] = 'Slide Bottom Medium';
+$string['slide_left_medium'] = 'Slide Left Medium';
+$string['slide_right_medium'] = 'Slide Right Medium';

@@ -49,6 +49,7 @@ class Document {
         Utilities::typography();
         Utilities::preloader();
         Utilities::backtoTop();
+        Utilities::page_settings();
     }
 
     public function getScripts() : void{
