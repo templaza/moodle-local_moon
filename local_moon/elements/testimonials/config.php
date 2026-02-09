@@ -39,6 +39,11 @@ class MoonElementTestimonials extends MoonElement {
             'label' => 'avatar_options',
         ]);
 
+        $this->addField('icon_options', [
+            'type'  => 'group',
+            'label' => 'icon_options',
+        ]);
+
         $this->addField('name_options', [
             'type'  => 'group',
             'label' => 'name_options',
@@ -734,6 +739,18 @@ class MoonElementTestimonials extends MoonElement {
                 'shadow-lg'   => 'lg',
             ],
         ]);
+        $this->addField('card_vertical_align', [
+            'group'   => 'card_options',
+            'type'    => 'list',
+            'label'   => 'vertical_alignment',
+            'default' => '',
+            'options' => [
+                ''          => 'Default',
+                'align-items-center'   => 'center',
+                'align-items-end'   => 'bottom',
+
+            ],
+        ]);
 
         $this->addField('enable_slider', [
             'group'      => 'slider_options',
@@ -741,6 +758,11 @@ class MoonElementTestimonials extends MoonElement {
             'default'    => '0',
             'label'      => 'enable_slider',
             'attributes' => ["role" => "switch"],
+        ]);
+        $this->addField('slider_padding', [
+            'group' => 'slider_options',
+            'type'  => 'spacing',
+            'label' => 'slider_padding',
         ]);
 
         $this->addField('slider_autoplay', [
@@ -805,6 +827,106 @@ class MoonElementTestimonials extends MoonElement {
             'default'    => '1',
             'label'      => 'navigation',
             'conditions' => "[enable_slider]==1",
+        ]);
+        $this->addField('slider_nav_position', [
+            'group'   => 'slider_options',
+            'type'    => 'list',
+            'label'   => 'position',
+            'options'         => array(
+                '' =>  'Default',
+                'uk-position-top-left' => 'top_left',
+                'uk-position-top-center' => 'top_center',
+                'uk-position-top-right' => 'top_right',
+                'uk-position-center-left' => 'center_left',
+                'uk-position-center' => 'center_center',
+                'uk-position-center-right' => 'center_right',
+                'uk-position-bottom-left' => 'bottom_left',
+                'uk-position-bottom-center' => 'bottom_center',
+                'uk-position-bottom-right' => 'bottom_right',
+            ),
+            'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
+        ]);
+        $this->addField('slider_nav_height', [
+            'group'      => 'slider_options',
+            'type'       => 'range',
+            'label'      => 'nav_height',
+            "attributes" => [
+                'min'        => 1,
+                'max'        => 300,
+                'step'       => 1,
+                'responsive' => true,
+                'postfix'    => 'px',
+            ],
+            'default'    => 50,
+        ]);
+        $this->addField('slider_nav_width', [
+            'group'      => 'slider_options',
+            'type'       => 'range',
+            'label'      => 'nav_height',
+            "attributes" => [
+                'min'        => 1,
+                'max'        => 300,
+                'step'       => 1,
+                'responsive' => true,
+                'postfix'    => 'px',
+            ],
+            'default'    => 50,
+        ]);
+        $this->addField('slider_nav_border', [
+            "group"      => "slider_options",
+            "type"       => "border",
+            "label"      => "border",
+            'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
+        ]);
+
+        $this->addField('slider_nav_radius', [
+            'group' => 'slider_options',
+            'type'  => 'spacing',
+            'label' => 'radius',
+            'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
+        ]);
+        $this->addField('next_margin', [
+            'group' => 'slider_options',
+            'type'  => 'spacing',
+            'label' => 'next_margin',
+            'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
+        ]);
+        $this->addField('preview_margin', [
+            'group' => 'slider_options',
+            'type'  => 'spacing',
+            'label' => 'preview_margin',
+            'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
+        ]);
+
+        $this->addField('nav_color', [
+            'group' => 'slider_options',
+            'type'  => 'color',
+            'label' => 'color_hover',
+            'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
+        ]);
+        $this->addField('nav_bg_color', [
+            'group' => 'slider_options',
+            'type'  => 'color',
+            'label' => 'background_color',
+            'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
+        ]);
+        $this->addField('nav_color_hover', [
+            'group' => 'slider_options',
+            'type'  => 'color',
+            'label' => 'color_hover',
+            'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
+        ]);
+        $this->addField('nav_bg_color_hover', [
+            'group' => 'slider_options',
+            'type'  => 'color',
+            'label' => 'background_color_hover',
+            'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
+        ]);
+        $this->addField('slider_nav_border_hover', [
+            "group"      => "slider_options",
+            "type"       => "border",
+            "label"      => "border_hover",
+            'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
         ]);
 
         $this->addField('slider_dotnav', [
@@ -1167,6 +1289,29 @@ class MoonElementTestimonials extends MoonElement {
             'group' => 'rating_options',
             'type'  => 'spacing',
             'label' => 'margin',
+        ]);
+        $this->addField('testimonial_icon', [
+            "type"       => "icons",
+            'group' => 'icon_options',
+            "label"      => "fa_icon",
+        ]);
+        $this->addField('testimonial_icon_size', [
+            'group'      => 'icon_options',
+            'type'       => 'range',
+            'label'      => 'icon_size',
+            "attributes" => [
+                'min'        => 1,
+                'max'        => 300,
+                'step'       => 1,
+                'responsive' => true,
+                'postfix'    => 'px',
+            ],
+            'default'    => 30,
+        ]);
+        $this->addField('testimonial_icon_color', [
+            "group"      => "icon_options",
+            "type"       => "color",
+            "label"      => "color",
         ]);
     }
 }

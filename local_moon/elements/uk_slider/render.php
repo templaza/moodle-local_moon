@@ -135,6 +135,8 @@ $nav_color     = Style::getColor($params->get('navigation_color', ''));
 $nav_hover_color     = Style::getColor($params->get('navigation_color_hover', ''));
 $nav_bg_color     = Style::getColor($params->get('navigation_bg_color', ''));
 $nav_bg_hover_color     = Style::getColor($params->get('navigation_bg_color_hover', ''));
+$next_text = $params->get('slidenav_next_text', '');
+$preview_text = $params->get('slidenav_preview_text', '');
 
 $dot_options = $params->get('dot_style', '');
 $dot_below = $params->get('dot_below', '');
@@ -281,16 +283,16 @@ if($slider_style=='style1'){
 
             $output .= $media_overlay;
 
-            $output .= '<div class="ui-content-wrap uk-position-cover uk-flex ' . $overlay_positions . ' '.$overlay_align.' ">';
+            $output .= '<div class="ui-content-wrap container uk-position-cover uk-flex ' . $overlay_positions . ' '.$overlay_align.' ">';
 
             $output .= '<div class="' . $overlay_pos_int . ' ' .$overlay_max_width.'">';
 
             if (!empty($slide->params->get('meta')) && $meta_position == 'before') {
-                $output .= '<div class="moon-meta">' . $slide->params->get('meta') . '</div>';
+                $output .= '<div class="moon-meta" data-uk-slideshow-parallax="y: -50,0,0; opacity: 1,1,0">' . $slide->params->get('meta') . '</div>';
             }
 
             if (!empty($slide->params->get('title'))) {
-                $output .= '<'.$title_html_element.' class="moon-heading" uk-slideshow-parallax="y: -50,0,0; opacity: 1,1,0">'. $slide->params->get('title') . '</'.$title_html_element.'>';
+                $output .= '<'.$title_html_element.' class="moon-heading" data-uk-slideshow-parallax="y: -50,0,0; opacity: 1,1,0">'. $slide->params->get('title') . '</'.$title_html_element.'>';
             }
 
             if (!empty($slide->params->get('meta')) && $meta_position == 'after') {
@@ -298,7 +300,7 @@ if($slider_style=='style1'){
             }
             if (!empty($slide->params->get('description'))) {
                 $content = format_text($slide->params->get('description', ''), FORMAT_HTML, ['context' => $this->context]);
-                $output .= '<div class="moon-text" uk-slideshow-parallax="y: 50,0,0; opacity: 1,1,0">' . $content . '</div>';
+                $output .= '<div class="moon-text" data-uk-slideshow-parallax="y: 50,0,0; opacity: 1,1,0">' . $content . '</div>';
             }
             $target = !empty($slide->params->get('link_target')) ? ' target="'.$slide->params->get('link_target').'"' : '';
             if (!empty($slide->params->get('link'))) {
@@ -316,8 +318,8 @@ if($slider_style=='style1'){
 
     if($navigation){
         $output .= '
-    <a class="uk-position-center-left uk-position-small uk-hidden-hover" href data-uk-slidenav-previous data-uk-slideshow-item="previous"></a>
-    <a class="uk-position-center-right uk-position-small uk-hidden-hover" href data-uk-slidenav-next data-uk-slideshow-item="next"></a>
+    <a class="uk-position-center-left tz-sidenav uk-position-small uk-hidden-hover" href data-uk-slidenav-previous data-uk-slideshow-item="previous">'.$preview_text.'</a>
+    <a class="uk-position-center-right tz-sidenav uk-position-small uk-hidden-hover" href data-uk-slidenav-next data-uk-slideshow-item="next">'.$next_text.'</a>
     ';
     }
 
@@ -350,6 +352,11 @@ $style->child('.uk-slidenav')->addCss('color', $nav_color['light']);
 $style_dark->child('.uk-slidenav')->addCss('color', $nav_color['dark']);
 $style->child('.uk-slidenav:hover')->addCss('color', $nav_hover_color['light']);
 $style_dark->child('.uk-slidenav:hover')->addCss('color', $nav_hover_color['dark']);
+
+$style->child('.uk-slidenav::before')->addCss('background-color', $nav_color['light']);
+$style_dark->child('.uk-slidenav::before')->addCss('background-color', $nav_color['dark']);
+$style->child('.uk-slidenav:hover::before')->addCss('background-color', $nav_hover_color['light']);
+$style_dark->child('.uk-slidenav:hover::before')->addCss('background-color', $nav_hover_color['dark']);
 
 $style->child('.uk-slidenav')->addCss('background-color', $nav_bg_color['light']);
 $style_dark->child('.uk-slidenav')->addCss('background-color', $nav_bg_color['dark']);

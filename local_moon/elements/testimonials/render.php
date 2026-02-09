@@ -184,6 +184,13 @@ $enable_rating      =   $params->get('enable_rating', 0);
 $text_alignment             =   $params->get('text_alignment','');
 $text_alignment_breakpoint  =   $params->get('text_alignment_breakpoint','');
 $text_alignment_fallback    =   $params->get('text_alignment_fallback','');
+
+$card_vertical_align    =   $params->get('card_vertical_align','');
+
+$slider_nav_position    =   $params->get('slider_nav_position','');
+
+$testimonial_icon    =   $params->get('testimonial_icon','');
+
 if ($text_alignment) {
     $alignment              =   ' justify-content' . ($text_alignment_breakpoint ? '-' . $text_alignment_breakpoint : '') . '-' . $text_alignment . ($text_alignment_fallback ? ' justify-content-' . $text_alignment_fallback : '');
 } else {
@@ -208,7 +215,7 @@ foreach ($testimonials->getData() as $key => $testimonial) {
 
     echo '<div id="testimonial-'. $testimonial -> id .'" class="'.$item_cl.'"><div class="card' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
     if ($avatar_position == 'left' || $avatar_position == 'right') {
-        echo '<div class="row g-0">';
+        echo '<div class="row g-0 '.$card_vertical_align.'">';
         echo '<div class="'.$avatar_width_cls.'">';
     }
     if ($avatar_position == 'left' || $avatar_position == 'right') {
@@ -220,6 +227,12 @@ foreach ($testimonials->getData() as $key => $testimonial) {
     }
 
     echo '<div class="order-1 card-body'.$card_size.'">'; // Start Card-Body
+    if ($avatar_position == 'left' || $avatar_position == 'right') {
+        if($testimonial_icon){
+            echo '<div class="testimonial_icon"><i class="'.$testimonial_icon.'"></i></div>';
+        }
+    }
+
 
     if ($avatar_position == 'top') {
         echo '<div class="d-flex align-items-start">';
@@ -289,9 +302,40 @@ foreach ($testimonials->getData() as $key => $testimonial) {
             echo '<a class="as-author-url" href="'.$testimonial->params->get('link', '').'" target="_blank">' . $testimonial->params->get('link_title', '') . '</a>';
         }
     }
+    if ($avatar_position == 'left' || $avatar_position == 'right') {
+
+        if (!empty($enable_rating)) {
+            echo '<div class="as-rating-block row row-cols-auto gx-2'.$alignment.'">';
+            for ($i = 0; $i < 5 ; $i++) {
+                if ($i < $rating) {
+                    if ($rating - $i >= 1) {
+                        echo '<div class="as-star"><i class="fa-solid fa-star"></i></div>';
+                    } else {
+                        echo '<div class="as-star"><i class="fa-solid fa-star-half-stroke"></i></div>';
+                    }
+                } else {
+                    echo '<div class="as-star"><i class="fa-regular fa-star"></i></div>';
+                }
+            }
+            echo '</div>';
+        }
+        if (!empty($testimonial->params->get('designation', '')) && $designation_position == 'before') {
+            echo '<div class="as-author-designation">' . $testimonial->params->get('designation', '') . '</div>';
+        }
+        if (!empty($testimonial->params->get('title', ''))) {
+            echo '<'.$title_html_element.' class="as-author-name">'. $testimonial->params->get('title', '') . '</'.$title_html_element.'>';
+        }
+        if (!empty($testimonial->params->get('designation', '')) && $designation_position == 'after') {
+            echo '<div class="as-author-designation">' . $testimonial->params->get('designation', '') . '</div>';
+        }
+        if (!empty($testimonial->params->get('link', '')) && !empty($testimonial->params->get('link_title', ''))) {
+            echo '<a class="as-author-url" href="'.$testimonial->params->get('link', '').'" target="_blank">' . $testimonial->params->get('link_title', '') . '</a>';
+        }
+    }
     echo '</div>'; // End Card-Body
 
     if ($avatar_position == 'left' || $avatar_position == 'right') {
+
         echo '</div>';
         echo '</div>';
     }
@@ -304,7 +348,12 @@ if ($enable_slider) {
         echo '<div class="swiper-pagination"></div>';
     }
     if ($slider_nav) {
-        echo '<div class="swiper-button-prev"></div><div class="swiper-button-next"></div>';
+        if($slider_nav_position){
+            echo '<div class="swiper_nav uk-flex '.$slider_nav_position.'"><div class="swiper-button-prev swiper-nav-button uk-position-relative"></div><div class="swiper-button-next swiper-nav-button uk-position-relative"></div></div> ';
+        }else{
+            echo '<div class="swiper_nav uk-flex '.$slider_nav_position.'"><div class="swiper-button-prev swiper-nav-button"></div><div class="swiper-button-next swiper-nav-button"></div></div> ';
+        }
+
     }
     if ($slider_scrollbar) {
         echo '<div class="swiper-scrollbar"></div>';
@@ -363,3 +412,64 @@ if ($params->get('card_style', '') == 'custom') {
         Style::addBorderStyle('#'. $element->id . ' .card', $card_border, 'global', $element->isRoot);
     }
 }
+$slider_padding   =   $params->get('slider_padding', '');
+if (!empty($slider_padding)) {
+    Style::setSpacingStyle($element->style->child('.swiper'), $slider_padding);
+}
+
+$next_margin   =   $params->get('next_margin', '');
+if (!empty($next_margin)) {
+    Style::setSpacingStyle($element->style->child('.swiper-button-next'), $next_margin, 'margin');
+}
+$preview_margin   =   $params->get('preview_margin', '');
+if (!empty($preview_margin)) {
+    Style::setSpacingStyle($element->style->child('.swiper-button-prev'), $preview_margin, 'margin');
+}
+$slider_nav_height      =   $params->get('slider_nav_height', '');
+$nav_height = json_decode($slider_nav_height, true);
+if (json_last_error() === JSON_ERROR_NONE && is_array($nav_height)) {
+    $style->child('.swiper-nav-button')->addResponsiveCSS('height', $nav_height, $nav_height['postfix']);
+}
+$slider_nav_width      =   $params->get('slider_nav_width', '');
+$nav_width = json_decode($slider_nav_width, true);
+if (json_last_error() === JSON_ERROR_NONE && is_array($nav_width)) {
+    $style->child('.swiper-nav-button')->addResponsiveCSS('width', $nav_width, $nav_width['postfix']);
+}
+$nav_border    =   json_decode($params->get('slider_nav_border', ''), true);
+if (!empty($nav_border)) {
+    Style::addBorderStyle('#'. $element->id . ' .swiper-nav-button', $nav_border, 'global', $element->isRoot);
+}
+$nav_radius  =   $params->get('slider_nav_radius', '');
+if (!empty($nav_radius)) {
+    Style::setSpacingStyle($element->style->child('.swiper-nav-button'), $nav_radius,'radius');
+}
+
+$nav_color     = Style::getColor($params->get('nav_color', ''));
+$style->child('.swiper-nav-button')->addCss('color', $nav_color['light']);
+$style_dark->child('.swiper-nav-button')->addCss('color', $nav_color['dark']);
+
+$nav_bg_color     = Style::getColor($params->get('nav_bg_color', ''));
+$style->child('.swiper-nav-button')->addCss('background-color', $nav_bg_color['light']);
+$style_dark->child('.swiper-nav-button')->addCss('background-color', $nav_bg_color['dark']);
+
+$nav_bg_color_hover     = Style::getColor($params->get('nav_bg_color_hover', ''));
+$style->child('.swiper-nav-button:hover')->addCss('background-color', $nav_bg_color_hover['light']);
+$style_dark->child('.swiper-nav-button:hover')->addCss('background-color', $nav_bg_color_hover['dark']);
+
+$nav_color_hover     = Style::getColor($params->get('nav_color_hover', ''));
+$style->child('.swiper-nav-button:hover')->addCss('color', $nav_color_hover['light']);
+$style_dark->child('.swiper-nav-button:hover')->addCss('color', $nav_color_hover['dark']);
+
+$nav_border_hover    =   json_decode($params->get('slider_nav_border_hover', ''), true);
+if (!empty($nav_border_hover)) {
+    Style::addBorderStyle('#'. $element->id . ' .swiper-nav-button:hover', $nav_border_hover, 'global', $element->isRoot);
+}
+$testimonial_icon_size        =   $params->get('testimonial_icon_size', '30');
+$icon_size = json_decode($testimonial_icon_size, true);
+if (json_last_error() === JSON_ERROR_NONE && is_array($icon_size)) {
+    $style->child('.testimonial_icon')->addResponsiveCSS('font-size', $icon_size, $icon_size['postfix']);
+}
+
+$testimonial_icon_color     = Style::getColor($params->get('testimonial_icon_color', ''));
+$style->child('.testimonial_icon')->addCss('color', $testimonial_icon_color['light']);
+$style_dark->child('.testimonial_icon')->addCss('color', $testimonial_icon_color['dark']);

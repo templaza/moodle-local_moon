@@ -277,6 +277,18 @@ class MoonElementUk_Slider extends MoonElement {
             'default' => '0',
             'label'   => 'Nav Enable',
         ]);
+        $this->addField('slidenav_next_text', [
+            "group"       => "navigation_options",
+            "type"        => "text",
+            "label"       => "next_text",
+            "conditions" => "[navigation]==1",
+        ]);
+        $this->addField('slidenav_preview_text', [
+            "group"       => "navigation_options",
+            "type"        => "text",
+            "label"       => "preview_text",
+            "conditions" => "[navigation]==1",
+        ]);
         $this->addField('navigation_color', [
             "group"      => "navigation_options",
             "type"       => "color",

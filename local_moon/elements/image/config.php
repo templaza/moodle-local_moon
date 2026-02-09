@@ -117,7 +117,15 @@ class MoonElementImage extends MoonElement {
                 "rounded"        => "rounded",
                 "rounded-circle" => "circle",
                 "rounded-pill"   => "pill",
+                "custom"   => "custom",
             ],
+        ]);
+        $this->addField('image_radius', [
+            'group' => 'widget_styles',
+            'type'  => 'spacing',
+            'name'  => 'image_radius',
+            'label' => 'radius',
+            "conditions" => "[img_border_radius]=='custom'",
         ]);
 
         $this->addField('image_rounded_size', [

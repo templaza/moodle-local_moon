@@ -1,7 +1,7 @@
 <?php
 defined('MOODLE_INTERNAL') || die;
 use local_moon\library\Helper\Style;
-use local_moon\library\Blocks\CourseHandler;
+use local_moon\library\Blocks\BlogHandler;
 use local_moon\library\Framework;
 
 $params         = $this->params;
@@ -36,8 +36,8 @@ $attrs_slider   = ' data-uk-slider="' . implode( '; ', array_filter( $attrs_slid
 $document = Framework::getDocument();
 $document->loadUIKit();
 
+$moonBlog = new BlogHandler();
 
-$moonCourseHandler = new CourseHandler();
 $blog_since =  $params->get('blog_since', 604800);
 
 $courses = [];
@@ -45,8 +45,19 @@ $filter = array();
 
 $filter['since'] = $blog_since;
 $text = '';
-$bloglisting = new blog_listing($filter);
-$entries = $bloglisting->get_entries(0, 5);
+//$bloglisting = new blog_listing($filter);
+//$entries = $bloglisting->get_entries(0, 5);
+
+global $DB;
+$since = time() - $blog_since;
+
+$entries = $DB->get_records_sql("
+    SELECT *
+    FROM {post}
+    WHERE created >= ?
+    ORDER BY created DESC
+", [$since], 0, 5);
+
 if (!empty($entries)) {
     $viewblogurl = new moodle_url('/blog/index.php');
     $text = '';
@@ -55,7 +66,7 @@ if (!empty($entries)) {
     $text .= '<div class="uk-slider-items row flex-nowrap">';
     foreach ($entries as $entryid => $entry) {
         $viewblogurl->param('entryid', $entryid);
-        $img_url = theme_moon_get_blog_image_url($entryid);
+        $img_url = $moonBlog->moon_get_blog_image_url($entryid);
 
         $summary = isset($entry->summary) ? strip_tags($entry->summary) : '';
         $words = $summary !== '' ? preg_split('/\s+/', trim($summary)) : [];
@@ -83,7 +94,7 @@ if (!empty($entries)) {
                     <div class="content">
                         <ul class="meta">
                             <li>
-                                '.get_string('blog_date', 'block_moon_recent_blog').' <span>'.userdate($entry->created, '%B %e, %Y', 0).'</span>
+                                '.get_string('blog_date', 'local_moon').' <span>'.userdate($entry->created, '%B %e, %Y', 0).'</span>
                             </li>                        
                             <li><a href="'.$authorurl.'">'.$authorname.'</a>
                             </li>

@@ -804,6 +804,7 @@ $string['xs_column_avatar_width'] = 'Avatar Width in Extra Small Screen';
 $string['enable_rating'] = 'Enable Rating';
 $string['rating_color'] = 'Rating Color';
 $string['slides_per_group'] = 'Slides Per Group';
+$string['icon_options'] = 'Icon Options';
 
 // Map
 $string['apis'] = 'APIs';
@@ -880,3 +881,36 @@ $string['slide_top_medium'] = 'Slide Top Medium';
 $string['slide_bottom_medium'] = 'Slide Bottom Medium';
 $string['slide_left_medium'] = 'Slide Left Medium';
 $string['slide_right_medium'] = 'Slide Right Medium';
+$string['overlay_options'] = 'Overlay Options';
+$string['image_options'] = 'Image Options';
+$string['column_padding'] = 'Column Padding';
+$string['row_margin'] = 'Row Margin';
+$string['enable_lightbox'] = 'Enable Lightbox';
+
+// pricing table
+
+$string['title_color'] = 'Title Color';
+$string['icon_color'] = 'Icon Color';
+$string['price_symbol'] = 'Price Symbol';
+$string['pricing_options'] = 'Price Options';
+$string['symbol_options'] = 'Symbol Options';
+$string['icon_size'] = 'Icon Size';
+$string['description_options'] = 'Description Options';
+$string['listing_options'] = 'Listing Options';
+$string['button_options'] = 'Button Options';
+$string['background_color_hover'] = 'Background Hover Color';
+$string['next_margin'] = 'Next margin';
+$string['preview_margin'] = 'Preview margin';
+$string['nav_height'] = 'Nav Height';
+$string['nav_width'] = 'Nav Width';
+$string['slider_padding'] = 'Slider Padding';
+
+// blog recent
+
+$string['blog_date'] = 'Posted on';
+
+// circle text
+
+$string['hover_rotate'] = 'Rotate when hover';
+$string['auto_rotate'] = 'Auto rotate';
+

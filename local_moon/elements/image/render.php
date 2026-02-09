@@ -1,6 +1,13 @@
 <?php
 defined('MOODLE_INTERNAL') || die;
+use local_moon\library\Framework;
+use local_moon\library\Helper\Style;
+
+$document = Framework::getDocument();
+
 $params         = $this->params;
+$element = $this;
+
 $title          = $params->get('title', '');
 $image          = $params->get('image', '');
 $image_dark     = $params->get('image_dark', '');
@@ -14,9 +21,16 @@ $border_radius      =   $params->get('img_border_radius', '');
 $rounded_size       =   $params->get('image_rounded_size', '3');
 if ($border_radius == 'rounded') {
     $border_radius  =   ' ' . $border_radius . '-' . $rounded_size;
-} else {
+} elseif($border_radius =='custom') {
+    $image_radius=  $params->get('image_radius', '');
+    if (!empty($image_radius)) {
+        Style::setSpacingStyle($element->style->child('.moon-image-element'), $image_radius, 'radius');
+    }
+} else{
     $border_radius  =   $border_radius !== '' ? ' ' . $border_radius : '';
-}
+    }
+
+
 $box_shadow     = $params->get('box_shadow', '');
 $box_shadow     = $box_shadow !== '' ? ' ' . $box_shadow : '';
 $hover_effect   = $params->get('hover_effect', '');
@@ -33,7 +47,7 @@ if (!empty($image)) {
     if (!empty($figure_caption)) {
         echo '<figure class="m-0">';
     }
-    echo '<div class="as-image-wrapper position-relative overflow-hidden'. $display . $border_radius . $box_shadow . $hover_effect . $transition . '">';
+    echo '<div class="as-image-wrapper uk-overflow-hidden moon-image-element position-relative overflow-hidden'. $display . $border_radius . $box_shadow . $hover_effect . $transition . '">';
     echo '<img class="as-image" src="'. $image .'" alt="'.$title.'">';
     if (!empty($image_dark)) {
         echo '<img class="as-image-dark d-none" src="'. $image_dark.'" alt="'.$title.'">';
