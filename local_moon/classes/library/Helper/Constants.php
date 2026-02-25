@@ -170,6 +170,17 @@ class Constants
                             'main'    => 'main',
                         ],
                     ],
+
+                    'moon_element_overflow' => [
+                        "group" => "general",
+                        "type" => "list",
+                        "label" => "element_overflow",
+                        'default' => '',
+                        'options' => [
+                            ''     => 'default',
+                            'overflow-hidden' => 'hidden',
+                        ],
+                    ],
                     'animation' => [
                         'group' => 'animation_settings',
                         'type' => 'animations',

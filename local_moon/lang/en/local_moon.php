@@ -492,6 +492,7 @@ $string['custom_class_desc'] = 'Add custom class to the element.';
 $string['custom_id'] = 'Custom ID';
 $string['custom_id_desc'] = 'Add custom id to the element.';
 $string['element_tag'] = 'Element Tag';
+$string['element_overflow'] = 'Overflow';
 $string['element_tag_desc'] = 'Select the HTML tag for the element.';
 $string['typography'] = 'Typography';
 $string['grid_options'] = 'Grid Options';
@@ -777,6 +778,9 @@ $string['dot_navigation'] = 'Dot Navigation';
 // Image
 $string['figure_caption'] = 'Figure Caption';
 
+// page settings
+$string['body_padding'] = 'Body Padding';
+
 // Button
 $string['buttons'] = 'Buttons';
 $string['button_group'] = 'Button Group';
@@ -854,7 +858,7 @@ $string['kenburns_label'] = 'Ken Burns Effect';
 $string['kenburns_duration'] = 'Ken Burns Duration';
 $string['kenburns_duration_desc'] = 'Set the duration for the Ken Burns effect in seconds.';
 $string['overlay_position'] = 'Overlay Position';
-$string['overlay_color'] = 'Overlay background color';
+$string['overlay_bg_color'] = 'Overlay background color';
 $string['video_url'] = 'Youtube or Vimeo Url';
 $string['dot_options'] = 'Dot Options';
 $string['dot_option'] = 'Dot Options';
@@ -886,6 +890,7 @@ $string['image_options'] = 'Image Options';
 $string['column_padding'] = 'Column Padding';
 $string['row_margin'] = 'Row Margin';
 $string['enable_lightbox'] = 'Enable Lightbox';
+$string['max_height'] = 'Max Height';
 
 // pricing table
 
@@ -914,3 +919,5 @@ $string['blog_date'] = 'Posted on';
 $string['hover_rotate'] = 'Rotate when hover';
 $string['auto_rotate'] = 'Auto rotate';
 
+$string['title_clone'] = 'Clone Title';
+$string['title_custom_clone'] = 'Title Clone Custom';
