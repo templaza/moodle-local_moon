@@ -643,6 +643,17 @@ class Utilities
         }
     }
 
+    public static function page_settings(): void
+    {
+        $params = Framework::getTheme()->getParams();
+        $body_padding = $params->get('body_padding', '');
+        $style = new Style('body');
+        if (!empty($body_padding)) {
+            Style::setSpacingStyle($style, $body_padding);
+        }
+        $style->render();
+    }
+
     public static function preloader(): void
     {
         $params = Framework::getTheme()->getParams();
