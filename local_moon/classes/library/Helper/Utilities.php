@@ -336,7 +336,7 @@ class Utilities
             ],
             'submenu' => [
                 '.nav-submenu-container .nav-submenu > li',
-                '.nav-submenu',
+                '.dropdown-menu .dropdown-item',
                 '.moon-mobile-menu .nav-child .menu-go-back',
                 '.moon-mobile-menu .nav-child .nav-item-submenu > .as-menu-item',
                 '.nav-item-submenu .as-menu-item'

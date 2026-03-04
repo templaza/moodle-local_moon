@@ -51,9 +51,11 @@ $card_size          =   $card_size ? ' card-size-' . $card_size : '';
 $card_rounded_size  =   $params->get('card_rounded_size', '3');
 $border_radius      =   $params->get('card_border_radius', '');
 $bd_radius          =   $border_radius != '' ? ' rounded-' . $border_radius : ' rounded-' . $card_rounded_size;
+$card_custom_radius      =   $params->get('card_custom_radius', '');
 
 $media_width_cls    =   '';
 $media_position     =   $params->get('media_position', 'top');
+$content_position     =   $params->get('content_position', 'uk-position-bottom');
 if ($media_position == 'right') {
     $media_width_cls.=  'order-2';
 } else {
@@ -131,6 +133,7 @@ $button_bd_radius   =   $button_radius ? ' ' . $button_radius : '';
 $image_rounded_size     =   $params->get('image_rounded_size', '3');
 $image_border_radius    =   $params->get('image_border_radius', '0');
 $image_border_radius    =   $image_border_radius != 'rounded' ? ' rounded-' . $image_border_radius : ' rounded-' . $image_rounded_size;
+$image_radius      =   $params->get('image_radius', '');
 
 $hover_effect   = $params->get('hover_effect', '');
 $transition     = $params->get('hover_transition', '');
@@ -138,8 +141,6 @@ $transition     = $transition !== '' ? ' as-transition-' . $transition : '';
 
 $card_hover_transition     = $params->get('card_hover_transition', '');
 $card_hover_transition     = $card_hover_transition !== '' ? ' as-transition-' . $card_hover_transition : '';
-
-$button_margin_top  =   $params->get('button_margin_top', '');
 
 $use_masonry        =   $params->get('use_masonry', 0);
 $hover_tog_class = $img_tog_class =$img_eff='';
@@ -156,7 +157,7 @@ foreach ($grids->data as $key => $grid) {
 
     $media          =   '';
     if ($grid->params->get('type', '') == 'image' && $grid->params->get('image', '')) {
-        $media      =   '<div class="as-image-cover position-relative overflow-hidden' . $image_border_radius . $hover_tog_class .$img_eff. $transition . ($media_position == 'bottom' ? ' order-2 ' : '') . '">';
+        $media      =   '<div class="as-image-cover grid-media position-relative overflow-hidden' . $image_border_radius . $hover_tog_class .$img_eff. $transition . ($media_position == 'bottom' ? ' order-2 ' : '') . '">';
         $media      .=  $layout == 'overlay' ? '<div class="as-image-cover moon-image-overlay-cover">' : '';
         $media      .=  '<img class="' .$hover_effect.$img_tog_class . ($image_fullwidth ? 'w-100' : '') . ($enable_image_cover || $media_position == 'left' || $media_position == 'right' ? ' object-fit-cover h-100' : '') . ($params->get('card_style', '') == 'none' ? '' : ' card-img-'. $media_position) .'" src="'. $grid->params->get('image', '') .'" alt="'.$grid->params->get('title', '').'">';
         $media      .=  $layout == 'overlay' ? '</div>' : '';
@@ -188,12 +189,12 @@ foreach ($grids->data as $key => $grid) {
         }
     }
 
-    echo '<div id="grid-'. $grid -> id .'" class="moon-grid"><div class="card' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
+    echo '<div id="grid-'. $grid -> id .'" class="moon-grid"><div class="card overflow-hidden ' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
     if ($media_position == 'left' || $media_position == 'right') {
         echo '<div class="row g-0'.($vertical_middle ? ' align-items-center' : '').'">';
         echo '<div class="'.$media_width_cls.'">';
     }
-    if ($media_position != 'inside') {
+    if ($media_position != 'inside' || $media_position == 'cover') {
         echo $media;
     }
     if ($media_position == 'left' || $media_position == 'right') {
@@ -201,11 +202,16 @@ foreach ($grids->data as $key => $grid) {
         echo '<div class="col order-1">';
     }
 
+    if($media_position == 'cover' && $content_position){
+        echo '<div class="'.$content_position.'">';
+    }
+
     echo '<div class="' . ($layout == 'overlay' && $enable_image_cover ? ' as-light' : 'order-1 card-body' ) . $card_size . '">'; // Start Card-Body
 
     if ($media_position == 'inside') {
         echo $media;
     }
+
 
     if (!empty($grid->params->get('meta', '')) && $meta_position == 'before' || $meta_position !='after') {
         echo '<div class="moon-meta '.$meta_position.'">' . $grid->params->get('meta', '') . '</div>';
@@ -223,10 +229,13 @@ foreach ($grids->data as $key => $grid) {
     if (!empty($grid->params->get('link', '')) && !empty($grid->params->get('link_title', ''))) {
         $button_class   =   $button_style !== 'text' ? 'btn btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius : 'as-btn-text text-uppercase text-reset';
         $btn_title      =   $button_style == 'text' ? '<small>'. $grid->params->get('link_title', '') . '</small>' : $grid->params->get('link_title', '');
-        echo '<a class="'. $button_class . (!empty($button_margin_top) ? ' mt-' . $button_margin_top : '') .'" href="'.$grid->params->get('link', '').'" role="button"'.$link_target.'>' . $btn_title . '</a>';
+        echo '<a class="'. $button_class . '" href="'.$grid->params->get('link', '').'" role="button"'.$link_target.'>' . $btn_title . '</a>';
     }
 
     echo '</div>'; // End Card-Body
+    if($media_position == 'cover' && $content_position){
+        echo '</div>';
+    }
 
     if ($media_position == 'left' || $media_position == 'right') {
         echo '</div>';
@@ -303,4 +312,49 @@ switch ($overlay_type) {
             $style->child('.card-img-overlay')->addCss('background-image', Style::getGradientValue($overlay_gradient));
         }
         break;
+}
+$media_margin =   $params->get('media_margin', '');
+
+if (!empty($media_margin)) {
+    Style::setSpacingStyle($element->style->child('.grid-media'), $media_margin,'margin');
+}
+if (!empty($image_radius) && $image_border_radius==' rounded-custom') {
+    Style::setSpacingStyle($element->style->child('.grid-media'), $image_radius,'radius');
+}
+if (!empty($card_custom_radius) && $border_radius=='custom') {
+    Style::setSpacingStyle($element->style->child('.card'), $card_custom_radius,'radius');
+}
+
+
+$button_font_style   =   $params->get('button_font_style');
+if (!empty($button_font_style)) {
+    Style::renderTypography('#'.$element->id.' .btn', $button_font_style, null, $element->isRoot);
+}
+
+$button_color     = Style::getColor($params->get('button_color', ''));
+$button_color_hover     = Style::getColor($params->get('button_color_hover', ''));
+$button_bg_color     = Style::getColor($params->get('button_bg_color', ''));
+$button_bg_color_hover     = Style::getColor($params->get('button_bg_color_hover', ''));
+$style->child('.btn')->addCss('color', $button_color['light']);
+$style_dark->child('.btn')->addCss('color', $button_color['dark']);
+$style->child('.btn:hover')->addCss('color', $button_color_hover['light']);
+$style_dark->child('.btn:hover')->addCss('color', $button_color_hover['dark']);
+$style->child('.btn')->addCss('background-color', $button_bg_color['light']);
+$style_dark->child('.btn')->addCss('background-color', $button_bg_color['dark']);
+$style->child('.btn:hover')->addCss('background-color', $button_bg_color_hover['light']);
+$style_dark->child('.btn:hover')->addCss('background-color', $button_bg_color_hover['dark']);
+
+$button_padding =   $params->get('button_padding', '');
+
+if (!empty($button_padding)) {
+    Style::setSpacingStyle($element->style->child('.btn'), $button_padding);
+}
+$button_custom_radius      =   $params->get('button_custom_radius', '');
+if (!empty($button_custom_radius) && $button_radius=='custom') {
+    Style::setSpacingStyle($element->style->child('.btn'), $button_custom_radius,'radius');
+}
+$button_custom_margin =   $params->get('button_custom_margin', '');
+
+if (!empty($button_custom_margin)) {
+    Style::setSpacingStyle($element->style->child('.btn'), $button_custom_margin,'margin');
 }

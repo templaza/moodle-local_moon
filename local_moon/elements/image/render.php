@@ -7,7 +7,7 @@ $document = Framework::getDocument();
 
 $params         = $this->params;
 $element = $this;
-
+$style = $element->style;
 $title          = $params->get('title', '');
 $image          = $params->get('image', '');
 $image_dark     = $params->get('image_dark', '');
@@ -29,6 +29,22 @@ if ($border_radius == 'rounded') {
 } else{
     $border_radius  =   $border_radius !== '' ? ' ' . $border_radius : '';
     }
+$image_height      =   $params->get('image_height', '');
+$image_width      =   $params->get('image_width', '');
+
+$image_height_data = json_decode($image_height, true);
+$image_width_data = json_decode($image_width, true);
+
+if (json_last_error() === JSON_ERROR_NONE && is_array($image_width_data)) {
+    $style->child('.moon-image-element')->addResponsiveCSS('width', $image_width_data, $image_width_data['postfix']);
+}
+if (json_last_error() === JSON_ERROR_NONE && is_array($image_height_data)) {
+    $style->child('.moon-image-element')->addResponsiveCSS('height', $image_height_data, $image_height_data['postfix']);
+}
+$cus_cl = '';
+if(isset($image_height) && isset($image_width)){
+    $cus_cl = ' custom-size ';
+}
 
 
 $box_shadow     = $params->get('box_shadow', '');
@@ -41,13 +57,13 @@ $display        = $params->get('display', '');
 $display        = $display !== '' ? ' ' . $display : '';
 if (!empty($image)) {
     if ($use_link) {
-        echo '<a href="'.$link.'" title="'.$title.'"'.$target.'>';
+        echo '<a class="uk-inline" href="'.$link.'" title="'.$title.'"'.$target.'>';
     }
 
     if (!empty($figure_caption)) {
         echo '<figure class="m-0">';
     }
-    echo '<div class="as-image-wrapper uk-overflow-hidden moon-image-element position-relative overflow-hidden'. $display . $border_radius . $box_shadow . $hover_effect . $transition . '">';
+    echo '<div class="as-image-wrapper uk-overflow-hidden moon-image-element position-relative overflow-hidden'. $display .$cus_cl. $border_radius . $box_shadow . $hover_effect . $transition . '">';
     echo '<img class="as-image" src="'. $image .'" alt="'.$title.'">';
     if (!empty($image_dark)) {
         echo '<img class="as-image-dark d-none" src="'. $image_dark.'" alt="'.$title.'">';

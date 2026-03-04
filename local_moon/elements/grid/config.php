@@ -645,7 +645,15 @@ class MoonElementGrid extends MoonElement {
                 "0"      => "squared",
                 "circle" => "circle",
                 "pill"   => "pill",
+                "custom"   => "custom",
             ],
+        ]);
+        $this->addField('card_custom_radius', [
+            'group' => 'card_options',
+            'type'  => 'spacing',
+            'name'  => 'image_radius',
+            'label' => 'radius',
+            "conditions" => "[card_border_radius]=='custom'",
         ]);
 
         $this->addField('card_rounded_size', [
@@ -674,7 +682,26 @@ class MoonElementGrid extends MoonElement {
                 "bottom" => "bottom",
                 "right"  => "right",
                 "inside" => "inside",
+                "cover" => "cover",
             ],
+        ]);
+        $this->addField('content_position', [
+            "group"   => "card_options",
+            "type"    => "list",
+            "label"   => "content_position",
+            "default" => "bottom_left",
+            "options" => [
+                "uk-position-top"  => "top",
+                "uk-position-center"  => "center",
+                "uk-position-bottom"  => "bottom",
+            ],
+            "conditions" => "[media_position]=='cover'",
+        ]);
+
+        $this->addField('media_margin', [
+            "group" => "card_options",
+            "type"  => "spacing",
+            "label" => "margin",
         ]);
 
         $this->addField('media_column_responsive', [
@@ -1006,7 +1033,15 @@ class MoonElementGrid extends MoonElement {
                 "0"       => "square",
                 "circle"  => "circle",
                 "pill"    => "pill",
+                "custom"    => "custom",
             ],
+        ]);
+        $this->addField('image_radius', [
+            'group' => 'image_options',
+            'type'  => 'spacing',
+            'name'  => 'image_radius',
+            'label' => 'radius',
+            "conditions" => "[image_border_radius]=='custom'",
         ]);
 
         $this->addField('image_rounded_size', [
@@ -1190,6 +1225,31 @@ class MoonElementGrid extends MoonElement {
                 'value' => Font::$get_default_font_value,
             ],
         ]);
+        $this->addField('button_font_style', [
+            "group"   => "readmore_options",
+            "type"    => "typography",
+            "label"   => "font_style",
+            "attributes" => [
+                'options' => [
+                    "colorpicker" => true,
+                    'stylepicker' => true,
+                    'fontpicker' => true,
+                    'sizepicker' => true,
+                    'letterspacingpicker' => true,
+                    'lineheightpicker' => true,
+                    'weightpicker' => true,
+                    'transformpicker' => true,
+                    'columns' => 1,
+                    'preview' => false,
+                    'collapse' => true,
+                    'system_fonts' => Font::get_system_fonts(),
+                    'text_transform_options' => Font::text_transform(),
+                    'lang' => Font::font_properties(),
+                ],
+                'lang' => Font::font_properties(),
+                'value' => Font::$get_default_font_value,
+            ],
+        ]);
 
         $this->addField('button_style', [
             "group"   => "readmore_options",
@@ -1208,7 +1268,32 @@ class MoonElementGrid extends MoonElement {
                 "dark"      => "Dark",
                 "link"      => "Link",
                 "text"      => "Text",
+                "custom"      => "custom",
             ],
+        ]);
+        $this->addField('button_color', [
+            "group"      => "readmore_options",
+            "type"       => "color",
+            "label"      => "color",
+            "conditions" => "[button_style]=='custom'",
+        ]);
+        $this->addField('button_bg_color', [
+            "group"      => "readmore_options",
+            "type"       => "color",
+            "label"      => "background_color",
+            "conditions" => "[button_style]=='custom'",
+        ]);
+        $this->addField('button_color_hover', [
+            "group"      => "readmore_options",
+            "type"       => "color",
+            "label"      => "color_hover",
+            "conditions" => "[button_style]=='custom'",
+        ]);
+        $this->addField('button_bg_color_hover', [
+            "group"      => "readmore_options",
+            "type"       => "color",
+            "label"      => "background_hover_color",
+            "conditions" => "[button_style]=='custom'",
         ]);
 
         $this->addField('button_outline', [
@@ -1232,6 +1317,11 @@ class MoonElementGrid extends MoonElement {
                 "btn-sm" => "Small",
             ],
         ]);
+        $this->addField('button_padding', [
+            "group"      => "readmore_options",
+            "type"       => "spacing",
+            "label"      => "padding",
+        ]);
 
         $this->addField('btn_border_radius', [
             "group"   => "readmore_options",
@@ -1242,22 +1332,19 @@ class MoonElementGrid extends MoonElement {
                 ""             => "Rounded",
                 "rounded-0"    => "Square",
                 "rounded-pill" => "Circle",
+                "custom" => "custom",
             ],
         ]);
-
-        $this->addField('button_margin_top', [
-            "group"   => "readmore_options",
-            "type"    => "list",
-            "label"   => "margin_top",
-            "default" => "",
-            "options" => [
-                ""  => "none",
-                "1" => "1",
-                "2" => "2",
-                "3" => "3",
-                "4" => "4",
-                "5" => "5",
-            ],
+        $this->addField('button_custom_radius', [
+            'group' => 'readmore_options',
+            'type'  => 'spacing',
+            'label' => 'radius',
+            "conditions" => "[btn_border_radius]=='custom'",
+        ]);
+        $this->addField('button_custom_margin', [
+            "group" => "readmore_options",
+            "type"  => "spacing",
+            "label" => "margin",
         ]);
     }
 }

@@ -1,5 +1,6 @@
 <?php
 defined('MOODLE_INTERNAL') || die;
+use local_moon\library\Framework;
 use local_moon\library\Helper\Style;
 use local_moon\library\Helper\SubForm;
 $params = $this->params;
@@ -8,7 +9,8 @@ $accordions     = new SubForm($params->get('accordions', ''));
 if (!count($accordions->data)) {
     return false;
 }
-
+$document = Framework::getDocument();
+$document->loadUIKit();
 $box_shadow         =   $params->get('box_shadow', '');
 $box_shadow         =   $box_shadow ? ' ' . $box_shadow : '';
 $box_shadow_hover   =   $params->get('box_shadow_hover', '');
@@ -86,4 +88,20 @@ if (!empty($title_padding)) {
 $content_padding   =   $params->get('content_padding', '');
 if (!empty($content_padding)) {
     Style::setSpacingStyle($element->style->child('.accordion-body'), $content_padding);
+}
+$title_border    =   json_decode($params->get('title_border', ''), true);
+if (!empty($title_border)) {
+    Style::addBorderStyle('#'. $element->id . ' .accordion-button', $title_border, 'global', $element->isRoot);
+}
+$item_radius  =   $params->get('item_radius', '');
+if (!empty($item_radius)) {
+    Style::setSpacingStyle($element->style->child('.accordion-item'), $item_radius,'radius');
+}
+$title_radius  =   $params->get('title_radius', '');
+if (!empty($title_radius)) {
+    Style::setSpacingStyle($element->style->child('.accordion-button'), $title_radius,'radius');
+}
+$item_margin=  $params->get('item_margin', '');
+if (!empty($item_margin)) {
+    Style::setSpacingStyle($element->style->child('.accordion-item'), $item_margin, 'margin');
 }

@@ -162,6 +162,17 @@ class MoonElementHeading extends MoonElement {
             "type"  => "spacing",
             "label" => "margin",
         ]);
+        $this->addField('meta_border', [
+            "group"      => "meta_options",
+            "type"       => "border",
+            "label"      => "border",
+        ]);
+        $this->addField('meta_radius', [
+            'group' => 'meta_options',
+            'type'  => 'spacing',
+            'name'  => 'image_radius',
+            'label' => 'radius',
+        ]);
 
         $this->addField('meta_position', [
             "group"   => "meta_options",
@@ -171,6 +182,52 @@ class MoonElementHeading extends MoonElement {
             "options" => [
                 "before" => "before_title",
                 "after"  => "after_title",
+            ],
+        ]);
+        $this->addField('title_clone', [
+            "group"       => "general",
+            "type"        => "radio",
+            "label"       => "title_clone",
+            "attributes" => [
+                "role" => "switch"
+            ],
+            "default"     => 0,
+        ]);
+        $this->addField('title_clone_txt', [
+            "group"       => "general",
+            "type"        => "text",
+            "label"       => "title_custom_clone",
+            "dynamic"     => true,
+            "conditions" => "[title_clone]==1",
+        ]);
+        $this->addField('title_clone_margin', [
+            "group" => "general",
+            "type"  => "spacing",
+            "label" => "margin",
+        ]);
+        $this->addField('title_clone_font_style', [
+            "group"   => "general",
+            "type"    => "typography",
+            "label"   => "font_style",
+            "attributes" => [
+                'options' => [
+                    "colorpicker" => true,
+                    'stylepicker' => true,
+                    'fontpicker' => true,
+                    'sizepicker' => true,
+                    'letterspacingpicker' => true,
+                    'lineheightpicker' => true,
+                    'weightpicker' => true,
+                    'transformpicker' => true,
+                    'columns' => 1,
+                    'preview' => false,
+                    'collapse' => true,
+                    'system_fonts' => Font::get_system_fonts(),
+                    'text_transform_options' => Font::text_transform(),
+                    'lang' => Font::font_properties(),
+                ],
+                'lang' => Font::font_properties(),
+                'value' => Font::$get_default_font_value,
             ],
         ]);
     }

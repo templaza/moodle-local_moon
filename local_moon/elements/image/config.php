@@ -106,6 +106,30 @@ class MoonElementImage extends MoonElement {
                 "d-inline-flex" => "Inline Flex",
             ],
         ]);
+        $this->addField('image_width', [
+            'group'   => 'widget_styles',
+            'type'    => 'range',
+            'label'      => 'image_width',
+            "attributes" => [
+                'min'        => 1,
+                'max'        => 2000,
+                'step'       => 1,
+                'responsive' => true,
+                'postfix' => 'px|%',
+            ],
+        ]);
+        $this->addField('image_height', [
+            'group'   => 'widget_styles',
+            'type'    => 'range',
+            'label'      => 'image_height',
+            "attributes" => [
+                'min'        => 1,
+                'max'        => 2000,
+                'step'       => 1,
+                'responsive' => true,
+                'postfix' => 'px|%',
+            ],
+        ]);
 
         $this->addField('img_border_radius', [
             "group"   => "widget_styles",
@@ -123,7 +147,6 @@ class MoonElementImage extends MoonElement {
         $this->addField('image_radius', [
             'group' => 'widget_styles',
             'type'  => 'spacing',
-            'name'  => 'image_radius',
             'label' => 'radius',
             "conditions" => "[img_border_radius]=='custom'",
         ]);

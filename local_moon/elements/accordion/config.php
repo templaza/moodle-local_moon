@@ -86,6 +86,16 @@ class MoonElementAccordion extends MoonElement {
             'default'    => 0,
             'attributes' => ['role' => 'switch'],
         ]);
+        $this->addField('item_radius', [
+            'group' => 'widget_styles',
+            'type'  => 'spacing',
+            'label' => 'radius',
+        ]);
+        $this->addField('item_margin', [
+            'group' => 'widget_styles',
+            'type'  => 'spacing',
+            'label' => 'margin',
+        ]);
 
         $this->addField('color_settings', [
             'group'   => 'widget_styles',
@@ -203,7 +213,16 @@ class MoonElementAccordion extends MoonElement {
             "type"       => "spacing",
             "label"      => "padding",
         ]);
-
+        $this->addField('title_border', [
+            "group"      => "title_options",
+            "type"       => "border",
+            "label"      => "border",
+        ]);
+        $this->addField('title_radius', [
+            'group' => 'title_options',
+            'type'  => 'spacing',
+            'label' => 'radius',
+        ]);
         $this->addField('content_font_style', [
             'group'   => 'content_options',
             'type'    => 'typography',
