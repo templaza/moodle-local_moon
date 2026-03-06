@@ -1,0 +1,37 @@
+.main-runtext {
+  margin: 0 auto;
+  overflow: visible;
+  position: relative;
+}
+.runtext-container .holder {
+  position: relative;
+  overflow: visible;
+  display:inline;
+  float:left;
+}
+
+.runtext-container .holder .text-container {
+  display:inline;
+}
+.text-stroke{
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 2px;
+}
+.tz-marquee {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.tz-marquee .tz-marquee-content {
+  display: flex;
+  animation: scroll 60s linear infinite;
+  left: 25%;
+  transform: translateX(-25%);
+}
+
+@keyframes scroll {
+  0%   { transform: translateX(-25%) translateX(0); }
+  50% { transform: translateX(5%) translateX(-90%); }
+}

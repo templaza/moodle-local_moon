@@ -17,15 +17,12 @@ $style_dark = $element->style_dark;
 
 $media_position     =   $params->get('media_position', 'top');
 
-$overlay_text_color =   $params->get('overlay_text_color', '');
-$overlay_text_color =   $overlay_text_color !== '' ? ' ' . $overlay_text_color : '';
 $min_height         =   $params->get('min_height', '');
 $slider_height      =   $params->get('slider_height', '');
 $autoplay           =   $params->get('autoplay', 0);
 $interval           =   $params->get('interval', 5);
 $interval           =   $interval * 1000;
 $overlay_type       =   $params->get('overlay_type', '');
-$overlay_color      =   $params->get('overlay_color', '');
 $effect_type        =   $params->get('effect_type', 'theater');
 
 $overlay_position   =   $params->get('overlay_position', 'justify-content-center align-items-center');
@@ -288,7 +285,7 @@ if($slider_style=='style1'){
             $output .= '<div class="' . $overlay_pos_int . ' ' .$overlay_max_width.'">';
 
             if (!empty($slide->params->get('meta')) && $meta_position == 'before') {
-                $output .= '<div class="moon-meta" data-uk-slideshow-parallax="y: -50,0,0; opacity: 1,1,0">' . $slide->params->get('meta') . '</div>';
+                $output .= '<div class="moon-meta uk-inline" data-uk-slideshow-parallax="y: -50,0,0; opacity: 1,1,0">' . $slide->params->get('meta') . '</div>';
             }
 
             if (!empty($slide->params->get('title'))) {
@@ -296,7 +293,7 @@ if($slider_style=='style1'){
             }
 
             if (!empty($slide->params->get('meta')) && $meta_position == 'after') {
-                $output .= '<div class="moon-meta">' . $slide->params->get('meta') . '</div>';
+                $output .= '<div class="moon-meta uk-inline">' . $slide->params->get('meta') . '</div>';
             }
             if (!empty($slide->params->get('description'))) {
                 $content = format_text($slide->params->get('description', ''), FORMAT_HTML, ['context' => $this->context]);
@@ -348,6 +345,22 @@ if (!empty($title_heading_margin)) {
 if (!empty($meta_heading_margin)) {
     Style::setSpacingStyle($element->style->child('.moon-meta'), $meta_heading_margin, 'margin');
 }
+$meta_radius=  $params->get('meta_radius', '');
+if (!empty($meta_radius)) {
+    Style::setSpacingStyle($element->style->child('.moon-meta'), $meta_radius, 'radius');
+}
+$meta_padding   =   $params->get('meta_heading_padding', '');
+if (!empty($meta_padding)) {
+    Style::setSpacingStyle($this->style->child('.moon-meta'), $meta_padding);
+}
+$meta_bg_color     = Style::getColor($params->get('meta_bg_color', ''));
+$style->child('.moon-meta')->addCss('background-color', $meta_bg_color['light']);
+$style_dark->child('.moon-meta')->addCss('background-color', $meta_bg_color['dark']);
+
+$overlay_bg_color     = Style::getColor($params->get('overlay_bg_color', ''));
+$style->child('.ui-media::before')->addCss('background-color', $overlay_bg_color['light']);
+$style_dark->child('.ui-media::before')->addCss('background-color', $overlay_bg_color['dark']);
+
 $style->child('.uk-slidenav')->addCss('color', $nav_color['light']);
 $style_dark->child('.uk-slidenav')->addCss('color', $nav_color['dark']);
 $style->child('.uk-slidenav:hover')->addCss('color', $nav_hover_color['light']);
@@ -386,3 +399,39 @@ $style_dark->child('.uk-dotnav > .uk-active > *')->addCss('background-color', $d
 
 $style->child('.uk-dotnav > * > :hover')->addCss('background-color', $dot_hover_color['light']);
 $style_dark->child('.uk-dotnav > * > :hover')->addCss('background-color', $dot_hover_color['dark']);
+$slide_radius=  $params->get('slideshow_radius', '');
+if (!empty($slide_radius)) {
+    Style::setSpacingStyle($element->style->child('.uk-slideshow-items'), $slide_radius, 'radius');
+}
+
+$button_font_style   =   $params->get('button_font_style');
+if (!empty($button_font_style)) {
+    Style::renderTypography('#'.$element->id.' .btn', $button_font_style, null, $element->isRoot);
+}
+$button_margin   =   $params->get('button_margin', '');
+if (!empty($button_margin)) {
+    Style::setSpacingStyle($element->style->child('.ui-button'), $button_margin, 'margin');
+}
+$button_padding   =   $params->get('button_padding', '');
+if (!empty($button_padding)) {
+    Style::setSpacingStyle($element->style->child('.btn'), $button_padding);
+}
+$button_radius  =   $params->get('button_radius', '');
+if (!empty($button_radius)) {
+    Style::setSpacingStyle($element->style->child('.btn'), $button_radius,'radius');
+}
+$button_border    =   json_decode($params->get('button_border', ''), true);
+if (!empty($button_border)) {
+    Style::addBorderStyle('#'. $element->id . ' .btn', $button_border, 'global', $element->isRoot);
+}
+$button_bg_color     = Style::getColor($params->get('button_bg_color', ''));
+$style->child('.btn')->addCss('background-color', $button_bg_color['light']);
+$style_dark->child('.btn')->addCss('background-color', $button_bg_color['dark']);
+
+$button_bg_color_hover     = Style::getColor($params->get('button_bg_color_hover', ''));
+$style->child('.btn:hover')->addCss('background-color', $button_bg_color_hover['light']);
+$style_dark->child('.btn:hover')->addCss('background-color', $button_bg_color_hover['dark']);
+
+$button_color_hover     = Style::getColor($params->get('button_color_hover', ''));
+$style->child('.btn:hover')->addCss('color', $button_color_hover['light']);
+$style_dark->child('.btn:hover')->addCss('color', $button_color_hover['dark']);

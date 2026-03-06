@@ -203,6 +203,11 @@ class MoonElementUk_Slider extends MoonElement {
             'type'       => 'spacing',
             'label'      => 'padding',
         ]);
+        $this->addField('slideshow_radius', [
+            'group' => 'slideshow_options',
+            'type'  => 'spacing',
+            'label' => 'radius',
+        ]);
 
         $this->addField('slideshow_transition', [
             'group'   => 'slideshow_options',
@@ -441,11 +446,10 @@ class MoonElementUk_Slider extends MoonElement {
                 'bottom-right' => 'bottom_right',
             ),
         ]);
-        $this->addField('overlay_color', [
+        $this->addField('overlay_bg_color', [
             'group'      => 'overlay_options',
             'type'       => 'color',
-            'name'       => 'overlay_color',
-            'label'      => 'overlay_color',
+            'label'      => 'overlay_bg_color',
         ]);
 
         $this->addField('title_html_element', [
@@ -471,7 +475,7 @@ class MoonElementUk_Slider extends MoonElement {
             "attributes" => [
                 'options' => [
                     "colorpicker" => true,
-                    'stylepicker' => false,
+                    'stylepicker' => true,
                     'fontpicker' => true,
                     'sizepicker' => true,
                     'letterspacingpicker' => true,
@@ -523,12 +527,22 @@ class MoonElementUk_Slider extends MoonElement {
                 'value' => Font::$get_default_font_value,
             ],
         ]);
+        $this->addField('meta_bg_color', [
+            "group"      => "meta_options",
+            "type"       => "color",
+            "label"      => "background_color",
+        ]);
 
         $this->addField('meta_heading_margin', [
             'group' => 'meta_options',
             'type'  => 'spacing',
             'name'  => 'meta_heading_margin',
             'label' => 'margin',
+        ]);
+        $this->addField('meta_heading_padding', [
+            'group'      => 'meta_options',
+            'type'       => 'spacing',
+            'label'      => 'padding',
         ]);
 
         $this->addField('meta_position', [
@@ -542,11 +556,43 @@ class MoonElementUk_Slider extends MoonElement {
                 'after'  => 'after_title',
             ],
         ]);
+        $this->addField('meta_radius', [
+            'group' => 'meta_options',
+            'type'  => 'spacing',
+            'label' => 'radius',
+        ]);
 
         $this->addField('content_font_style', [
             'group'   => 'content_options',
             'type'    => 'typography',
             'name'    => 'content_font_style',
+            'label'   => 'font_style',
+            "attributes" => [
+                'options' => [
+                    "colorpicker" => true,
+                    'stylepicker' => false,
+                    'fontpicker' => true,
+                    'sizepicker' => true,
+                    'letterspacingpicker' => true,
+                    'lineheightpicker' => true,
+                    'weightpicker' => true,
+                    'transformpicker' => true,
+                    'columns' => 1,
+                    'preview' => false,
+                    'collapse' => true,
+                    'system_fonts' => Font::get_system_fonts(),
+                    'text_transform_options' => Font::text_transform(),
+                    'lang' => Font::font_properties(),
+                ],
+                'lang' => Font::font_properties(),
+                'value' => Font::$get_default_font_value,
+            ],
+        ]);
+
+        $this->addField('button_font_style', [
+            'group'   => 'readmore_options',
+            'type'    => 'typography',
+            'name'    => 'button_font_style',
             'label'   => 'font_style',
             "attributes" => [
                 'options' => [
@@ -586,7 +632,43 @@ class MoonElementUk_Slider extends MoonElement {
                 'light'     => 'Light',
                 'dark'      => 'Dark',
                 'link'      => 'Link',
+                'custom'      => 'custom',
             ],
+        ]);
+        $this->addField('button_margin', [
+            'group' => 'readmore_options',
+            'type'  => 'spacing',
+            'label' => 'margin',
+        ]);
+        $this->addField('button_padding', [
+            'group' => 'readmore_options',
+            'type'  => 'spacing',
+            'label' => 'padding',
+            'conditions' => "[button_style]=='custom'",
+        ]);
+        $this->addField('button_border', [
+            "group"      => "readmore_options",
+            "type"       => "border",
+            "label"      => "border",
+            'conditions' => "[button_style]=='custom'",
+        ]);
+        $this->addField('button_bg_color', [
+            'group' => 'readmore_options',
+            'type'  => 'color',
+            'label' => 'background_color',
+            'conditions' => "[button_style]=='custom'",
+        ]);
+        $this->addField('button_color_hover', [
+            'group' => 'readmore_options',
+            'type'  => 'color',
+            'label' => 'color_hover',
+            'conditions' => "[button_style]=='custom'",
+        ]);
+        $this->addField('button_bg_color_hover', [
+            'group' => 'readmore_options',
+            'type'  => 'color',
+            'label' => 'background_color_hover',
+            'conditions' => "[button_style]=='custom'",
         ]);
 
         $this->addField('button_outline', [
@@ -623,7 +705,14 @@ class MoonElementUk_Slider extends MoonElement {
                 ''             => 'Rounded',
                 'rounded-0'    => 'Square',
                 'rounded-pill' => 'Circle',
+                'custom' => 'custom',
             ],
+        ]);
+        $this->addField('button_radius', [
+            'group'   => 'readmore_options',
+            'type'  => 'spacing',
+            'label' => 'radius',
+            'conditions' => "[btn_border_radius]=='custom'",
         ]);
         $this->addField('image_width', [
             'group'   => 'image_options',
