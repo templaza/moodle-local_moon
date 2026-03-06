@@ -921,3 +921,5 @@ $string['auto_rotate'] = 'Auto rotate';
 
 $string['title_clone'] = 'Clone Title';
 $string['title_custom_clone'] = 'Title Clone Custom';
+
+$string['item_margin'] = 'Item margin';
