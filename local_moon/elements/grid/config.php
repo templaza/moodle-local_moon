@@ -697,6 +697,30 @@ class MoonElementGrid extends MoonElement {
             ],
             "conditions" => "[media_position]=='cover'",
         ]);
+        $this->addField('media_hover_transition', [
+            "group"      => "card_options",
+            "type"       => "list",
+            "label"      => "hover_transition",
+            "default"    => "fade",
+            "options"    => [
+                'uk-transition-fade' => 'Fade',
+                'uk-transition-scale-up' => 'scale_up',
+                'uk-transition-scale-down' => 'scale_down',
+                'uk-transition-slide-top' => 'slide_top',
+                'uk-transition-slide-bottom' => 'slide_bottom',
+                'uk-transition-slide-left' => 'slide_left',
+                'uk-transition-slide-right' => 'slide_right',
+                'uk-transition-slide-top-small' => 'slide_top_small',
+                'uk-transition-slide-bottom-small' => 'slide_bottom_small',
+                'uk-transition-slide-left-small' => 'slide_left_small',
+                'uk-transition-slide-right-small' => 'slide_right_small',
+                'uk-transition-slide-top-medium' => 'slide_top_medium',
+                'uk-transition-slide-bottom-medium' => 'slide_bottom_medium',
+                'uk-transition-slide-left-medium' => 'slide_left_medium',
+                'uk-transition-slide-right-medium' => 'slide_right_medium',
+            ],
+            "conditions" => "[media_position]=='cover'",
+        ]);
 
         $this->addField('media_margin', [
             "group" => "card_options",
@@ -985,7 +1009,7 @@ class MoonElementGrid extends MoonElement {
             "label"      => "min_height",
             "attributes" => [
                 "min"        => 1,
-                "max"        => 600,
+                "max"        => 1000,
                 "step"       => 1,
                 "postfix"    => "px",
             ],

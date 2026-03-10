@@ -13,7 +13,7 @@ $document = Framework::getDocument();
 $style = $element->style;
 $style_dark = $element->style_dark;
 $row_column_cls     =   '';
-
+$document->loadUIKit();
 $responsive_key     =   ['xxl', 'xl', 'lg', 'md', 'sm', 'xs'];
 foreach ($responsive_key as $key) {
     $default        =   match ($key) {
@@ -98,7 +98,11 @@ $box_shadow         =   $params->get('card_box_shadow', '');
 $box_shadow         =   $box_shadow ? ' ' . $box_shadow : '';
 $box_shadow_hover   =   $params->get('card_box_shadow_hover', '');
 $box_shadow_hover   =   $box_shadow_hover ? ' ' . $box_shadow_hover : '';
-
+$cover_toggle = '';
+if($enable_image_cover){
+    $cover_toggle = ' uk-transition-toggle ';
+}
+$content_hover_transition     = $params->get('media_hover_transition', '');
 
 $title_html_element =   $params->get('title_html_element', 'h3');
 $title_font_style   =   $params->get('title_font_style');
@@ -140,6 +144,7 @@ $transition     = $params->get('hover_transition', '');
 $transition     = $transition !== '' ? ' as-transition-' . $transition : '';
 
 $card_hover_transition     = $params->get('card_hover_transition', '');
+
 $card_hover_transition     = $card_hover_transition !== '' ? ' as-transition-' . $card_hover_transition : '';
 
 $use_masonry        =   $params->get('use_masonry', 0);
@@ -162,7 +167,12 @@ foreach ($grids->data as $key => $grid) {
         $media      .=  '<img class="' .$hover_effect.$img_tog_class . ($image_fullwidth ? 'w-100' : '') . ($enable_image_cover || $media_position == 'left' || $media_position == 'right' ? ' object-fit-cover h-100' : '') . ($params->get('card_style', '') == 'none' ? '' : ' card-img-'. $media_position) .'" src="'. $grid->params->get('image', '') .'" alt="'.$grid->params->get('title', '').'">';
         $media      .=  $layout == 'overlay' ? '</div>' : '';
         if ($enable_image_cover) {
-            $media .= '<div class="card-img-overlay"></div>';
+            if($content_hover_transition){
+                $media .= '<div class="card-img-overlay uk-transition-fade"></div>';
+            }else{
+                $media .= '<div class="card-img-overlay"></div>';
+            }
+
         }
         $media      .=  '</div>';
 
@@ -189,7 +199,7 @@ foreach ($grids->data as $key => $grid) {
         }
     }
 
-    echo '<div id="grid-'. $grid -> id .'" class="moon-grid"><div class="card overflow-hidden ' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
+    echo '<div id="grid-'. $grid -> id .'" class="moon-grid"><div class="card overflow-hidden ' . $cover_toggle. $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
     if ($media_position == 'left' || $media_position == 'right') {
         echo '<div class="row g-0'.($vertical_middle ? ' align-items-center' : '').'">';
         echo '<div class="'.$media_width_cls.'">';
@@ -203,7 +213,7 @@ foreach ($grids->data as $key => $grid) {
     }
 
     if($media_position == 'cover' && $content_position){
-        echo '<div class="'.$content_position.'">';
+        echo '<div class="'.$content_position.' '.$content_hover_transition.'">';
     }
 
     echo '<div class="' . ($layout == 'overlay' && $enable_image_cover ? ' as-light' : 'order-1 card-body' ) . $card_size . '">'; // Start Card-Body
