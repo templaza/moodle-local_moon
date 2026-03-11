@@ -371,11 +371,11 @@ class MoonElementTestimonials extends MoonElement {
             'options'    => [
                 ''  => 'inherit',
                 '0' => 'Collapse',
-                '1' => 'X-Small',
-                '2' => 'Small',
-                '3' => 'Medium',
-                '4' => 'Large',
-                '5' => 'X-Large',
+                '10' => 'X-Small',
+                '20' => 'Small',
+                '30' => 'Medium',
+                '40' => 'Large',
+                '50' => 'X-Large',
             ],
         ]);
 
@@ -388,11 +388,11 @@ class MoonElementTestimonials extends MoonElement {
             'options'    => [
                 ''  => 'inherit',
                 '0' => 'Collapse',
-                '1' => 'X-Small',
-                '2' => 'Small',
-                '3' => 'Medium',
-                '4' => 'Large',
-                '5' => 'X-Large',
+                '10' => 'X-Small',
+                '20' => 'Small',
+                '30' => 'Medium',
+                '40' => 'Large',
+                '50' => 'X-Large',
             ],
         ]);
 
@@ -405,11 +405,11 @@ class MoonElementTestimonials extends MoonElement {
             'options'    => [
                 ''  => 'inherit',
                 '0' => 'Collapse',
-                '1' => 'X-Small',
-                '2' => 'Small',
-                '3' => 'Medium',
-                '4' => 'Large',
-                '5' => 'X-Large',
+                '10' => 'X-Small',
+                '20' => 'Small',
+                '30' => 'Medium',
+                '40' => 'Large',
+                '50' => 'X-Large',
             ],
         ]);
 
@@ -422,11 +422,11 @@ class MoonElementTestimonials extends MoonElement {
             'options'    => [
                 ''  => 'inherit',
                 '0' => 'Collapse',
-                '1' => 'X-Small',
-                '2' => 'Small',
-                '3' => 'Medium',
-                '4' => 'Large',
-                '5' => 'X-Large',
+                '10' => 'X-Small',
+                '20' => 'Small',
+                '30' => 'Medium',
+                '40' => 'Large',
+                '50' => 'X-Large',
             ],
         ]);
 
@@ -439,11 +439,11 @@ class MoonElementTestimonials extends MoonElement {
             'options'    => [
                 ''  => 'inherit',
                 '0' => 'Collapse',
-                '1' => 'X-Small',
-                '2' => 'Small',
-                '3' => 'Medium',
-                '4' => 'Large',
-                '5' => 'X-Large',
+                '10' => 'X-Small',
+                '20' => 'Small',
+                '30' => 'Medium',
+                '40' => 'Large',
+                '50' => 'X-Large',
             ],
         ]);
 
@@ -455,11 +455,11 @@ class MoonElementTestimonials extends MoonElement {
             'conditions' => "[column_responsive]=='xs'",
             'options'    => [
                 '0' => 'Collapse',
-                '1' => 'X-Small',
-                '2' => 'Small',
-                '3' => 'Medium',
-                '4' => 'Large',
-                '5' => 'X-Large',
+                '10' => 'X-Small',
+                '20' => 'Small',
+                '30' => 'Medium',
+                '40' => 'Large',
+                '50' => 'X-Large',
             ],
         ]);
 
@@ -532,6 +532,13 @@ class MoonElementTestimonials extends MoonElement {
             'conditions' => "[card_size]=='custom'",
         ]);
 
+        $this->addField('card_margin', [
+            'group'      => 'card_options',
+            'type'       => 'spacing',
+            'label'      => 'margin',
+            'conditions' => "[card_size]=='custom'",
+        ]);
+
         $this->addField('card_border_radius', [
             'group'   => 'card_options',
             'type'    => 'list',
@@ -542,7 +549,14 @@ class MoonElementTestimonials extends MoonElement {
                 '0'      => 'square',
                 'circle' => 'circle',
                 'pill'   => 'pill',
+                'custom'   => 'custom',
             ],
+        ]);
+        $this->addField('card_radius_custom', [
+            'group' => 'card_options',
+            'type'  => 'spacing',
+            'label' => 'radius',
+            'conditions' => "[card_border_radius]=='custom'",
         ]);
 
         $this->addField('card_rounded_size', [

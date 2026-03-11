@@ -27,6 +27,8 @@ $nav_bg_hover_color     = Style::getColor($params->get('navigation_bg_color_hove
 
 $dot_margin =  $params->get('dot_margin', '');
 $meta_margin =  $params->get('meta_margin', '');
+$layout =  $params->get('blog_style', '');
+$limit =  $params->get('blog_limit', 5);
 
 
 $attrs_slider[] = '';
@@ -56,41 +58,128 @@ $entries = $DB->get_records_sql("
     FROM {post}
     WHERE created >= ?
     ORDER BY created DESC
-", [$since], 0, 5);
+", [$since], 0, $limit);
 
 if (!empty($entries)) {
     $viewblogurl = new moodle_url('/blog/index.php');
     $text = '';
-    $text .= '<div class="moon-blog-area">';
-    $text .= '<div class=" container p-0 uk-position-relative uk-visible-toggle" tabindex="-1" '.$attrs_slider.'>';
-    $text .= '<div class="uk-slider-items row flex-nowrap">';
-    foreach ($entries as $entryid => $entry) {
-        $viewblogurl->param('entryid', $entryid);
-        $img_url = $moonBlog->moon_get_blog_image_url($entryid);
+    if($layout =='style2'){
+        $text .='<div class="moon-blog-area moon-blog-area-style2 ">';
+        $text .='<div class="container-blog">';
+        $text .='<div class="row  g-4">';
+        $i=1;
+foreach ($entries as $entryid => $entry):
+    $viewblogurl->param('entryid', $entryid);
+    $img_url = $moonBlog->moon_get_blog_image_url($entryid);
 
-        $summary = isset($entry->summary) ? strip_tags($entry->summary) : '';
-        $words = $summary !== '' ? preg_split('/\s+/', trim($summary)) : [];
-        $excerpttxt = !empty($words) ? implode(' ', array_slice($words, 0, 15)) : '';
+    $summary = isset($entry->summary) ? strip_tags($entry->summary) : '';
+    $words = $summary !== '' ? preg_split('/\s+/', trim($summary)) : [];
+    $excerpttxt = !empty($words) ? implode(' ', array_slice($words, 0, 15)) : '';
 
-        $author = core_user::get_user($entry->userid);
+    $author = core_user::get_user($entry->userid);
 
-        $authorname = fullname($author);
-        $authorurl = (new moodle_url('/user/profile.php', ['id' => $author->id]))->out(false);
-        $text .='
+    $authorname = fullname($author);
+    $authorurl = (new moodle_url('/user/profile.php', ['id' => $author->id]))->out(false);
+    if($i==1){
+        $text .='<div class="col-lg-6 col-md-12 blog-style2-left">';
+        $text .='<div class="moon-blog-card wrap-style">';
+        $text .='<div class="image">';
+        $text .='<a href="'.$viewblogurl .'">';
+        if ($img_url) {
+            $text .='<img src="'.$img_url .'" alt="image">';
+        }
+        $text .='</a>';
+        $text .='</div>';
+
+        $text .='<div class="content">';
+        $text .='<ul class="meta">';
+                 $text .=' <li>
+                            '. get_string('blog_date', 'local_moon').'<span>'.userdate($entry->created, '%B %e, %Y', 0).'</span>
+                        </li>';
+                $text .='    <li>
+                    <a href="'. $authorurl.'">'.$authorname.'</a>
+                </li>';
+                $text .='</ul>';
+                $text .='<h3>
+                    <a href="'.$viewblogurl.'">'.format_string($entry->subject).'</a>
+                </h3>';
+
+                    if ($excerpttxt) {
+                        $text .='<div class="blog-description"> <p>'.format_text($excerpttxt, FORMAT_HTML).'</p></div>';
+                    }
+        $text .='</div>';
+        $text .='</div>';
+        $text .='</div>';
+    }else{
+        if($i==2){
+            $text .='<div class="col-lg-6 col-md-12 blog-style2-right">';
+        }
+        $text .='<div class="blog-right-item">';
+            $text .='<div class="moon-blog-card uk-grid uk-grid-medium" data-uk-grid>';
+                $text .='<div class="image">
+                    <a href="'. $viewblogurl.'">';
+                        if ($img_url) {
+                            $text .='<img src="'.$img_url.'" alt="image">';
+                        }
+                    $text .='</a>';
+                $text .='</div>';
+                $text .='<div class="content uk-width-expand">
+                    <ul class="meta">';
+                            $text .='<li>
+                                '.get_string('blog_date', 'local_moon').' <span>'.userdate($entry->created, '%B %e, %Y', 0).'</span>
+                            </li>';
+                            $text .='<li>
+                                <a href="'.$authorurl.'">'.$authorname.'</a>
+                            </li>';
+                    $text .='</ul>';
+                        $text .='<h3>
+                            <a href="'.$viewblogurl.'">'.format_string($entry->subject).'</a>
+                        </h3>';
+
+                    if ($excerpttxt) {
+                        $text .='<div class="blog-description"> <p>'.format_text($excerpttxt, FORMAT_HTML).'</p></div>';
+                    }
+                $text .='</div>';
+            $text .='</div>';
+        $text .='</div>';
+        if($i==count($entries)){
+            $text .='</div>';
+        }
+    }
+    $i++;
+    endforeach;
+
+    }else{
+        $text .= '<div class="moon-blog-area">';
+        $text .= '<div class=" container p-0 uk-position-relative uk-visible-toggle" tabindex="-1" '.$attrs_slider.'>';
+        $text .= '<div class="uk-slider-items row flex-nowrap">';
+        foreach ($entries as $entryid => $entry) {
+            $viewblogurl->param('entryid', $entryid);
+            $img_url = $moonBlog->moon_get_blog_image_url($entryid);
+
+            $summary = isset($entry->summary) ? strip_tags($entry->summary) : '';
+            $words = $summary !== '' ? preg_split('/\s+/', trim($summary)) : [];
+            $excerpttxt = !empty($words) ? implode(' ', array_slice($words, 0, 15)) : '';
+
+            $author = core_user::get_user($entry->userid);
+
+            $authorname = fullname($author);
+            $authorurl = (new moodle_url('/user/profile.php', ['id' => $author->id]))->out(false);
+            $text .='
                     <div class="blog-slider-item '.$slider_column.' col-md-6">
                         <div class="moon-blog-card">
                     ';
-        if($img_url){
-            $text .='
+            if($img_url){
+                $text .='
                     <div class="image">
                         <a href="'.$viewblogurl.'">
                             <img src="'.$img_url.'" alt="image">
                         </a>
                     </div>
                     ';
-        }
+            }
 
-        $text .='
+            $text .='
                     <div class="content">
                         <ul class="meta">
                             <li>
@@ -105,24 +194,24 @@ if (!empty($entries)) {
                         <div class="blog-description"> <p>'.format_text($excerpttxt, FORMAT_HTML).'</p></div>
                     </div>
                 ';
-        $text .='
+            $text .='
                         </div>
                     </div>
                 ';
-    }
+        }
 
 
-    $text .= '</div>';
-    if($navigation){
-        $text .= '<a class="uk-position-center-left uk_slider_preview uk-position-small uk-hidden-hover" href data-uk-slidenav-previous data-uk-slider-item="previous"></a>
+        $text .= '</div>';
+        if($navigation){
+            $text .= '<a class="uk-position-center-left uk_slider_preview uk-position-small uk-hidden-hover" href data-uk-slidenav-previous data-uk-slider-item="previous"></a>
         <a class="uk-position-center-right uk_slider_next  uk-position-small uk-hidden-hover" href data-uk-slidenav-next data-uk-slider-item="next"></a>';
+        }
+        if($dot){
+            $text .= '<ul class="uk-slider-nav uk-dotnav uk-flex-center"></ul>';
+        }
+        $text .= '</div>';
+        $text .= '</div>';
     }
-    if($dot){
-        $text .= '<ul class="uk-slider-nav uk-dotnav uk-flex-center"></ul>';
-    }
-    $text .= '</div>';
-    $text .= '</div>';
-
 
 } else {
     echo get_string('norecentblogentries', 'block_blog_recent');

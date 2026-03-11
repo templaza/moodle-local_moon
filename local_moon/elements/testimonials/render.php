@@ -227,7 +227,7 @@ foreach ($testimonials->getData() as $key => $testimonial) {
     }
 
     echo '<div class="order-1 card-body'.$card_size.'">'; // Start Card-Body
-    if ($avatar_position == 'left' || $avatar_position == 'right') {
+    if ($avatar_position == 'left' || $avatar_position == 'right' || $avatar_position == 'bottom') {
         if($testimonial_icon){
             echo '<div class="testimonial_icon"><i class="'.$testimonial_icon.'"></i></div>';
         }
@@ -367,11 +367,17 @@ if ($enable_slider) {
 } elseif ($use_masonry) {
     $document->loadMasonry('#'. $element->id .' .as-masonry');
 }
-
+$document->loadUIKit();
 if ($params->get('card_size', '') == 'custom') {
     $card_padding   =   $params->get('card_padding', '');
     if (!empty($card_padding)) {
         Style::setSpacingStyle($element->style->child('.card-size-custom'), $card_padding);
+    }
+}
+if ($params->get('card_size', '') == 'custom') {
+    $card_margin   =   $params->get('card_margin', '');
+    if (!empty($card_margin)) {
+        Style::setSpacingStyle($element->style->child('.card-size-custom'), $card_margin, 'margin');
     }
 }
 if (!empty($image_max_width)) {
@@ -404,13 +410,19 @@ if ($params->get('card_style', '') == 'custom') {
     $style_dark->child('.card')->addCss('color', $text_color['dark']);
 
     $bg_color       =   Style::getColor($params->get('bg_color', ''));
-    $style->child('.card')->addCss('background-color', $bg_color['light']);
-    $style_dark->child('.card')->addCss('background-color', $bg_color['dark']);
+    if ($avatar_position == 'left' || $avatar_position == 'right') {
+        $style->child('.card-body')->addCss('background-color', $bg_color['light']);
+        $style_dark->child('.card-body')->addCss('background-color', $bg_color['dark']);
+    }else{
+        $style->child('.card')->addCss('background-color', $bg_color['light']);
+        $style_dark->child('.card')->addCss('background-color', $bg_color['dark']);
+    }
 
     $card_border    =   json_decode($params->get('card_border', ''), true);
     if (!empty($card_border)) {
         Style::addBorderStyle('#'. $element->id . ' .card', $card_border, 'global', $element->isRoot);
     }
+
 }
 $slider_padding   =   $params->get('slider_padding', '');
 if (!empty($slider_padding)) {
@@ -473,3 +485,17 @@ if (json_last_error() === JSON_ERROR_NONE && is_array($icon_size)) {
 $testimonial_icon_color     = Style::getColor($params->get('testimonial_icon_color', ''));
 $style->child('.testimonial_icon')->addCss('color', $testimonial_icon_color['light']);
 $style_dark->child('.testimonial_icon')->addCss('color', $testimonial_icon_color['dark']);
+
+if($border_radius  == 'custom'){
+    $card_radius_custom  =   $params->get('card_radius_custom', '');
+    if ($avatar_position == 'left' || $avatar_position == 'right') {
+        if (!empty($card_radius_custom)) {
+            Style::setSpacingStyle($element->style->child('.card-body'), $card_radius_custom,'radius');
+        }
+    }else{
+        if (!empty($card_radius_custom)) {
+            Style::setSpacingStyle($element->style->child('.card'), $card_radius_custom,'radius');
+        }
+    }
+
+}

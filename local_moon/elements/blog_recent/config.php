@@ -30,6 +30,16 @@ class MoonElementBlog_Recent extends MoonElement {
             "type" => "group",
             "label" => "slider_options",
         ]);
+        $this->addField('blog_style', [
+            "group"      => "general",
+            "type"       => "list",
+            "label"      => "style",
+            "default"    => "style1",
+            "options"    => [
+                "style1" => "style1",
+                "style2" => "style2",
+            ],
+        ]);
         $this->addField('blog_since', [
             "group"      => "general",
             "type"       => "list",
