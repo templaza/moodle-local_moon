@@ -22,6 +22,7 @@ $title    =   $params->get('title','');
 
 $title_icon    =   $params->get('title_icon','');
 $title_pos    =   $params->get('title_pos','uk-position-relative');
+$box_pos    =   $params->get('box_position','');
 
 if (!empty($title)) {
     $cl  = $auto_rot ='';
@@ -36,7 +37,7 @@ if (!empty($title)) {
         $media .= '<i class="' . $title_icon . '" aria-hidden="true"></i>';
     }
 
-    echo '<div class="ui-text '.$cl.' '.$title_pos.'">';
+    echo '<div class="ui-text '.$cl.' '.$title_pos.' '.$box_pos.' ">';
     ?>
     <svg class="circletext <?php echo $auto_rot;?>" viewBox="0 0 100 100" >
         <defs>
@@ -83,6 +84,10 @@ if (!empty($title_radius)) {
 $title_padding   =   $params->get('title_padding', '');
 if (!empty($title_padding)) {
     Style::setSpacingStyle($element->style->child('svg.circletext'), $title_padding);
+}
+$title_margin   =   $params->get('title_margin', '');
+if (!empty($title_margin)) {
+    Style::setSpacingStyle($element->style->child('.ui-text'), $title_margin,'margin');
 }
 
 $title_width      =   $params->get('title_width', '');

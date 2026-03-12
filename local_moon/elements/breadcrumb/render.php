@@ -11,7 +11,10 @@ $breadcrumbs = $PAGE->navbar->get_items();
 $show_heading = (int) $this->params->get('show_heading', 1);
 $show_page_button = (int) $this->params->get('show_page_button', 1);
 $lastitem = end($breadcrumbs);
-$heading = $lastitem->text;
+if($lastitem){
+    $heading = $lastitem->text;
+}
+
 if($heading==''){
     $heading =  $PAGE->heading;
 }

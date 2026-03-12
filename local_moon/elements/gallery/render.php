@@ -56,8 +56,8 @@ if (!empty($row_margin)) {
     Style::setSpacingStyle($this->style->child('* + .uk-grid-margin'), $row_margin,'margin');
 }
 $overlay_bg_color     = Style::getColor($params->get('overlay_bg_color', ''));
-$style->child('.uk-position-cover')->addCss('background-color', $overlay_bg_color['light']);
-$style_dark->child('.uk-position-cover')->addCss('background-color', $overlay_bg_color['dark']);
+$style->child('.uk-overlay')->addCss('background-color', $overlay_bg_color['light']);
+$style_dark->child('.uk-overlay')->addCss('background-color', $overlay_bg_color['dark']);
 
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {

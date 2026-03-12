@@ -229,5 +229,5 @@ $style->child('.uk-button:hover')->addCss('background-color', $button_bg_color_h
 $style_dark->child('.uk-button:hover')->addCss('background-color', $button_bg_color_hover['dark']);
 
 $button_color_hover     = Style::getColor($params->get('button_color_hover', ''));
-$style->child('.uk-button:hover')->addCss('color', $button_bg_color['light']);
-$style_dark->child('.uk-button:hover')->addCss('color', $button_bg_color['dark']);
+$style->child('.uk-button:hover')->addCss('color', $button_color_hover['light']);
+$style_dark->child('.uk-button:hover')->addCss('color', $button_color_hover['dark']);

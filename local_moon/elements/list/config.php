@@ -110,6 +110,7 @@ class MoonElementList extends MoonElement {
                 "list-group"              => "List Group",
                 "list-group-flush"        => "List Group Flush",
                 "list-group-numbered"     => "List Group Numbered",
+                "custom"     => "custom",
             ],
         ]);
 
@@ -176,6 +177,19 @@ class MoonElementList extends MoonElement {
             'group' => 'icon_options',
             'type'  => 'color',
             'label' => 'icon_color',
+        ]);
+        $this->addField('icon_size', [
+            'group'      => 'icon_options',
+            'type'       => 'range',
+            'label'      => 'icon_size',
+            "attributes" => [
+                'min'        => 1,
+                'max'        => 300,
+                'step'       => 1,
+                'responsive' => true,
+                'postfix'    => 'px',
+            ],
+            'default'    => 30,
         ]);
         $this->addField('icon_padding', [
             "group" => "icon_options",

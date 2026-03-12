@@ -92,6 +92,11 @@ class MoonElementCircletext extends MoonElement {
             'type'  => 'spacing',
             'label' => 'padding',
         ]);
+        $this->addField('title_margin', [
+            'group' => 'general',
+            'type'  => 'spacing',
+            'label' => 'margin',
+        ]);
 
         $this->addField('title_width', [
             'group'      => 'general',
@@ -152,6 +157,24 @@ class MoonElementCircletext extends MoonElement {
                 'uk-position-relative'   => 'Relative',
                 'uk-position-absolute'   => 'Absolute',
             ],
+        ]);
+        $this->addField('box_position', [
+            'group'   => 'general',
+            'type'    => 'list',
+            'label'   => 'position',
+            'options'         => array(
+                '' =>  'None',
+                'uk-position-top-left' => 'top_left',
+                'uk-position-top-center' => 'top_center',
+                'uk-position-top-right' => 'top_right',
+                'uk-position-center-left' => 'center_left',
+                'uk-position-center' => 'center_center',
+                'uk-position-center-right' => 'center_right',
+                'uk-position-bottom-left' => 'bottom_left',
+                'uk-position-bottom-center' => 'bottom_center',
+                'uk-position-bottom-right' => 'bottom_right',
+            ),
+            "conditions" => "[title_pos]=='uk-position-absolute'",
         ]);
     }
 }
