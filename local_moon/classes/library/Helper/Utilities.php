@@ -288,7 +288,15 @@ class Utilities
         global $CFG;
         $scss = new \ScssPhp\ScssPhp\Compiler();
         $scss->setImportPaths($CFG->dirroot . '/local/moon/assets/scss/');
-        $content = static::getMoonSCSSVariables() . '@import "style";';
+        $version = $CFG->branch;
+        if(isset($version)){
+            if ($version >= 500) {
+                $content = static::getMoonSCSSVariables() . '@import "style";';
+            }else{
+                $content = static::getMoonSCSSVariables() . '@import "style4x";';
+            }
+        }
+
         return $scss->compileString($content)->getCss();
     }
 
