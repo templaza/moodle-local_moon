@@ -1,5 +1,10 @@
 /* Blog */
 .moon-blog-area{
+  .blog-slider-item{
+    .moon-blog-card{
+      border:2px dashed $pink;
+    }
+  }
   .container-blog{
     background: #fff;
   }
@@ -91,6 +96,38 @@
       }
       .moon-blog-card{
         margin-bottom:30px;
+      }
+    }
+  }
+}
+.moon-blog-area-style3{
+  .blog-date{
+    width:80px;
+    height:80px;
+    border-radius: 50%;
+    color:#fff;
+    margin:15px;
+  }
+  .blog-day{
+    font-size:30px;
+    font-weight: bold;
+  }
+  .blog-month{
+    font-size:14px;
+    text-transform: uppercase;
+    line-height:1.3em;
+  }
+  .meta{
+    i{
+      margin-right:5px;
+    }
+    li{
+      &:before{
+        display:none !important;
+      }
+      padding-right:25px;
+      &:last-child{
+        padding-right:0;
       }
     }
   }

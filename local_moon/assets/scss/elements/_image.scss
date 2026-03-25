@@ -6,4 +6,8 @@
       object-fit: cover;
     }
   }
+  &.text-end{
+    display:flex;
+    justify-content: end;
+  }
 }

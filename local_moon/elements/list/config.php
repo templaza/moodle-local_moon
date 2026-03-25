@@ -82,6 +82,14 @@ class MoonElementList extends MoonElement {
                         "dynamic"    => true,
                         "conditions" => "[icon_type]=='custom'",
                     ],
+                    'icon_color_item' => [
+                        "type"       => "color",
+                        "label"      => "color",
+                    ],
+                    'icon_bg_item' => [
+                        "type"       => "color",
+                        "label"      => "background_color",
+                    ],
                 ]
             ],
         ];
@@ -94,6 +102,43 @@ class MoonElementList extends MoonElement {
             "attributes" => [
                 'form'    =>  $repeater->renderJson('subform')
             ],
+        ]);
+        $this->addField('title_heading', [
+            "group" => "general",
+            "type"  => "text",
+            "label"  => "heading",
+        ]);
+        $this->addField('heading_font_style', [
+            "group"      => "general",
+            "type"       => "typography",
+            "label"       => "font_style",
+            "attributes" => [
+                'options' => [
+                    "colorpicker" => true,
+                    'stylepicker' => true,
+                    'fontpicker' => true,
+                    'sizepicker' => true,
+                    'letterspacingpicker' => true,
+                    'lineheightpicker' => true,
+                    'weightpicker' => true,
+                    'transformpicker' => true,
+                    'columns' => 1,
+                    'preview' => false,
+                    'collapse' => true,
+                    'system_fonts' => Font::get_system_fonts(),
+                    'text_transform_options' => Font::text_transform(),
+                    'lang' => Font::font_properties(),
+                ],
+                'lang' => Font::font_properties(),
+                'value' => Font::$get_default_font_value,
+            ],
+            "conditions" => "[title_heading] !=''",
+        ]);
+        $this->addField('heading_margin', [
+            "group" => "general",
+            "type"  => "spacing",
+            "label"  => "heading_margin",
+            "conditions" => "[title_heading] !=''",
         ]);
 
         $this->addField('list_style', [
@@ -112,6 +157,19 @@ class MoonElementList extends MoonElement {
                 "list-group-numbered"     => "List Group Numbered",
                 "custom"     => "custom",
             ],
+        ]);
+
+        $this->addField('vertical_align', [
+            "group"   => "misc_options",
+            "type"    => "list",
+            "label"   => "vertical_alignment",
+            "default" => "uk-flex-top",
+            "options" => [
+                "uk-flex-top"             => "top",
+                "uk-flex-middle"          => "middle",
+                "uk-flex-bottom"          => "bottom",
+            ],
+            "conditions" => "[list_style]=='custom'",
         ]);
 
         $this->addField('title_width', [
@@ -178,6 +236,11 @@ class MoonElementList extends MoonElement {
             'type'  => 'color',
             'label' => 'icon_color',
         ]);
+        $this->addField('icon_bg_color', [
+            'group' => 'icon_options',
+            'type'  => 'color',
+            'label' => 'background_color',
+        ]);
         $this->addField('icon_size', [
             'group'      => 'icon_options',
             'type'       => 'range',
@@ -191,10 +254,49 @@ class MoonElementList extends MoonElement {
             ],
             'default'    => 30,
         ]);
+        $this->addField('icon_margin', [
+            "group" => "icon_options",
+            "type"  => "spacing",
+            "label"  => "icon_margin",
+        ]);
         $this->addField('icon_padding', [
             "group" => "icon_options",
             "type"  => "spacing",
             "label"  => "icon_padding",
+        ]);
+        $this->addField('icon_width', [
+            'group'   => 'icon_options',
+            'type'    => 'range',
+            'label'      => 'width',
+            "attributes" => [
+                'min'        => 1,
+                'max'        => 2000,
+                'step'       => 1,
+                'responsive' => true,
+                'postfix' => 'px|%',
+            ],
+        ]);
+        $this->addField('icon_height', [
+            'group'   => 'icon_options',
+            'type'    => 'range',
+            'label'      => 'height',
+            "attributes" => [
+                'min'        => 1,
+                'max'        => 2000,
+                'step'       => 1,
+                'responsive' => true,
+                'postfix' => 'px|%',
+            ],
+        ]);
+        $this->addField('icon_border', [
+            "group"      => "icon_options",
+            "type"       => "border",
+            "label"      => "border",
+        ]);
+        $this->addField('icon_radius', [
+            'group' => 'icon_options',
+            'type'  => 'spacing',
+            'label' => 'radius',
         ]);
 
         $this->addField('content_font_style', [

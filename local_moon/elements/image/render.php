@@ -17,6 +17,8 @@ $link           = $params->get('link', '');
 $target         = $params->get('target', '');
 $target         = $target !== '' ? ' target="'.$target.'"' : '';
 
+$shape          = $params->get('img_shape', '');
+
 $border_radius      =   $params->get('img_border_radius', '');
 $rounded_size       =   $params->get('image_rounded_size', '3');
 if ($border_radius == 'rounded') {
@@ -46,6 +48,10 @@ if(isset($image_height) && isset($image_width)){
     $cus_cl = ' custom-size ';
 }
 
+$image_border    =   json_decode($params->get('image_border', ''), true);
+if (!empty($image_border)) {
+    Style::addBorderStyle('#'. $element->id . ' .as-image', $image_border, 'global', $element->isRoot);
+}
 
 $box_shadow     = $params->get('box_shadow', '');
 $box_shadow     = $box_shadow !== '' ? ' ' . $box_shadow : '';
@@ -78,4 +84,17 @@ if (!empty($image)) {
     if ($use_link) {
         echo '</a>';
     }
+}
+$mask_scale         = $params->get('mask_scale', '');
+$mask_repeat         = $params->get('mask_repeat', '');
+$mask_position         = $params->get('mask_position', '');
+if($shape=='style1'){
+    $shape_style = '/local/moon/assets/images/shapes/style1.svg';
+    $style->child('.as-image-wrapper img')->addCss('-webkit-mask-image', 'url('.$shape_style.')');
+    $style->child('.as-image-wrapper img')->addCss('-webkit-mask-repeat', $mask_repeat);
+    $style->child('.as-image-wrapper img')->addCss('-webkit-mask-position', $mask_position);
+}
+$mask_scale_size = json_decode($mask_scale, true);
+if (json_last_error() === JSON_ERROR_NONE && is_array($mask_scale_size)) {
+    $element->style->child('.as-image-wrapper img')->addResponsiveCSS('-webkit-mask-size', $mask_scale_size, $mask_scale_size['postfix']);
 }

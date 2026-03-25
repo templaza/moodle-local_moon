@@ -21,6 +21,10 @@ class MoonElementImage extends MoonElement {
             "type" => "group",
             "label" => "widget_styles",
         ]);
+        $this->addField('mask_styles',  [
+            "type" => "group",
+            "label" => "mask_styles",
+        ]);
 
         $this->addField('image_color_mode', [
             "group"   => "general",
@@ -130,6 +134,11 @@ class MoonElementImage extends MoonElement {
                 'postfix' => 'px|%',
             ],
         ]);
+        $this->addField('image_border', [
+            "group"      => "widget_styles",
+            "type"       => "border",
+            "label"      => "border",
+        ]);
 
         $this->addField('img_border_radius', [
             "group"   => "widget_styles",
@@ -179,6 +188,19 @@ class MoonElementImage extends MoonElement {
                 "shadow-lg"   => "large",
             ],
         ]);
+        $this->addField('image_rotate', [
+            'group'      => 'widget_styles',
+            'type'       => 'range',
+            'label'      => 'rotate',
+            "attributes" => [
+                'min'        => -360,
+                'max'        => 360,
+                'step'       => 1,
+                'responsive' => true,
+                'postfix'    => 'deg',
+            ],
+            'default'    => 0,
+        ]);
 
         $this->addField('hover_effect', [
             "group"   => "widget_styles",
@@ -199,6 +221,60 @@ class MoonElementImage extends MoonElement {
             "label"   => "hover_transition",
             "default" => "",
             "options" => Constants::$hover_transition,
+        ]);
+        $this->addField('img_mask', [
+            "group"   => "mask_styles",
+            "type"    => "list",
+            "label"   => "mask",
+            "default" => "",
+            "options" => [
+                ""               => "none",
+                "style1"        => "style1",
+                "custom"   => "custom",
+            ],
+        ]);
+        $this->addField('mask_scale', [
+            'group'   => 'mask_styles',
+            'type'    => 'range',
+            'label'      => 'mask_scale',
+            "attributes" => [
+                'min'        => 1,
+                'max'        => 200,
+                'step'       => 1,
+                'responsive' => true,
+                'postfix' => '%',
+            ],
+            'default' => 100,
+        ]);
+        $this->addField('mask_position', [
+            "group"   => "mask_styles",
+            "type"    => "list",
+            "label"   => "position",
+            "default" => "",
+            "options" => [
+                ""         => "default",
+                "center center" => "center_center",
+                "center left"    => "center_left",
+                "center right"   => "center_right",
+                "top center"   => "top_center",
+                "top left"   => "top_left",
+                "top right"   => "top_right",
+                "bottom center"   => "bottom_center",
+                "bottom left"   => "bottom_left",
+                "bottom right"   => "bottom_right",
+            ],
+        ]);
+        $this->addField('mask_repeat', [
+            "group"   => "mask_styles",
+            "type"    => "list",
+            "label"   => "repeat",
+            "default" => "",
+            "options" => [
+                "no-repeat"  => "no_repeat",
+                "repeat" => "repeat_all",
+                "repeat-x"    => "repeat_x",
+                "repeat-Y"   => "repeat_y",
+            ],
         ]);
     }
 }

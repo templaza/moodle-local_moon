@@ -181,7 +181,7 @@ if($slider_style=='style1'){
         echo '</div>';
 
         echo '<div class="col-md-6 order-1 order-md-2">';
-        echo '<div class="uk-flex uk-flex-right ">';
+        echo '<div class="uk-flex uk-flex-right@m ">';
         echo '<div class="uk-slider-image uk-cover-container">';
         echo '<img data-uk-cover src="'. $slide->params->get('image') .'" class="object-fit-cover w-100 h-100" alt="'.$slide->params->get('title').'">';
         echo '</div>';
@@ -410,7 +410,7 @@ if (!empty($button_font_style)) {
 }
 $button_margin   =   $params->get('button_margin', '');
 if (!empty($button_margin)) {
-    Style::setSpacingStyle($element->style->child('.ui-button'), $button_margin, 'margin');
+    Style::setSpacingStyle($element->style->child('.moon-button'), $button_margin, 'margin');
 }
 $button_padding   =   $params->get('button_padding', '');
 if (!empty($button_padding)) {

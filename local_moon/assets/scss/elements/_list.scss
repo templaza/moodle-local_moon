@@ -1,0 +1,13 @@
+.as-list-icon{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+.style-custom{
+  .list-item-inner{
+    flex-wrap: wrap;
+  }
+  .list-item-info{
+    flex: 1;
+  }
+}

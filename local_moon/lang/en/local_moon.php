@@ -923,3 +923,9 @@ $string['title_clone'] = 'Clone Title';
 $string['title_custom_clone'] = 'Title Clone Custom';
 
 $string['item_margin'] = 'Item margin';
+$string['item_options'] = 'Item Options';
+$string['content_padding'] = 'Content Padding';
+$string['mask_styles'] = 'Mask Options';
+$string['mask'] = 'Mask';
+$string['mask_scale'] = 'Mask Scale';
+$string['repeat'] = 'Repeat';

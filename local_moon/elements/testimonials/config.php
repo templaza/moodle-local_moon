@@ -118,6 +118,11 @@ class MoonElementTestimonials extends MoonElement {
                         'default' => 5,
                         'dynamic' => true,
                     ],
+                    'item_bg_color' => [
+                        'type'       => 'color',
+                        'label'      => 'background_color',
+                    ],
+
                 ]
             ],
         ];
