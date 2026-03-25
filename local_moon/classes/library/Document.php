@@ -598,4 +598,12 @@ class Document {
             $this->_is_loaded['video_bg'] = true;
         }
     }
+
+    public function loadTransform(): void
+    {
+        if (!isset($this->_is_loaded['transform'])) {
+            $this->addScript('/local/moon/assets/transform/js/index.min.js');
+            $this->_is_loaded['transform'] = true;
+        }
+    }
 }

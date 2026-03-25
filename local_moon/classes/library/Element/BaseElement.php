@@ -9,8 +9,10 @@ namespace local_moon\library\Element;
 use context_system;
 use local_moon\library\Framework;
 use local_moon\library\Helper\Registry;
+use local_moon\library\Helper\SubForm;
 use local_moon\library\Helper\Text;
 use local_moon\library\Helper\Style;
+use local_moon\library\Helper\Utilities;
 
 defined('MOODLE_INTERNAL') || die;
 
@@ -26,6 +28,7 @@ class BaseElement
     public bool $isRoot = false;
     public bool $has_maxwidth = false;
     public mixed $context = '';
+    public bool $transform_loaded = false;
     public function __construct($data, $devices, $options = array(), $role = '')
     {
         $this->_data    = $data;
@@ -94,6 +97,7 @@ class BaseElement
             $class_maxwidth         =   '';
         }
 //        Helper::triggerEvent('onMoonPrepareContent', [&$this, 'layout.element.content']);
+        $this->_transform();
         $this->_animation();
         $this->_background();
         $content    =   '';
@@ -392,7 +396,7 @@ class BaseElement
     protected function _animation(): void
     {
         $animation = $this->params->get('animation', '');
-        if (empty($animation)) {
+        if (empty($animation) || $this->transform_loaded) {
             return;
         }
         $document = Framework::getDocument();
@@ -417,6 +421,102 @@ class BaseElement
         $this->addAttribute('data-animation-loop', $this->params->get('animation_loop', 0));
         $this->addAttribute('data-animation-stagger', $this->params->get('animation_stagger', 200));
         $document->loadAnimation();
+    }
+
+    protected function _transform(): void
+    {
+        $transform_scenes = new SubForm($this->params->get('transform_scenes',''));
+        $scenes = [];
+        $scroll_settings = [];
+        if (!empty($transform_scenes->getData())) {
+            foreach ($transform_scenes->getData() as $scene) {
+                $animations = $scene->params->toArray();
+                $from = [];
+                $to = [];
+                foreach ($animations as $animation => $value) {
+                    if (!empty($value)) {
+                        if (Utilities::isJsonString($value)) {
+                            $tmp = json_decode($value, true);
+                            $animation_name = match ($animation) {
+                                'translate_x' => 'x',
+                                'translate_y' => 'y',
+
+                                'rotate', 'rotate_z' => 'rotation',
+                                'rotate_x' => 'rotateX',
+                                'rotate_y' => 'rotateY',
+
+                                'scale' => 'scale',
+                                'scale_x' => 'scaleX',
+                                'scale_y' => 'scaleY',
+
+                                'skew_x' => 'skewX',
+                                'skew_y' => 'skewY',
+
+                                'opacity' => 'opacity',
+
+                                default => $animation
+                            };
+                            if (isset($tmp['from']) && $tmp['from'] !== '') {
+                                $from[$animation_name] = $tmp['from'];
+                            }
+                            if (isset($tmp['to']) && $tmp['to'] !== '') {
+                                $to[$animation_name] = $tmp['to'];
+                            }
+                        }
+                    }
+                }
+                if (!empty($from) && !empty($to)) {
+                    $scenes[] = [
+                        'from' => $from,
+                        'to' => $to
+                    ];
+                } elseif (!empty($from)) {
+                    $scenes[] = [
+                        'from' => $from
+                    ];
+                } elseif (!empty($to)) {
+                    $scenes[] = [
+                        'to' => $to
+                    ];
+                }
+            }
+            $start = $this->params->get('transform_start', '');
+            $end = $this->params->get('transform_end', '');
+            $transform_scrub = $this->params->get('transform_scrub', 3);
+            $transform_pin = $this->params->get('transform_pin', 0);
+            $transform_markers = $this->params->get('transform_markers', 0);
+            $transform_toggle_actions = $this->params->get('transform_toggle_actions', '');
+            if (!empty($start)) {
+                $scroll_settings['start'] = $start;
+            }
+            if (!empty($end)) {
+                $scroll_settings['end'] = $end;
+            }
+            if (!empty($transform_scrub)) {
+                $scroll_settings['scrub'] = $transform_scrub;
+            }
+            if (!empty($transform_pin)) {
+                $scroll_settings['pin'] = true;
+                $transform_pin_spacing = $this->params->get('transform_pin_spacing', 1);
+                if (empty($transform_pin_spacing)) {
+                    $scroll_settings['pinSpacing'] = false;
+                }
+            }
+            if (!empty($transform_markers)) {
+                $scroll_settings['markers'] = true;
+            }
+            if (!empty($transform_toggle_actions)) {
+                $scroll_settings['toggleActions'] = $transform_toggle_actions;
+            }
+            if (!empty($scenes)) {
+                $this->addAttribute('data-transform-scenes', htmlspecialchars(json_encode($scenes), ENT_QUOTES, 'UTF-8'));
+                $this->addAttribute('data-transform-scroll', htmlspecialchars(json_encode($scroll_settings), ENT_QUOTES, 'UTF-8'));
+                $document = Framework::getDocument();
+                $document->loadGSAP('ScrollTrigger');
+                $document->loadTransform();
+                $this->transform_loaded = true;
+            }
+        }
     }
 
     public function _customCss(): void

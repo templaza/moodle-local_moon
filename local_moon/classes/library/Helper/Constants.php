@@ -116,6 +116,119 @@ class Constants
 
     public static function getElementDefaultOptions(): array
     {
+        $repeater_options = [
+            'general-settings' => [
+                'label'  => 'general',
+                'fields' => [
+                    // groups
+                    'move_settings'    => [
+                        'type'        => 'group',
+                        'title'       => 'move',
+                        'description' => 'move_desc',
+                    ],
+                    'opacity_settings' => [
+                        'type'        => 'group',
+                        'title'       => 'opacity',
+                        'description' => 'opacity_desc',
+                    ],
+                    'rotate_settings'  => [
+                        'type'        => 'group',
+                        'title'       => 'rotate',
+                        'description' => 'rotate_desc',
+                    ],
+                    'scale_settings'   => [
+                        'type'        => 'group',
+                        'title'       => 'scale',
+                        'description' => 'scale_desc',
+                    ],
+                    'skew_settings'    => [
+                        'type'        => 'group',
+                        'title'       => 'skew',
+                        'description' => 'skew_desc',
+                    ],
+
+                    // from/to fields (grouped via astroidgroup attribute)
+                    'translate_x' => [
+                        'group'       => 'move_settings',
+                        'type'        => 'fromto',
+                        'label'       => 'translate_x_label',
+                        'description' => 'translate_x_desc',
+                        "attributes" => [
+                            'unit'        => 'px',
+                        ],
+                    ],
+                    'translate_y' => [
+                        'group'       => 'move_settings',
+                        'type'        => 'fromto',
+                        'label'       => 'translate_y_label',
+                        'description' => 'translate_y_desc',
+                        "attributes" => [
+                            'unit'        => 'px',
+                        ],
+                    ],
+                    'rotate_x' => [
+                        'group'       => 'rotate_settings',
+                        'type'        => 'fromto',
+                        'label'       => 'rotate_x_label',
+                        'description' => 'rotate_x_desc',
+                        "attributes" => [
+                            'unit'        => 'deg',
+                        ],
+                    ],
+                    'rotate_y' => [
+                        'group'       => 'rotate_settings',
+                        'type'        => 'fromto',
+                        'label'       => 'rotate_y_label',
+                        'description' => 'rotate_y_desc',
+                        "attributes" => [
+                            'unit'        => 'deg',
+                        ],
+                    ],
+                    'rotate_z' => [
+                        'group'       => 'rotate_settings',
+                        'type'        => 'fromto',
+                        'label'       => 'rotate_z_label',
+                        'description' => 'rotate_z_desc',
+                        'unit'        => 'deg',
+                    ],
+                    'scale_x' => [
+                        'group'       => 'scale_settings',
+                        'type'        => 'fromto',
+                        'label'       => 'scale_x_label',
+                        'description' => 'scale_x_desc',
+                    ],
+                    'scale_y' => [
+                        'group'       => 'scale_settings',
+                        'type'        => 'fromto',
+                        'label'       => 'scale_y_label',
+                        'description' => 'scale_y_desc',
+                    ],
+                    'opacity' => [
+                        'group'       => 'opacity_settings',
+                        'type'        => 'fromto',
+                        'label'       => 'opacity',
+                        'description' => 'opacity_desc',
+                    ],
+                    'skew_x' => [
+                        'group'       => 'skew_settings',
+                        'type'        => 'fromto',
+                        'label'       => 'skew_x_label',
+                        'description' => 'skew_x_desc',
+                        'unit'        => 'deg',
+                    ],
+                    'skew_y' => [
+                        'group'       => 'skew_settings',
+                        'type'        => 'fromto',
+                        'label'       => 'skew_y_label',
+                        'description' => 'skew_y_desc',
+                        'unit'        => 'deg',
+                    ],
+                ],
+            ],
+        ];
+        $repeater   = new Form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
+        $transform_form = $repeater->renderJson('subform');
+        $transform_form['countLabel'] = 'Scene';
         return [
             'general-settings' => [
                 'label' => 'general',
@@ -147,6 +260,7 @@ class Constants
                     'general'                       => ['type' => 'group'],
                     'spacing_settings'              => ['type' => 'group', 'label' => 'spacing_settings'],
                     'animation_settings'            => ['type' => 'group', 'label' => 'animation'],
+                    'transform_settings'            => ['type' => 'group', 'label' => 'transform_settings'],
                     'animation_background_settings' => ['type' => 'group', 'label' => 'animation_background_settings'],
                     'device_settings'               => ['type' => 'group', 'label' => 'device_settings'],
                     'custom_settings'               => ['type' => 'group', 'label' => 'custom_settings'],
@@ -586,6 +700,91 @@ class Constants
                             'xl' => 'breakpoint_xl',
                             'xxl' => 'breakpoint_xxl',
                         ],
+                    ],
+
+                    'transform_scenes' => [
+                        'group' => 'transform_settings',
+                        'type'        => 'subform',
+                        'label'       => 'transform_scenes',
+                        'description' => 'transform_scenes_desc',
+                        "attributes" => [
+                            'form'    =>  $transform_form
+                        ],
+                    ],
+
+                    'transform_scroll_settings_divider' => [
+                        'group' => 'transform_settings',
+                        'type'  => 'divider',
+                    ],
+
+                    'transform_scroll_settings' => [
+                        'group'       => 'transform_settings',
+                        'type'        => 'heading',
+                        'title'       => 'scroll_settings_title',
+                        'description' => 'scroll_settings_desc',
+                    ],
+
+                    'transform_start' => [
+                        'group'       => 'transform_settings',
+                        'type'        => 'text',
+                        'label'       => 'start_label',
+                        'description' => 'start_desc',
+                    ],
+
+                    'transform_end' => [
+                        'group'       => 'transform_settings',
+                        'type'        => 'text',
+                        'label'       => 'end_label',
+                        'description' => 'end_desc',
+                    ],
+
+                    'transform_scrub' => [
+                        'group'       => 'transform_settings',
+                        'type'        => 'range',
+                        'attributes'  => [
+                            'min'         => 0,
+                            'max'         => 20,
+                            'step'        => 0.1,
+                            'postfix'     => 'seconds',
+                        ],
+                        'default'     => 2,
+                        'label'       => 'scrub_label',
+                        'description' => 'scrub_desc',
+                    ],
+
+                    'transform_pin' => [
+                        'group'       => 'transform_settings',
+                        'type'        => 'radio',
+                        'attributes'  => ["role" => "switch"],
+                        'default'     => 0,
+                        'label'       => 'pin_label',
+                        'description' => 'pin_desc',
+                    ],
+
+                    'transform_pin_spacing' => [
+                        'group'       => 'transform_settings',
+                        'type'        => 'radio',
+                        'attributes'  => ["role" => "switch"],
+                        'default'     => 1,
+                        'label'       => 'pin_spacing_label',
+                        'description' => 'pin_spacing_desc',
+                        'conditions'  => "[transform_pin]==1",
+                    ],
+
+                    'transform_markers' => [
+                        'group'       => 'transform_settings',
+                        'type'        => 'radio',
+                        'attributes'  => ["role" => "switch"],
+                        'default'     => 0,
+                        'label'       => 'markers_label',
+                        'description' => 'markers_desc',
+                    ],
+
+                    'transform_toggle_actions' => [
+                        'group'       => 'transform_settings',
+                        'type'        => 'text',
+                        'label'       => 'toggle_actions_label',
+                        'description' => 'toggle_actions_desc',
                     ],
 
                     'animation_background_type' => [
