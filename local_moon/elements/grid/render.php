@@ -164,7 +164,7 @@ foreach ($grids->data as $key => $grid) {
     if ($grid->params->get('type', '') == 'image' && $grid->params->get('image', '')) {
         $media      =   '<div class="as-image-cover grid-media position-relative overflow-hidden' . $image_border_radius . $hover_tog_class .$img_eff. $transition . ($media_position == 'bottom' ? ' order-2 ' : '') . '">';
         $media      .=  $layout == 'overlay' ? '<div class="as-image-cover moon-image-overlay-cover">' : '';
-        $media      .=  '<img class="' .$hover_effect.$img_tog_class . ($image_fullwidth ? 'w-100' : '') . ($enable_image_cover || $media_position == 'left' || $media_position == 'right' ? ' object-fit-cover h-100' : '') . ($params->get('card_style', '') == 'none' ? '' : ' card-img-'. $media_position) .'" src="'. $grid->params->get('image', '') .'" alt="'.$grid->params->get('title', '').'">';
+        $media      .=  '<img class="tz-img-grid ' .$hover_effect.$img_tog_class . ($image_fullwidth ? 'w-100' : ' uk-width-auto') . ($enable_image_cover || $media_position == 'left' || $media_position == 'right' ? ' object-fit-cover h-100' : '') . ($params->get('card_style', '') == 'none' ? '' : ' card-img-'. $media_position) .'" src="'. $grid->params->get('image', '') .'" alt="'.$grid->params->get('title', '').'">';
         $media      .=  $layout == 'overlay' ? '</div>' : '';
         if ($enable_image_cover) {
             if($content_hover_transition){
@@ -367,4 +367,15 @@ $button_custom_margin =   $params->get('button_custom_margin', '');
 
 if (!empty($button_custom_margin)) {
     Style::setSpacingStyle($element->style->child('.btn'), $button_custom_margin,'margin');
+}
+$image_height      =   $params->get('image_height', '');
+$image_width      =   $params->get('image_width', '');
+
+$image_height_data = json_decode($image_height, true);
+$image_width_data = json_decode($image_width, true);
+if (json_last_error() === JSON_ERROR_NONE && is_array($image_width_data)) {
+    $style->child('.grid-media')->addResponsiveCSS('width', $image_width_data, $image_width_data['postfix']);
+}
+if (json_last_error() === JSON_ERROR_NONE && is_array($image_height_data)) {
+    $style->child('.grid-media')->addResponsiveCSS('height', $image_height_data, $image_height_data['postfix']);
 }

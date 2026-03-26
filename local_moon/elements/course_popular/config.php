@@ -21,9 +21,27 @@ class MoonElementCourse_Popular extends MoonElement {
             "type" => "group",
             "label" => "title_options",
         ]);
+        $this->addField('item_options',  [
+            "type" => "group",
+            "label" => "item_options",
+        ]);
+        $this->addField('image_options',  [
+            "type" => "group",
+            "label" => "image_options",
+        ]);
         $this->addField('slider_options',  [
             "type" => "group",
             "label" => "slider_options",
+        ]);
+        $this->addField('course_style', [
+            "group"      => "general",
+            "type"       => "list",
+            "label"      => "style",
+            "default"    => "style1",
+            "options"    => [
+                "style1" => "style1",
+                "style2" => "style2",
+            ],
         ]);
         $this->addField('course_limit', [
             "group"       => "general",
@@ -65,6 +83,38 @@ class MoonElementCourse_Popular extends MoonElement {
             "group" => "title_options",
             "type"  => "spacing",
             "label" => "margin",
+        ]);
+        $this->addField('item_bg_color', [
+            "group"      => "item_options",
+            "type"       => "color",
+            "label"      => "background_color",
+        ]);
+        $this->addField('item_border', [
+            "group"      => "item_options",
+            "type"       => "border",
+            "label"      => "border",
+        ]);
+        $this->addField('item_border_radius', [
+            'group' => 'item_options',
+            'type'  => 'spacing',
+            'label' => 'radius',
+        ]);
+
+        $this->addField('item_card_padding', [
+            'group'      => 'item_options',
+            'type'       => 'spacing',
+            'label'      => 'card_padding',
+        ]);
+
+        $this->addField('content_padding', [
+            'group'      => 'item_options',
+            'type'       => 'spacing',
+            'label'      => 'content_padding',
+        ]);
+        $this->addField('image_radius', [
+            'group' => 'image_options',
+            'type'  => 'spacing',
+            'label' => 'radius',
         ]);
 
         $this->addField('autoplay', [

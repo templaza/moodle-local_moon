@@ -991,6 +991,7 @@ class MoonElementGrid extends MoonElement {
                 "role" => "switch"
             ],
             "label"   => "image_fullwidth",
+            "conditions" => "[layout]=='overlay'",
         ]);
 
         $this->addField('enable_image_cover', [
@@ -1001,6 +1002,31 @@ class MoonElementGrid extends MoonElement {
                 "role" => "switch"
             ],
             "label"   => "enable_image_cover",
+            "conditions" => "[layout]=='overlay'",
+        ]);
+        $this->addField('image_width', [
+            'group'   => 'image_options',
+            'type'    => 'range',
+            'label'      => 'image_width',
+            "attributes" => [
+                'min'        => 1,
+                'max'        => 2000,
+                'step'       => 1,
+                'responsive' => true,
+                'postfix' => 'px|%',
+            ],
+        ]);
+        $this->addField('image_height', [
+            'group'   => 'image_options',
+            'type'    => 'range',
+            'label'      => 'image_height',
+            "attributes" => [
+                'min'        => 1,
+                'max'        => 2000,
+                'step'       => 1,
+                'responsive' => true,
+                'postfix' => 'px|%',
+            ],
         ]);
 
         $this->addField('min_height', [

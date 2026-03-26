@@ -7,7 +7,7 @@ use local_moon\library\Framework;
 $params         = $this->params;
 $style = $this->style;
 $style_dark = $this->style_dark;
-
+$element = $this;
 global $CFG, $PAGE;
 
 require_once($CFG->dirroot. '/course/renderer.php');
@@ -149,6 +149,75 @@ foreach ($entries as $entryid => $entry):
     $i++;
     endforeach;
 
+    }elseif($layout=='style3'){
+        $text .= '<div class="moon-blog-area moon-blog-area-style3">';
+        $text .= '<div class=" container p-0 uk-position-relative uk-visible-toggle" tabindex="-1" '.$attrs_slider.'>';
+        $text .= '<div class="uk-slider-items row flex-nowrap">';
+        foreach ($entries as $entryid => $entry) {
+            $viewblogurl->param('entryid', $entryid);
+            $img_url = $moonBlog->moon_get_blog_image_url($entryid);
+
+            $summary = isset($entry->summary) ? strip_tags($entry->summary) : '';
+            $words = $summary !== '' ? preg_split('/\s+/', trim($summary)) : [];
+            $excerpttxt = !empty($words) ? implode(' ', array_slice($words, 0, 15)) : '';
+
+            $author = core_user::get_user($entry->userid);
+
+            $authorname = fullname($author);
+            $authorurl = (new moodle_url('/user/profile.php', ['id' => $author->id]))->out(false);
+            $text .='
+                    <div class="blog-slider-item '.$slider_column.' blog-item'.$entryid.' col-md-6">
+                        <div class="moon-blog-card">
+                    ';
+            if($img_url){
+                $text .='
+                    <div class="image uk-inline">
+                        <a href="'.$viewblogurl.'">
+                            <img src="'.$img_url.'" alt="image">
+                        </a>
+                        <span class="uk-position-top-left blog-date uk-flex-center uk-flex-middle uk-flex uk-flex-column">                        
+                        <span class="blog-day">'.userdate($entry->created, '%e', 0).'</span>
+                        <span class="blog-month">'.userdate($entry->created, '%b', 0).'</span>
+                        </span>
+                    </div>
+                    ';
+            }
+            $blog_comment = '';
+            $count = $moonBlog->moon_get_blog_comment_count($entryid);
+            if ($count !== null) {
+                $blog_comment ='<li><i class="fa-solid fa-comments"></i> '.$count.'</li>';
+            }
+
+            $text .='
+                    <div class="content">                        
+                        <h3>
+                            <a href="'.$viewblogurl.'">'.format_string($entry->subject).'</a>
+                        </h3>
+                        <div class="blog-description"> <p>'.format_text($excerpttxt, FORMAT_HTML).'</p></div>                        
+                        <ul class="meta">                                                   
+                            <li><i class="fa-solid fa-user"></i> <a href="'.$authorurl.'">'.$authorname.'</a>
+                            </li>
+                            '.$blog_comment.'
+                        </ul>
+                    </div>
+                ';
+            $text .='
+                        </div>
+                    </div>
+                ';
+        }
+
+
+        $text .= '</div>';
+        if($navigation){
+            $text .= '<a class="uk-position-center-left uk_slider_preview uk-position-small uk-hidden-hover" href data-uk-slidenav-previous data-uk-slider-item="previous"></a>
+        <a class="uk-position-center-right uk_slider_next  uk-position-small uk-hidden-hover" href data-uk-slidenav-next data-uk-slider-item="next"></a>';
+        }
+        if($dot){
+            $text .= '<ul class="uk-slider-nav uk-dotnav uk-flex-center"></ul>';
+        }
+        $text .= '</div>';
+        $text .= '</div>';
     }else{
         $text .= '<div class="moon-blog-area">';
         $text .= '<div class=" container p-0 uk-position-relative uk-visible-toggle" tabindex="-1" '.$attrs_slider.'>';
@@ -244,4 +313,24 @@ $style_dark->child('.uk-slidenav:hover')->addCss('background-color', $nav_bg_hov
 $nav_padding   =   $params->get('navigation_padding', '');
 if (!empty($nav_padding)) {
     Style::setSpacingStyle($this->style->child('.uk-slidenav'), $nav_padding);
+}
+$item_content_padding   =   $params->get('item_content_padding', '');
+if (!empty($item_content_padding)) {
+    Style::setSpacingStyle($this->style->child('.content'), $item_content_padding);
+}
+$item_bg_color     = Style::getColor($params->get('item_bg_color', ''));
+
+$style->child('.moon-blog-card')->addCss('background-color', $item_bg_color['light']);
+$style_dark->child('.moon-blog-card')->addCss('background-color', $item_bg_color['dark']);
+$item_border    =   json_decode($params->get('item_border', ''), true);
+if (!empty($item_border)) {
+    Style::addBorderStyle('#'. $element->id . ' .moon-blog-card', $item_border, 'global', $element->isRoot);
+}
+$item_radius=   $params->get('item_border_radius', '');
+if (!empty($item_radius)) {
+    Style::setSpacingStyle($element->style->child('.moon-blog-card'), $item_radius,'radius');
+}
+$image_border_radius=   $params->get('image_border_radius', '');
+if (!empty($image_border_radius)) {
+    Style::setSpacingStyle($element->style->child('.image'), $image_border_radius,'radius');
 }
