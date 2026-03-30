@@ -7,13 +7,23 @@
 class AstroidTransform {
     scenes = [];
     scrollConfig = {};
+    timelineConfig = {};
     el = null;
     constructor(el) {
-        this.el = el;
+        this.el = el.dataset.transformTrigger
+            ? el.querySelectorAll(el.dataset.transformTrigger)
+            : el;
         this.scenes = JSON.parse(el.dataset.transformScenes);
         this.scrollConfig = el.dataset.transformScroll
             ? JSON.parse(el.dataset.transformScroll)
             : {};
+        this.timelineConfig = el.dataset.transformTimeline
+            ? JSON.parse(el.dataset.transformTimeline)
+            : {};
+        this.timelineConfig.paused = true;
+        if (this.timelineConfig.repeat) {
+            this.timelineConfig.repeat = this.timelineConfig.repeat === 'true' ? -1 : parseInt(this.timelineConfig.repeat);
+        }
         if (this.scrollConfig.scrub) {
             this.scrollConfig.scrub = this.scrollConfig.scrub === 'true' ? true : parseFloat(this.scrollConfig.scrub);
         }
@@ -21,13 +31,13 @@ class AstroidTransform {
 
     init() {
         // Create timeline
-        const tl = gsap.timeline({
-            paused: true
-        });
+        const tl = gsap.timeline(this.timelineConfig);
         // Build scenes
         this.scenes.forEach(scene => {
-            if (scene.from) {
-                tl.fromTo(this.el, scene.from, scene.to || {});
+            if (scene.from && scene.to) {
+                tl.fromTo(this.el, scene.from, scene.to);
+            } else if (scene.from) {
+                tl.from(this.el, scene.from);
             } else {
                 tl.to(this.el, scene.to || {});
             }

@@ -123,28 +123,33 @@ class Constants
                     // groups
                     'move_settings'    => [
                         'type'        => 'group',
-                        'title'       => 'move',
+                        'label'       => 'move',
                         'description' => 'move_desc',
                     ],
                     'opacity_settings' => [
                         'type'        => 'group',
-                        'title'       => 'opacity',
+                        'label'       => 'opacity',
                         'description' => 'opacity_desc',
                     ],
                     'rotate_settings'  => [
                         'type'        => 'group',
-                        'title'       => 'rotate',
+                        'label'       => 'rotate',
                         'description' => 'rotate_desc',
                     ],
                     'scale_settings'   => [
                         'type'        => 'group',
-                        'title'       => 'scale',
+                        'label'       => 'scale',
                         'description' => 'scale_desc',
                     ],
                     'skew_settings'    => [
                         'type'        => 'group',
-                        'title'       => 'skew',
+                        'label'       => 'skew',
                         'description' => 'skew_desc',
+                    ],
+                    'tween_settings'    => [
+                        'type'        => 'group',
+                        'label'       => 'tween',
+                        'description' => 'tween_desc',
                     ],
 
                     // from/to fields (grouped via astroidgroup attribute)
@@ -223,6 +228,34 @@ class Constants
                         'description' => 'skew_y_desc',
                         'unit'        => 'deg',
                     ],
+                    'duration' => [
+                        'group'       => 'tween_settings',
+                        'type'        => 'range',
+                        'label'       => 'duration_label',
+                        'description' => 'duration_desc',
+                        'default'     => '0.5',
+                        'attributes'  => [
+                            'min'     => '0',
+                            'max'     => '10',
+                            'step'    => '0.1',
+                            'postfix' => 'seconds',
+                        ],
+                    ],
+
+                    'stagger' => [
+                        'group'       => 'tween_settings',
+                        'type'        => 'range',
+                        'label'       => 'stagger_label',
+                        'description' => 'stagger_desc',
+                        'default'     => '0',
+                        'attributes'  => [
+                            'min'     => '0',
+                            'max'     => '10',
+                            'step'    => '0.01',
+                            'postfix' => 'seconds',
+                        ],
+                    ],
+
                 ],
             ],
         ];
@@ -259,10 +292,6 @@ class Constants
                 'fields' => [
                     'general'                       => ['type' => 'group'],
                     'spacing_settings'              => ['type' => 'group', 'label' => 'spacing_settings'],
-                    'animation_settings'            => ['type' => 'group', 'label' => 'animation'],
-                    'transform_settings'            => ['type' => 'group', 'label' => 'transform_settings'],
-                    'animation_background_settings' => ['type' => 'group', 'label' => 'animation_background_settings'],
-                    'device_settings'               => ['type' => 'group', 'label' => 'device_settings'],
                     'custom_settings'               => ['type' => 'group', 'label' => 'custom_settings'],
 
                     'moon_element_tag' => [
@@ -294,68 +323,6 @@ class Constants
                             ''     => 'default',
                             'overflow-hidden' => 'hidden',
                         ],
-                    ],
-                    'animation' => [
-                        'group' => 'animation_settings',
-                        'type' => 'animations',
-                        'attributes' => [
-                            'options' => self::getAnimations(),
-                        ],
-                        'label' => 'animation_type',
-                        'description' => 'animation_type_desc',
-                    ],
-                    'animation_delay' => [
-                        'group' => 'animation_settings',
-                        'type' => 'text',
-                        'label' => 'animation_delay',
-                        'default' => '500',
-                        "attributes" => [
-                            'hint' => '500',
-                        ],
-                        'conditions' => "[animation]!=''",
-                    ],
-                    'animation_duration' => [
-                        'group' => 'animation_settings',
-                        'type' => 'text',
-                        'label' => 'animation_duration',
-                        'default' => '500',
-                        "attributes" => [
-                            'hint' => '500',
-                        ],
-                        'conditions' => "[animation]!=''",
-                    ],
-                    'animation_loop' => [
-                        'group'       => 'animation_settings',
-                        'type'        => 'radio',
-                        'label'       => 'animation_loop',
-                        'description' => 'animation_loop_desc',
-                        'default'     => 0,
-                        "attributes" => [
-                            "role" => "switch"
-                        ],
-                        'conditions'      => "[animation]!=''",
-                    ],
-                    'animation_stagger' => [
-                        'group'       => 'animation_settings',
-                        'type'        => 'range',
-                        'label'       => 'stagger_time',
-                        'description' => 'stagger_time_desc',
-                        'default'     => '200',
-                        'attributes' => [
-                            'min'         => 0,
-                            'max'         => 2000,
-                            'step'        => 1,
-                            'postfix'     => 'milliseconds',
-                        ],
-                        'conditions'      => "[animation]!=''",
-                    ],
-                    'animation_element' => [
-                        'group'       => 'animation_settings',
-                        'type'        => 'text',
-                        'label'       => 'animation_element',
-                        'description' => 'animation_element_desc',
-                        'default'     => '',
-                        'conditions'      => "[animation]!=''",
                     ],
 
                     'max_width' => [
@@ -702,6 +669,99 @@ class Constants
                         ],
                     ],
 
+                    'margin' => [
+                        'group' => 'spacing_settings',
+                        'type' => 'spacing',
+                        'label' => 'margin',
+                    ],
+                    'padding' => [
+                        'group' => 'spacing_settings',
+                        'type' => 'spacing',
+                        'label' => 'padding',
+                    ],
+
+                    'custom_css' => [
+                        'group' => 'custom_settings',
+                        'type' => 'textarea',
+                        'label' => 'custom_css',
+                        'description' => 'custom_css_desc',
+                        "attributes" => [
+                            'code' => 'scss',
+                        ],
+                    ],
+                ]
+            ],
+            'animation-settings' => [
+                'label' => 'animation',
+                'fields' => [
+                    'animation_settings'            => ['type' => 'group', 'label' => 'animation_basic'],
+                    'transform_settings'            => ['type' => 'group', 'label' => 'transform_settings'],
+                    'animation_background_settings' => ['type' => 'group', 'label' => 'animation_background_settings'],
+                    // Animation Settings
+                    'animation' => [
+                        'group' => 'animation_settings',
+                        'type' => 'animations',
+                        'attributes' => [
+                            'options' => self::getAnimations(),
+                        ],
+                        'label' => 'animation_type',
+                        'description' => 'animation_type_desc',
+                    ],
+                    'animation_delay' => [
+                        'group' => 'animation_settings',
+                        'type' => 'text',
+                        'label' => 'animation_delay',
+                        'default' => '500',
+                        "attributes" => [
+                            'hint' => '500',
+                        ],
+                        'conditions' => "[animation]!=''",
+                    ],
+                    'animation_duration' => [
+                        'group' => 'animation_settings',
+                        'type' => 'text',
+                        'label' => 'animation_duration',
+                        'default' => '500',
+                        "attributes" => [
+                            'hint' => '500',
+                        ],
+                        'conditions' => "[animation]!=''",
+                    ],
+                    'animation_loop' => [
+                        'group'       => 'animation_settings',
+                        'type'        => 'radio',
+                        'label'       => 'animation_loop',
+                        'description' => 'animation_loop_desc',
+                        'default'     => 0,
+                        "attributes" => [
+                            "role" => "switch"
+                        ],
+                        'conditions'      => "[animation]!=''",
+                    ],
+                    'animation_stagger' => [
+                        'group'       => 'animation_settings',
+                        'type'        => 'range',
+                        'label'       => 'stagger_time',
+                        'description' => 'stagger_time_desc',
+                        'default'     => '200',
+                        'attributes' => [
+                            'min'         => 0,
+                            'max'         => 2000,
+                            'step'        => 1,
+                            'postfix'     => 'milliseconds',
+                        ],
+                        'conditions'      => "[animation]!=''",
+                    ],
+                    'animation_element' => [
+                        'group'       => 'animation_settings',
+                        'type'        => 'text',
+                        'label'       => 'animation_element',
+                        'description' => 'animation_element_desc',
+                        'default'     => '',
+                        'conditions'      => "[animation]!=''",
+                    ],
+
+                    // Transform Settings
                     'transform_scenes' => [
                         'group' => 'transform_settings',
                         'type'        => 'subform',
@@ -712,16 +772,56 @@ class Constants
                         ],
                     ],
 
+                    'transform_timeline_settings_divider' => [
+                        'group'      => 'transform_settings',
+                        'type'       => 'divider',
+                        'conditions' => "[transform_scenes]!='' AND [transform_scenes]!='[]'",
+                    ],
+
+                    'transform_timeline_settings' => [
+                        'group'       => 'transform_settings',
+                        'type'        => 'heading',
+                        'label'       => 'timeline_settings',
+                        'description' => 'timeline_settings_desc',
+                        'conditions'  => "[transform_scenes]!='' AND [transform_scenes]!='[]'",
+                    ],
+
+                    'transform_element' => [
+                        'group'       => 'transform_settings',
+                        'type'        => 'text',
+                        'label'       => 'animation_element',
+                        'description' => 'animation_element_desc',
+                        'default'     => '',
+                        'conditions'  => "[transform_scenes]!='' AND [transform_scenes]!='[]'",
+                    ],
+
+                    'transform_repeat' => [
+                        'group'       => 'transform_settings',
+                        'type'        => 'range',
+                        'label'       => 'repeat',
+                        'description' => 'repeat_desc',
+                        'default'     => '0',
+                        'attributes'  => [
+                            'min'     => '-1',
+                            'max'     => '10',
+                            'step'    => '1',
+                            'postfix' => 'times',
+                        ],
+                        'conditions'  => "[transform_scenes]!='' AND [transform_scenes]!='[]'",
+                    ],
+
                     'transform_scroll_settings_divider' => [
                         'group' => 'transform_settings',
                         'type'  => 'divider',
+                        'conditions'  => "[transform_scenes]!='' AND [transform_scenes]!='[]'",
                     ],
 
                     'transform_scroll_settings' => [
                         'group'       => 'transform_settings',
                         'type'        => 'heading',
-                        'title'       => 'scroll_settings_title',
+                        'label'       => 'scroll_settings_title',
                         'description' => 'scroll_settings_desc',
+                        'conditions'  => "[transform_scenes]!='' AND [transform_scenes]!='[]'",
                     ],
 
                     'transform_start' => [
@@ -729,6 +829,7 @@ class Constants
                         'type'        => 'text',
                         'label'       => 'start_label',
                         'description' => 'start_desc',
+                        'conditions'  => "[transform_scenes]!='' AND [transform_scenes]!='[]'",
                     ],
 
                     'transform_end' => [
@@ -736,6 +837,7 @@ class Constants
                         'type'        => 'text',
                         'label'       => 'end_label',
                         'description' => 'end_desc',
+                        'conditions'  => "[transform_scenes]!='' AND [transform_scenes]!='[]'",
                     ],
 
                     'transform_scrub' => [
@@ -750,6 +852,7 @@ class Constants
                         'default'     => 2,
                         'label'       => 'scrub_label',
                         'description' => 'scrub_desc',
+                        'conditions'  => "[transform_scenes]!='' AND [transform_scenes]!='[]'",
                     ],
 
                     'transform_pin' => [
@@ -759,6 +862,7 @@ class Constants
                         'default'     => 0,
                         'label'       => 'pin_label',
                         'description' => 'pin_desc',
+                        'conditions'  => "[transform_scenes]!='' AND [transform_scenes]!='[]'",
                     ],
 
                     'transform_pin_spacing' => [
@@ -768,7 +872,7 @@ class Constants
                         'default'     => 1,
                         'label'       => 'pin_spacing_label',
                         'description' => 'pin_spacing_desc',
-                        'conditions'  => "[transform_pin]==1",
+                        'conditions'  => "[transform_scenes]!='' AND [transform_scenes]!='[]' AND [transform_pin]==1",
                     ],
 
                     'transform_markers' => [
@@ -778,6 +882,7 @@ class Constants
                         'default'     => 0,
                         'label'       => 'markers_label',
                         'description' => 'markers_desc',
+                        'conditions'  => "[transform_scenes]!='' AND [transform_scenes]!='[]'",
                     ],
 
                     'transform_toggle_actions' => [
@@ -785,8 +890,10 @@ class Constants
                         'type'        => 'text',
                         'label'       => 'toggle_actions_label',
                         'description' => 'toggle_actions_desc',
+                        'conditions'  => "[transform_scenes]!='' AND [transform_scenes]!='[]'",
                     ],
 
+                    // Animation Background Settings
                     'animation_background_type' => [
                         'group' => 'animation_background_settings',
                         'type'  => 'list',
@@ -866,30 +973,14 @@ class Constants
                             "center bottom" => "center_bottom",
                         ],
                     ],
-
-                    'margin' => [
-                        'group' => 'spacing_settings',
-                        'type' => 'spacing',
-                        'label' => 'margin',
-                    ],
-                    'padding' => [
-                        'group' => 'spacing_settings',
-                        'type' => 'spacing',
-                        'label' => 'padding',
-                    ],
-
-                    'custom_css' => [
-                        'group' => 'custom_settings',
-                        'type' => 'textarea',
-                        'label' => 'custom_css',
-                        'description' => 'custom_css_desc',
-                        "attributes" => [
-                            'code' => 'scss',
-                        ],
-                    ],
-
+                ]
+            ],
+            'visibility-settings' => [
+                'label' => 'visibility',
+                'fields' => [
+                    'general' => ['type' => 'group'],
                     'hideonxs' => [
-                        'group' => 'device_settings',
+                        'group' => 'general',
                         'type' => 'radio',
                         'label' => 'extra_small_devices',
                         'description' => 'extra_small_devices_desc',
@@ -899,7 +990,7 @@ class Constants
                         ],
                     ],
                     'hideonsm' => [
-                        'group' => 'device_settings',
+                        'group' => 'general',
                         'type' => 'radio',
                         'label' => 'small_devices',
                         'description' => 'small_devices_desc',
@@ -909,7 +1000,7 @@ class Constants
                         ],
                     ],
                     'hideonmd' => [
-                        'group' => 'device_settings',
+                        'group' => 'general',
                         'type' => 'radio',
                         'label' => 'medium_devices',
                         'description' => 'medium_devices_desc',
@@ -919,7 +1010,7 @@ class Constants
                         ],
                     ],
                     'hideonlg' => [
-                        'group' => 'device_settings',
+                        'group' => 'general',
                         'type' => 'radio',
                         'label' => 'large_devices',
                         'description' => 'large_devices_desc',
@@ -929,7 +1020,7 @@ class Constants
                         ],
                     ],
                     'hideonxl' => [
-                        'group' => 'device_settings',
+                        'group' => 'general',
                         'type' => 'radio',
                         'label' => 'extra_large_devices',
                         'description' => 'extra_large_devices_desc',
@@ -939,7 +1030,7 @@ class Constants
                         ],
                     ],
                     'hideonxxl' => [
-                        'group' => 'device_settings',
+                        'group' => 'general',
                         'type' => 'radio',
                         'label' => 'extra_extra_large_devices',
                         'description' => 'extra_extra_large_devices_desc',
