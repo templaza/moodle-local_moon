@@ -581,6 +581,46 @@ class Constants
                         'conditions' => "[background_setting] =='gradient'",
                     ],
 
+                    // Parallax
+                    'enable_background_parallax' => [
+                        'group'       => 'general',
+                        'type'        => 'radio',
+                        'label'       => 'enable_parallax',
+                        'description' => 'enable_parallax_desc',
+                        'default'     => '0',
+                        'attributes'  => ["role" => "switch"],
+                    ],
+
+                    'background_parallax_speed' => [
+                        'group'       => 'general',
+                        'type'        => 'range',
+                        'label'       => 'parallax_speed',
+                        'description' => 'parallax_speed_desc',
+                        'attributes' => [
+                            'min'         => 0,
+                            'max'         => 1,
+                            'step'        => 0.01,
+                            'postfix'     => 'seconds',
+                        ],
+                        'conditions'  => "([background_setting]=='image' OR [background_setting]=='video') AND [enable_background_parallax]==1",
+                    ],
+
+                    'background_parallax_scrub' => [
+                        'group'       => 'general',
+                        'type'        => 'range',
+                        'label'       => 'scrub_label',
+                        'description' => 'scrub_desc',
+                        'attributes' => [
+                            'min'         => 0.1,
+                            'max'         => 10,
+                            'step'        => 0.1,
+                            'postfix'     => 'seconds',
+                        ],
+                        'default'     => 2,
+                        'conditions'  => "([background_setting]=='image' OR [background_setting]=='video') AND [enable_background_parallax]==1",
+                    ],
+
+
                     'border_style' => [
                         'group' => 'general',
                         'type' => 'border',

@@ -599,11 +599,27 @@ class Document {
         }
     }
 
+    public function loadParallax(): void
+    {
+        if (!isset($this->_is_loaded['parallax'])) {
+            $this->addScript('/local/moon/assets/parallax/parallax.min.js');
+            $this->_is_loaded['parallax'] = true;
+        }
+    }
+
     public function loadTransform(): void
     {
         if (!isset($this->_is_loaded['transform'])) {
             $this->addScript('/local/moon/assets/transform/js/index.min.js');
             $this->_is_loaded['transform'] = true;
+        }
+    }
+
+    public function loadImagesLoaded(): void
+    {
+        if (!isset($this->_is_loaded['imagesloaded'])) {
+            $this->addScript('/local/moon/assets/imagesloaded/imagesloaded.pkgd.min.js', [], true);
+            $this->_is_loaded['imagesloaded'] = true;
         }
     }
 }

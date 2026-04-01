@@ -275,6 +275,7 @@ class BaseElement
         if (empty($background)) {
             return;
         }
+        $enable_background_parallax = $this->params->get('enable_background_parallax', 0);
         switch ($background) {
             case 'color': // if color background
                 $background_color   =   Style::getColor($this->params->get('background_color', ''));
@@ -292,6 +293,9 @@ class BaseElement
                     $this->style->addCss('background-size', $this->params->get('background_size', ''));
                     $this->style->addCss('background-attachment', $this->params->get('background_attachment', ''));
                     $this->style->addCss('background-position', $this->params->get('background_position', ''));
+                    if ($enable_background_parallax) {
+                        $this->addParallax('image');
+                    }
                     $this->addOverlayColor();
                 }
                 break;
@@ -301,6 +305,9 @@ class BaseElement
                 if (!empty($video)) {
                     $this->addAttribute('data-as-video-bg', $video);
                     $this->addAttribute('data-as-video-poster', $poster);
+                    if ($enable_background_parallax) {
+                        $this->addParallax('video');
+                    }
                     Framework::getDocument()->loadVideoBG();
                     $this->addOverlayColor();
                 }
@@ -308,6 +315,23 @@ class BaseElement
             case 'gradient': // if gradient background
                 $this->style->addCss('background-image', Style::getGradientValue($this->params->get('background_gradient', '')));
                 break;
+        }
+    }
+
+    protected function addParallax($type): void
+    {
+        $parallax_speed = $this->params->get('background_parallax_speed', 0.3);
+        $parallax_scrub = $this->params->get('background_parallax_scrub', 2);
+        $parallax = [];
+        $parallax['type'] = $type;
+        $parallax['speed'] = $parallax_speed;
+        $parallax['scrub'] = $parallax_scrub;
+        $this->addAttribute('data-parallax', htmlspecialchars(json_encode($parallax), ENT_QUOTES, 'UTF-8'));
+        $document = Framework::getDocument();
+        $document->loadGSAP('ScrollTrigger');
+        $document->loadImagesLoaded();
+        if ($type == 'image') {
+            $document->loadParallax();
         }
     }
 

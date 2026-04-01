@@ -1,10 +1,16 @@
-// javascript
+/**
+ * @package   Astroid Framework
+ * @author    Astroid Framework Team https://astroidframe.work
+ * @copyright Copyright (C) 2026 AstroidFrame.work.
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
+ */
 (function () {
     function initASVideoBG(root = document) {
         const nodes = root.querySelectorAll('[data-as-video-bg]');
         nodes.forEach(function (el) {
             const url = el.dataset.asVideoBg;
             const poster = el.dataset.asVideoPoster;
+            const parallax = JSON.parse(el.dataset.parallax || "{}");
             let position = el.dataset.asVideoPosition;
             if (typeof position === 'undefined' || position === '') {
                 position = 'absolute';
@@ -34,12 +40,12 @@
             video.playsInline = true;
             video.loop = true;
             video.src = url;
-            video.classList.add('position-absolute', 'top-50', 'start-50', 'translate-middle', 'w-auto', 'h-auto');
-
+            video.classList.add('position-absolute', 'top-50', 'start-50', 'object-fit-cover');
+            //
             video.style.minWidth = '100%';
-            video.style.minHeight = '100%';
+            video.style.minHeight = '120%';
+            video.style.transform = 'translate(-50%, -50%)';
             video.style.zIndex = '-100';
-            video.style.maxWidth = 'inherit';
 
             container.appendChild(video);
 
@@ -56,6 +62,50 @@
             if (playPromise && typeof playPromise.catch === 'function') {
                 playPromise.catch(function () { /* autoplay blocked — leave muted */ });
             }
+
+            // Parallax
+            if (el.dataset.parallax && parallax.type === 'video' && typeof gsap !== 'undefined') {
+                // parse options from data-parallax (already parsed into `parallax` object)
+                const speed = Number(parallax.speed) || 0.3;
+                const startPercent = -70;
+                const endPercent = (20 * speed)-50;
+                const startTrigger = parallax.start || 'top bottom';
+                const endTrigger = parallax.end || 'bottom top';
+
+                // determine scrub: allow boolean or numeric value
+                let scrub = true;
+                if (typeof parallax.scrub !== 'undefined') {
+                    if (parallax.scrub === false || parallax.scrub === 'false') scrub = false;
+                    else if (parallax.scrub === true || parallax.scrub === 'true') scrub = true;
+                    else scrub = Number(parallax.scrub) || true;
+                }
+
+                // Only proceed if ScrollTrigger is available
+                if (typeof ScrollTrigger !== 'undefined') {
+                    // register plugin once
+                    if (!initASVideoBG._scrollTriggerRegistered) {
+                        gsap.registerPlugin(ScrollTrigger);
+                        initASVideoBG._scrollTriggerRegistered = true;
+                    }
+                    video.style.minHeight = `${120 + (speed * 50)}%`;
+                    imagesLoaded( el, function( instance ) {
+                        // Use will-change for smoother animations
+                        gsap.set(video, { xPercent: -50, yPercent: startPercent, willChange: 'transform' });
+
+                        gsap.to(video, {
+                            yPercent: endPercent,
+                            ease: 'none',
+                            scrollTrigger: {
+                                trigger: el,
+                                start: startTrigger,
+                                end: endTrigger,
+                                scrub: scrub,
+                                invalidateOnRefresh: true
+                            }
+                        });
+                    });
+                }
+            }
         });
     }
 
@@ -65,5 +115,3 @@
         initASVideoBG();
     }
 }());
-
-
