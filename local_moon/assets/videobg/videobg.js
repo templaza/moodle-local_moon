@@ -88,21 +88,19 @@
                         initASVideoBG._scrollTriggerRegistered = true;
                     }
                     video.style.minHeight = `${120 + (speed * 50)}%`;
-                    imagesLoaded( el, function( instance ) {
-                        // Use will-change for smoother animations
-                        gsap.set(video, { xPercent: -50, yPercent: startPercent, willChange: 'transform' });
+                    // Use will-change for smoother animations
+                    gsap.set(video, { xPercent: -50, yPercent: startPercent, y: 0, willChange: 'transform' });
 
-                        gsap.to(video, {
-                            yPercent: endPercent,
-                            ease: 'none',
-                            scrollTrigger: {
-                                trigger: el,
-                                start: startTrigger,
-                                end: endTrigger,
-                                scrub: scrub,
-                                invalidateOnRefresh: true
-                            }
-                        });
+                    gsap.to(video, {
+                        yPercent: endPercent,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: el,
+                            start: startTrigger,
+                            end: endTrigger,
+                            scrub: scrub,
+                            invalidateOnRefresh: true
+                        }
                     });
                 }
             }

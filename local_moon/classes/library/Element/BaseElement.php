@@ -329,7 +329,6 @@ class BaseElement
         $this->addAttribute('data-parallax', htmlspecialchars(json_encode($parallax), ENT_QUOTES, 'UTF-8'));
         $document = Framework::getDocument();
         $document->loadGSAP('ScrollTrigger');
-        $document->loadImagesLoaded();
         if ($type == 'image') {
             $document->loadParallax();
         }

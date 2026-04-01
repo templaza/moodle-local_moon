@@ -22,7 +22,7 @@ class Parallax {
         this.config = config;
         this.type = this.config.type || 'image';
         this.speed = Number(this.config.speed) || 0.3;
-        this.startPercent = -20-50;
+        this.startPercent = -70;
         this.endPercent = (20 * this.speed)-50;
         this.startTrigger = this.config.start || 'top bottom';
         this.endTrigger = this.config.end || 'bottom top';
@@ -62,21 +62,19 @@ class Parallax {
             else scrub = Number(_this.config.scrub) || true;
         }
 
-        imagesLoaded( _this.element, function( instance ) {
-            // Use will-change for smoother animations
-            gsap.set(bgElement, { xPercent: -50, yPercent: _this.startPercent, willChange: 'transform' });
+        // Use will-change for smoother animations
+        gsap.set(bgElement, { xPercent: -50, yPercent: _this.startPercent, y: 0, willChange: 'transform' });
 
-            gsap.to(bgElement, {
-                yPercent: _this.endPercent,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: _this.element,
-                    start: _this.startTrigger,
-                    end: _this.endTrigger,
-                    scrub: scrub,
-                    invalidateOnRefresh: true
-                }
-            });
+        gsap.to(bgElement, {
+            yPercent: _this.endPercent,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: _this.element,
+                start: _this.startTrigger,
+                end: _this.endTrigger,
+                scrub: scrub,
+                invalidateOnRefresh: true
+            }
         });
     }
 }
