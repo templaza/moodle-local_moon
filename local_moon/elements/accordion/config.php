@@ -28,6 +28,11 @@ class MoonElementAccordion extends MoonElement {
             'label' => 'title_options',
         ]);
 
+        $this->addField('icon_options', [
+            'type'  => 'group',
+            'label' => 'icon_options',
+        ]);
+
         $this->addField('content_options', [
             'type'  => 'group',
             'label' => 'content_options',
@@ -43,6 +48,14 @@ class MoonElementAccordion extends MoonElement {
                     'content' => [
                         'type'        => 'editor',
                         'label'       => 'content',
+                    ],
+                    'title_color' => [
+                        'type' => 'color',
+                        'label' => 'color',
+                    ],
+                    'title_bg_color' => [
+                        'type' => 'color',
+                        'label' => 'background_color',
                     ],
                 ]
             ],
@@ -222,6 +235,27 @@ class MoonElementAccordion extends MoonElement {
             'group' => 'title_options',
             'type'  => 'spacing',
             'label' => 'radius',
+        ]);
+        $this->addField('icon_type', [
+            'group'   => 'icon_options',
+            'type'    => 'list',
+            'label'   => 'icon_type',
+            'default' => '',
+            'options' => [
+                ''                   => 'default',
+                'fontawesome'  => 'fontawesome',
+            ],
+        ]);
+        $this->addField('fa_icon', [
+            'group'      => 'icon_options',
+            'type'       => 'icons',
+            'label'      => 'fa_icon',
+            "conditions" => "[icon_type]=='fontawesome'",
+        ]);
+        $this->addField('icon_color', [
+            'group'      => 'icon_options',
+            'type'       => 'color',
+            'label'      => 'icon_color',
         ]);
         $this->addField('content_font_style', [
             'group'   => 'content_options',

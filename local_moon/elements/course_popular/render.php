@@ -47,7 +47,7 @@ if($course_style=='style2'){
         $moonCourse = $moonCourseHandler->moonGetCourseDetails($course->id);
         $courseDescriptionRaw = $moonCourseHandler->moonGetCourseDescription($course->id, 5000);
         $wordsArray = explode(' ', strip_tags($courseDescriptionRaw ?? ''));
-        $first20Words = array_slice($wordsArray, 0, 15);
+        $first20Words = array_slice($wordsArray, 0, 20);
         $moonCourseDescription = implode(' ', $first20Words);
 
         // Rating Control
@@ -83,7 +83,7 @@ if($course_style=='style2'){
                                 <h3 class="coursename text-left">
                                     <a href="'. $moonCourse->url .'">'.$moonCourse->fullName.'</a>
                                 </h3>';
-        $text .='<div class="course-description">'.$moonCourse->summary.'</div>';
+        $text .='<div class="course-description">'.$moonCourseDescription.'</div>';
 
         $studentcount = $moonCourseHandler->moonCountstudents($course->id);
         $sectioncount = $moonCourseHandler->moonCourseSections($course->id);
@@ -197,7 +197,7 @@ if($course_style=='style2'){
                                 <h3 class="coursename text-left">
                                     <a href="'. $moonCourse->url .'">'.$moonCourse->fullName.'</a>
                                 </h3>';
-        $text .='<div class="course-description">'.$moonCourse->summary.'</div>';
+        $text .='<div class="course-description">'.$moonCourseDescription.'</div>';
 
         $studentcount = $moonCourseHandler->moonCountstudents($course->id);
         $sectioncount = $moonCourseHandler->moonCourseSections($course->id);

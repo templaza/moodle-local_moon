@@ -39,6 +39,10 @@ class MoonElementGrid extends MoonElement {
             'label' => 'image_options',
         ]);
 
+        $this->addField('slider_options', [
+            'type'  => 'group',
+            'label' => 'slider_options',
+        ]);
         $this->addField('title_options', [
             'type'  => 'group',
             'label' => 'title_options',
@@ -229,9 +233,14 @@ class MoonElementGrid extends MoonElement {
                             "center bottom" => "center_bottom",
                         ],
                     ],
+                    'item_background_color' => [
+                        'type' => 'color',
+                        'label' => 'background_color',
+                    ],
                 ]
             ],
         ];
+
         $repeater   = new Form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
         $this->addField('grids',  [
             "group" => "general",
@@ -936,7 +945,52 @@ class MoonElementGrid extends MoonElement {
                 "shadow-hover-popout" => "popout",
             ],
         ]);
+        $this->addField('enable_slider', [
+            "group"   => "slider_options",
+            "type"    => "radio",
+            "default" => "0",
+            "attributes" => [
+                "role" => "switch"
+            ],
+            "label"   => "enable_slider",
+        ]);
+        $this->addField('autoplay', [
+            'group'   => 'slider_options',
+            'type'    => 'radio',
+            "attributes" => [
+                "role" => "switch"
+            ],
+            'default' => '0',
+            'label'   => 'autoplay',
+            "conditions" => "[enable_slider]==1",
+        ]);
+        $this->addField('navigation', [
+            'group'   => 'slider_options',
+            'type'    => 'radio',
+            "attributes" => [
+                "role" => "switch"
+            ],
+            'default' => '0',
+            'label'   => 'Navigation',
+            "conditions" => "[enable_slider]==1",
+        ]);
 
+        $this->addField('dot', [
+            'group'   => 'slider_options',
+            'type'    => 'radio',
+            "attributes" => [
+                "role" => "switch"
+            ],
+            'default' => 1,
+            'label'   => 'Dotnav',
+            "conditions" => "[enable_slider]==1",
+        ]);
+        $this->addField('dot_margin', [
+            "group" => "slider_options",
+            "type"  => "spacing",
+            "label" => "dot_margin",
+            'conditions' => "[dot]==1",
+        ]);
         $this->addField('icon_size', [
             "group"   => "icon_options",
             "type"    => "range",

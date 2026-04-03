@@ -20,7 +20,7 @@ if($shape){
     <?php if($shape=='wave'){
         ?>
         <div class="tz-shape-wave uk-width-1-1 <?php echo $shape;?>">
-            <svg class="wave1" xmlns="http://www.w3.org/2000/svg" width="1920" height="208" viewBox="0 0 1920 208">
+            <svg class="wave1" xmlns="http://www.w3.org/2000/svg" width="1920" height="160" viewBox="0 0 1920 160">
                 <path class="wave_fill" id="tzPath_6" data-name="Path 6" d="M1920,1080H0V905.767s118.76,81.6,216.68,0,339.84,74.4,463.68,0,339.84,50.4,429.12,0,336.96,76.8,426.24,0,384.28,0,384.28,0Z" transform="translate(0 -871.634)"/>
             </svg>
         </div>

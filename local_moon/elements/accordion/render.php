@@ -22,14 +22,35 @@ $style          = $style !== '' ? ' '. $style : '';
 
 $collapse       = $params->get('collapse', '');
 $always_open    = $params->get('always_open', 0);
-//$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-//$wa->useScript('bootstrap.collapse');
-echo '<div class="accordion'.$style.'" id="accordion-'.$element->id.'">';
-foreach ($accordions->data as $key => $accordion) {
-    echo '<div class="accordion-item '.$box_shadow . $box_shadow_hover.'">';
 
-    echo '<h2 class="accordion-header">';
-    echo '<button class="accordion-button'.($key != 0 || $collapse === 'close-all' ? ' collapsed' : '').'" type="button" data-bs-toggle="collapse" data-bs-target="#collapse'.$element->id.$key.'" aria-expanded="true" aria-controls="collapse'.$element->id.$key.'">'.$accordion->params->get('title', '').'</button>';
+$icon_type = $params->get('icon_type', '');
+$fa_icon = $params->get('fa_icon', '');
+$icon =$icon_cl= '';
+
+if($icon_type){
+    if($fa_icon){
+        $icon = '<i class="'.$fa_icon.'"></i>';
+        $icon_cl = 'custom_icon';
+    }
+}
+
+echo '<div class="accordion'.$style.' '.$icon_cl.'" id="accordion-'.$element->id.'">';
+foreach ($accordions->data as $key => $accordion) {
+    $title_color  =   Style::getColor($accordion->params->get('title_color', ''));
+    $title_bg_color  =   Style::getColor($accordion->params->get('title_bg_color', ''));
+    if($title_bg_color){
+        $element->style->child('#accordion-'. $accordion -> id .' .accordion-header button')->addCss('background-color', $title_bg_color['light']);
+        $element->style_dark->child('#accordion-'. $accordion -> id .' .accordion-header button')->addCss('background-color', $title_bg_color['dark']);
+    }
+    if($title_color){
+        $element->style->child('#accordion-'. $accordion -> id .' .accordion-header button')->addCss('color', $title_color['light']);
+        $element->style_dark->child('#accordion-'. $accordion -> id .' .accordion-header button')->addCss('color', $title_color['dark']);
+    }
+
+    echo '<div id="accordion-'. $accordion -> id .'" class="accordion-item '.$box_shadow . $box_shadow_hover.'">';
+
+    echo '<h2 class="accordion-header ">';
+    echo '<button class="uk-flex uk-flex-between accordion-button'.($key != 0 || $collapse === 'close-all' ? ' collapsed' : '').'" type="button" data-bs-toggle="collapse" data-bs-target="#collapse'.$element->id.$key.'" aria-expanded="true" aria-controls="collapse'.$element->id.$key.'">'.$accordion->params->get('title', '').' '.$icon.'</button>';
     echo '</h2>';
 
     echo '<div id="collapse'.$element->id.$key.'" class="accordion-collapse collapse'.($key == 0 && $collapse === '' ? ' show' : '').'"'.(!$always_open ? ' data-bs-parent="#accordion-'.$element->id.'"' : '').'>';
@@ -56,6 +77,7 @@ $color_active   = Style::getColor($params->get('color_active', ''));
 $bgcolor        = Style::getColor($params->get('bgcolor', ''));
 $bgcolor_hover  = Style::getColor($params->get('bgcolor_hover', ''));
 $bgcolor_active = Style::getColor($params->get('bgcolor_active', ''));
+$icon_color = Style::getColor($params->get('icon_color', ''));
 
 $bgcolor_content        = Style::getColor($params->get('bgcolor_content', ''));
 
@@ -66,6 +88,9 @@ $element->style->child('.accordion-button')->hover()->addCss('color', $color_hov
 $element->style_dark->child('.accordion-button')->hover()->addCss('color', $color_hover['dark']);
 $element->style->child('.accordion-button:not(.collapsed)')->addCss('color', $color_active['light']);
 $element->style_dark->child('.accordion-button:not(.collapsed)')->addCss('color', $color_active['dark']);
+
+$element->style->child('.accordion-button::after')->addCss('color', $icon_color['light']);
+$element->style_dark->child('.accordion-button::after')->addCss('color', $icon_color['dark']);
 
 // Background color style
 $element->style->child('.accordion-button')->addCss('background-color', $bgcolor['light']);

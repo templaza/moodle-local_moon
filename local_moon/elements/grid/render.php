@@ -148,6 +148,7 @@ $card_hover_transition     = $params->get('card_hover_transition', '');
 $card_hover_transition     = $card_hover_transition !== '' ? ' as-transition-' . $card_hover_transition : '';
 
 $use_masonry        =   $params->get('use_masonry', 0);
+
 $hover_tog_class = $img_tog_class =$img_eff='';
 if (str_starts_with($hover_effect, 'uk-transition')) {
     $hover_tog_class = ' uk-transition-toggle ';
@@ -156,10 +157,29 @@ if (str_starts_with($hover_effect, 'uk-transition')) {
     $img_eff = ' '.$hover_effect.' ';
 }
 
-echo '<div class="row'.($use_masonry ? ' as-masonry as-loading' : '').$row_column_cls.'">';
+$autoplay       = $params->get('autoplay', 0);
+$navigation     = $params->get('navigation', 0);
+$dot            = $params->get('dot', 1);
+$dot_margin     =  $params->get('dot_margin', '');
+
+$attrs_slider[] = '';
+$attrs_slider[] = (  $autoplay  ) ? 'autoplay: 1' : '';
+$attrs_slider   = ' data-uk-slider="' . implode( '; ', array_filter( $attrs_slider ) ) . '"';
+
+$enable_slider        =   $params->get('enable_slider', 0);
+$slider_wrap='';
+if($enable_slider){
+    $slider_wrap = ' uk-slider-items flex-nowrap ';
+    echo '<div class=" p-0 uk-position-relative uk-visible-toggle" tabindex="-1" '.$attrs_slider.'>';
+}
+echo '<div class="row'.($use_masonry ? ' as-masonry as-loading' : '').$row_column_cls.$slider_wrap.'">';
 foreach ($grids->data as $key => $grid) {
     $link_target    =   !empty($grid->params->get('link_target', '')) ? ' target="'.$grid->params->get('link_target', '').'"' : '';
-
+    $item_bg_color  =   Style::getColor($grid->params->get('item_background_color', ''));
+    if($item_bg_color){
+        $element->style->child('#grid-'. $grid -> id .' .card')->addCss('background-color', $item_bg_color['light']);
+        $element->style_dark->child('#grid-'. $grid -> id .' .card')->addCss('background-color', $item_bg_color['dark']);
+    }
     $media          =   '';
     if ($grid->params->get('type', '') == 'image' && $grid->params->get('image', '')) {
         $media      =   '<div class="as-image-cover grid-media position-relative overflow-hidden' . $image_border_radius . $hover_tog_class .$img_eff. $transition . ($media_position == 'bottom' ? ' order-2 ' : '') . '">';
@@ -266,6 +286,17 @@ foreach ($grids->data as $key => $grid) {
     }
 }
 echo '</div>';
+if($navigation){
+    echo '<a class="uk-position-center-left uk_slider_preview uk-position-small uk-hidden-hover" href data-uk-slidenav-previous data-uk-slider-item="previous"></a>
+        <a class="uk-position-center-right uk_slider_next  uk-position-small uk-hidden-hover" href data-uk-slidenav-next data-uk-slider-item="next"></a>';
+}
+if($dot){
+    echo '<ul class="uk-slider-nav uk-dotnav uk-flex-center"></ul>';
+}
+if($enable_slider){
+    echo '</div>';
+}
+
 if ($use_masonry) {
     $document->loadMasonry('#'. $element->id .' .as-masonry');
 }
@@ -378,4 +409,7 @@ if (json_last_error() === JSON_ERROR_NONE && is_array($image_width_data)) {
 }
 if (json_last_error() === JSON_ERROR_NONE && is_array($image_height_data)) {
     $style->child('.grid-media')->addResponsiveCSS('height', $image_height_data, $image_height_data['postfix']);
+}
+if (!empty($dot_margin)) {
+    Style::setSpacingStyle($this->style->child('.uk-dotnav'), $dot_margin, 'margin');
 }
