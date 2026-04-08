@@ -9,6 +9,14 @@ define('AJAX_SCRIPT', true);
 require_once(__DIR__ . '/../../../config.php');
 
 require_login();
+if (!is_siteadmin()) {
+    throw new required_capability_exception(
+        context_system::instance(),
+        'moodle/site:config',
+        'nopermissions',
+        ''
+    );
+}
 require_sesskey();
 $context = context_system::instance();
 $PAGE->set_context($context);

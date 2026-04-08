@@ -6,6 +6,14 @@ use local_moon\library\Helper\Settings;
 use local_moon\library\Helper\Constants;
 
 require_login();
+if (!is_siteadmin()) {
+    throw new required_capability_exception(
+        context_system::instance(),
+        'moodle/site:config',
+        'nopermissions',
+        ''
+    );
+}
 $context = context_system::instance();
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/local/moon/index.php'));
