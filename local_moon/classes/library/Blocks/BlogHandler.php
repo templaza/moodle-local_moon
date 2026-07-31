@@ -45,5 +45,29 @@ class BlogHandler {
         return null;
 
     }
+    function moon_get_blog_comment_count(int $blogid): ?int {
+        global $DB;
+
+        if ($blogid <= 0) {
+            return null;
+        }
+
+        $sql = "SELECT COUNT(*)
+            FROM {comments}
+            WHERE commentarea = :area
+              AND itemid = :itemid";
+
+        $params = [
+            'area'   => 'blog_post',
+            'itemid' => $blogid
+        ];
+
+        try {
+            return (int)$DB->count_records_sql($sql, $params);
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
 }
 
