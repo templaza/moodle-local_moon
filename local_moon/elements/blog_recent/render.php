@@ -29,7 +29,8 @@ $dot_margin =  $params->get('dot_margin', '');
 $meta_margin =  $params->get('meta_margin', '');
 $layout =  $params->get('blog_style', '');
 $limit =  $params->get('blog_limit', 5);
-
+$show_author =  $params->get('show_author', '');
+$show_comment =  $params->get('show_comment', '');
 
 $attrs_slider[] = '';
 $attrs_slider[] = (  $autoplay  ) ? 'autoplay: 1' : '';
@@ -161,10 +162,27 @@ foreach ($entries as $entryid => $entry):
             $words = $summary !== '' ? preg_split('/\s+/', trim($summary)) : [];
             $excerpttxt = !empty($words) ? implode(' ', array_slice($words, 0, 15)) : '';
 
-            $author = core_user::get_user($entry->userid);
 
-            $authorname = fullname($author);
-            $authorurl = (new moodle_url('/user/profile.php', ['id' => $author->id]))->out(false);
+            $meta_html = '';
+            if($show_author || $show_comment){
+                $author = core_user::get_user($entry->userid);
+
+                $authorname = fullname($author);
+                $authorurl = (new moodle_url('/user/profile.php', ['id' => $author->id]))->out(false);
+                $blog_comment = '';
+                $count = $moonBlog->moon_get_blog_comment_count($entryid);
+                if ($count !== null) {
+                    $blog_comment ='<li><i class="fa-solid fa-comments"></i> '.$count.'</li>';
+                }
+                $author_html = '<li><i class="fa-solid fa-user"></i><a href="'.$authorurl.'">'.$authorname.'</a></li>';
+                $meta_html .= '
+                    <ul class="meta">                                                   
+                        '.$author_html.'
+                        '.$blog_comment.'
+                    </ul>
+                ';
+            }
+
             $text .='
                     <div class="blog-slider-item '.$slider_column.' blog-item'.$entryid.' col-md-6">
                         <div class="moon-blog-card">
@@ -182,11 +200,6 @@ foreach ($entries as $entryid => $entry):
                     </div>
                     ';
             }
-            $blog_comment = '';
-            $count = $moonBlog->moon_get_blog_comment_count($entryid);
-            if ($count !== null) {
-                $blog_comment ='<li><i class="fa-solid fa-comments"></i> '.$count.'</li>';
-            }
 
             $text .='
                     <div class="content">                        
@@ -194,11 +207,7 @@ foreach ($entries as $entryid => $entry):
                             <a href="'.$viewblogurl.'">'.format_string($entry->subject).'</a>
                         </h3>
                         <div class="blog-description"> <p>'.format_text($excerpttxt, FORMAT_HTML).'</p></div>                        
-                        <ul class="meta">                                                   
-                            <li><i class="fa-solid fa-user"></i> <a href="'.$authorurl.'">'.$authorname.'</a>
-                            </li>
-                            '.$blog_comment.'
-                        </ul>
+                        '.$meta_html.'
                     </div>
                 ';
             $text .='

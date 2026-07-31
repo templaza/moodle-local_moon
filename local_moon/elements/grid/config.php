@@ -1003,6 +1003,36 @@ class MoonElementGrid extends MoonElement {
             ],
             "default" => 60,
         ]);
+        $this->addField('icon_box_width', [
+            'group'   => 'icon_options',
+            'type'    => 'range',
+            'label'      => 'box_width',
+            "attributes" => [
+                'min'        => 1,
+                'max'        => 2000,
+                'step'       => 1,
+                'responsive' => true,
+                'postfix' => 'px|%',
+            ],
+        ]);
+        $this->addField('icon_box_height', [
+            'group'   => 'icon_options',
+            'type'    => 'range',
+            'label'      => 'box_height',
+            "attributes" => [
+                'min'        => 1,
+                'max'        => 2000,
+                'step'       => 1,
+                'responsive' => true,
+                'postfix' => 'px|%',
+            ],
+        ]);
+        $this->addField('icon_box_radius', [
+            'group' => 'icon_options',
+            'type'  => 'spacing',
+            'name'  => 'icon_box_radius',
+            'label' => 'border_radius',
+        ]);
 
         $this->addField('icon_color', [
             "group" => "icon_options",
@@ -1010,10 +1040,22 @@ class MoonElementGrid extends MoonElement {
             "label" => "color",
         ]);
 
+        $this->addField('icon_bg_color', [
+            "group" => "icon_options",
+            "type"  => "color",
+            "label" => "background_color",
+        ]);
+
         $this->addField('icon_color_hover', [
             "group" => "icon_options",
             "type"  => "color",
             "label" => "color_hover",
+        ]);
+
+        $this->addField('icon_bgcolor_hover', [
+            "group" => "icon_options",
+            "type"  => "color",
+            "label" => "background_color_hover",
         ]);
 
         $this->addField('enable_icon_link', [

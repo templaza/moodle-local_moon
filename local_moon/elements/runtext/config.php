@@ -11,7 +11,7 @@ class MoonElementRuntext extends MoonElement {
             'name' => 'runtext',
             'title' => 'Run Text',
             'description' => 'Run Text Widget of Moodle',
-            'icon' => 'as-icon as-icon-toggle-on',
+            'icon' => 'as-icon as-icon-text-wrap',
             'category' => 'utility',
             'element_type' => 'widget'
         ]);

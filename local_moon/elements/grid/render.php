@@ -86,6 +86,14 @@ $icon_color_hover   =   Style::getColor($params->get('icon_color_hover', ''));
 $style->child('.moon-icon')->hover()->addCss('color', $icon_color_hover['light']);
 $style_dark->child('.moon-icon')->hover()->addCss('color', $icon_color_hover['dark']);
 
+$icon_bg_color         =   Style::getColor($params->get('icon_bg_color', ''));
+$style->child('.moon-icon')->addCss('background-color', $icon_bg_color['light']);
+$style_dark->child('.moon-icon')->addCss('background-color', $icon_bg_color['dark']);
+
+$icon_bgcolor_hover   =   Style::getColor($params->get('icon_bgcolor_hover', ''));
+$style->child('.moon-icon')->hover()->addCss('background-color', $icon_bgcolor_hover['light']);
+$style_dark->child('.moon-icon')->hover()->addCss('background-color', $icon_bgcolor_hover['dark']);
+
 $layout             =   $params->get('layout', 'classic');
 $enable_image_cover =   $params->get('enable_image_cover', 0);
 $image_fullwidth    =   $enable_image_cover ? 1 : $params->get('image_fullwidth', 1);
@@ -360,7 +368,7 @@ if (!empty($media_margin)) {
     Style::setSpacingStyle($element->style->child('.grid-media'), $media_margin,'margin');
 }
 if (!empty($image_radius) && $image_border_radius==' rounded-custom') {
-    Style::setSpacingStyle($element->style->child('.grid-media'), $image_radius,'radius');
+    Style::setSpacingStyle($element->style->child('.grid-media, .tz-img-grid'), $image_radius,'radius');
 }
 if (!empty($card_custom_radius) && $border_radius=='custom') {
     Style::setSpacingStyle($element->style->child('.card'), $card_custom_radius,'radius');
@@ -412,4 +420,24 @@ if (json_last_error() === JSON_ERROR_NONE && is_array($image_height_data)) {
 }
 if (!empty($dot_margin)) {
     Style::setSpacingStyle($this->style->child('.uk-dotnav'), $dot_margin, 'margin');
+}
+
+
+$icon_box_width      =   $params->get('icon_box_width', '');
+$icon_box_height      =   $params->get('icon_box_height', '');
+
+$icon_box_height_data = json_decode($icon_box_height, true);
+$icon_box_width_data = json_decode($icon_box_width, true);
+if (json_last_error() === JSON_ERROR_NONE && is_array($icon_box_width_data)) {
+    $style->child('.moon-icon')->addResponsiveCSS('width', $icon_box_width_data, $icon_box_width_data['postfix']);
+    $style->child('.moon-icon')->addCss('display', 'flex');
+    $style->child('.moon-icon')->addCss('align-items', 'center');
+    $style->child('.moon-icon')->addCss('justify-content', 'center');
+}
+if (json_last_error() === JSON_ERROR_NONE && is_array($icon_box_height_data)) {
+    $style->child('.moon-icon')->addResponsiveCSS('height', $icon_box_height_data, $icon_box_height_data['postfix']);
+}
+$icon_box_radius      =   $params->get('icon_box_radius', '');
+if (!empty($icon_box_radius)) {
+    Style::setSpacingStyle($element->style->child('.moon-icon'), $icon_box_radius,'radius');
 }

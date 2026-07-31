@@ -241,10 +241,10 @@ foreach ($testimonials->getData() as $key => $testimonial) {
     if ($avatar_position == 'top') {
         echo '<div class="d-flex align-items-start">';
         echo $media;
-        if (!empty($testimonial->params->get('designation', '')) && $designation_position == 'before') {
-            echo '<div class="as-author-designation">' . $testimonial->params->get('designation', '') . '</div>';
-        }
         echo '<div class="top-name">';
+            if (!empty($testimonial->params->get('designation', '')) && $designation_position == 'before') {
+                echo '<div class="as-author-designation">' . $testimonial->params->get('designation', '') . '</div>';
+            }
             if (!empty($testimonial->params->get('title', ''))) {
                 echo '<'.$title_html_element.' class="as-author-name">'. $testimonial->params->get('title', '') . '</'.$title_html_element.'>';
             }
@@ -274,6 +274,11 @@ foreach ($testimonials->getData() as $key => $testimonial) {
     }
     if (!empty($testimonial->params->get('message', ''))) {
         echo '<div class="as-author-message">' . $testimonial->params->get('message', '') . '</div>';
+    }
+    if ($avatar_position == 'top') {
+        if($testimonial_icon){
+            echo '<div class="testimonial_icon text-right"><i class="'.$testimonial_icon.'"></i></div>';
+        }
     }
     if ($avatar_position == 'bottom') {
         echo $media;
@@ -501,5 +506,12 @@ if($border_radius  == 'custom'){
             Style::setSpacingStyle($element->style->child('.card'), $card_radius_custom,'radius');
         }
     }
-
+}
+$image_margin   =   $params->get('image_margin', '');
+if (!empty($image_margin)) {
+    Style::setSpacingStyle($element->style->child('.as-author-avatar'), $image_margin, 'margin');
+}
+$icon_margin   =   $params->get('icon_margin', '');
+if (!empty($image_margin)) {
+    Style::setSpacingStyle($element->style->child('.testimonial_icon'), $icon_margin, 'margin');
 }

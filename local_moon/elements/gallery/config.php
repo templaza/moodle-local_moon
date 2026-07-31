@@ -11,7 +11,7 @@ class MoonElementGallery extends MoonElement {
             'name' => 'gallery',
             'title' => 'Gallery',
             'description' => 'Gallery Widget of Moodle',
-            'icon' => 'as-icon as-icon-spotlights',
+            'icon' => 'as-icon as-icon-folder-picture',
             'category' => 'media,utility',
             'element_type' => 'widget'
         ]);

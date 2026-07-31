@@ -556,6 +556,7 @@ $string['element_overflow'] = 'Overflow';
 $string['element_tag_desc'] = 'Select the HTML tag for the element.';
 $string['typography'] = 'Typography';
 $string['grid_options'] = 'Grid Options';
+$string['readmore_options'] = 'Button Options';
 $string['card_options'] = 'Card Options';
 $string['slider_options'] = 'Slider Options';
 $string['avatar_options'] = 'Avatar Options';
@@ -824,6 +825,7 @@ $string['interval'] = 'Interval';
 $string['indicators'] = 'Indicators';
 $string['navigation'] = 'Navigation';
 $string['nav_position'] = 'Navigation Position';
+$string['nav_margin'] = 'Navigation wrap margin';
 $string['inside'] = 'Inside';
 $string['outside'] = 'Outside';
 $string['dot_nav'] = 'Dot Navigation';
@@ -973,6 +975,7 @@ $string['slider_padding'] = 'Slider Padding';
 // blog recent
 
 $string['blog_date'] = 'Posted on';
+$string['show_author'] = 'Show Author';
 
 // circle text
 
@@ -989,3 +992,7 @@ $string['mask_styles'] = 'Mask Options';
 $string['mask'] = 'Mask';
 $string['mask_scale'] = 'Mask Scale';
 $string['repeat'] = 'Repeat';
+$string['box_width'] = 'Box Width';
+$string['box_height'] = 'Box Height';
+$string['spacing_options'] = 'Spacing Options';
+$string['border_hover'] = 'Border Hover';

@@ -229,7 +229,7 @@ class MoonElementList extends MoonElement {
         $this->addField('title_heading_margin', [
             "group" => "title_options",
             "type"  => "spacing",
-            "label"  => "title_heading_margin",
+            "label"  => "margin",
         ]);
         $this->addField('icon_color', [
             'group' => 'icon_options',

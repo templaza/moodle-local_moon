@@ -102,9 +102,8 @@ $element->style_dark->child('.accordion-button:not(.collapsed)')->addCss('backgr
 
 //content background
 
-$element->style->child('.accordion-body')->addCss('background-color', $bgcolor['light']);
-$element->style_dark->child('.accordion-body')->addCss('background-color', $bgcolor['dark']);
-
+$element->style->child('.accordion-body')->addCss('background-color', $bgcolor_content['light']);
+$element->style_dark->child('.accordion-body')->addCss('background-color', $bgcolor_content['dark']);
 
 $title_padding   =   $params->get('title_padding', '');
 if (!empty($title_padding)) {

@@ -18,6 +18,7 @@ class MoonElementHeading extends MoonElement {
         $this->setFieldSet('general-settings');
 
         $this->addField('meta_options',  [
+            "group"       => "meta_options",
             "type" => "group",
             "label" => "meta_options",
         ]);

@@ -579,141 +579,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('avatar_column_responsive', [
-            'group'      => 'card_options',
-            'type'       => 'radio',
-            'attributes' => ['width'      => 'full'],
-            'default'    => 'lg',
-            'conditions' => "[avatar_position]=='left' OR [avatar_position]=='right'",
-            'options'    => [
-                'xxl' => 'xxl_icon',
-                'xl'  => 'xl_icon',
-                'lg'  => 'lg_icon',
-                'md'  => 'md_icon',
-                'sm'  => 'sm_icon',
-                'xs'  => 'xs_icon',
-            ],
-        ]);
 
-        $this->addField('xxl_column_avatar', [
-            'group'      => 'card_options',
-            'type'       => 'list',
-            'label'      => 'xxl_column_avatar_width',
-            'default'    => '',
-            'conditions' => "[avatar_column_responsive]=='xxl' AND ([avatar_position]=='left' OR [avatar_position]=='right')",
-            'options'    => [
-                ''  => 'inherit',
-                '12' => '1/1',
-                '6'  => '1/2',
-                '4'  => '1/3',
-                '8'  => '2/3',
-                '3'  => '1/4',
-                '9'  => '3/4',
-                '2'  => '1/6',
-                '5'  => '5/12',
-                '7'  => '7/12',
-            ],
-        ]);
-
-        $this->addField('xl_column_avatar', [
-            'group'      => 'card_options',
-            'type'       => 'list',
-            'label'      => 'xl_column_avatar_width',
-            'default'    => '',
-            'conditions' => "[avatar_column_responsive]=='xl' AND ([avatar_position]=='left' OR [avatar_position]=='right')",
-            'options'    => [
-                ''  => 'inherit',
-                '12' => '1/1',
-                '6'  => '1/2',
-                '4'  => '1/3',
-                '8'  => '2/3',
-                '3'  => '1/4',
-                '9'  => '3/4',
-                '2'  => '1/6',
-                '5'  => '5/12',
-                '7'  => '7/12',
-            ],
-        ]);
-
-        $this->addField('lg_column_avatar', [
-            'group'      => 'card_options',
-            'type'       => 'list',
-            'label'      => 'lg_column_avatar_width',
-            'default'    => '4',
-            'conditions' => "[avatar_column_responsive]=='lg' AND ([avatar_position]=='left' OR [avatar_position]=='right')",
-            'options'    => [
-                ''  => 'inherit',
-                '12' => '1/1',
-                '6'  => '1/2',
-                '4'  => '1/3',
-                '8'  => '2/3',
-                '3'  => '1/4',
-                '9'  => '3/4',
-                '2'  => '1/6',
-                '5'  => '5/12',
-                '7'  => '7/12',
-            ],
-        ]);
-
-        $this->addField('md_column_avatar', [
-            'group'      => 'card_options',
-            'type'       => 'list',
-            'label'      => 'md_column_avatar_width',
-            'default'    => '12',
-            'conditions' => "[avatar_column_responsive]=='md' AND ([avatar_position]=='left' OR [avatar_position]=='right')",
-            'options'    => [
-                ''  => 'inherit',
-                '12' => '1/1',
-                '6'  => '1/2',
-                '4'  => '1/3',
-                '8'  => '2/3',
-                '3'  => '1/4',
-                '9'  => '3/4',
-                '2'  => '1/6',
-                '5'  => '5/12',
-                '7'  => '7/12',
-            ],
-        ]);
-
-        $this->addField('sm_column_avatar', [
-            'group'      => 'card_options',
-            'type'       => 'list',
-            'label'      => 'sm_column_avatar_width',
-            'default'    => '12',
-            'conditions' => "[avatar_column_responsive]=='sm' AND ([avatar_position]=='left' OR [avatar_position]=='right')",
-            'options'    => [
-                ''  => 'inherit',
-                '12' => '1/1',
-                '6'  => '1/2',
-                '4'  => '1/3',
-                '8'  => '2/3',
-                '3'  => '1/4',
-                '9'  => '3/4',
-                '2'  => '1/6',
-                '5'  => '5/12',
-                '7'  => '7/12',
-            ],
-        ]);
-
-        $this->addField('xs_column_avatar', [
-            'group'      => 'card_options',
-            'type'       => 'list',
-            'label'      => 'xs_column_avatar_width',
-            'default'    => '12',
-            'conditions' => "[avatar_column_responsive]=='xs' AND ([avatar_position]=='left' OR [avatar_position]=='right')",
-            'options'    => [
-                ''  => 'inherit',
-                '12' => '1/1',
-                '6'  => '1/2',
-                '4'  => '1/3',
-                '8'  => '2/3',
-                '3'  => '1/4',
-                '9'  => '3/4',
-                '2'  => '1/6',
-                '5'  => '5/12',
-                '7'  => '7/12',
-            ],
-        ]);
 
         $this->addField('enable_grid_match', [
             'group'      => 'card_options',
@@ -1104,6 +970,141 @@ class MoonElementTestimonials extends MoonElement {
                 'right'  => 'right',
             ],
         ]);
+        $this->addField('avatar_column_responsive', [
+            'group'      => 'card_options',
+            'type'       => 'radio',
+            'attributes' => ['width'      => 'full'],
+            'default'    => 'lg',
+            'conditions' => "[avatar_position]=='left' OR [avatar_position]=='right'",
+            'options'    => [
+                'xxl' => 'xxl_icon',
+                'xl'  => 'xl_icon',
+                'lg'  => 'lg_icon',
+                'md'  => 'md_icon',
+                'sm'  => 'sm_icon',
+                'xs'  => 'xs_icon',
+            ],
+        ]);
+
+        $this->addField('xxl_column_avatar', [
+            'group'      => 'card_options',
+            'type'       => 'list',
+            'label'      => 'xxl_column_avatar_width',
+            'default'    => '',
+            'conditions' => "[avatar_column_responsive]=='xxl' AND ([avatar_position]=='left' OR [avatar_position]=='right')",
+            'options'    => [
+                ''  => 'inherit',
+                '12' => '1/1',
+                '6'  => '1/2',
+                '4'  => '1/3',
+                '8'  => '2/3',
+                '3'  => '1/4',
+                '9'  => '3/4',
+                '2'  => '1/6',
+                '5'  => '5/12',
+                '7'  => '7/12',
+            ],
+        ]);
+
+        $this->addField('xl_column_avatar', [
+            'group'      => 'card_options',
+            'type'       => 'list',
+            'label'      => 'xl_column_avatar_width',
+            'default'    => '',
+            'conditions' => "[avatar_column_responsive]=='xl' AND ([avatar_position]=='left' OR [avatar_position]=='right')",
+            'options'    => [
+                ''  => 'inherit',
+                '12' => '1/1',
+                '6'  => '1/2',
+                '4'  => '1/3',
+                '8'  => '2/3',
+                '3'  => '1/4',
+                '9'  => '3/4',
+                '2'  => '1/6',
+                '5'  => '5/12',
+                '7'  => '7/12',
+            ],
+        ]);
+
+        $this->addField('lg_column_avatar', [
+            'group'      => 'card_options',
+            'type'       => 'list',
+            'label'      => 'lg_column_avatar_width',
+            'default'    => '4',
+            'conditions' => "[avatar_column_responsive]=='lg' AND ([avatar_position]=='left' OR [avatar_position]=='right')",
+            'options'    => [
+                ''  => 'inherit',
+                '12' => '1/1',
+                '6'  => '1/2',
+                '4'  => '1/3',
+                '8'  => '2/3',
+                '3'  => '1/4',
+                '9'  => '3/4',
+                '2'  => '1/6',
+                '5'  => '5/12',
+                '7'  => '7/12',
+            ],
+        ]);
+
+        $this->addField('md_column_avatar', [
+            'group'      => 'card_options',
+            'type'       => 'list',
+            'label'      => 'md_column_avatar_width',
+            'default'    => '12',
+            'conditions' => "[avatar_column_responsive]=='md' AND ([avatar_position]=='left' OR [avatar_position]=='right')",
+            'options'    => [
+                ''  => 'inherit',
+                '12' => '1/1',
+                '6'  => '1/2',
+                '4'  => '1/3',
+                '8'  => '2/3',
+                '3'  => '1/4',
+                '9'  => '3/4',
+                '2'  => '1/6',
+                '5'  => '5/12',
+                '7'  => '7/12',
+            ],
+        ]);
+
+        $this->addField('sm_column_avatar', [
+            'group'      => 'card_options',
+            'type'       => 'list',
+            'label'      => 'sm_column_avatar_width',
+            'default'    => '12',
+            'conditions' => "[avatar_column_responsive]=='sm' AND ([avatar_position]=='left' OR [avatar_position]=='right')",
+            'options'    => [
+                ''  => 'inherit',
+                '12' => '1/1',
+                '6'  => '1/2',
+                '4'  => '1/3',
+                '8'  => '2/3',
+                '3'  => '1/4',
+                '9'  => '3/4',
+                '2'  => '1/6',
+                '5'  => '5/12',
+                '7'  => '7/12',
+            ],
+        ]);
+
+        $this->addField('xs_column_avatar', [
+            'group'      => 'card_options',
+            'type'       => 'list',
+            'label'      => 'xs_column_avatar_width',
+            'default'    => '12',
+            'conditions' => "[avatar_column_responsive]=='xs' AND ([avatar_position]=='left' OR [avatar_position]=='right')",
+            'options'    => [
+                ''  => 'inherit',
+                '12' => '1/1',
+                '6'  => '1/2',
+                '4'  => '1/3',
+                '8'  => '2/3',
+                '3'  => '1/4',
+                '9'  => '3/4',
+                '2'  => '1/6',
+                '5'  => '5/12',
+                '7'  => '7/12',
+            ],
+        ]);
 
         $this->addField('image_max_width', [
             'group'      => 'avatar_options',
@@ -1111,6 +1112,11 @@ class MoonElementTestimonials extends MoonElement {
             'label'      => 'max_width',
             'default'    => '200',
             'attributes' => ['min' => 1, 'max' => 1200, 'step' => 1, 'postfix' => 'px'],
+        ]);
+        $this->addField('image_margin', [
+            'group' => 'avatar_options',
+            'type'  => 'spacing',
+            'label' => 'margin',
         ]);
 
         $this->addField('image_border', [
@@ -1326,6 +1332,11 @@ class MoonElementTestimonials extends MoonElement {
                 'postfix'    => 'px',
             ],
             'default'    => 30,
+        ]);
+        $this->addField('icon_margin', [
+            'group' => 'icon_options',
+            'type'  => 'spacing',
+            'label' => 'margin',
         ]);
         $this->addField('testimonial_icon_color', [
             "group"      => "icon_options",

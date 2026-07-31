@@ -10,7 +10,7 @@ class MoonElementBlog_Recent extends MoonElement {
             'name' => 'blog_recent',
             'title' => 'Blog Recent',
             'description' => 'get latest blog',
-            'icon' => 'fa-solid fa-book-open',
+            'icon' => 'as-icon as-icon-list4',
             'category' => 'Blog',
             'element_type' => 'widget'
         ]);
@@ -126,6 +126,24 @@ class MoonElementBlog_Recent extends MoonElement {
                 'value' => Font::$get_default_font_value
             ],
         ]);
+        $this->addField('show_author', [
+            'group'   => 'meta_options',
+            'type'    => 'radio',
+            "attributes" => [
+                "role" => "switch"
+            ],
+            'default' => '1',
+            'label'   => 'show_author',
+        ]);
+        $this->addField('show_comment', [
+            'group'   => 'meta_options',
+            'type'    => 'radio',
+            "attributes" => [
+                "role" => "switch"
+            ],
+            'default' => '1',
+            'label'   => 'show_comment',
+        ]);
 
         $this->addField('meta_margin', [
             "group" => "meta_options",
@@ -135,7 +153,7 @@ class MoonElementBlog_Recent extends MoonElement {
         $this->addField('image_border_radius', [
             'group' => 'image_options',
             'type'  => 'spacing',
-            'label' => 'radius',
+            'label' => 'border_radius',
         ]);
         $this->addField('item_bg_color', [
             "group"      => "item_options",
@@ -150,7 +168,7 @@ class MoonElementBlog_Recent extends MoonElement {
         $this->addField('item_border_radius', [
             'group' => 'item_options',
             'type'  => 'spacing',
-            'label' => 'radius',
+            'label' => 'border_radius',
         ]);
         $this->addField('item_content_padding', [
             'group'      => 'item_options',

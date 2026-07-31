@@ -36,7 +36,6 @@ $image_width      =   $params->get('image_width', '');
 
 $image_height_data = json_decode($image_height, true);
 $image_width_data = json_decode($image_width, true);
-
 if (json_last_error() === JSON_ERROR_NONE && is_array($image_width_data)) {
     $style->child('.moon-image-element')->addResponsiveCSS('width', $image_width_data, $image_width_data['postfix']);
 }
@@ -44,7 +43,7 @@ if (json_last_error() === JSON_ERROR_NONE && is_array($image_height_data)) {
     $style->child('.moon-image-element')->addResponsiveCSS('height', $image_height_data, $image_height_data['postfix']);
 }
 $cus_cl = '';
-if(isset($image_height) && isset($image_width)){
+if($image_width_data['global'] && $image_height_data['global']){
     $cus_cl = ' custom-size ';
 }
 

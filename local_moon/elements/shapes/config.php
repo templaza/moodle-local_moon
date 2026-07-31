@@ -11,7 +11,7 @@ class MoonElementShapes extends MoonElement {
             'name' => 'shapes',
             'title' => 'Shape',
             'description' => 'Add Shape for block',
-            'icon' => 'as-icon as-icon-toggle-on',
+            'icon' => 'as-icon as-icon-puzzle',
             'category' => 'utility',
             'element_type' => 'widget'
         ]);

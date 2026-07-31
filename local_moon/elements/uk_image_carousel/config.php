@@ -4,14 +4,14 @@ use local_moon\library\Helper\MoonElement;
 use local_moon\library\Helper\Form;
 use local_moon\library\Helper\Constants;
 use local_moon\library\Helper\Font;
-class MoonElementUk_Slider extends MoonElement {
+class MoonElementUk_Image_Carousel extends MoonElement {
     public function __construct()
     {
         parent::__construct([
-            'name' => 'uk_slider',
-            'title' => 'Uk Slider',
-            'description' => 'Uk Slider Widget of Moodle',
-            'icon' => 'as-icon as-icon-camera-flip',
+            'name' => 'uk_image_carousel',
+            'title' => 'Uk Image Carousel',
+            'description' => 'Uk Image Carousel Widget of Moodle',
+            'icon' => 'as-icon as-icon-pictures',
             'category' => 'media,utility',
             'element_type' => 'widget'
         ]);
@@ -21,7 +21,7 @@ class MoonElementUk_Slider extends MoonElement {
 
         $this->addField('slideshow_options', [
             'type'  => 'group',
-            'label' => 'slideshow',
+            'label' => 'Slider',
         ]);
         $this->addField('navigation_options', [
             'type'  => 'group',
@@ -32,11 +32,6 @@ class MoonElementUk_Slider extends MoonElement {
             'label' => 'dot_options',
         ]);
 
-        $this->addField('overlay_options', [
-            'type'  => 'group',
-            'label' => 'overlay',
-        ]);
-
         $this->addField('title_options', [
             'type'  => 'group',
             'label' => 'title',
@@ -44,6 +39,10 @@ class MoonElementUk_Slider extends MoonElement {
         $this->addField('image_options', [
             'type'  => 'group',
             'label' => 'Image',
+        ]);
+        $this->addField('overlay_options', [
+            'type'  => 'group',
+            'label' => 'overlay',
         ]);
 
         $this->addField('meta_options', [
@@ -56,37 +55,14 @@ class MoonElementUk_Slider extends MoonElement {
             'label' => 'content',
         ]);
 
-        $this->addField('readmore_options', [
-            'type'  => 'group',
-            'label' => 'readmore',
-        ]);
         $repeater_options = [
             'general-settings' => [
                 'label' => 'general',
                 'fields' => [
-                    'image_type' => [
-                        'type'       => 'list',
-                        'label'      => 'image_type',
-                        'default'    => '',
-                        'options'    => [
-                            ''       => 'Image',
-                            'video' => 'Video',
-                        ],
-                    ],
                     'image' => [
                         'type'    => 'media',
                         'label'   => 'TPL_ASTROID_SELECT_IMAGE',
                         'dynamic' => true,
-                        "conditions" => "[image_type]==''",
-                    ],
-                    'video' => [
-                        'type'    => 'text',
-                        'label'   => 'video_url',
-                        "attributes" => [
-                            'hint'    => 'https://www.youtube.com/watch?v=gEbbIlMXE1Y',
-                            'dynamic' => true,
-                        ],
-                        "conditions" => "[image_type]=='video'",
                     ],
                     'title' => [
                         'type'    => 'text',
@@ -144,84 +120,332 @@ class MoonElementUk_Slider extends MoonElement {
                 'form'    =>  $repeater->renderJson('subform')
             ],
         ]);
-
-
-        $this->addField('slider_style', [
-            'group'      => 'slideshow_options',
-            'type'    => 'list',
-            'label'      => 'Style',
-            'options'         => array(
-                'style1' => 'Style1',
-                'style2' => 'Style2',
-            ),
-            'default'    => 'style1',
-        ]);
-
-        $this->addField('slider_height', [
-            'group'      => 'slideshow_options',
-            'type'    => 'list',
-            'label'      => 'height',
-            "description" => "uk_slider_height",
-            'options'         => array(
-                '' => 'Auto',
-                'full' => 'Viewport',
-                'percent' => 'Viewport (Minus 20%)',
-                'section' => 'Viewport (Minus the following section)',
-            ),
-            'default'    => '',
-        ]);
-
-        $this->addField('min_height', [
-            'group'   => 'slideshow_options',
-            'type'    => 'range',
-            'label'      => 'min_height',
+        $this->addField('column_responsive', [
+            "group"   => "slideshow_options",
+            "type"    => "radio",
             "attributes" => [
-                'min'        => 1,
-                'max'        => 1200,
-                'step'       => 1,
-                'responsive' => false,
-                'postfix' => 'px',
+                "width"   => "full",
             ],
-            'default' => 600,
+            "default" => "lg",
+            "options" => [
+                'xxl' => 'xxl_icon',
+                'xl'  => 'xl_icon',
+                'lg'  => 'lg_icon',
+                'md'  => 'md_icon',
+                'sm'  => 'sm_icon',
+                'xs'  => 'xs_icon',
+            ],
         ]);
 
-        $this->addField('max_height', [
-            'group'   => 'slideshow_options',
-            'type'    => 'range',
-            'label'      => 'max_height',
-            "attributes" => [
-                'min'        => 1,
-                'max'        => 2000,
-                'step'       => 1,
-                'responsive' => false,
-                'postfix' => 'px',
+        $this->addField('xxl_column', [
+            "group"      => "slideshow_options",
+            "type"       => "list",
+            "label"      => "xxl_column",
+            "default"    => "",
+            "conditions" => "[column_responsive]=='xxl'",
+            "options"    => [
+                ""  => "inherit",
+                '1' => 'one_column',
+                '2' => 'two_columns',
+                '3' => 'three_columns',
+                '4' => 'four_columns',
+                '5' => 'five_columns',
+                '6' => 'six_columns',
             ],
-            'default' => 800,
         ]);
+
+        $this->addField('xl_column', [
+            "group"      => "slideshow_options",
+            "type"       => "list",
+            "label"      => "xl_column",
+            "default"    => "",
+            "conditions" => "[column_responsive]=='xl'",
+            "options"    => [
+                ""  => "inherit",
+                '1' => 'one_column',
+                '2' => 'two_columns',
+                '3' => 'three_columns',
+                '4' => 'four_columns',
+                '5' => 'five_columns',
+                '6' => 'six_columns',
+            ],
+        ]);
+
+        $this->addField('lg_column', [
+            "group"      => "slideshow_options",
+            "type"       => "list",
+            "label"      => "lg_column",
+            "default"    => "3",
+            "conditions" => "[column_responsive]=='lg'",
+            "options"    => [
+                ""  => "inherit",
+                '1' => 'one_column',
+                '2' => 'two_columns',
+                '3' => 'three_columns',
+                '4' => 'four_columns',
+                '5' => 'five_columns',
+                '6' => 'six_columns',
+            ],
+        ]);
+
+        $this->addField('md_column', [
+            "group"      => "slideshow_options",
+            "type"       => "list",
+            "label"      => "md_column",
+            "default"    => "1",
+            "conditions" => "[column_responsive]=='md'",
+            "options"    => [
+                ""  => "inherit",
+                '1' => 'one_column',
+                '2' => 'two_columns',
+                '3' => 'three_columns',
+                '4' => 'four_columns',
+                '5' => 'five_columns',
+                '6' => 'six_columns',
+            ],
+        ]);
+
+        $this->addField('sm_column', [
+            "group"      => "slideshow_options",
+            "type"       => "list",
+            "label"      => "sm_column",
+            "default"    => "1",
+            "conditions" => "[column_responsive]=='sm'",
+            "options"    => [
+                ""  => "inherit",
+                '1' => 'one_column',
+                '2' => 'two_columns',
+                '3' => 'three_columns',
+                '4' => 'four_columns',
+                '5' => 'five_columns',
+                '6' => 'six_columns',
+            ],
+        ]);
+
+        $this->addField('xs_column', [
+            "group"      => "slideshow_options",
+            "type"       => "list",
+            "label"      => "xs_column",
+            "default"    => "1",
+            "conditions" => "[column_responsive]=='xs'",
+            "options"    => [
+                ""  => "inherit",
+                '1' => 'one_column',
+                '2' => 'two_columns',
+                '3' => 'three_columns',
+                '4' => 'four_columns',
+                '5' => 'five_columns',
+                '6' => 'six_columns',
+            ],
+        ]);
+
+        $this->addField('row_gutter_xxl', [
+            "group"      => "slideshow_options",
+            "type"       => "list",
+            "label"      => "row_gutter_xxl",
+            "default"    => "",
+            "conditions" => "[column_responsive]=='xxl'",
+            "options"    => [
+                ""  => "inherit",
+                "0" => "Collapse",
+                "1" => "X-Small",
+                "2" => "Small",
+                "3" => "Medium",
+                "4" => "Large",
+                "5" => "X-Large",
+            ],
+        ]);
+
+        $this->addField('row_gutter_xl', [
+            "group"      => "slideshow_options",
+            "type"       => "list",
+            "label"      => "row_gutter_xl",
+            "default"    => "",
+            "conditions" => "[column_responsive]=='xl'",
+            "options"    => [
+                ""  => "inherit",
+                "0" => "Collapse",
+                "1" => "X-Small",
+                "2" => "Small",
+                "3" => "Medium",
+                "4" => "Large",
+                "5" => "X-Large",
+            ],
+        ]);
+
+        $this->addField('row_gutter_lg', [
+            "group"      => "slideshow_options",
+            "type"       => "list",
+            "label"      => "row_gutter_lg",
+            "default"    => "4",
+            "conditions" => "[column_responsive]=='lg'",
+            "options"    => [
+                ""  => "inherit",
+                "0" => "Collapse",
+                "1" => "X-Small",
+                "2" => "Small",
+                "3" => "Medium",
+                "4" => "Large",
+                "5" => "X-Large",
+            ],
+        ]);
+
+        $this->addField('row_gutter_md', [
+            "group"      => "slideshow_options",
+            "type"       => "list",
+            "label"      => "row_gutter_md",
+            "default"    => "3",
+            "conditions" => "[column_responsive]=='md'",
+            "options"    => [
+                ""  => "inherit",
+                "0" => "Collapse",
+                "1" => "X-Small",
+                "2" => "Small",
+                "3" => "Medium",
+                "4" => "Large",
+                "5" => "X-Large",
+            ],
+        ]);
+
+        $this->addField('row_gutter_sm', [
+            "group"      => "slideshow_options",
+            "type"       => "list",
+            "label"      => "row_gutter_sm",
+            "default"    => "3",
+            "conditions" => "[column_responsive]=='sm'",
+            "options"    => [
+                ""  => "inherit",
+                "0" => "Collapse",
+                "1" => "X-Small",
+                "2" => "Small",
+                "3" => "Medium",
+                "4" => "Large",
+                "5" => "X-Large",
+            ],
+        ]);
+
+        $this->addField('row_gutter', [
+            "group"      => "slideshow_options",
+            "type"       => "list",
+            "label"      => "row_gutter_xs",
+            "default"    => "3",
+            "conditions" => "[column_responsive]=='xs'",
+            "options"    => [
+                "0" => "Collapse",
+                "1" => "X-Small",
+                "2" => "Small",
+                "3" => "Medium",
+                "4" => "Large",
+                "5" => "X-Large",
+            ],
+        ]);
+
+        $this->addField('column_gutter_xxl', [
+            "group"      => "slideshow_options",
+            "type"       => "list",
+            "label"      => "column_gutter_xxl",
+            "default"    => "",
+            "conditions" => "[column_responsive]=='xxl'",
+            "options"    => [
+                ""  => "inherit",
+                "0" => "Collapse",
+                "1" => "X-Small",
+                "2" => "Small",
+                "3" => "Medium",
+                "4" => "Large",
+                "5" => "X-Large",
+            ],
+        ]);
+
+        $this->addField('column_gutter_xl', [
+            "group"      => "slideshow_options",
+            "type"       => "list",
+            "label"      => "column_gutter_xl",
+            "default"    => "",
+            "conditions" => "[column_responsive]=='xl'",
+            "options"    => [
+                ""  => "inherit",
+                "0" => "Collapse",
+                "1" => "X-Small",
+                "2" => "Small",
+                "3" => "Medium",
+                "4" => "Large",
+                "5" => "X-Large",
+            ],
+        ]);
+
+        $this->addField('column_gutter_lg', [
+            "group"      => "slideshow_options",
+            "type"       => "list",
+            "label"      => "column_gutter_lg",
+            "default"    => "4",
+            "conditions" => "[column_responsive]=='lg'",
+            "options"    => [
+                ""  => "inherit",
+                "0" => "Collapse",
+                "1" => "X-Small",
+                "2" => "Small",
+                "3" => "Medium",
+                "4" => "Large",
+                "5" => "X-Large",
+            ],
+        ]);
+
+        $this->addField('column_gutter_md', [
+            "group"      => "slideshow_options",
+            "type"       => "list",
+            "label"      => "column_gutter_md",
+            "default"    => "3",
+            "conditions" => "[column_responsive]=='md'",
+            "options"    => [
+                ""  => "inherit",
+                "0" => "Collapse",
+                "1" => "X-Small",
+                "2" => "Small",
+                "3" => "Medium",
+                "4" => "Large",
+                "5" => "X-Large",
+            ],
+        ]);
+
+        $this->addField('column_gutter_sm', [
+            "group"      => "slideshow_options",
+            "type"       => "list",
+            "label"      => "column_gutter_sm",
+            "default"    => "3",
+            "conditions" => "[column_responsive]=='sm'",
+            "options"    => [
+                ""  => "inherit",
+                "0" => "Collapse",
+                "1" => "X-Small",
+                "2" => "Small",
+                "3" => "Medium",
+                "4" => "Large",
+                "5" => "X-Large",
+            ],
+        ]);
+
+        $this->addField('column_gutter', [
+            "group"      => "slideshow_options",
+            "type"       => "list",
+            "label"      => "column_gutter_xs",
+            "default"    => "3",
+            "conditions" => "[column_responsive]=='xs'",
+            "options"    => [
+                "0" => "Collapse",
+                "1" => "X-Small",
+                "2" => "Small",
+                "3" => "Medium",
+                "4" => "Large",
+                "5" => "X-Large",
+            ],
+        ]);
+
+
         $this->addField('slideshow_padding', [
             'group'      => 'slideshow_options',
             'type'       => 'spacing',
             'label'      => 'padding',
-        ]);
-        $this->addField('slideshow_radius', [
-            'group' => 'slideshow_options',
-            'type'  => 'spacing',
-            'label' => 'radius',
-        ]);
-
-        $this->addField('slideshow_transition', [
-            'group'   => 'slideshow_options',
-            'type'    => 'list',
-            'name'    => 'effect_type',
-            'label'   => 'effect_type',
-            'default' => 'fade',
-            'options' => [
-                'slide'      => 'Slide',
-                'fade'       => 'Fade',
-                'scale'      => 'Scale',
-                'pull'       => 'Pull',
-                'push'       => 'Push',
-            ],
         ]);
 
         $this->addField('autoplay', [
@@ -240,38 +464,25 @@ class MoonElementUk_Slider extends MoonElement {
             "description" => "interval_desc",
             "conditions" => "[autoplay]==1",
         ]);
-        $this->addField('kenburns_transition', [
+        $this->addField('center', [
             'group'   => 'slideshow_options',
-            'type'    => 'list',
-            'label'   => 'kenburns_label',
-            'options'         => array(
-                '' =>  'None',
-                'top-left' => 'top_left',
-                'top-center' => 'top_center',
-                'top-right' => 'top_right',
-                'center-left' => 'center_left',
-                'center-center' => 'center_center',
-                'center-right' => 'center_right',
-                'bottom-left' => 'bottom_left',
-                'bottom-center' => 'bottom_center',
-                'bottom-right' => 'bottom_right',
-            ),
-        ]);
-        $this->addField('kenburns_duration', [
-            'group'      => 'slideshow_options',
-            'type'       => 'range',
-            'label'      => 'kenburns_duration',
-            'description'      => 'kenburns_duration_desc',
+            'type'    => 'radio',
             "attributes" => [
-                'min'        => 1,
-                'max'        => 30,
-                'step'       => 1,
-                'responsive' => false,
-                'postfix'    => '',
+                "role" => "switch"
             ],
-            'default'    => 9,
-            "conditions" => "[kenburns_transition] !==''",
+            'default' => '0',
+            'label'   => 'Center',
         ]);
+        $this->addField('parallax', [
+            'group'   => 'slideshow_options',
+            'type'    => 'radio',
+            "attributes" => [
+                "role" => "switch"
+            ],
+            'default' => '0',
+            'label'   => 'Parallax',
+        ]);
+
 
         $this->addField('navigation', [
             'group'   => 'navigation_options',
@@ -282,18 +493,55 @@ class MoonElementUk_Slider extends MoonElement {
             'default' => '0',
             'label'   => 'Nav Enable',
         ]);
-        $this->addField('slidenav_next_text', [
-            "group"       => "navigation_options",
-            "type"        => "text",
-            "label"       => "next_text",
-            "conditions" => "[navigation]==1",
+        $this->addField('slider_nav_position', [
+            'group'   => 'navigation_options',
+            'type'    => 'list',
+            'label'   => 'nav_position',
+            'options'         => array(
+                '' =>  'Default',
+                'uk-position-top-left' => 'top_left',
+                'uk-position-top-center' => 'top_center',
+                'uk-position-top-right' => 'top_right',
+                'uk-position-center-left' => 'center_left',
+                'uk-position-center' => 'center_center',
+                'uk-position-center-right' => 'center_right',
+                'uk-position-bottom-left' => 'bottom_left',
+                'uk-position-bottom-center' => 'bottom_center',
+                'uk-position-bottom-right' => 'bottom_right',
+            ),
+            'conditions' => "[navigation]==1",
         ]);
-        $this->addField('slidenav_preview_text', [
-            "group"       => "navigation_options",
-            "type"        => "text",
-            "label"       => "preview_text",
-            "conditions" => "[navigation]==1",
+        $this->addField('navigation_wrap_margin', [
+            'group'      => 'navigation_options',
+            'type'       => 'spacing',
+            'label'      => 'nav_margin',
+            'conditions' => "[navigation]==1 AND [slider_nav_position] !=''",
         ]);
+        $this->addField('navigation_padding', [
+            'group'      => 'navigation_options',
+            'type'       => 'spacing',
+            'label'      => 'padding',
+            'conditions' => "[navigation]==1",
+        ]);
+        $this->addField('navigation_next_margin', [
+            'group'      => 'navigation_options',
+            'type'       => 'spacing',
+            'label'      => 'next_margin',
+            'conditions' => "[navigation]==1",
+        ]);
+        $this->addField('navigation_pre_margin', [
+            'group'      => 'navigation_options',
+            'type'       => 'spacing',
+            'label'      => 'preview_margin',
+            'conditions' => "[navigation]==1",
+        ]);
+        $this->addField('navigation_radius', [
+            'group' => 'navigation_options',
+            'type'  => 'spacing',
+            'label' => 'radius',
+            'conditions' => "[navigation]==1",
+        ]);
+
         $this->addField('navigation_color', [
             "group"      => "navigation_options",
             "type"       => "color",
@@ -318,12 +566,7 @@ class MoonElementUk_Slider extends MoonElement {
             "label"      => "background_hover_color",
             "conditions" => "[navigation]==1",
         ]);
-        $this->addField('navigation_padding', [
-            'group'      => 'navigation_options',
-            'type'       => 'spacing',
-            'label'      => 'padding',
-            'conditions' => "[navigation]==1",
-        ]);
+
         $this->addField('dot_style', [
             'group'   => 'dot_options',
             'type'    => 'list',
@@ -452,22 +695,6 @@ class MoonElementUk_Slider extends MoonElement {
             'label'      => 'overlay_bg_color',
         ]);
 
-        $this->addField('title_html_element', [
-            'group'   => 'title_options',
-            'type'    => 'list',
-            'label'   => 'html_element',
-            'default' => 'h3',
-            'options' => [
-                'h1' => 'h1',
-                'h2' => 'h2',
-                'h3' => 'h3',
-                'h4' => 'h4',
-                'h5' => 'h5',
-                'h6' => 'h6',
-                'div'=> 'div',
-            ],
-        ]);
-
         $this->addField('title_font_style', [
             'group'   => 'title_options',
             'type'    => 'typography',
@@ -562,163 +789,6 @@ class MoonElementUk_Slider extends MoonElement {
             'label' => 'radius',
         ]);
 
-        $this->addField('content_font_style', [
-            'group'   => 'content_options',
-            'type'    => 'typography',
-            'name'    => 'content_font_style',
-            'label'   => 'font_style',
-            "attributes" => [
-                'options' => [
-                    "colorpicker" => true,
-                    'stylepicker' => false,
-                    'fontpicker' => true,
-                    'sizepicker' => true,
-                    'letterspacingpicker' => true,
-                    'lineheightpicker' => true,
-                    'weightpicker' => true,
-                    'transformpicker' => true,
-                    'columns' => 1,
-                    'preview' => false,
-                    'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
-                ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
-            ],
-        ]);
-        $this->addField('content_padding', [
-            'group'      => 'content_options',
-            'type'       => 'spacing',
-            'label'      => 'padding',
-        ]);
-
-        $this->addField('button_font_style', [
-            'group'   => 'readmore_options',
-            'type'    => 'typography',
-            'name'    => 'button_font_style',
-            'label'   => 'font_style',
-            "attributes" => [
-                'options' => [
-                    "colorpicker" => true,
-                    'stylepicker' => false,
-                    'fontpicker' => true,
-                    'sizepicker' => true,
-                    'letterspacingpicker' => true,
-                    'lineheightpicker' => true,
-                    'weightpicker' => true,
-                    'transformpicker' => true,
-                    'columns' => 1,
-                    'preview' => false,
-                    'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
-                ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
-            ],
-        ]);
-
-        $this->addField('button_style', [
-            'group'   => 'readmore_options',
-            'type'    => 'list',
-            'name'    => 'button_style',
-            'label'   => 'style',
-            'default' => 'primary',
-            'options' => [
-                'primary'   => 'Primary',
-                'secondary' => 'Secondary',
-                'success'   => 'Success',
-                'danger'    => 'Danger',
-                'warning'   => 'Warning',
-                'info'      => 'Info',
-                'light'     => 'Light',
-                'dark'      => 'Dark',
-                'link'      => 'Link',
-                'custom'      => 'custom',
-            ],
-        ]);
-        $this->addField('button_margin', [
-            'group' => 'readmore_options',
-            'type'  => 'spacing',
-            'label' => 'margin',
-        ]);
-        $this->addField('button_padding', [
-            'group' => 'readmore_options',
-            'type'  => 'spacing',
-            'label' => 'padding',
-            'conditions' => "[button_style]=='custom'",
-        ]);
-        $this->addField('button_border', [
-            "group"      => "readmore_options",
-            "type"       => "border",
-            "label"      => "border",
-            'conditions' => "[button_style]=='custom'",
-        ]);
-        $this->addField('button_bg_color', [
-            'group' => 'readmore_options',
-            'type'  => 'color',
-            'label' => 'background_color',
-            'conditions' => "[button_style]=='custom'",
-        ]);
-        $this->addField('button_color_hover', [
-            'group' => 'readmore_options',
-            'type'  => 'color',
-            'label' => 'color_hover',
-            'conditions' => "[button_style]=='custom'",
-        ]);
-        $this->addField('button_bg_color_hover', [
-            'group' => 'readmore_options',
-            'type'  => 'color',
-            'label' => 'background_color_hover',
-            'conditions' => "[button_style]=='custom'",
-        ]);
-
-        $this->addField('button_outline', [
-            'group'   => 'readmore_options',
-            'type'    => 'radio',
-            'name'    => 'button_outline',
-            "attributes" => [
-                "role" => "switch"
-            ],
-            'default' => '0',
-            'label'   => 'button_outline',
-        ]);
-
-        $this->addField('button_size', [
-            'group'   => 'readmore_options',
-            'type'    => 'list',
-            'name'    => 'button_size',
-            'label'   => 'style',
-            'default' => '',
-            'options' => [
-                ''       => 'Default',
-                'btn-lg' => 'Large',
-                'btn-sm' => 'Small',
-            ],
-        ]);
-
-        $this->addField('btn_border_radius', [
-            'group'   => 'readmore_options',
-            'type'    => 'list',
-            'name'    => 'btn_border_radius',
-            'label'   => 'border_radius',
-            'default' => '',
-            'options' => [
-                ''             => 'Rounded',
-                'rounded-0'    => 'Square',
-                'rounded-pill' => 'Circle',
-                'custom' => 'custom',
-            ],
-        ]);
-        $this->addField('button_radius', [
-            'group'   => 'readmore_options',
-            'type'  => 'spacing',
-            'label' => 'radius',
-            'conditions' => "[btn_border_radius]=='custom'",
-        ]);
         $this->addField('image_width', [
             'group'   => 'image_options',
             'type'    => 'range',
@@ -755,6 +825,37 @@ class MoonElementUk_Slider extends MoonElement {
             "group"      => "image_options",
             "type"       => "border",
             "label"      => "border",
+        ]);
+        $this->addField('content_font_style', [
+            'group'   => 'content_options',
+            'type'    => 'typography',
+            'name'    => 'content_font_style',
+            'label'   => 'font_style',
+            "attributes" => [
+                'options' => [
+                    "colorpicker" => true,
+                    'stylepicker' => false,
+                    'fontpicker' => true,
+                    'sizepicker' => true,
+                    'letterspacingpicker' => true,
+                    'lineheightpicker' => true,
+                    'weightpicker' => true,
+                    'transformpicker' => true,
+                    'columns' => 1,
+                    'preview' => false,
+                    'collapse' => true,
+                    'system_fonts' => Font::get_system_fonts(),
+                    'text_transform_options' => Font::text_transform(),
+                    'lang' => Font::font_properties(),
+                ],
+                'lang' => Font::font_properties(),
+                'value' => Font::$get_default_font_value,
+            ],
+        ]);
+        $this->addField('content_padding', [
+            'group'      => 'content_options',
+            'type'       => 'spacing',
+            'label'      => 'padding',
         ]);
 
     }
