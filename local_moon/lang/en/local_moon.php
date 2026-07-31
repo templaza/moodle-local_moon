@@ -782,6 +782,13 @@ $string['TPL_ASTROID_SELECT_VIDEO'] = 'Select Video';
 $string['TPL_ASTROID_CHANGE_VIDEOS'] = 'Change Video';
 $string['TPL_ASTROID_CHANGE_VIDEO'] = 'Change Video';
 $string['ASTROID_DRAFT'] = 'Draft';
+$string['layout_type'] = 'Section Layout';
+$string['ASTROID_CONTAINER'] = 'Container';
+$string['ASTROID_CONTAINER_FLUID'] = 'Container Fluid';
+$string['ASTROID_CONTAINER_WITH_NO_GUTTERS'] = 'Container with No gutters';
+$string['ASTROID_CONTAINER_FLUID_WITH_NO_GUTTERS'] = 'Container Fluid with No gutters';
+$string['ASTROID_ELEMENT_LAYOUT_SECTION_LAYOUT_OPTIONS_WITHOUT_CONTAINER'] = 'Without Container';
+$string['ASTROID_ELEMENT_LAYOUT_SECTION_LAYOUT_OPTIONS_CUSTOM'] = 'Custom (Add Custom class to use customized container)';
 
 // Contact information
 $string['miscellaneous'] = 'Miscellaneous';
@@ -996,3 +1003,4 @@ $string['box_width'] = 'Box Width';
 $string['box_height'] = 'Box Height';
 $string['spacing_options'] = 'Spacing Options';
 $string['border_hover'] = 'Border Hover';
+$string['enable_parallax'] = 'Enable Parallax';
