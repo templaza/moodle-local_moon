@@ -1,9 +1,10 @@
-[![Github All Releases](https://img.shields.io/github/downloads/templaza/moon-framework/total.svg)](https://github.com/templaza/astroid-framework/releases)
+[![Github All Releases](https://img.shields.io/github/downloads/templaza/moon-framework/total.svg)](https://github.com/templaza/moon-framework/releases)
+[![GitHub release](https://img.shields.io/github/release/templaza/moon-framework.svg)](https://github.com/templaza/moon-framework/releases)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 # Moon Framework - Powerful Moodle Framework
 
-Powerful framework for designers and developers to create responsive, fast & robust Joomla based websites and templates. A great framework for Joomla with outstanding features such as Layout Builder, Article Layout Builder, typography, colors will be a powerful tool to help you create unique styles for your website.
+Moon Framework is a Moodle LMS-focused version of the [Astroid Framework](https://github.com/templaza/astroid-framework). It brings Astroid’s flexible, modern design approach into the Moodle ecosystem, helping developers and institutions build engaging, responsive, and customizable learning experiences.
 
 ## Features
 * Moodle 5 Compatible
