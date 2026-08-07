@@ -73,7 +73,6 @@ $buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_action
 // If the settings menu will be included in the header then don't add it here.
 $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settings_menu() : false;
 $templatecontext = [
-    'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
     'output' => $OUTPUT,
     'sidepreblocks' => $blockshtml,
     'hasblocks' => $hasblocks,

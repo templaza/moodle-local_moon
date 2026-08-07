@@ -13,7 +13,7 @@ use local_moon\library\Framework;
 
 class Constants
 {
-    public static $moon_version = '1.0.0';
+    public static $moon_version = '1.0.2';
     public static $fontawesome_version = '7.0.0';
     public static $fancybox_version = '6.0';
     public static $animatecss_version = '3.7.0';
@@ -21,14 +21,14 @@ class Constants
     public static $forum_link = 'https://github.com/templaza/moon-framework/issues';
     public static $documentation_link = 'https://docs.moonframe.work/';
     public static $video_tutorial_link = 'https://www.youtube.com/channel/UCUHl1uU0Ofkyo-1ke-K4_xg';
-    public static $donate_link = 'https://ko-fi.com/moonframework';
+    public static $donate_link = 'https://ko-fi.com/astroidframework';
     public static $github_link = 'https://github.com/templaza/moon-framework';
     public static $download_link = 'https://github.com/templaza/moon-framework/releases/latest';
     public static $releases_link = 'https://github.com/templaza/moon-framework/releases';
     public static $moon_link = 'https://moonframe.work/';
     public static $templates_link = 'https://moonframe.work/';
-    public static $jed_link = 'https://extensions.joomla.org/extension/moon-framework/';
-    public static $go_pro = 'https://moonframe.work/pricing';
+    public static $jed_link = 'https://marketplace.moodle.com';
+    public static $go_pro = 'https://moonframe.work';
 
     /**
      * Return configurations of Manager
