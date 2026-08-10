@@ -23,18 +23,20 @@ define([], function () {
         const wrap = header.querySelector('.header-wrap');
         const headerTop = getOffsetTop(header);
         const headerHeight = header.offsetHeight;
-        // const headerBottom = headerTop + headerHeight + 30;
+        const headerBottom = headerTop + headerHeight + 30;
         const winScroll = window.scrollY;
 
-        if (winScroll > headerTop) {
+        if (winScroll > headerBottom) {
             header.classList.add('sticky-header-active');
             header.style.paddingTop = headerHeight + 'px';
+            header.style.setProperty('--mf-sticky-header-mark-height', headerHeight + 'px');
             if (container) {
                 wrap.classList.add(container);
             }
         } else {
             header.classList.remove('sticky-header-active');
             header.style.paddingTop = '';
+            header.style.removeProperty('--mf-sticky-header-mark-height');
             if (container) {
                 wrap.classList.remove(container);
             }

@@ -103,6 +103,10 @@ class Element extends BaseElement
     public function _decorateSection()
     {
         $params = Framework::getTheme()->getParams();
+        if ($this->type == 'header') {
+            $this->section->hasHeader = true;
+            $this->section->addClass('moon-header-section');
+        }
         if ($this->type == "module_position") {
             if ($params->get('header_module_position', '') === $this->params->get('position', '')) {
                 $this->section->hasHeader = true;

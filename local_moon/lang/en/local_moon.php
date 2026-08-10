@@ -186,6 +186,8 @@ $string['xl'] = 'X-Large';
 $string['xxl'] = '2X-Large';
 $string['widget_styles'] = 'Widget Styles';
 $string['advanced'] = 'Advanced';
+$string['container_type'] = 'Container Type';
+$string['container_type_desc'] = 'Select the type of container for the element.';
 
 // Design Options
 $string['spacing_settings'] = 'Spacing';
@@ -427,6 +429,8 @@ $string['header'] = 'Header';
 $string['enable_header'] = 'Enable Header';
 $string['header_mode'] = 'Header Mode';
 $string['header_mode_desc'] = 'Select your header mode for the appearance of your site.';
+$string['sticky_header'] = 'Sticky Header';
+$string['sticky_header_desc'] = 'Here you can select the type of the Sticky Header for desktop view, tablet view and mobile view.';
 $string['horizontal_menu_mode'] = 'Horizontal Menu Mode';
 $string['horizontal_menu_mode_desc'] = 'Select your horizontal menu mode. Select between left, right or center menu.';
 $string['stacked_menu_mode'] = 'Stacked Menu Mode';
@@ -461,6 +465,17 @@ $string['block_3_custom'] = 'Block 3 Custom HTML';
 $string['block_3_custom_desc'] = 'Add custom HTML to the Header Block 3.';
 $string['blank'] = 'Blank';
 $string['region'] = 'Region';
+$string['sticky_on_desktop'] = 'Sticky on Desktop';
+$string['sticky_on_tablet'] = 'Sticky on Tablet';
+$string['sticky_on_mobile'] = 'Sticky on Mobile';
+$string['sticky_on_desktop_desc'] = 'Select the type of the Sticky Header for Desktop.';
+$string['sticky_on_tablet_desc'] = 'Select the type of the Sticky Header for Tablet.';
+$string['sticky_on_mobile_desc'] = 'Select the type of the Sticky Header for Mobile.';
+$string['sticky'] = 'Sticky';
+$string['sticky_on_scrollup'] = 'Sticky on Scroll Up';
+$string['static'] = 'Static';
+$string['enable_sticky_menu'] = 'Enable Sticky Menu';
+$string['enable_sticky_menu_desc'] = 'Enable or disable the sticky menu.';
 
 // Basic Settings
 $string['basic'] = 'Basic';
@@ -602,7 +617,6 @@ $string['colors'] = 'Colors';
 $string['colors_desc'] = 'Select the color for the theme.';
 $string['body'] = 'Body';
 $string['body_color_desc'] = 'Select the body color.';
-$string['header'] = 'Header';
 $string['header_color_desc'] = 'Select the header color.';
 $string['sticky_header'] = 'Sticky Header';
 $string['sticky_header_color_desc'] = 'Select the sticky header color.';
