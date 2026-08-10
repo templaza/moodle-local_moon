@@ -662,6 +662,68 @@ class Utilities
         $style->render();
     }
 
+    public static function color_mode(): void
+    {
+        global $PAGE;
+        $theme = Framework::getTheme();
+        $color_mode = $theme->getColorMode();
+        if ($color_mode) {
+            $params = $theme->getParams();
+            $enable_color_mode_transform    =   $params->get('enable_color_mode_transform', 0);
+            if ($enable_color_mode_transform) {
+                $colormode_transform_type               =   $params->get('colormode_transform_type', 'light_dark');
+                $astroid_colormode_transform_offset     =   $params->get('astroid_colormode_transform_offset', 50);
+                if ($colormode_transform_type === 'light_dark') {
+                    $from   =   'light';
+                    $to     =   'dark';
+                } else {
+                    $from   =   'dark';
+                    $to     =   'light';
+                }
+                $PAGE->requires->js_call_amd(
+                    'local_moon/colortransform',
+                    'init',
+                    [
+                        'from' => $from,
+                        'to' => $to,
+                        'offset' => $astroid_colormode_transform_offset
+                    ]
+                );
+            } else {
+                $PAGE->requires->js_call_amd(
+                    'local_moon/colormode',
+                    'init',
+                    [
+                        'mode' => $color_mode,
+                        'templatehash' => md5($theme->name)
+                    ]
+                );
+            }
+        }
+    }
+
+    public static function sticky_menu(): void
+    {
+        $params = Framework::getTheme()->getParams();
+        $enable_sticky_menu = $params->get('enable_sticky_menu', 1);
+        if (!$enable_sticky_menu) {
+            return;
+        }
+        $header_sticky_container_type = $params->get('header_sticky_container_type', '');
+//        $stickyheader = $params->get('stickyheader', 'sticky');
+//        $stickyheadertablet  = $params->get('stickyheadertablet', 'static');
+//        $stickyheadermobile  = $params->get('stickyheadermobile', 'static');
+
+        global $PAGE;
+        $PAGE->requires->js_call_amd(
+            'local_moon/stickymenu',
+            'init',
+            [
+                'container' => $header_sticky_container_type
+            ]
+        );
+    }
+
     public static function preloader(): void
     {
         $params = Framework::getTheme()->getParams();
