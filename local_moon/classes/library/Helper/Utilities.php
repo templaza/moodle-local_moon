@@ -710,16 +710,19 @@ class Utilities
             return;
         }
         $header_sticky_container_type = $params->get('header_sticky_container_type', '');
-//        $stickyheader = $params->get('stickyheader', 'sticky');
-//        $stickyheadertablet  = $params->get('stickyheadertablet', 'static');
-//        $stickyheadermobile  = $params->get('stickyheadermobile', 'static');
+        $stickyheader = $params->get('stickyheader', 'sticky');
+        $stickyheadertablet  = $params->get('stickyheadertablet', 'static');
+        $stickyheadermobile  = $params->get('stickyheadermobile', 'static');
 
         global $PAGE;
         $PAGE->requires->js_call_amd(
             'local_moon/stickymenu',
             'init',
             [
-                'container' => $header_sticky_container_type
+                'containerParam' => $header_sticky_container_type,
+                'stickyheaderParam' => $stickyheader,
+                'stickyheadertabletParam' => $stickyheadertablet,
+                'stickyheadermobileParam' => $stickyheadermobile
             ]
         );
     }

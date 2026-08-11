@@ -49,6 +49,12 @@
       }
     }
   }
+  &.inactive {
+    &:before, >.header-wrap {
+      -webkit-animation-name: stickyOutUp;
+      animation-name: stickyOutUp;
+    }
+  }
 }
 
 /* Sidebar Header */

@@ -9,30 +9,56 @@ define([], function () {
         return el.getBoundingClientRect().top + window.scrollY;
     }
 
+    const header = document.getElementById('moon-header');
+    const headerHeight = header.offsetHeight;
+    const wrap = header.querySelector('.header-wrap');
+    const headerTop = getOffsetTop(header);
+    const headerBottom = headerTop + headerHeight + 30;
+    let container = '';
+    let stickyheader = '';
+    let stickyheadertablet = '';
+    let stickyheadermobile = '';
+
+
+    let lastScrollTop = 0;
+
+    let initLastScrollTop = function () {
+        lastScrollTop = window.scrollY;
+    };
+
+    let isScrollDown = () => window.scrollY > lastScrollTop;
+
+    let deviceBreakpoint = function () {
+        const _sizes = ['xs', 'sm', 'md', 'lg', 'xl'];
+        let _device = 'undefined';
+        _sizes.forEach(function (_size) {
+            const el = document.querySelector('.moon-breakpoints .device-' + _size);
+            if (el && getComputedStyle(el).display === 'block') {
+                _device = _size;
+            }
+        });
+        return _device;
+    };
+
     /**
-     * Init header
-     * @param {string} container The container element
+     * Toggle sticky header
+     * @param {string} status The status of the sticky header
+     * @param {string} stickyHeaderType The sticky header type
      * @return {void}
      */
-    function initHeader(container) {
-        const header = document.getElementById('moon-header');
-        if (!header) {
-            return;
-        }
-
-        const wrap = header.querySelector('.header-wrap');
-        const headerTop = getOffsetTop(header);
-        const headerHeight = header.offsetHeight;
-        const headerBottom = headerTop + headerHeight + 30;
-        const winScroll = window.scrollY;
-
-        if (winScroll > headerBottom) {
+    let toggleStickyHeader = function (status, stickyHeaderType) {
+        if (status === 'active') {
             header.classList.add('sticky-header-active');
+            if (stickyHeaderType === 'stickyonscroll' && header.classList.contains('inactive')) {
+                header.classList.remove('inactive');
+            }
             header.style.paddingTop = headerHeight + 'px';
             header.style.setProperty('--mf-sticky-header-mark-height', headerHeight + 'px');
             if (container) {
                 wrap.classList.add(container);
             }
+        } else if (status === 'inactive') {
+            header.classList.add('inactive');
         } else {
             header.classList.remove('sticky-header-active');
             header.style.paddingTop = '';
@@ -41,25 +67,90 @@ define([], function () {
                 wrap.classList.remove(container);
             }
         }
+    };
+
+    /**
+     * Init header
+     * @return {void}
+     */
+    function initHeader() {
+        if (!header) {
+            return;
+        }
+        const winScroll = window.scrollY;
+        const _breakpoint = deviceBreakpoint();
+
+        if (_breakpoint === 'xl' || _breakpoint === 'lg') {
+            if (winScroll > headerBottom) {
+                if (stickyheader === 'sticky' || (stickyheader === 'stickyonscroll' && !isScrollDown())) {
+                    toggleStickyHeader('active', stickyheader);
+                } else if (stickyheader === 'stickyonscroll' && header.classList.contains('sticky-header-active')) {
+                    toggleStickyHeader('inactive', stickyheader);
+                }
+            } else if (winScroll <= headerTop) {
+                toggleStickyHeader('default', stickyheader);
+            }
+        } else if (_breakpoint === 'sm' || _breakpoint === 'md') {
+            if (stickyheadertablet === 'static') {
+                if (header.classList.contains('sticky-header-active')) {
+                    toggleStickyHeader('default', stickyheadertablet);
+                }
+                return;
+            }
+            if (winScroll > headerBottom) {
+                if (stickyheadertablet === 'sticky' || (stickyheadertablet === 'stickyonscroll' && !isScrollDown())) {
+                    toggleStickyHeader('active', stickyheadertablet);
+                } else if (stickyheadertablet === 'stickyonscroll' && header.classList.contains('sticky-header-active')) {
+                    toggleStickyHeader('inactive', stickyheadertablet);
+                }
+            } else if (winScroll <= headerTop) {
+                toggleStickyHeader('default', stickyheadertablet);
+            }
+        } else {
+            if (stickyheadermobile === 'static') {
+                if (header.classList.contains('sticky-header-active')) {
+                    toggleStickyHeader('default', stickyheadermobile);
+                }
+                return;
+            }
+            if (winScroll > headerBottom) {
+                if (stickyheadermobile === 'sticky' || (stickyheadermobile === 'stickyonscroll' && !isScrollDown())) {
+                    toggleStickyHeader('active', stickyheadermobile);
+                } else if (stickyheadermobile === 'stickyonscroll' && header.classList.contains('sticky-header-active')) {
+                    toggleStickyHeader('inactive', stickyheadermobile);
+                }
+            } else if (winScroll <= headerTop) {
+                toggleStickyHeader('default', stickyheadermobile);
+            }
+        }
     }
     return {
         /**
          * Initialize the sticky menu
-         * @param {string} container The container element
+         * @param {string} containerParam The container element
+         * @param {string} stickyheaderParam The sticky header type
+         * @param {string} stickyheadertabletParam The sticky header type for tablet
+         * @param {string} stickyheadermobileParam The sticky header type for mobile
          * @returns {void}
          */
-        init: function(container) {
+        init: function(containerParam, stickyheaderParam, stickyheadertabletParam, stickyheadermobileParam) {
+            container = containerParam;
+            stickyheader = stickyheaderParam;
+            stickyheadertablet = stickyheadertabletParam;
+            stickyheadermobile = stickyheadermobileParam;
+
             document.addEventListener('DOMContentLoaded', function() {
-                initHeader(container);
+                initHeader();
             });
             window.addEventListener('resize', function() {
-                initHeader(container);
+                initHeader();
             });
             window.addEventListener('scroll', function() {
-                initHeader(container);
+                initHeader();
+                initLastScrollTop();
             });
             window.addEventListener('orientationchange', function() {
-                initHeader(container);
+                initHeader();
             });
         }
     };
