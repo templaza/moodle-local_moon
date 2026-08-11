@@ -46,14 +46,14 @@ if ($logo_type == 'text') {
     $logo->sticky_header = $params->get('sticky_header_logo', $system_logo);
     $logo->sticky_header_dark = $params->get('sticky_header_logo_dark', $system_logo);
 
-    $default_logo_width     =   $params->get('default_logo_width', '');
-    $default_logo_height    =   $params->get('default_logo_height', '');
+    $default_logo_width  = trim((string) $params->get('default_logo_width', ''));
+    $default_logo_height = trim((string) $params->get('default_logo_height', ''));
     $style = new Style('.moon-logo', '', true);
 
-    if (!empty($default_logo_width)) {
+    if ($default_logo_width !== '' && preg_match('/^\d+(\.\d+)?(px|rem|em|%|vw|vh)?$/', $default_logo_width)) {
         $style->child('.moon-logo-image > .moon-logo-default')->addCss('max-width', $default_logo_width);
     }
-    if (!empty($default_logo_height)) {
+    if ($default_logo_height !== '' && preg_match('/^\d+(\.\d+)?(px|rem|em|%|vw|vh)?$/', $default_logo_height)) {
         $style->child('.moon-logo-image > .moon-logo-default')->addCss('max-height', $default_logo_height);
     }
     $style->render();
