@@ -60,13 +60,23 @@ if ($logo_type == 'text') {
 }
 
 $logo->link_type = $params->get('logo_link_type', 'default');
+$logo->is_link = $logo->link_type !== 'none';
+
 $logo->link = $CFG->wwwroot;
 $logo->link_target = '_self';
+$logo->link_rel = '';
+
 if ($logo->link_type === 'custom') {
-    $logo->link = $params->get('logo_link_custom', '');
-    if ($params->get('logo_link_target_blank', 0)) {
+    $url = trim((string) $params->get('logo_link_custom', ''));
+    // Allow only well-formed absolute URLs; fall back to site root if empty/invalid.
+    $logo->link = clean_param($url, PARAM_URL) ?: $CFG->wwwroot;
+
+    if (!empty($params->get('logo_link_target_blank', 0))) {
         $logo->link_target = '_blank';
+        $logo->link_rel = 'noopener noreferrer';
     }
+} elseif ($logo->link_type === 'none') {
+    $logo->link = '';
 }
 
 $header_options = new Header($mode);
