@@ -55,9 +55,9 @@ foreach ($social_profiles as $social_profile) {
             $social_profile_link = $social_profile->link;
             break;
     }
-    $output .= '<div class="col"><a title="' . ($social_profile->title ? $social_profile->title : 'Social Icon') . '" ' . ($style != 1 ? ' aria-label="' . $social_profile->title . '" style="color:' . $social_profile->color . '"' : '') . ' href="' . $social_profile_link . '" target="_blank" rel="noopener"><i class="' . $social_profile->icon . '"></i></a></div>';
+    $output .= '<a title="' . ($social_profile->title ? $social_profile->title : 'Social Icon') . '" ' . ($style != 1 ? ' aria-label="' . $social_profile->title . '" style="color:' . $social_profile->color . '"' : '') . ' href="' . $social_profile_link . '" target="_blank" rel="noopener"><i class="' . $social_profile->icon . '"></i></a>';
 }
 if (!empty($output)) {
-    $output = '<div class="moon-social-icons row'.(!empty($class) ? ' ' . $class : '').'">' . $output . '</div>';
+    $output = '<div class="moon-social-icons as-gutter-x-lg as-gutter-x-xl@lg'.(!empty($class) ? ' ' . $class : '').'">' . $output . '</div>';
 }
 echo $output;

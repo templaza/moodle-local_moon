@@ -1,6 +1,11 @@
+.moremenu .nav-link.active {
+  border: none;
+}
 .primary-navigation .navigation .nav-link {
   color: var(--mf-main-menu-link-color);
   background-color: var(--mf-main-menu-link-background);
+  border: none;
+  box-shadow: none;
   &.active {
     color: var(--mf-main-menu-link-active-color);
     background-color: var(--mf-main-menu-active-background);

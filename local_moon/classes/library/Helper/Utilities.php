@@ -337,8 +337,8 @@ class Utilities
             'h4' => ['h4', '.h4'],
             'h5' => ['h5', '.h5'],
             'h6' => ['h6', '.h6'],
-            'logo' => ['.moon-logo-text', '.moon-logo-text > a.site-title'],
-            'logo_tag_line' => '.moon-logo-text > p.site-tagline',
+            'logo' => ['a.moon-logo-text > .site-title'],
+            'logo_tag_line' => 'a.moon-logo-text > .site-tagline',
             'menu' => [
                 '.primary-navigation > .navigation li.nav-item'
             ],

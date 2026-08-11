@@ -4,3 +4,16 @@
     max-height: 65px;
   }
 }
+.moon-logo-default{
+  &.dark {
+    display: none;
+  }
+}
+[data-bs-theme=dark] {
+  .moon-logo-default{
+    display: none;
+    &.dark {
+      display: block;
+    }
+  }
+}

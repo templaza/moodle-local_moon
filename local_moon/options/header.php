@@ -19,6 +19,7 @@ Framework::getTheme()->addFields(
         'fields' => [
             'header_element' => ["type" => "group", "label" => "header", "description" => ""],
             'header_logo_options_element' => ["type" => "group", "label" => "logo_options", "description" => "logo_options_desc"],
+            'header_sticky_options_element' => ["type" => "group", "label" => "sticky_header", "description" => "sticky_header_desc"],
 
             'header' => [
                 "group" => "header_element",
@@ -484,6 +485,183 @@ Framework::getTheme()->addFields(
                     'hint'       => '60px',
                 ],
                 'conditions' => "[header]==true AND [logo_type]=='image'",
+            ],
+
+            'enable_sticky_menu' => [
+                'group' => 'header_sticky_options_element',
+                'type' => 'radio',
+                'label' => 'enable_sticky_menu',
+                'description' => 'enable_sticky_menu_desc',
+                'attributes' => [
+                    "role" => "switch"
+                ],
+                'default' => '1',
+                'conditions' => "[header]==true AND [header_mode]!='sidebar'",
+            ],
+
+            'header_sticky_container_type' => [
+                'group' => 'header_sticky_options_element',
+                'type' => 'list',
+                'label' => 'container_type',
+                'description' => 'container_type_desc',
+                'default' => '',
+                'options' => [
+                    '' => 'default',
+                    'container' => 'ASTROID_CONTAINER',
+                    'container-fluid' => 'ASTROID_CONTAINER_FLUID',
+                    'container-with-no-gutters' => 'ASTROID_CONTAINER_WITH_NO_GUTTERS',
+                    'container-fluid-with-no-gutters' => 'ASTROID_CONTAINER_FLUID_WITH_NO_GUTTERS',
+                    'no-container' => 'ASTROID_ELEMENT_LAYOUT_SECTION_LAYOUT_OPTIONS_WITHOUT_CONTAINER',
+                    'custom-container' => 'ASTROID_ELEMENT_LAYOUT_SECTION_LAYOUT_OPTIONS_CUSTOM',
+                ],
+                'conditions' => "[header]==true AND [enable_sticky_menu]==true AND [header_mode]!='sidebar'",
+            ],
+
+//            'stickey_horizontal_menu_mode' => [
+//                'group' => 'header_sticky_options_element',
+//                'type' => 'radio',
+//                'name' => 'stickey_horizontal_menu_mode',
+//                "label" => "horizontal_menu_mode",
+//                "description" => "horizontal_menu_mode_desc",
+//                "default" => "left",
+//                "attributes" => [
+//                    "role" => "image"
+//                ],
+//                "options" => [
+//                    'left'   => '/local/moon/assets/images/header/horizontal-left.svg',
+//                    'center' => '/local/moon/assets/images/header/horizontal-center.svg',
+//                    'right'  => '/local/moon/assets/images/header/horizontal-right.svg',
+//                ],
+//                'conditions' => "[header]==true AND [enable_sticky_menu]==true AND [header_mode]!='sidebar'",
+//            ],
+//
+//            'stickey_header_logo' => [
+//                'group' => 'header_sticky_options_element',
+//                'type' => 'media',
+//                'name' => 'stickey_header_logo',
+//                'label' => 'TPL_ASTROID_BASIC_STICKY_HEADER_LOGO_LABEL',
+//                'description' => 'TPL_ASTROID_BASIC_STICKY_HEADER_LOGO_DESC',
+//                'conditions' => "[header]==true AND [enable_sticky_menu]==true AND [logo_type]=='image' AND [header_mode]!='sidebar' AND ([astroid_color_mode_enable]=='1' OR [astroid_color_mode_enable]=='0')",
+//            ],
+//
+//            'stickey_header_logo_dark' => [
+//                'group' => 'header_sticky_options_element',
+//                'type' => 'media',
+//                'name' => 'stickey_header_logo_dark',
+//                'label' => 'TPL_ASTROID_BASIC_STICKY_HEADER_LOGO_DARK_LABEL',
+//                'description' => 'TPL_ASTROID_BASIC_STICKY_HEADER_LOGO_DARK_DESC',
+//                'conditions' => "[header]==true AND [enable_sticky_menu]==true AND [logo_type]=='image' AND [header_mode]!='sidebar' AND ([astroid_color_mode_enable]=='1' OR [astroid_color_mode_enable]=='2')",
+//            ],
+//
+//            'sticky_logo_width' => [
+//                'group' => 'header_sticky_options_element',
+//                'type' => 'text',
+//                'name' => 'sticky_logo_width',
+//                'label' => 'TPL_ASTROID_BASIC_STICKY_LOGO_WIDTH_LABEL',
+//                'description' => 'TPL_ASTROID_BASIC_STICKY_LOGO_WIDTH_DESC',
+//                'attributes' => [
+//                    'hint' => '200px',
+//                ],
+//                'conditions' => "[header]==true AND [enable_sticky_menu]==true AND [logo_type]=='image' AND [header_mode]!='sidebar'",
+//            ],
+//
+//            'sticky_logo_height' => [
+//                'group' => 'header_sticky_options_element',
+//                'type' => 'text',
+//                'name' => 'sticky_logo_height',
+//                'label' => 'TPL_ASTROID_BASIC_STICKY_LOGO_HEIGHT_LABEL',
+//                'description' => 'TPL_ASTROID_BASIC_STICKY_LOGO_HEIGHT_DESC',
+//                'attributes' => [
+//                    'hint' => '60px',
+//                ],
+//                'conditions' => "[header]==true AND [enable_sticky_menu]==true AND [logo_type]=='image' AND [header_mode]!='sidebar'",
+//            ],
+//
+//            'stickey_block_1_type' => [
+//                'group' => 'header_sticky_options_element',
+//                'type' => 'list',
+//                'label' => 'header_block_1',
+//                'description' => 'header_block_1_desc',
+//                'default' => 'blank',
+//                'options' => [
+//                    'blank'   => 'blank',
+//                    'position'=> 'region',
+//                    'custom'  => 'custom',
+//                ],
+//                'conditions' => "[header]==true AND [enable_sticky_menu]==true AND [header_mode]!='sidebar'",
+//            ],
+//
+//            'stickey_block_1_position' => [
+//                'group' => 'header_sticky_options_element',
+//                'type' => 'regions',
+//                'label' => 'block_1_position',
+//                'description' => 'block_1_position_desc',
+//                'conditions' => "[header]==true AND [enable_sticky_menu]==true AND [stickey_block_1_type] == 'position' AND [header_mode]!='sidebar'",
+//            ],
+//
+//            'stickey_block_1_custom' => [
+//                'group' => 'header_sticky_options_element',
+//                'type' => 'textarea',
+//                'label' => 'block_1_custom',
+//                'description' => 'block_1_custom_desc',
+//                "attributes" => [
+//                    'filter' => 'raw',
+//                ],
+//                'conditions' => "[header]==true AND [enable_sticky_menu]==true AND [stickey_block_1_type] == 'custom' AND [header_mode]!='sidebar'",
+//            ],
+//
+//            'enable_sticky_badge' => [
+//                'group' => 'header_sticky_options_element',
+//                'type' => 'radio',
+//                'label' => 'TPL_ASTROID_HEADER_STICKY_HEADER_ENABLE_BADGE_LABEL',
+//                'description' => 'TPL_ASTROID_HEADER_STICKY_HEADER_ENABLE_BADGE_DESC',
+//                'attributes' => [
+//                    'role' => 'switch',
+//                ],
+//                'default' => '0',
+//                'conditions' => "[header]==true AND [enable_sticky_menu]==true AND [header_mode]!='sidebar'",
+//            ],
+
+            'stickyheader' => [
+                'group' => 'header_sticky_options_element',
+                'type' => 'list',
+                'label' => 'sticky_on_desktop',
+                'description' => 'sticky_on_desktop_desc',
+                'default' => 'sticky',
+                'conditions' => "[header]==true AND [enable_sticky_menu]==true AND [header_mode]!='sidebar'",
+                'options' => [
+                    'sticky' => 'sticky',
+                    'stickyonscroll' => 'sticky_on_scrollup',
+                ],
+            ],
+
+            'stickyheadertablet' => [
+                'group' => 'header_sticky_options_element',
+                'type' => 'list',
+                'label' => 'sticky_on_tablet',
+                'description' => 'sticky_on_tablet_desc',
+                'default' => 'static',
+                'conditions' => "[header]==true AND [enable_sticky_menu]==true AND [header_mode]!='sidebar'",
+                'options' => [
+                    'static' => 'static',
+                    'sticky' => 'sticky',
+                    'stickyonscroll' => 'sticky_on_scrollup',
+                ],
+            ],
+
+            'stickyheadermobile' => [
+                'group' => 'header_sticky_options_element',
+                'type' => 'list',
+                'name' => 'stickyheadermobile',
+                'label' => 'sticky_on_mobile',
+                'description' => 'sticky_on_mobile_desc',
+                'default' => 'static',
+                'conditions' => "[header]==true AND [enable_sticky_menu]==true AND [header_mode]!='sidebar'",
+                'options' => [
+                    'static' => 'static',
+                    'sticky' => 'sticky',
+                    'stickyonscroll' => 'sticky_on_scrollup',
+                ],
             ],
         ]
     ]
