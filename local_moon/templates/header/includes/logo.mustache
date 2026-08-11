@@ -1,10 +1,12 @@
 <div class="logo-wrapper moon-logo">
-    <a href="{{{ config.homeurl }}}" class="moon-logo moon-logo-image navbar-brand d-flex align-items-center">
-        {{# output.should_display_navbar_logo }}
-            <img src="{{output.get_compact_logo_url}}" class="logo" alt="{{sitename}}">
-        {{/ output.should_display_navbar_logo }}
-        {{^ output.should_display_navbar_logo }}
-            {{{ sitename }}}
-        {{/ output.should_display_navbar_logo }}
+    <a href="{{{ logo.link }}}" class="moon-logo {{logo.class}} navbar-brand">
+        {{# logo.is_text }}
+            {{{ logo.text }}}
+            {{{ logo.tag_line }}}
+        {{/ logo.is_text }}
+        {{^ logo.is_text }}
+            <img src="{{logo.default}}" class="logo moon-logo-default" alt="{{logo.text}}">
+            <img src="{{logo.default_dark}}" class="logo moon-logo-default dark" alt="{{logo.text}}">
+        {{/ logo.is_text }}
     </a>
 </div>

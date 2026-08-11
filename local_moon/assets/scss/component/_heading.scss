@@ -1,3 +1,6 @@
+.moon-header-section {
+  background-color: var(--mf-header-bg);
+}
 .header-stacked-section {
   .moon-nav-center-balance, .moon-nav-center {
     .navbar-nav {
@@ -5,21 +8,69 @@
     }
   }
 }
+.sticky-header-active {
+  &:before {
+    content: '';
+    background-color: var(--mf-stick-header-bg-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding-top: var(--mf-sticky-header-mark-height);
+    z-index: 3;
+    -webkit-animation-name: slideInDown;
+    animation-name: slideInDown;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-duration: .7s;
+    animation-duration: .7s;
+  }
+  >.header-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+    z-index: 3;
+    -webkit-animation-name: slideInDown;
+    animation-name: slideInDown;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-duration: .7s;
+    animation-duration: .7s;
+    a {
+      color: var(--mf-stick-header-menu-link-color);
+      &:hover {
+        color: var(--mf-stick-header-menu-link-hover-color);
+      }
+      &.active {
+        color: var(--mf-stick-header-menu-link-active-color);
+      }
+    }
+  }
+  &.inactive {
+    &:before, >.header-wrap {
+      -webkit-animation-name: stickyOutUp;
+      animation-name: stickyOutUp;
+    }
+  }
+}
 
 /* Sidebar Header */
 .moon-header {
-  color: var(--as-header-text-color);
+  color: var(--mf-header-text-color);
   h1,h2,h3,h4,h5,h6 {
-    color: var(--as-header-heading-color);
+    color: var(--mf-header-heading-color);
   }
   a {
-    color: var(--as-header-link-color);
+    color: var(--mf-header-link-color);
     &:hover {
-      --as-header-link-color: var(--as-header-link-hover-color);
+      --mf-header-link-color: var(--mf-header-link-hover-color);
     }
   }
   &.has-sidebar {
-    z-index: 1;
+    z-index: 3;
     transition: .1s linear all;
     &.sidebar-dir-left {
       border-right: 1px solid var(--bs-border-color);
@@ -107,9 +158,9 @@
   }
 
   .moon-sidebar-content {
-    background-color: var(--as-header-bg);
+    background-color: var(--mf-header-bg);
     > * {
-      background-color: var(--as-header-bg);
+      background-color: var(--mf-header-bg);
     }
     overflow-y: auto;
     @media(min-width: 1200px) {
@@ -187,7 +238,7 @@
 
 .moon-header-sidebar-topbar {
   .moon-sidebar-header-topbar {
-    background-color: var(--as-header-bg);
+    background-color: var(--mf-header-bg);
     position: sticky;
     top: 0;
     z-index: 1021;

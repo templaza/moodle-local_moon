@@ -270,7 +270,6 @@ Framework::getTheme()->addFields(
                 'options'     => [
                     'text'  => 'TPL_ASTROID_BASIC_LOGO_TYPE_OPTIONS_TEXT',
                     'image' => 'TPL_ASTROID_BASIC_LOGO_TYPE_OPTIONS_IMAGE',
-                    'none'  => 'ASTROID_NONE',
                 ],
             ],
 
@@ -296,12 +295,12 @@ Framework::getTheme()->addFields(
                 'group'       => 'header_logo_options_element',
                 'type'        => 'radio',
                 'label'       => 'TPL_ASTROID_TYPOGRAPHY_LOGO',
-                'description' => 'TPL_ASTROID_TYPOGRAPHY_OPTION_DESC',
+                'description' => 'typography_properties_desc',
                 'default'     => 'inherit',
                 'conditions'  => "[header]==1 AND [logo_type]=='text'",
                 'options'     => [
-                    'inherit' => 'JGLOBAL_INHERIT',
-                    'custom'  => 'TPL_ASTROID_OPTIONS_CUSTOM',
+                    'inherit' => 'inherit',
+                    'custom'  => 'custom',
                 ],
             ],
 
@@ -335,7 +334,7 @@ Framework::getTheme()->addFields(
                 'group'       => 'header_logo_options_element',
                 'type'        => 'radio',
                 'label'       => 'TPL_ASTROID_TYPOGRAPHY_LOGO_TAG_LINE',
-                'description' => 'TPL_ASTROID_TYPOGRAPHY_OPTION_DESC',
+                'description' => 'typography_properties_desc',
                 'default'     => 'inherit',
                 'conditions'  => "[header]==true AND [logo_type]=='text'",
                 'options'     => [
@@ -480,7 +479,7 @@ Framework::getTheme()->addFields(
                 'type'       => 'text',
                 'name'       => 'mobile_logo_height',
                 'label'      => 'TPL_ASTROID_BASIC_MOBILE_LOGO_HEIGHT_LABEL',
-                'description'=> 'TPL_ASTROID_BASIC_MOBILE_MOBILE_LOGO_HEIGHT_DESC',
+                'description'=> 'TPL_ASTROID_BASIC_MOBILE_LOGO_HEIGHT_DESC',
                 "attributes" => [
                     'hint'       => '60px',
                 ],
