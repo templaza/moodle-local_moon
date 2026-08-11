@@ -13,7 +13,7 @@ use local_moon\library\Framework;
 
 class Constants
 {
-    public static $moon_version = '1.0.2';
+    public static $moon_version = '1.0.3';
     public static $fontawesome_version = '7.0.0';
     public static $fancybox_version = '6.0';
     public static $animatecss_version = '3.7.0';
