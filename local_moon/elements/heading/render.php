@@ -29,7 +29,7 @@ $meta_heading_margin =  $params->get('meta_heading_margin', '');
 $meta_heading_padding =  $params->get('meta_heading_padding', '');
 $meta_position=  $params->get('meta_position', 'before');
 $meta_border    =   json_decode($params->get('meta_border', ''), true);
-$line_color     = Style::getColor($params->get('line_color', ''));
+
 if (!empty($meta_border)) {
     Style::addBorderStyle('#'. $element->id . ' .heading-meta', $meta_border, 'global', $element->isRoot);
 }
@@ -51,8 +51,9 @@ if($meta_line==1){
     if (json_last_error() === JSON_ERROR_NONE && is_array($line_height_data)) {
         $style->child('.meta-line:before')->addResponsiveCSS('height', $line_height_data, $line_height_data['postfix']);
     }
-    $style->child('.moon-icon')->addCss('color', $icon_color['light']);
-    $style_dark->child('.moon-icon')->addCss('color', $icon_color['dark']);
+    $line_color     = Style::getColor($params->get('line_color', ''));
+    $style->child('.meta-line:before')->addCss('background-color', $line_color['light']);
+    $style_dark->child('.meta-line:before')->addCss('background-color', $line_color['dark']);
 }
 
 if (!empty($title)) {
