@@ -8,4 +8,16 @@
     position:absolute;
     z-index: 1;
   }
+  .meta-line{
+    &:before{
+      content:"";
+      position:absolute;
+      height:3px;
+      left:0;
+      background: $secondary;
+      width:50px;
+      margin-top: -1px;
+      top:50%;
+    }
+  }
 }
