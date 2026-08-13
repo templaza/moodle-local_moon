@@ -189,6 +189,24 @@ $string['widget_styles'] = 'Widget Styles';
 $string['advanced'] = 'Advanced';
 $string['container_type'] = 'Container Type';
 $string['container_type_desc'] = 'Select the type of container for the element.';
+$string['media_type'] = 'Media Type';
+$string['media_type_desc'] = 'Select the type of media for the element.';
+$string['icon_type'] = 'Icon Type';
+$string['icon_type_desc'] = 'Select the type of icon for the element.';
+$string['astroid_icon'] = 'Moon Icon';
+$string['media_position'] = 'Media Position';
+$string['enable_icon_link'] = 'Enable Icon Link';
+$string['choose_layout'] = 'Choose Layout';
+$string['image_width'] = 'Image Width';
+$string['image_height'] = 'Image Height';
+$string['dot_margin'] = 'Dot Margin';
+$string['list_items'] = 'List Items';
+$string['title_font_style'] = 'Title Font Style';
+$string['list_style'] = 'List Style';
+$string['title_html_element'] = 'Title HTML Element';
+$string['icon_margin'] = 'Icon Margin';
+$string['icon_padding'] = 'Icon Padding';
+$string['misc_options'] = 'Misc Options';
 
 // Design Options
 $string['spacing_settings'] = 'Spacing';

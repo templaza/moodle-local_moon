@@ -11,6 +11,10 @@
     margin-top: 0;
     padding-left: 0 !important;
     padding-right: 0 !important;
+    div[role="main"] {
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
   .drawer-left, .drawer-right {
     top: 0;

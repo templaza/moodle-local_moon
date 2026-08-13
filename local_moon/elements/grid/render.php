@@ -430,9 +430,6 @@ $icon_box_height_data = json_decode($icon_box_height, true);
 $icon_box_width_data = json_decode($icon_box_width, true);
 if (json_last_error() === JSON_ERROR_NONE && is_array($icon_box_width_data)) {
     $style->child('.moon-icon')->addResponsiveCSS('width', $icon_box_width_data, $icon_box_width_data['postfix']);
-    $style->child('.moon-icon')->addCss('display', 'flex');
-    $style->child('.moon-icon')->addCss('align-items', 'center');
-    $style->child('.moon-icon')->addCss('justify-content', 'center');
 }
 if (json_last_error() === JSON_ERROR_NONE && is_array($icon_box_height_data)) {
     $style->child('.moon-icon')->addResponsiveCSS('height', $icon_box_height_data, $icon_box_height_data['postfix']);

@@ -25,26 +25,30 @@ foreach ($icons->data as $key => $icon) {
 
     // Button Custom Style
 
-        $color          =   Style::getColor($icon->params->get('color', ''));
-        $color_hover    =   Style::getColor($icon->params->get('color_hover', ''));
-        $bgcolor        =   Style::getColor($icon->params->get('bgcolor', ''));
-        $bgcolor_hover  =   Style::getColor($icon->params->get('bgcolor_hover', ''));
+    $color          =   Style::getColor($icon->params->get('color', ''));
+    $color_hover    =   Style::getColor($icon->params->get('color_hover', ''));
+    $bgcolor        =   Style::getColor($icon->params->get('bgcolor', ''));
+    $bgcolor_hover  =   Style::getColor($icon->params->get('bgcolor_hover', ''));
 
-        // Color style
-        $element->style->child('#icon-'.$icon->id)->addCss('color', $color['light']);
-        $element->style_dark->child('#icon-'.$icon->id)->addCss('color', $color['dark']);
-        $element->style->child('#icon-'.$icon->id)->hover()->addCss('color', $color_hover['light']);
-        $element->style_dark->child('#icon-'.$icon->id)->hover()->addCss('color', $color_hover['dark']);
+    // Color style
+    $element->style->child('#icon-'.$icon->id)->addCss('color', $color['light']);
+    $element->style_dark->child('#icon-'.$icon->id)->addCss('color', $color['dark']);
+    $element->style->child('#icon-'.$icon->id)->hover()->addCss('color', $color_hover['light']);
+    $element->style_dark->child('#icon-'.$icon->id)->hover()->addCss('color', $color_hover['dark']);
 
-        // Background color style
-        $element->style->child('#icon-'.$icon->id)->addCss('background-color', $bgcolor['light']);
-        $element->style_dark->child('#icon-'.$icon->id)->addCss('background-color', $bgcolor['dark']);
-        $element->style->child('#icon-'.$icon->id)->hover()->addCss('background-color', $bgcolor_hover['light']);
-        $element->style_dark->child('#icon-'.$icon->id)->hover()->addCss('background-color', $bgcolor_hover['dark']);
+    // Background color style
+    $element->style->child('#icon-'.$icon->id)->addCss('background-color', $bgcolor['light']);
+    $element->style_dark->child('#icon-'.$icon->id)->addCss('background-color', $bgcolor['dark']);
+    $element->style->child('#icon-'.$icon->id)->hover()->addCss('background-color', $bgcolor_hover['light']);
+    $element->style_dark->child('#icon-'.$icon->id)->hover()->addCss('background-color', $bgcolor_hover['dark']);
 
+    if ($icon->params->get('link', '')) {
+        $link_target    =   !empty($icon->params->get('link_target', '')) ? ' target="'.$icon->params->get('link_target', '').'"' : '';
+        echo '<a id="icon-'.$icon->id.'" href="' .$icon->params->get('link', ''). '" class="moon-icon d-flex align-items-center justify-content-center" '.$link_target.'>'.$title.'</a>';
+    } else {
+        echo '<div id="icon-'.$icon->id.'" class="moon-icon d-flex align-items-center justify-content-center">'.$title.'</div>';
+    }
 
-    $link_target    =   !empty($icon->params->get('link_target', '')) ? ' target="'.$icon->params->get('link_target', '').'"' : '';
-    echo '<a id="icon-'.$icon->id.'" href="' .$icon->params->get('link', ''). '" class="moon-icon d-flex align-items-center justify-content-center" '.$link_target.'>'.$title.'</a>';
     $title_font_style =   $icon->params->get('title_font_style');
     if (!empty($title_font_style)) {
         Style::renderTypography('#'.$element->id.' #icon-' . $icon->id , $title_font_style, null, $element->isRoot);
