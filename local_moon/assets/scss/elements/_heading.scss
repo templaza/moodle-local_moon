@@ -9,15 +9,25 @@
     z-index: 1;
   }
   .meta-line{
+    display:flex;
+    align-items: center;
+    gap: 20px;
     &:before{
       content:"";
-      position:absolute;
+      position:relative;
       height:3px;
-      left:0;
       background: $secondary;
       width:50px;
-      margin-top: -1px;
-      top:50%;
+    }
+  }
+  &.text-center{
+    .meta-line{
+      justify-content: center;
+    }
+  }
+  &.text-end{
+    .meta-line{
+      justify-content: end;
     }
   }
 }

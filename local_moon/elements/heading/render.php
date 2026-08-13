@@ -57,8 +57,8 @@ if($meta_line==1){
 }
 
 if (!empty($title)) {
-    if ($meta !='' && $meta_position == 'before') {
-        echo '<div class="heading-meta uk-display-inline-block '.$meta_cls.'">'.$meta.'</div>';
+    if (($meta !== '' || $meta_line === 1) && $meta_position === 'before') {
+        echo '<div class="heading-meta '.$meta_cls.'">'.$meta.'</div>';
     }
     if ($use_link) {
         echo '<a href="'.$link.'" title="'.$title.'">';
@@ -68,9 +68,9 @@ if (!empty($title)) {
         echo '</a>';
     }
     if($title_clone){
-        echo '<div class="heading-clone uk-position-absolute">'.$title_clone_txt.'</div>';
+        echo '<div class="heading-clone position-absolute">'.$title_clone_txt.'</div>';
     }
-    if ($meta !=''  && $meta_position == 'after') {
+    if (($meta !== '' || $meta_line === 1) && $meta_position === 'after') {
         echo '<div class="heading-meta '.$meta_cls.'">'.$meta.'</div>';
     }
 }
