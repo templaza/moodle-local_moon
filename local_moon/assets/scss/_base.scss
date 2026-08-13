@@ -1,7 +1,5 @@
-.moon-grid {
-  .card {
-    background-color: transparent;
-  }
+#page-content {
+  background-color: var(--bs-body-bg);
 }
 .moon-element-overlay{
   &:before {

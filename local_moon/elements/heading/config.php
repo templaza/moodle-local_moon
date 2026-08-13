@@ -17,8 +17,13 @@ class MoonElementHeading extends MoonElement {
     public function setFields(): void {
         $this->setFieldSet('general-settings');
 
+
+        $this->addField('title_options', [
+            'type'  => 'group',
+            'label' => 'title_options',
+        ]);
+
         $this->addField('meta_options',  [
-            "group"       => "meta_options",
             "type" => "group",
             "label" => "meta_options",
         ]);
@@ -124,67 +129,6 @@ class MoonElementHeading extends MoonElement {
             "type"  => "spacing",
             "label" => "margin",
         ]);
-
-        $this->addField('meta_text', [
-            "group"       => "meta_options",
-            "type"        => "text",
-            "label"       => "meta",
-            "dynamic"     => true,
-        ]);
-
-        $this->addField('meta_font_style', [
-            "group"   => "meta_options",
-            "type"    => "typography",
-            "label"   => "font_style",
-            "attributes" => [
-                'options' => [
-                    "colorpicker" => true,
-                    'stylepicker' => true,
-                    'fontpicker' => true,
-                    'sizepicker' => true,
-                    'letterspacingpicker' => true,
-                    'lineheightpicker' => true,
-                    'weightpicker' => true,
-                    'transformpicker' => true,
-                    'columns' => 1,
-                    'preview' => false,
-                    'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
-                ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
-            ],
-        ]);
-
-        $this->addField('meta_heading_margin', [
-            "group" => "meta_options",
-            "type"  => "spacing",
-            "label" => "margin",
-        ]);
-        $this->addField('meta_border', [
-            "group"      => "meta_options",
-            "type"       => "border",
-            "label"      => "border",
-        ]);
-        $this->addField('meta_radius', [
-            'group' => 'meta_options',
-            'type'  => 'spacing',
-            'name'  => 'image_radius',
-            'label' => 'radius',
-        ]);
-
-        $this->addField('meta_position', [
-            "group"   => "meta_options",
-            "type"    => "list",
-            "label"   => "meta_position",
-            "default" => "before",
-            "options" => [
-                "before" => "before_title",
-                "after"  => "after_title",
-            ],
-        ]);
         $this->addField('title_clone', [
             "group"       => "general",
             "type"        => "radio",
@@ -231,5 +175,114 @@ class MoonElementHeading extends MoonElement {
                 'value' => Font::$get_default_font_value,
             ],
         ]);
+
+        $this->addField('meta_text', [
+            "group"       => "meta_options",
+            "type"        => "text",
+            "label"       => "meta",
+            "dynamic"     => true,
+        ]);
+
+        $this->addField('meta_font_style', [
+            "group"   => "meta_options",
+            "type"    => "typography",
+            "label"   => "font_style",
+            "attributes" => [
+                'options' => [
+                    "colorpicker" => true,
+                    'stylepicker' => true,
+                    'fontpicker' => true,
+                    'sizepicker' => true,
+                    'letterspacingpicker' => true,
+                    'lineheightpicker' => true,
+                    'weightpicker' => true,
+                    'transformpicker' => true,
+                    'columns' => 1,
+                    'preview' => false,
+                    'collapse' => true,
+                    'system_fonts' => Font::get_system_fonts(),
+                    'text_transform_options' => Font::text_transform(),
+                    'lang' => Font::font_properties(),
+                ],
+                'lang' => Font::font_properties(),
+                'value' => Font::$get_default_font_value,
+            ],
+        ]);
+
+        $this->addField('meta_heading_margin', [
+            "group" => "meta_options",
+            "type"  => "spacing",
+            "label" => "margin",
+        ]);
+
+        $this->addField('meta_heading_padding', [
+            "group" => "meta_options",
+            "type"  => "spacing",
+            "label" => "padding",
+        ]);
+        $this->addField('meta_border', [
+            "group"      => "meta_options",
+            "type"       => "border",
+            "label"      => "border",
+        ]);
+        $this->addField('meta_radius', [
+            'group' => 'meta_options',
+            'type'  => 'spacing',
+            'name'  => 'image_radius',
+            'label' => 'radius',
+        ]);
+        $this->addField('meta_line', [
+            "group"       => "meta_options",
+            "type"        => "radio",
+            "label"       => "meta_line",
+            "attributes" => [
+                "role" => "switch"
+            ],
+            "default"     => 0,
+        ]);
+        $this->addField('line_width', [
+            'group'   => 'meta_options',
+            'type'    => 'range',
+            'label'      => 'width',
+            "attributes" => [
+                'min'        => 1,
+                'max'        => 2000,
+                'step'       => 1,
+                'responsive' => true,
+                'postfix' => 'px|%',
+            ],
+            "conditions" => "[meta_line]==1",
+        ]);
+        $this->addField('line_height', [
+            'group'   => 'meta_options',
+            'type'    => 'range',
+            'label'      => 'height',
+            "attributes" => [
+                'min'        => 1,
+                'max'        => 2000,
+                'step'       => 1,
+                'responsive' => true,
+                'postfix' => 'px|%',
+            ],
+            "conditions" => "[meta_line]==1",
+        ]);
+        $this->addField('line_color', [
+            "group"      => "meta_options",
+            "type"       => "color",
+            "label"      => "color",
+            "conditions" => "[meta_line]==1",
+        ]);
+
+        $this->addField('meta_position', [
+            "group"   => "meta_options",
+            "type"    => "list",
+            "label"   => "meta_position",
+            "default" => "before",
+            "options" => [
+                "before" => "before_title",
+                "after"  => "after_title",
+            ],
+        ]);
+
     }
 }

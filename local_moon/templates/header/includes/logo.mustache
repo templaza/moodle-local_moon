@@ -1,12 +1,12 @@
-<div class="logo-wrapper moon-logo">
-    <a href="{{{ logo.link }}}" class="moon-logo {{logo.class}} navbar-brand">
+<div class="logo-wrapper moon-logo d-flex align-items-center flex-nowrap">
+    {{# logo.is_link }}<a href="{{{ logo.link }}}" class="moon-logo {{logo.class}} navbar-brand">{{/logo.is_link}}
         {{# logo.is_text }}
-            {{{ logo.text }}}
-            {{{ logo.tag_line }}}
+            <div class="site-title">{{ logo.text }}</div>
+            {{# logo.has_tagline }}<div class="site-tagline">{{ logo.tag_line }}</div>{{/ logo.has_tagline }}
         {{/ logo.is_text }}
         {{^ logo.is_text }}
             <img src="{{logo.default}}" class="logo moon-logo-default" alt="{{logo.text}}">
             <img src="{{logo.default_dark}}" class="logo moon-logo-default dark" alt="{{logo.text}}">
         {{/ logo.is_text }}
-    </a>
+    {{# logo.is_link }}</a>{{/ logo.is_link }}
 </div>

@@ -32,7 +32,9 @@ if ($logo_type == 'text') {
     $logo->is_text = true;
     $logo->tag_line = $params->get('tag_line', ''); // Logo Tagline
     if ($logo->tag_line) {
-        $logo->tag_line = '<p class="site-tagline">' . $logo->tag_line . '</p>';
+        $logo->has_tagline = true;
+    } else {
+        $logo->has_tagline = false;
     }
 } else {
     // Logo file

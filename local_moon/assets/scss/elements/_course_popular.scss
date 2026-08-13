@@ -7,3 +7,20 @@
     }
   }
 }
+.moon-visible-all{
+  .uk-slider-container{
+    overflow: visible;
+  }
+}
+.moon-visible-right{
+  .uk-slider-container{
+    overflow:visible;
+    clip-path: inset(-100vw -100vw -100vw 0);
+  }
+}
+.moon-visible-left{
+  .uk-slider-container{
+    overflow:visible;
+    clip-path: inset(0 -100vw -100vw -100vw);
+  }
+}

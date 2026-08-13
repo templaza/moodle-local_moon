@@ -13,7 +13,7 @@ use local_moon\library\Framework;
 
 class Constants
 {
-    public static $moon_version = '1.0.3';
+    public static $moon_version = '1.0.5';
     public static $fontawesome_version = '7.0.0';
     public static $fancybox_version = '6.0';
     public static $animatecss_version = '3.7.0';
@@ -931,87 +931,6 @@ class Constants
                         'label'       => 'toggle_actions_label',
                         'description' => 'toggle_actions_desc',
                         'conditions'  => "[transform_scenes]!='' AND [transform_scenes]!='[]'",
-                    ],
-
-                    // Animation Background Settings
-                    'animation_background_type' => [
-                        'group' => 'animation_background_settings',
-                        'type'  => 'list',
-                        'label' => 'animation_background_type',
-                        'default' => '',
-                        'options' => [
-                            '' => 'none',
-                            'physics' => 'Physics',
-                            'hawking' => 'Hawking',
-                            'quantum' => 'Quantum',
-                            'heuristics' => 'Heuristics',
-                        ],
-                    ],
-
-                    'animation_background_width' => [
-                        'group' => 'animation_background_settings',
-                        'type' => 'range',
-                        'label' => 'width',
-                        'description' => 'width_animation',
-                        'conditions' => "[animation_background_type]!=''",
-                        "attributes" => [
-                            'min' => 0,
-                            'max' => 2000,
-                            'step' => 1,
-                            'postfix' => 'px|vh|vw|%',
-                            'responsive' => true,
-                        ],
-                    ],
-
-                    'animation_background_height' => [
-                        'group' => 'animation_background_settings',
-                        'type' => 'range',
-                        'label' => 'height',
-                        'description' => 'height_animation',
-                        'conditions' => "[animation_background_type]!=''",
-                        "attributes" => [
-                            'min' => 0,
-                            'max' => 2000,
-                            'step' => 1,
-                            'postfix' => 'px|vh|vw|%',
-                            'responsive' => true,
-                        ],
-                    ],
-
-                    'animation_background_first_color' => [
-                        'group' => 'animation_background_settings',
-                        'type' => 'color',
-                        'label' => 'first_color',
-                        'description' => 'first_color_desc',
-                        'conditions' => "[animation_background_type]!=''",
-                    ],
-
-                    'animation_background_second_color' => [
-                        'group' => 'animation_background_settings',
-                        'type' => 'color',
-                        'label' => 'second_color',
-                        'description' => 'second_color_desc',
-                        'conditions' => "[animation_background_type]=='hawking'",
-                    ],
-
-                    'animation_background_position' => [
-                        'group' => 'animation_background_settings',
-                        'type' => 'list',
-                        'label' => 'background_position',
-                        'default' => '',
-                        'conditions' => "[animation_background_type]!=''",
-                        'options' => [
-                            "" => "inherit",
-                            "left top" => "left_top",
-                            "left center" => "left_center",
-                            "left bottom" => "left_bottom",
-                            "right top" => "right_top",
-                            "right center" => "right_center",
-                            "right bottom" => "right_bottom",
-                            "center top" => "center_top",
-                            "center center" => "center_center",
-                            "center bottom" => "center_bottom",
-                        ],
                     ],
                 ]
             ],

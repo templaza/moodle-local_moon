@@ -331,14 +331,14 @@ class Utilities
 
         $types = array(
             'body' => ['body', '.body'],
-            'h1' => ['h1', '.h1'],
-            'h2' => ['h2', '.h2'],
-            'h3' => ['h3', '.h3'],
-            'h4' => ['h4', '.h4'],
-            'h5' => ['h5', '.h5'],
-            'h6' => ['h6', '.h6'],
-            'logo' => ['.moon-logo-text', '.moon-logo-text > a.site-title'],
-            'logo_tag_line' => '.moon-logo-text > p.site-tagline',
+            'h1' => ['h1', '.h1', '.uk-h1'],
+            'h2' => ['h2', '.h2', '.uk-h2'],
+            'h3' => ['h3', '.h3', '.uk-h3'],
+            'h4' => ['h4', '.h4', '.uk-h4'],
+            'h5' => ['h5', '.h5', '.uk-h5'],
+            'h6' => ['h6', '.h6', '.uk-h6'],
+            'logo' => ['a.moon-logo-text > .site-title'],
+            'logo_tag_line' => 'a.moon-logo-text > .site-tagline',
             'menu' => [
                 '.primary-navigation > .navigation li.nav-item'
             ],

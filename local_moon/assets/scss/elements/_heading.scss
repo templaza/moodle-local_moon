@@ -8,4 +8,26 @@
     position:absolute;
     z-index: 1;
   }
+  .meta-line{
+    display:flex;
+    align-items: center;
+    gap: 20px;
+    &:before{
+      content:"";
+      position:relative;
+      height:3px;
+      background: $secondary;
+      width:50px;
+    }
+  }
+  &.text-center{
+    .meta-line{
+      justify-content: center;
+    }
+  }
+  &.text-end{
+    .meta-line{
+      justify-content: end;
+    }
+  }
 }

@@ -22,13 +22,14 @@ $title_heading_margin=  $params->get('title_heading_margin', '');
 $title_clone       = $params->get('title_clone', 0);
 $title_clone_txt           = $params->get('title_clone_txt', '');
 
-
 // Meta
 $meta = $params->get('meta_text', '');
 $meta_font_style     = $params->get('meta_font_style', null);
-$meta_heading_margin=  $params->get('meta_heading_margin', '');
+$meta_heading_margin =  $params->get('meta_heading_margin', '');
+$meta_heading_padding =  $params->get('meta_heading_padding', '');
 $meta_position=  $params->get('meta_position', 'before');
 $meta_border    =   json_decode($params->get('meta_border', ''), true);
+
 if (!empty($meta_border)) {
     Style::addBorderStyle('#'. $element->id . ' .heading-meta', $meta_border, 'global', $element->isRoot);
 }
@@ -36,10 +37,28 @@ $meta_radius=  $params->get('meta_radius', '');
 if (!empty($meta_radius)) {
     Style::setSpacingStyle($element->style->child(' .heading-meta'), $meta_radius, 'radius');
 }
+$meta_cls = '';
+$meta_line       = $params->get('meta_line', 0);
+if($meta_line==1){
+    $meta_cls = ' meta-line';
+    $line_height      =   $params->get('line_height', '');
+    $line_width      =   $params->get('line_width', '');
+    $line_height_data = json_decode($line_height, true);
+    $line_width_data = json_decode($line_width, true);
+    if (json_last_error() === JSON_ERROR_NONE && is_array($line_width_data)) {
+        $style->child('.meta-line:before')->addResponsiveCSS('width', $line_width_data, $line_width_data['postfix']);
+    }
+    if (json_last_error() === JSON_ERROR_NONE && is_array($line_height_data)) {
+        $style->child('.meta-line:before')->addResponsiveCSS('height', $line_height_data, $line_height_data['postfix']);
+    }
+    $line_color     = Style::getColor($params->get('line_color', ''));
+    $style->child('.meta-line:before')->addCss('background-color', $line_color['light']);
+    $style_dark->child('.meta-line:before')->addCss('background-color', $line_color['dark']);
+}
 
 if (!empty($title)) {
-    if ($meta !='' && $meta_position == 'before') {
-        echo '<div class="heading-meta uk-display-inline-block">'.$meta.'</div>';
+    if (($meta !== '' || $meta_line === 1) && $meta_position === 'before') {
+        echo '<div class="heading-meta '.$meta_cls.'">'.$meta.'</div>';
     }
     if ($use_link) {
         echo '<a href="'.$link.'" title="'.$title.'">';
@@ -49,10 +68,10 @@ if (!empty($title)) {
         echo '</a>';
     }
     if($title_clone){
-        echo '<div class="heading-clone uk-position-absolute">'.$title_clone_txt.'</div>';
+        echo '<div class="heading-clone position-absolute">'.$title_clone_txt.'</div>';
     }
-    if ($meta !=''  && $meta_position == 'after') {
-        echo '<div class="heading-meta">'.$meta.'</div>';
+    if (($meta !== '' || $meta_line === 1) && $meta_position === 'after') {
+        echo '<div class="heading-meta '.$meta_cls.'">'.$meta.'</div>';
     }
 }
 if (!empty($font_style)) {
@@ -66,6 +85,9 @@ if (!empty($meta_font_style)) {
 }
 if (!empty($meta_heading_margin)) {
     Style::setSpacingStyle($this->style->child('.heading-meta'), $meta_heading_margin, 'margin');
+}
+if (!empty($meta_heading_padding)) {
+    Style::setSpacingStyle($this->style->child('.heading-meta'), $meta_heading_padding);
 }
 
 $title_clone_margin=  $params->get('title_clone_margin', '');

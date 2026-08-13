@@ -13,4 +13,36 @@
   .ui-content-wrap{
     z-index: 2;
   }
+  .ui-nav-title-items{
+    a{
+      &:after{
+        display: none;
+      }
+      &.uk-active{
+        &:before{
+          content:"";
+          height:4px;
+          position: absolute;
+          top:-3px;
+          left:0;
+          width:100%;
+          background: $secondary;
+        }
+      }
+    }
+  }
+  .ui-nav-title{
+    width:100%;
+    border-top:2px solid rgba(255,255,255,0.2);
+    .ui-nav-title-num{
+      width:50px;
+      height:50px;
+      border:1px solid #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      padding:0;
+    }
+  }
 }

@@ -237,6 +237,16 @@ class MoonElementGrid extends MoonElement {
                         'type' => 'color',
                         'label' => 'background_color',
                     ],
+                    'item_background_overlay' => [
+                        'conditions' => "[enable_background_image]==1",
+                        'type' => 'color',
+                        'label' => 'overlay_bg_color',
+                    ],
+                    'item_background_overlay_hover' => [
+                        'conditions' => "[enable_background_image]==1",
+                        'type' => 'color',
+                        'label' => 'overlay_bg_color_hover',
+                    ],
                 ]
             ],
         ];
@@ -691,6 +701,7 @@ class MoonElementGrid extends MoonElement {
                 "bottom" => "bottom",
                 "right"  => "right",
                 "inside" => "inside",
+                "left_title" => "Left Title",
                 "cover" => "cover",
             ],
         ]);
@@ -945,6 +956,22 @@ class MoonElementGrid extends MoonElement {
                 "shadow-hover-popout" => "popout",
             ],
         ]);
+        $this->addField('title_color_hover', [
+            "group" => "card_options",
+            "type"  => "color",
+            "label" => "card_hover_title_color",
+        ]);
+        $this->addField('content_color_hover', [
+            "group" => "card_options",
+            "type"  => "color",
+            "label" => "card_hover_content_color",
+        ]);
+        $this->addField('card_button_color_hover', [
+            "group" => "card_options",
+            "type"  => "color",
+            "label" => "card_hover_button_color",
+        ]);
+
         $this->addField('enable_slider', [
             "group"   => "slider_options",
             "type"    => "radio",
