@@ -429,12 +429,15 @@ $icon_box_height      =   $params->get('icon_box_height', '');
 $icon_box_height_data = json_decode($icon_box_height, true);
 $icon_box_width_data = json_decode($icon_box_width, true);
 if (json_last_error() === JSON_ERROR_NONE && is_array($icon_box_width_data)) {
-    $style->child('.moon-icon')->addResponsiveCSS('width', $icon_box_width_data, $icon_box_width_data['postfix']);
+    $style->child('.moon-icon-wrapper')->addResponsiveCSS('width', $icon_box_width_data, $icon_box_width_data['postfix']);
+    $style->child('.moon-icon-wrapper')->addCss('display', 'inline-flex');
+    $style->child('.moon-icon-wrapper')->addCss('align-items', 'center');
+    $style->child('.moon-icon-wrapper')->addCss('justify-content', 'center');
 }
 if (json_last_error() === JSON_ERROR_NONE && is_array($icon_box_height_data)) {
-    $style->child('.moon-icon')->addResponsiveCSS('height', $icon_box_height_data, $icon_box_height_data['postfix']);
+    $style->child('.moon-icon-wrapper')->addResponsiveCSS('height', $icon_box_height_data, $icon_box_height_data['postfix']);
 }
 $icon_box_radius      =   $params->get('icon_box_radius', '');
 if (!empty($icon_box_radius)) {
-    Style::setSpacingStyle($element->style->child('.moon-icon'), $icon_box_radius,'radius');
+    Style::setSpacingStyle($element->style->child('.moon-icon-wrapper'), $icon_box_radius,'radius');
 }
