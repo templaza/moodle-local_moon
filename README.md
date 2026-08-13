@@ -36,6 +36,17 @@ Moon Framework is a Moodle LMS-focused version of the [Astroid Framework](https:
 * Moodle: 4.x, 5.x
 * PHP : 8.2+
 
+## Installation
+1. Download the latest release of Moon Framework (local_moon.zip and theme_moon.zip) from the [GitHub releases page](https://github.com/templaza/moon-framework/releases/latest).
+2. Go to your Moodle site and navigate to Site administration > Plugins > Install plugins.
+3. Upload the downloaded zip files (local_moon.zip and theme_moon.zip) and follow the on-screen instructions to complete the installation.
+4. After installation, go to Site administration > Appearance > Themes > Select theme and choose "Moon" as your active theme.
+5. You can now start customizing your Moodle site using the Moon Framework's features and options.
+
+## Links
+* [Official Website](https://moonframe.work)
+* [Documentation](https://docs.moonframe.work)
+
 ## Browser Support
 | ![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png)|![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png)|![Edge](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png)|![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png)|
 | :---: | :---:	|:---:|:---:|
