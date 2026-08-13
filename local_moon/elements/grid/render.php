@@ -188,6 +188,16 @@ foreach ($grids->data as $key => $grid) {
         $element->style->child('#grid-'. $grid -> id .' .card')->addCss('background-color', $item_bg_color['light']);
         $element->style_dark->child('#grid-'. $grid -> id .' .card')->addCss('background-color', $item_bg_color['dark']);
     }
+    $item_background_overlay  =   Style::getColor($grid->params->get('item_background_overlay', ''));
+    if($item_background_overlay){
+        $element->style->child('#grid-'. $grid -> id .' .card:before')->addCss('background-color', $item_background_overlay['light']);
+        $element->style_dark->child('#grid-'. $grid -> id .' .card:before')->addCss('background-color', $item_background_overlay['dark']);
+    }
+    $item_background_overlay_hover  =   Style::getColor($grid->params->get('item_background_overlay_hover', ''));
+    if($item_background_overlay_hover){
+        $element->style->child('#grid-'. $grid -> id .':hover .card:before')->addCss('background-color', $item_background_overlay_hover['light']);
+        $element->style_dark->child('#grid-'. $grid -> id .':hover .card:before')->addCss('background-color', $item_background_overlay_hover['dark']);
+    }
     $media          =   '';
     if ($grid->params->get('type', '') == 'image' && $grid->params->get('image', '')) {
         $media      =   '<div class="as-image-cover grid-media position-relative overflow-hidden' . $image_border_radius . $hover_tog_class .$img_eff. $transition . ($media_position == 'bottom' ? ' order-2 ' : '') . '">';
@@ -232,7 +242,7 @@ foreach ($grids->data as $key => $grid) {
         echo '<div class="row g-0'.($vertical_middle ? ' align-items-center' : '').'">';
         echo '<div class="'.$media_width_cls.'">';
     }
-    if ($media_position != 'inside' || $media_position == 'cover') {
+    if (($media_position != 'inside' || $media_position == 'cover') && $media_position != 'left_title') {
         echo $media;
     }
     if ($media_position == 'left' || $media_position == 'right') {
@@ -255,7 +265,14 @@ foreach ($grids->data as $key => $grid) {
         echo '<div class="moon-meta '.$meta_position.'">' . $grid->params->get('meta', '') . '</div>';
     }
     if (!empty($grid->params->get('title', ''))) {
-        echo '<'.$title_html_element.' class="moon-heading">'. $grid->params->get('title', '') . '</'.$title_html_element.'>';
+        if ($media_position == 'left_title') {
+            echo '<div class="d-flex justify-content-start">';
+            echo $media;
+            echo '<'.$title_html_element.' class="moon-heading">'. $grid->params->get('title', '') . '</'.$title_html_element.'>';
+            echo '</div>';
+        }else{
+            echo '<'.$title_html_element.' class="moon-heading">'. $grid->params->get('title', '') . '</'.$title_html_element.'>';
+        }
     }
     if (!empty($grid->params->get('meta', '')) && $meta_position == 'after') {
         echo '<div class="moon-meta '.$meta_position.'">' . $grid->params->get('meta', '') . '</div>';
@@ -265,8 +282,8 @@ foreach ($grids->data as $key => $grid) {
         echo '<div class="moon-text">' . $content . '</div>';
     }
     if (!empty($grid->params->get('link', '')) && !empty($grid->params->get('link_title', ''))) {
-        $button_class   =   $button_style !== 'text' ? 'btn btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius : 'as-btn-text text-uppercase text-reset';
-        $btn_title      =   $button_style == 'text' ? '<small>'. $grid->params->get('link_title', '') . '</small>' : $grid->params->get('link_title', '');
+        $button_class   =   $button_style !== 'text' ? 'btn btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius : 'as-btn-text d-inline-block';
+        $btn_title      =   $button_style == 'text' ? ''. $grid->params->get('link_title', '') . '' : $grid->params->get('link_title', '');
         echo '<a class="'. $button_class . '" href="'.$grid->params->get('link', '').'" role="button"'.$link_target.'>' . $btn_title . '</a>';
     }
 
@@ -374,10 +391,22 @@ if (!empty($card_custom_radius) && $border_radius=='custom') {
     Style::setSpacingStyle($element->style->child('.card'), $card_custom_radius,'radius');
 }
 
+$title_color_hover     = Style::getColor($params->get('title_color_hover', ''));
+$style->child('.card:hover .moon-heading')->addCss('color', $title_color_hover['light']);
+$style_dark->child('.card:hover .moon-heading')->addCss('color', $title_color_hover['dark']);
+
+$content_color_hover     = Style::getColor($params->get('content_color_hover', ''));
+$style->child('.card:hover .moon-text')->addCss('color', $content_color_hover['light']);
+$style_dark->child('.card:hover .moon-text')->addCss('color', $content_color_hover['dark']);
+
+$card_button_color_hover     = Style::getColor($params->get('card_button_color_hover', ''));
+$style->child('.card:hover .btn')->addCss('color', $card_button_color_hover['light']);
+$style_dark->child('.card:hover .btn')->addCss('color', $card_button_color_hover['dark']);
+
 
 $button_font_style   =   $params->get('button_font_style');
 if (!empty($button_font_style)) {
-    Style::renderTypography('#'.$element->id.' .btn', $button_font_style, null, $element->isRoot);
+    Style::renderTypography('#'.$element->id.' .btn, #'.$element->id.' .as-btn-text', $button_font_style, null, $element->isRoot);
 }
 
 $button_color     = Style::getColor($params->get('button_color', ''));
@@ -397,6 +426,7 @@ $button_padding =   $params->get('button_padding', '');
 
 if (!empty($button_padding)) {
     Style::setSpacingStyle($element->style->child('.btn'), $button_padding);
+    Style::setSpacingStyle($element->style->child('.as-btn-text'), $button_padding);
 }
 $button_custom_radius      =   $params->get('button_custom_radius', '');
 if (!empty($button_custom_radius) && $button_radius=='custom') {
@@ -406,6 +436,7 @@ $button_custom_margin =   $params->get('button_custom_margin', '');
 
 if (!empty($button_custom_margin)) {
     Style::setSpacingStyle($element->style->child('.btn'), $button_custom_margin,'margin');
+    Style::setSpacingStyle($element->style->child('.as-btn-text'), $button_custom_margin,'margin');
 }
 $image_height      =   $params->get('image_height', '');
 $image_width      =   $params->get('image_width', '');
