@@ -1,6 +1,7 @@
 <?php
 $string['pluginname'] = 'Moon Framework';
 $string['settings_desc'] = 'Global configuration for Moon Framework';
+$string['moon:view'] = 'View Moon';
 
 // General
 $string['wide'] = 'Wide';
@@ -990,6 +991,7 @@ $string['title_options'] = 'Title Options';
 $string['tab_options'] = 'Tab Options';
 $string['choose_category'] = 'Choose Category';
 $string['course_limit'] = 'Course Limit';
+$string['nocourses'] = 'No courses available';
 
 //uk slideshow
 
@@ -999,7 +1001,6 @@ $string['kenburns_duration'] = 'Ken Burns Duration';
 $string['kenburns_duration_desc'] = 'Set the duration for the Ken Burns effect in seconds.';
 $string['overlay_position'] = 'Overlay Position';
 $string['overlay_bg_color'] = 'Overlay background color';
-$string['overlay_bg_color_hover'] = 'Hover Overlay background color';
 $string['video_url'] = 'Youtube or Vimeo Url';
 $string['dot_options'] = 'Dot Options';
 $string['dot_option'] = 'Dot Options';
