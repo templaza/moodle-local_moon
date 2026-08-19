@@ -31,7 +31,35 @@ $layout =  $params->get('blog_style', '');
 $limit =  $params->get('blog_limit', 5);
 $show_author =  $params->get('show_author', '');
 $show_comment =  $params->get('show_comment', '');
+$show_date_create =  $params->get('show_date_create', '');
+$image_position =  $params->get('image_position', '');
 
+$row_column_cls     =   '';
+$responsive_key     =   ['xxl', 'xl', 'lg', 'md', 'sm', 'xs'];
+foreach ($responsive_key as $key) {
+    $default        =   match ($key) {
+        'xxl', 'xl' =>  '',
+        'lg'        =>  3,
+        default     =>  1
+    };
+    $column         =   $params->get($key . '_column', $default);
+
+    if ($key !== 'xs') {
+        $row_column_cls     .=  $column ? ' row-cols-'. $key .'-' . $column : '';
+        $row_gutter         =   $params->get('row_gutter_'.$key, '');
+        $column_gutter      =   $params->get('column_gutter_'. $key, '');
+
+        $row_column_cls .=  ' gy-' . $key . '-' . $row_gutter;
+        $row_column_cls .=  ' gx-' . $key . '-' . $column_gutter;
+
+    } else {
+        $row_column_cls     .=  $column ? ' row-cols-' . $column : '';
+        $row_gutter         =   $params->get('row_gutter', 3);
+        $column_gutter      =   $params->get('column_gutter', 3);
+        $row_column_cls     .=  ' gy-' . $row_gutter;
+        $row_column_cls     .=  ' gx-' . $column_gutter;
+    }
+}
 $attrs_slider[] = '';
 $attrs_slider[] = (  $autoplay  ) ? 'autoplay: 1' : '';
 $attrs_slider   = ' data-uk-slider="' . implode( '; ', array_filter( $attrs_slider ) ) . '"';
@@ -95,13 +123,13 @@ foreach ($entries as $entryid => $entry):
         $text .='<div class="content">';
         $text .='<ul class="meta">';
                  $text .=' <li>
-                            '. get_string('blog_date', 'local_moon').'<span>'.userdate($entry->created, '%B %e, %Y', 0).'</span>
+                            '. get_string('blog_date', 'local_moon').'<span> '.userdate($entry->created, '%B %e, %Y', 0).'</span>
                         </li>';
                 $text .='    <li>
                     <a href="'. $authorurl.'">'.$authorname.'</a>
                 </li>';
                 $text .='</ul>';
-                $text .='<h3>
+                $text .='<h3 class="blog-title-left">
                     <a href="'.$viewblogurl.'">'.format_string($entry->subject).'</a>
                 </h3>';
 
@@ -116,24 +144,29 @@ foreach ($entries as $entryid => $entry):
             $text .='<div class="col-lg-6 col-md-12 blog-style2-right">';
         }
         $text .='<div class="blog-right-item">';
-            $text .='<div class="moon-blog-card uk-grid uk-grid-medium" data-uk-grid>';
-                $text .='<div class="image">
+            $text .='<div class="moon-blog-card row">';
+                $text .='<div class="blog-image-box col-md-5"><div class="image">
                     <a href="'. $viewblogurl.'">';
                         if ($img_url) {
                             $text .='<img src="'.$img_url.'" alt="image">';
                         }
                     $text .='</a>';
-                $text .='</div>';
-                $text .='<div class="content uk-width-expand">
+                $text .='</div></div>';
+                $text .='<div class="content col-md-7">
                     <ul class="meta">';
-                            $text .='<li>
-                                '.get_string('blog_date', 'local_moon').' <span>'.userdate($entry->created, '%B %e, %Y', 0).'</span>
+                            if($show_date_create){
+                                $text .='<li>
+                                '.get_string('blog_date', 'local_moon').' <span> '.userdate($entry->created, '%B %e, %Y', 0).'</span>
                             </li>';
-                            $text .='<li>
-                                <a href="'.$authorurl.'">'.$authorname.'</a>
-                            </li>';
+                            }
+                            if($show_author){
+                                $text .='<li>
+                                    <a href="'.$authorurl.'">'.$authorname.'</a>
+                                </li>';
+                            }
+
                     $text .='</ul>';
-                        $text .='<h3>
+                        $text .='<h3 class="blog-title">
                             <a href="'.$viewblogurl.'">'.format_string($entry->subject).'</a>
                         </h3>';
 
@@ -153,7 +186,7 @@ foreach ($entries as $entryid => $entry):
     }elseif($layout=='style3'){
         $text .= '<div class="moon-blog-area moon-blog-area-style3">';
         $text .= '<div class=" container p-0 uk-position-relative uk-visible-toggle" tabindex="-1" '.$attrs_slider.'>';
-        $text .= '<div class="uk-slider-items row flex-nowrap">';
+        $text .= '<div class="uk-slider-items row flex-nowrap '.$row_column_cls.'">';
         foreach ($entries as $entryid => $entry) {
             $viewblogurl->param('entryid', $entryid);
             $img_url = $moonBlog->moon_get_blog_image_url($entryid);
@@ -184,7 +217,7 @@ foreach ($entries as $entryid => $entry):
             }
 
             $text .='
-                    <div class="blog-slider-item '.$slider_column.' blog-item'.$entryid.' col-md-6">
+                    <div class="blog-slider-item blog-item'.$entryid.'">
                         <div class="moon-blog-card">
                     ';
             if($img_url){
@@ -203,7 +236,7 @@ foreach ($entries as $entryid => $entry):
 
             $text .='
                     <div class="content">                        
-                        <h3>
+                        <h3 class="blog-title">
                             <a href="'.$viewblogurl.'">'.format_string($entry->subject).'</a>
                         </h3>
                         <div class="blog-description"> <p>'.format_text($excerpttxt, FORMAT_HTML).'</p></div>                        
@@ -230,7 +263,7 @@ foreach ($entries as $entryid => $entry):
     }else{
         $text .= '<div class="moon-blog-area">';
         $text .= '<div class=" container p-0 uk-position-relative uk-visible-toggle" tabindex="-1" '.$attrs_slider.'>';
-        $text .= '<div class="uk-slider-items row flex-nowrap">';
+        $text .= '<div class="uk-slider-items row flex-nowrap '.$row_column_cls.'">';
         foreach ($entries as $entryid => $entry) {
             $viewblogurl->param('entryid', $entryid);
             $img_url = $moonBlog->moon_get_blog_image_url($entryid);
@@ -244,7 +277,7 @@ foreach ($entries as $entryid => $entry):
             $authorname = fullname($author);
             $authorurl = (new moodle_url('/user/profile.php', ['id' => $author->id]))->out(false);
             $text .='
-                    <div class="blog-slider-item '.$slider_column.' col-md-6">
+                    <div class="blog-slider-item ">
                         <div class="moon-blog-card">
                     ';
             if($img_url){
@@ -266,7 +299,7 @@ foreach ($entries as $entryid => $entry):
                             <li><a href="'.$authorurl.'">'.$authorname.'</a>
                             </li>
                         </ul>
-                        <h3>
+                        <h3 class="blog-title">
                             <a href="'.$viewblogurl.'">'.format_string($entry->subject).'</a>
                         </h3>
                         <div class="blog-description"> <p>'.format_text($excerpttxt, FORMAT_HTML).'</p></div>
@@ -327,6 +360,16 @@ $item_content_padding   =   $params->get('item_content_padding', '');
 if (!empty($item_content_padding)) {
     Style::setSpacingStyle($this->style->child('.content'), $item_content_padding);
 }
+$item_padding   =   $params->get('item_padding', '');
+if (!empty($item_padding)) {
+    Style::setSpacingStyle($this->style->child('.moon-blog-card'), $item_padding);
+}
+$title_margin   =   $params->get('title_margin', '');
+if (!empty($title_margin)) {
+    Style::setSpacingStyle($this->style->child('.blog-title'), $title_margin,'margin');
+}
+
+
 $item_bg_color     = Style::getColor($params->get('item_bg_color', ''));
 
 $style->child('.moon-blog-card')->addCss('background-color', $item_bg_color['light']);
@@ -342,4 +385,15 @@ if (!empty($item_radius)) {
 $image_border_radius=   $params->get('image_border_radius', '');
 if (!empty($image_border_radius)) {
     Style::setSpacingStyle($element->style->child('.image'), $image_border_radius,'radius');
+}
+$show_content           = $params->get('show_content', 1);
+if($show_content){
+    $content_margin   =   $params->get('content_margin', '');
+    if (!empty($content_margin)) {
+        Style::setSpacingStyle($this->style->child('.blog-description'), $content_margin,'margin');
+    }
+    $content_style        = $params->get('content_font_style', null);
+    if (!empty($content_style)) {
+        Style::renderTypography('#'.$this->id.' .blog-description', $content_style, null, $this->isRoot);
+    }
 }
