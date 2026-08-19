@@ -37,15 +37,28 @@ class MoonElementUk_Event extends MoonElement {
         ]);
 
         $this->addField('title_options', [
-            "group" => "general",
             "type"  => "group",
             "label" => "title_options",
         ]);
 
         $this->addField('content_options', [
-            "group" => "general",
             "type"  => "group",
             "label" => "content_options",
+        ]);
+        $this->addField('readmore_options', [
+            "type"  => "group",
+            "label" => "readmore_options",
+        ]);
+
+        $this->addField('event_layout', [
+            "group"   => "general",
+            "type"    => "list",
+            "label" => "layout",
+            "default" => "",
+            "options" => [
+                '' => 'default',
+                'list'  => 'list',
+            ],
         ]);
 
         $repeater_options = [
@@ -90,6 +103,7 @@ class MoonElementUk_Event extends MoonElement {
                 'sm'  => 'sm_icon',
                 'xs'  => 'xs_icon',
             ],
+            "conditions" => "[event_layout]=='' ",
         ]);
 
         $this->addField('xxl_column', [
@@ -97,7 +111,7 @@ class MoonElementUk_Event extends MoonElement {
             "type"       => "list",
             "label"      => "xxl_column",
             "default"    => "",
-            "conditions" => "[column_responsive]=='xxl'",
+            "conditions" => "[column_responsive]=='xxl' AND [event_layout]=='' ",
             "options"    => [
                 ""  => "inherit",
                 '1' => 'one_column',
@@ -114,7 +128,7 @@ class MoonElementUk_Event extends MoonElement {
             "type"       => "list",
             "label"      => "xl_column",
             "default"    => "",
-            "conditions" => "[column_responsive]=='xl'",
+            "conditions" => "[column_responsive]=='xl' AND [event_layout]==''",
             "options"    => [
                 ""  => "inherit",
                 '1' => 'one_column',
@@ -131,7 +145,7 @@ class MoonElementUk_Event extends MoonElement {
             "type"       => "list",
             "label"      => "lg_column",
             "default"    => "3",
-            "conditions" => "[column_responsive]=='lg'",
+            "conditions" => "[column_responsive]=='lg' AND [event_layout]==''",
             "options"    => [
                 ""  => "inherit",
                 '1' => 'one_column',
@@ -148,7 +162,7 @@ class MoonElementUk_Event extends MoonElement {
             "type"       => "list",
             "label"      => "md_column",
             "default"    => "1",
-            "conditions" => "[column_responsive]=='md'",
+            "conditions" => "[column_responsive]=='md' AND [event_layout]==''",
             "options"    => [
                 ""  => "inherit",
                 '1' => 'one_column',
@@ -165,7 +179,7 @@ class MoonElementUk_Event extends MoonElement {
             "type"       => "list",
             "label"      => "sm_column",
             "default"    => "1",
-            "conditions" => "[column_responsive]=='sm'",
+            "conditions" => "[column_responsive]=='sm' AND [event_layout]==''",
             "options"    => [
                 ""  => "inherit",
                 '1' => 'one_column',
@@ -182,7 +196,7 @@ class MoonElementUk_Event extends MoonElement {
             "type"       => "list",
             "label"      => "xs_column",
             "default"    => "1",
-            "conditions" => "[column_responsive]=='xs'",
+            "conditions" => "[column_responsive]=='xs' AND [event_layout]==''",
             "options"    => [
                 ""  => "inherit",
                 '1' => 'one_column',
@@ -199,7 +213,7 @@ class MoonElementUk_Event extends MoonElement {
             "type"       => "list",
             "label"      => "row_gutter_xxl",
             "default"    => "",
-            "conditions" => "[column_responsive]=='xxl'",
+            "conditions" => "[column_responsive]=='xxl' AND [event_layout]==''",
             "options"    => [
                 ""  => "inherit",
                 "0" => "Collapse",
@@ -216,7 +230,7 @@ class MoonElementUk_Event extends MoonElement {
             "type"       => "list",
             "label"      => "row_gutter_xl",
             "default"    => "",
-            "conditions" => "[column_responsive]=='xl'",
+            "conditions" => "[column_responsive]=='xl' AND [event_layout]==''",
             "options"    => [
                 ""  => "inherit",
                 "0" => "Collapse",
@@ -233,7 +247,7 @@ class MoonElementUk_Event extends MoonElement {
             "type"       => "list",
             "label"      => "row_gutter_lg",
             "default"    => "4",
-            "conditions" => "[column_responsive]=='lg'",
+            "conditions" => "[column_responsive]=='lg' AND [event_layout]==''",
             "options"    => [
                 ""  => "inherit",
                 "0" => "Collapse",
@@ -250,7 +264,7 @@ class MoonElementUk_Event extends MoonElement {
             "type"       => "list",
             "label"      => "row_gutter_md",
             "default"    => "3",
-            "conditions" => "[column_responsive]=='md'",
+            "conditions" => "[column_responsive]=='md' AND [event_layout]==''",
             "options"    => [
                 ""  => "inherit",
                 "0" => "Collapse",
@@ -267,7 +281,7 @@ class MoonElementUk_Event extends MoonElement {
             "type"       => "list",
             "label"      => "row_gutter_sm",
             "default"    => "3",
-            "conditions" => "[column_responsive]=='sm'",
+            "conditions" => "[column_responsive]=='sm' AND [event_layout]==''",
             "options"    => [
                 ""  => "inherit",
                 "0" => "Collapse",
@@ -284,7 +298,7 @@ class MoonElementUk_Event extends MoonElement {
             "type"       => "list",
             "label"      => "row_gutter_xs",
             "default"    => "3",
-            "conditions" => "[column_responsive]=='xs'",
+            "conditions" => "[column_responsive]=='xs' AND [event_layout]==''",
             "options"    => [
                 "0" => "Collapse",
                 "1" => "X-Small",
@@ -300,7 +314,7 @@ class MoonElementUk_Event extends MoonElement {
             "type"       => "list",
             "label"      => "column_gutter_xxl",
             "default"    => "",
-            "conditions" => "[column_responsive]=='xxl'",
+            "conditions" => "[column_responsive]=='xxl' AND [event_layout]==''",
             "options"    => [
                 ""  => "inherit",
                 "0" => "Collapse",
@@ -317,7 +331,7 @@ class MoonElementUk_Event extends MoonElement {
             "type"       => "list",
             "label"      => "column_gutter_xl",
             "default"    => "",
-            "conditions" => "[column_responsive]=='xl'",
+            "conditions" => "[column_responsive]=='xl' AND [event_layout]==''",
             "options"    => [
                 ""  => "inherit",
                 "0" => "Collapse",
@@ -334,7 +348,7 @@ class MoonElementUk_Event extends MoonElement {
             "type"       => "list",
             "label"      => "column_gutter_lg",
             "default"    => "4",
-            "conditions" => "[column_responsive]=='lg'",
+            "conditions" => "[column_responsive]=='lg' AND [event_layout]==''",
             "options"    => [
                 ""  => "inherit",
                 "0" => "Collapse",
@@ -351,7 +365,7 @@ class MoonElementUk_Event extends MoonElement {
             "type"       => "list",
             "label"      => "column_gutter_md",
             "default"    => "3",
-            "conditions" => "[column_responsive]=='md'",
+            "conditions" => "[column_responsive]=='md' AND [event_layout]==''",
             "options"    => [
                 ""  => "inherit",
                 "0" => "Collapse",
@@ -368,7 +382,7 @@ class MoonElementUk_Event extends MoonElement {
             "type"       => "list",
             "label"      => "column_gutter_sm",
             "default"    => "3",
-            "conditions" => "[column_responsive]=='sm'",
+            "conditions" => "[column_responsive]=='sm' AND [event_layout]==''",
             "options"    => [
                 ""  => "inherit",
                 "0" => "Collapse",
@@ -385,7 +399,7 @@ class MoonElementUk_Event extends MoonElement {
             "type"       => "list",
             "label"      => "column_gutter_xs",
             "default"    => "3",
-            "conditions" => "[column_responsive]=='xs'",
+            "conditions" => "[column_responsive]=='xs' AND [event_layout]==''",
             "options"    => [
                 "0" => "Collapse",
                 "1" => "X-Small",
@@ -585,6 +599,72 @@ class MoonElementUk_Event extends MoonElement {
             'group' => 'content_options',
             'type'  => 'spacing',
             'label' => 'margin',
+        ]);
+        $this->addField('button_text',  [
+            "group" => "readmore_options",
+            "type" => "text",
+            "label" => "title",
+            "conditions" => "[event_layout]=='list'",
+        ]);
+        $this->addField('button_icon', [
+            "group" => "readmore_options",
+            "type"  => "icons",
+            "label"  => "icon",
+            "conditions" => "[event_layout]=='list'",
+        ]);
+        $this->addField('button_color', [
+            "group"      => "readmore_options",
+            "type"       => "color",
+            "label"      => "color",
+            "conditions" => "[event_layout]=='list'",
+        ]);
+        $this->addField('button_bg_color', [
+            "group"      => "readmore_options",
+            "type"       => "color",
+            "label"      => "background_color",
+            "conditions" => "[event_layout]=='list'",
+        ]);
+        $this->addField('button_color_hover', [
+            "group"      => "readmore_options",
+            "type"       => "color",
+            "label"      => "color_hover",
+            "conditions" => "[event_layout]=='list'",
+        ]);
+        $this->addField('button_bg_color_hover', [
+            "group"      => "readmore_options",
+            "type"       => "color",
+            "label"      => "background_color_hover",
+            "conditions" => "[event_layout]=='list'",
+        ]);
+        $this->addField('button_padding', [
+            'group'      => 'readmore_options',
+            'type'       => 'spacing',
+            'label'      => 'padding',
+            "conditions" => "[event_layout]=='list'",
+        ]);
+        $this->addField('button_margin', [
+            "group" => "readmore_options",
+            "type"  => "spacing",
+            "label"  => "margin",
+            "conditions" => "[event_layout]=='list'",
+        ]);
+        $this->addField('button_radius', [
+            'group' => 'readmore_options',
+            'type'  => 'spacing',
+            'label' => 'border_radius',
+            "conditions" => "[event_layout]=='list'",
+        ]);
+        $this->addField('button_align', [
+            'group'   => 'readmore_options',
+            'type'    => 'list',
+            'label'   => 'alignment',
+            'default' => '',
+            'options' => [
+                ''          => 'Default',
+                'text-md-center'   => 'center',
+                'text-md-right'   => 'right',
+            ],
+            "conditions" => "[event_layout]=='list'",
         ]);
 
     }

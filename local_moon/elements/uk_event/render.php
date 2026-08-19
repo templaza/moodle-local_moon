@@ -45,6 +45,11 @@ $content_hover_transition     = $params->get('media_hover_transition', '');
 
 $enable_image_cover =   $params->get('enable_image_cover', 0);
 
+$event_layout   =   $params->get('event_layout','');
+$button_text   =   $params->get('button_text','');
+$button_icon   =   $params->get('button_icon','');
+$button_align   =   $params->get('button_align','');
+
 $image_layout   =   $params->get('image_layout');
 $image_height      =   $params->get('image_height', '');
 $image_height_data = json_decode($image_height, true);
@@ -68,7 +73,11 @@ if($image_hover_transition !=''){
     $toggle = ' uk-transition-toggle';
     $img_transition = ' uk-transition-scale-up uk-transition-opaque';
 }
-echo '<div class="row '.$row_column_cls.'">';
+$event_cls = 'row '.$row_column_cls.'';
+if($event_layout=='list'){
+    $event_cls = ' event-element';
+}
+echo '<div class="'.$event_cls.'">';
 foreach ($list_events->data as $key => $grid) {
     $media          =   '';
     global $DB;
@@ -83,18 +92,44 @@ foreach ($list_events->data as $key => $grid) {
         $media     .= '<a href="'.$url.'"><img '.$img_attr.' class="tz-img-grid '.$img_transition.'" src="'. $grid->params->get('image', '') .'" alt="'.$event->name.'"></a>';
         $media     .= '</div>';
     }
-    echo '<div id="event-'. $grid -> id .'" class="moon-event "><div class="event-item uk-overflow-hidden uk-position-relative '.$toggle.'">';
-        echo $media;
-    if($eventid){
-        echo $overlay_html;
-        echo '<div class="event-summary '.$content_position.'"> <h3 class="event-title"><a href="'.$url.'">' .$event->name.'</a></h3>';
-        echo '<div class="event-duration"><div class="event-start uk-flex uk-flex-middle">'.$start_icon.' ' . userdate($event->timestart).'</div>';
-        echo '<div class="event-end uk-flex uk-flex-middle">'.$end_icon.' ' . userdate($event->timestart + $event->timeduration).'</div>';
-        echo '</div>';
-        echo '</div>';
-    }
+    if($event_layout=='list'){
+        echo '<div id="event-'. $grid -> id .'" class="moon-event">
+        <div class="event-item row uk-flex uk-flex-middle">';
+        if($eventid){
+            $date = userdate($event->timestart);
+            $timestamp = strtotime($date);
+            $day = date('d', $timestamp);
 
-    echo '</div></div>';
+            echo '<div class="col-md-2 text-md-center">';
+            echo '<div class="start-day">' .$day. '</div>';
+            echo '<div class="start-month">' .date('F, Y', $timestamp). '</div>';
+            echo '</div>';
+            echo '<div class="col-md-8 event-summary">';
+            echo '<h3 class="event-title"><a href="'.$url.'">' .$event->name.'</a></h3>';
+            echo '<div class="event-end event-duration uk-flex uk-flex-middle">'.$end_icon.' ' . userdate($event->timestart + $event->timeduration).'</div>';
+            echo '</div>';
+            if($button_text || $button_icon){
+                echo '<div class="col-md-2 '.$button_align.' ">';
+                echo '<div class="event-btn"><a class="event-readmore uk-inline-block" href="'.$url.'">' .$button_text.' <i class="'.$button_icon.'"></i></a></div>';
+                echo '</div>';
+            }
+
+            echo '</div></div>';
+        }
+    }else{
+        echo '<div id="event-'. $grid -> id .'" class="moon-event "><div class="event-item uk-overflow-hidden uk-position-relative '.$toggle.'">';
+        echo $media;
+        if($eventid){
+            echo $overlay_html;
+            echo '<div class="event-summary '.$content_position.'"> <h3 class="event-title"><a href="'.$url.'">' .$event->name.'</a></h3>';
+            echo '<div class="event-duration"><div class="event-start uk-flex uk-flex-middle">'.$start_icon.' ' . userdate($event->timestart).'</div>';
+            echo '<div class="event-end uk-flex uk-flex-middle">'.$end_icon.' ' . userdate($event->timestart + $event->timeduration).'</div>';
+            echo '</div>';
+            echo '</div>';
+        }
+
+        echo '</div></div>';
+    }
 
 }
 echo '</div>';
@@ -164,4 +199,33 @@ if (json_last_error() === JSON_ERROR_NONE && is_array($icon_size)) {
 $icon_margin   =   $params->get('icon_margin', '');
 if (!empty($icon_margin)) {
     Style::setSpacingStyle($style->child('.event-duration i'), $icon_margin,'margin');
+}
+
+$button_color     = Style::getColor($params->get('button_color', ''));
+$button_hover_color     = Style::getColor($params->get('button_color_hover', ''));
+$button_bg_color     = Style::getColor($params->get('button_bg_color', ''));
+$button_bg_hover_color     = Style::getColor($params->get('button_bg_color_hover', ''));
+
+$style->child('.event-readmore')->addCss('color', $button_color['light']);
+$style_dark->child('.event-readmore')->addCss('color', $button_color['dark']);
+$style->child('.event-readmore:hover')->addCss('color', $button_hover_color['light']);
+$style_dark->child('.event-readmore:hover')->addCss('color', $button_hover_color['dark']);
+
+$style->child('.event-readmore')->addCss('background-color', $button_bg_color['light']);
+$style_dark->child('.event-readmore')->addCss('background-color', $button_bg_color['dark']);
+$style->child('.event-readmore:hover')->addCss('background-color', $button_bg_hover_color['light']);
+$style_dark->child('.event-readmore:hover')->addCss('background-color', $button_bg_hover_color['dark']);
+
+$button_padding   =   $params->get('button_padding', '');
+if (!empty($button_padding)) {
+    Style::setSpacingStyle($this->style->child('.event-readmore'), $button_padding);
+}
+$button_margin   =   $params->get('button_margin', '');
+if (!empty($button_margin)) {
+    Style::setSpacingStyle($this->style->child('.event-readmore'), $button_margin,'margin');
+}
+
+$button_radius=  $params->get('button_radius', '');
+if (!empty($button_radius)) {
+    Style::setSpacingStyle($this->style->child('.event-readmore'), $button_radius, 'radius');
 }

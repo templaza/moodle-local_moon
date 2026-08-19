@@ -1001,6 +1001,7 @@ $string['kenburns_duration'] = 'Ken Burns Duration';
 $string['kenburns_duration_desc'] = 'Set the duration for the Ken Burns effect in seconds.';
 $string['overlay_position'] = 'Overlay Position';
 $string['overlay_bg_color'] = 'Overlay background color';
+$string['overlay_bg_color_hover'] = 'Hover Overlay background color';
 $string['video_url'] = 'Youtube or Vimeo Url';
 $string['dot_options'] = 'Dot Options';
 $string['dot_option'] = 'Dot Options';
