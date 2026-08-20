@@ -46,13 +46,31 @@ if (!empty($url)) {
     $style->child('.video-button')->hover()->addCss('background-color', $background_color_hover['light']);
     $style_dark->child('.video-button')->hover()->addCss('background-color', $background_color_hover['dark']);
 
-    $style->child('.video-button')->addCss('width', $width. 'px');
-    $style->child('.video-button:before')->addCss('width', $width. 'px');
-    $style->child('.video-button:after')->addCss('width', $width. 'px');
 
-    $style->child('.video-button')->addCss('height', $height. 'px');
-    $style->child('.video-button:before')->addCss('height', $height. 'px');
-    $style->child('.video-button:after')->addCss('height', $height. 'px');
+    $width = json_decode($width, true);
+    $height = json_decode($height, true);
+    if (is_int($width)) {
+        $style->child('.video-button')->addCss('width', $width. 'px');
+        $style->child('.video-button:before')->addCss('width', $width. 'px');
+        $style->child('.video-button:after')->addCss('width', $width. 'px');
+    } else {
+        if (json_last_error() === JSON_ERROR_NONE && is_array($width)) {
+            $this->style->child('.video-button, .video-button:before, .video-button:after')->addResponsiveCSS('width', $width, $width['postfix']);
+        }
+    }
+    if (is_int($height)) {
+        $style->child('.video-button')->addCss('height', $height. 'px');
+        $style->child('.video-button:before')->addCss('height', $height. 'px');
+        $style->child('.video-button:after')->addCss('height', $height. 'px');
+
+    } else {
+        if (json_last_error() === JSON_ERROR_NONE && is_array($height)) {
+            $this->style->child('.video-button, .video-button:before, .video-button:after')->addResponsiveCSS('height', $height, $height['postfix']);
+        }
+    }
+
+
+
 
     if ($use_border) {
         $style->child('.video-button')->addCss('border-style', 'solid');

@@ -15,6 +15,7 @@ require_once($CFG->dirroot. '/course/renderer.php');
 $title_style        = $params->get('title_font_style', null);
 $meta_style        = $params->get('meta_font_style', null);
 
+$enable_slider      = $params->get('enable_slider', 1);
 $autoplay           = $params->get('autoplay', 0);
 $navigation         = $params->get('navigation', 0);
 $dot                = $params->get('dot', 1);
@@ -60,10 +61,37 @@ foreach ($responsive_key as $key) {
         $row_column_cls     .=  ' gx-' . $column_gutter;
     }
 }
+$media_width_cls    =   '';
+$media_position     =   $params->get('image_position', '');
+$vertical_middle    =   $params->get('vertical_middle', 0);
+foreach ($responsive_key as $device) {
+    $default        =   match ($device) {
+        'xxl', 'xl' =>  '',
+        'lg'        =>  4,
+        default     =>  12
+    };
+    $column_media   =   $params->get($device . '_column_media', $default);
+    if ($device === 'xs') {
+        $media_width_cls.=  $column_media ? ' col-' . $column_media . ($media_position == 'right' && $column_media < 12 ? ' text-end' : '') : '';
+    } else {
+        $media_width_cls.=  $column_media ? ' col-' . $device . '-' . $column_media . ($media_position == 'right' && $column_media < 12 ? ' text-'.$device.'-end' : '') : '';
+    }
+}
+
 $attrs_slider[] = '';
 $attrs_slider[] = (  $autoplay  ) ? 'autoplay: 1' : '';
 $attrs_slider   = ' data-uk-slider="' . implode( '; ', array_filter( $attrs_slider ) ) . '"';
-
+$now_rap = ' flex-nowrap ';
+if(!$enable_slider){
+    $attrs_slider='';
+    $now_rap = '';
+}
+$img_cover_container = 'uk-inline';
+$img_cover = '';
+if ($media_position == 'left') {
+    $img_cover = 'data-uk-cover';
+    $img_cover_container = ' uk-height-1-1 uk-cover-container';
+}
 $document = Framework::getDocument();
 $document->loadUIKit();
 
@@ -186,7 +214,7 @@ foreach ($entries as $entryid => $entry):
     }elseif($layout=='style3'){
         $text .= '<div class="moon-blog-area moon-blog-area-style3">';
         $text .= '<div class=" container p-0 uk-position-relative uk-visible-toggle" tabindex="-1" '.$attrs_slider.'>';
-        $text .= '<div class="uk-slider-items row flex-nowrap '.$row_column_cls.'">';
+        $text .= '<div class="uk-slider-items row  '.$now_rap.$row_column_cls.'">';
         foreach ($entries as $entryid => $entry) {
             $viewblogurl->param('entryid', $entryid);
             $img_url = $moonBlog->moon_get_blog_image_url($entryid);
@@ -220,30 +248,41 @@ foreach ($entries as $entryid => $entry):
                     <div class="blog-slider-item blog-item'.$entryid.'">
                         <div class="moon-blog-card">
                     ';
-            if($img_url){
-                $text .='
-                    <div class="image uk-inline">
-                        <a href="'.$viewblogurl.'">
-                            <img src="'.$img_url.'" alt="image">
-                        </a>
-                        <span class="uk-position-top-left blog-date uk-flex-center uk-flex-middle uk-flex uk-flex-column">                        
-                        <span class="blog-day">'.userdate($entry->created, '%e', 0).'</span>
-                        <span class="blog-month">'.userdate($entry->created, '%b', 0).'</span>
-                        </span>
-                    </div>
-                    ';
-            }
+                    if ($media_position == 'left') {
+                        $text .= '<div class="row g-0">';
+                        $text .= '<div class="'.$media_width_cls.' ">';
+                    }
+                    if($img_url){
+                        $text .='
+                            <div class="image '.$img_cover_container.'">
+                                <a href="'.$viewblogurl.'">
+                                    <img src="'.$img_url.'" '.$img_cover.' alt="image">
+                                </a>
+                                <span class="uk-position-top-left blog-date uk-flex-center uk-flex-middle uk-flex uk-flex-column">                        
+                                <span class="blog-day">'.userdate($entry->created, '%e', 0).'</span>
+                                <span class="blog-month">'.userdate($entry->created, '%b', 0).'</span>
+                                </span>
+                            </div>
+                            ';
+                    }
+                    if ($media_position == 'left') {
+                        $text .= '</div>';
+                        $text .= '<div class="col order-1 '.($vertical_middle ? ' align-items-center' : '').'">';
+                    }
 
-            $text .='
-                    <div class="content">                        
-                        <h3 class="blog-title">
-                            <a href="'.$viewblogurl.'">'.format_string($entry->subject).'</a>
-                        </h3>
-                        <div class="blog-description"> <p>'.format_text($excerpttxt, FORMAT_HTML).'</p></div>                        
-                        '.$meta_html.'
-                    </div>
-                ';
-            $text .='
+                    $text .='
+                            <div class="content">                        
+                                <h3 class="blog-title">
+                                    <a href="'.$viewblogurl.'">'.format_string($entry->subject).'</a>
+                                </h3>
+                                <div class="blog-description"> <p>'.format_text($excerpttxt, FORMAT_HTML).'</p></div>                        
+                                '.$meta_html.'
+                            </div>
+                        ';
+                    if ($media_position == 'left') {
+                        $text .= '</div></div>';
+                    }
+                    $text .='
                         </div>
                     </div>
                 ';
@@ -263,7 +302,7 @@ foreach ($entries as $entryid => $entry):
     }else{
         $text .= '<div class="moon-blog-area">';
         $text .= '<div class=" container p-0 uk-position-relative uk-visible-toggle" tabindex="-1" '.$attrs_slider.'>';
-        $text .= '<div class="uk-slider-items row flex-nowrap '.$row_column_cls.'">';
+        $text .= '<div class="uk-slider-items row '.$now_rap.$row_column_cls.'">';
         foreach ($entries as $entryid => $entry) {
             $viewblogurl->param('entryid', $entryid);
             $img_url = $moonBlog->moon_get_blog_image_url($entryid);
@@ -368,7 +407,10 @@ $title_margin   =   $params->get('title_margin', '');
 if (!empty($title_margin)) {
     Style::setSpacingStyle($this->style->child('.blog-title'), $title_margin,'margin');
 }
-
+$image_margin   =   $params->get('image_margin', '');
+if (!empty($image_margin)) {
+    Style::setSpacingStyle($this->style->child('.image'), $image_margin,'margin');
+}
 
 $item_bg_color     = Style::getColor($params->get('item_bg_color', ''));
 
@@ -396,4 +438,9 @@ if($show_content){
     if (!empty($content_style)) {
         Style::renderTypography('#'.$this->id.' .blog-description', $content_style, null, $this->isRoot);
     }
+}
+$min_height      =   $params->get('image_min_height', 300);
+$min_height = json_decode($min_height, true);
+if (json_last_error() === JSON_ERROR_NONE && is_array($min_height)) {
+    $element->style->child('.image')->addResponsiveCSS('height', $min_height, $min_height['postfix']);
 }

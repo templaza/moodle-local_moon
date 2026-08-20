@@ -1118,3 +1118,6 @@ $string['dot1_color'] = 'Dot 1 Color';
 $string['dot2_color'] = 'Dot 2 Color';
 $string['dot3_color'] = 'Dot 3 Color';
 $string['image_position'] = 'Image Position';
+$string['ripple_color'] = 'Ripple Color';
+$string['use_border'] = 'Use Border';
+$string['border_width'] = 'Border Width';

@@ -375,6 +375,24 @@ class MoonElementBlog_Recent extends MoonElement {
             'type'  => 'spacing',
             'label' => 'border_radius',
         ]);
+        $this->addField('image_min_height', [
+            'group'      => 'image_options',
+            'type'       => 'range',
+            'label'      => 'min_height',
+            "attributes" => [
+                'min'        => 1,
+                'max'        => 1000,
+                'step'       => 1,
+                'responsive' => true,
+                'postfix'    => 'px',
+            ],
+            'default'    => 300,
+        ]);
+        $this->addField('image_margin', [
+            'group'      => 'image_options',
+            'type'       => 'spacing',
+            'label'      => 'margin',
+        ]);
         $this->addField('item_bg_color', [
             "group"      => "item_options",
             "type"       => "color",
@@ -721,6 +739,16 @@ class MoonElementBlog_Recent extends MoonElement {
                 "5" => "X-Large",
             ],
         ]);
+        $this->addField('enable_slider', [
+            'group'   => 'slider_options',
+            'type'    => 'radio',
+            "attributes" => [
+                "role" => "switch"
+            ],
+            'default' => '1',
+            'label'   => 'enable_slider',
+            "conditions" => "[blog_style]!='style2'",
+        ]);
         $this->addField('autoplay', [
             'group'   => 'slider_options',
             'type'    => 'radio',
@@ -729,7 +757,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
             'default' => '0',
             'label'   => 'autoplay',
-            "conditions" => "[blog_style]!='style2'",
+            "conditions" => "[blog_style]!='style2' AND [enable_slider]==1",
         ]);
 
         $this->addField('navigation', [
@@ -740,37 +768,37 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
             'default' => '0',
             'label'   => 'Navigation',
-            "conditions" => "[blog_style]!='style2'",
+            "conditions" => "[blog_style]!='style2' AND [enable_slider]==1",
         ]);
         $this->addField('navigation_color', [
             "group"      => "slider_options",
             "type"       => "color",
             "label"      => "color",
-            "conditions" => "[navigation]==1 AND [blog_style]!='style2'",
+            "conditions" => "[navigation]==1 AND [blog_style]!='style2' AND [enable_slider]==1",
         ]);
         $this->addField('navigation_bg_color', [
             "group"      => "slider_options",
             "type"       => "color",
             "label"      => "background_color",
-            "conditions" => "[navigation]==1 AND [blog_style]!='style2'",
+            "conditions" => "[navigation]==1 AND [blog_style]!='style2' AND [enable_slider]==1",
         ]);
         $this->addField('navigation_color_hover', [
             "group"      => "slider_options",
             "type"       => "color",
             "label"      => "color_hover",
-            "conditions" => "[navigation]==1 AND [blog_style]!='style2'",
+            "conditions" => "[navigation]==1 AND [blog_style]!='style2' AND [enable_slider]==1",
         ]);
         $this->addField('navigation_bg_color_hover', [
             "group"      => "slider_options",
             "type"       => "color",
             "label"      => "background_hover_color",
-            "conditions" => "[navigation]==1 AND [blog_style]!='style2'",
+            "conditions" => "[navigation]==1 AND [blog_style]!='style2' AND [enable_slider]==1",
         ]);
         $this->addField('navigation_padding', [
             'group'      => 'slider_options',
             'type'       => 'spacing',
             'label'      => 'padding',
-            'conditions' => "[navigation]==1 AND [blog_style]!='style2'",
+            'conditions' => "[navigation]==1 AND [blog_style]!='style2' AND [enable_slider]==1",
         ]);
 
         $this->addField('dot', [
@@ -781,13 +809,13 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
             'default' => 1,
             'label'   => 'Dotnav',
-            "conditions" => "[blog_style]!='style2'",
+            "conditions" => "[blog_style]!='style2' AND [enable_slider]==1",
         ]);
         $this->addField('dot_margin', [
             "group" => "slider_options",
             "type"  => "spacing",
             "label" => "margin",
-            'conditions' => "[dot]==1 AND [blog_style]!='style2'",
+            'conditions' => "[dot]==1 AND [blog_style]!='style2' AND [enable_slider]==1",
         ]);
 
     }
