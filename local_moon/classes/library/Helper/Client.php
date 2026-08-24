@@ -88,10 +88,7 @@ class Client
         switch ($this->format) {
             case 'json':
                 if (!$raw) {
-                    $return = [];
-                    $return['status'] = 'success';
-                    $return['code'] = 200;
-                    $return['data'] = $data;
+                    $return = $this->responseData(['data' => $data]);
                 } else {
                     $return = $data;
                 }
@@ -119,5 +116,16 @@ class Client
         }
         echo $data;
         exit();
+    }
+
+    public function responseData ($array = []): array
+    {
+        $return = [
+            'status' => 'success',
+            'code' => 200,
+            'message' => '',
+            'data' => ''
+        ];
+        return array_merge($return, $array);
     }
 }

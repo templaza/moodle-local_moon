@@ -14,7 +14,7 @@ use local_moon\library\Framework;
 class Constants
 {
     public static $moon_version = '1.0.5';
-    public static $fontawesome_version = '7.0.0';
+    public static $fontawesome_version = '7.3.1';
     public static $fancybox_version = '6.0';
     public static $animatecss_version = '3.7.0';
     public static $lenis_version = '1.3.8';
@@ -36,10 +36,32 @@ class Constants
      */
     public static function manager_configs($mode = '') : array
     {
-        global $CFG;
+        global $DB, $USER, $CFG;
+        require_once($CFG->libdir . '/externallib.php');
         $theme = Framework::getTheme();
         $enable_widget  =   1;
         $tinyMceLicense =   '';
+        if (empty($_SESSION['local_moon_upload_token'])) {
+
+            $service = $DB->get_record(
+                'external_services',
+                ['shortname' => 'local_moon'],
+                '*',
+                MUST_EXIST
+            );
+
+            $validuntil = time() + $CFG->sessiontimeout;
+
+            $_SESSION['local_moon_upload_token'] = \external_generate_token(
+                EXTERNAL_TOKEN_PERMANENT,
+                $service,
+                $USER->id,
+                \context_system::instance(),
+                $validuntil
+            );
+        }
+
+        $upload_token = $_SESSION['local_moon_upload_token'];
         return [
             'site_url'              =>  $CFG->wwwroot . '/',
             'base_url'              =>  $CFG->wwwroot,
@@ -58,7 +80,8 @@ class Constants
             'jed_link'              => self::$jed_link,
             'jtemplate_link'        => parse_url($CFG->wwwroot, PHP_URL_PATH) .'/admin/themeselector.php',
             'astroid_admin_token'   => sesskey(),
-            'astroid_action'        => $CFG->wwwroot . '/local/moon/ajax/save.php',
+            'upload_token'          => $upload_token,
+            'astroid_action'        => $CFG->wwwroot . '/lib/ajax/service.php',
             'form_template'         => Utilities::getFormTemplate($mode),
             'tiny_mce_license'      => empty($tinyMceLicense) ? 'gpl' : $tinyMceLicense,
             'is_pro'                => false,

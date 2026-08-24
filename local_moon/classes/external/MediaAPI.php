@@ -1,0 +1,84 @@
+<?php
+/**
+ * @package   Moon Framework
+ * @author    Moon Framework Team https://moonframe.work
+ * @copyright Copyright (C) 2026 MoonFrame.work.
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
+ */
+namespace local_moon\external;
+
+defined('MOODLE_INTERNAL') || die();
+
+use external_function_parameters;
+use external_value;
+
+class MediaAPI extends API {
+    public static function execute_parameters(): external_function_parameters {
+        return new external_function_parameters([
+            'theme' => new external_value(
+                PARAM_ALPHANUMEXT,
+                'Theme Name'
+            ),
+
+            'task' => new external_value(
+                PARAM_ALPHANUMEXT,
+                'Task Name'
+            ),
+
+            'filearea' => new external_value(
+                PARAM_ALPHANUMEXT,
+                'File Area',
+                VALUE_DEFAULT,
+                ''
+            ),
+
+            'itemid' => new external_value(
+                PARAM_INT,
+                'Item ID',
+                VALUE_DEFAULT,
+                0
+            ),
+
+            'folder' => new external_value(
+                PARAM_PATH,
+                'Current Folder',
+                VALUE_DEFAULT,
+                ''
+            ),
+
+            'name' => new external_value(
+                PARAM_FILE,
+                'Name of the file or folder',
+                VALUE_DEFAULT,
+                ''
+            ),
+
+            'new_name' => new external_value(
+                PARAM_FILE,
+                'New Name',
+                VALUE_DEFAULT,
+                ''
+            ),
+
+            'type' => new external_value(
+                PARAM_ALPHA,
+                'Type',
+                VALUE_DEFAULT,
+                ''
+            ),
+        ]);
+    }
+
+    public static function execute($theme, $task, $filearea, $itemid, $folder, $name, $new_name, $type) {
+        $params = self::validate_parameters(self::execute_parameters(), ['theme' => $theme, 'task' => $task, 'filearea' => $filearea, 'itemid' => $itemid, 'folder' => $folder, 'name' => $name, 'new_name' => $new_name, 'type' => $type]);
+        $exec = self::action($params);
+        try {
+            if (!method_exists($exec, $params['task'])) {
+                throw new \Exception('Method not found');
+            }
+            return $exec->{$params['task']}();
+        } catch (\Exception $e) {
+            return self::response('', 'error', $e->getCode(), $e->getMessage());
+        }
+    }
+}

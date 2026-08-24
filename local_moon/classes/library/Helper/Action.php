@@ -2,7 +2,7 @@
 /**
  * @package   Moon Framework
  * @author    Moon Framework Team https://moonframe.work
- * @copyright Copyright (C) 2025 MoonFrame.work.
+ * @copyright Copyright (C) 2026 MoonFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
  */
 namespace local_moon\library\Helper;
@@ -14,16 +14,18 @@ defined('MOODLE_INTERNAL') || die;
 class Action extends Client {
     public string $filearea = '';
     public int $itemid = 0;
-    public function __construct($filearea, $itemid)
+    public array $params = [];
+    public function __construct($params)
     {
         parent::__construct();
-        $this->filearea = $filearea;
-        $this->itemid = $itemid;
+        $this->params = $params;
+        $this->filearea = $params['filearea'] ?? 'media';
+        $this->itemid = $params['itemid'] ?? 0;
     }
 
     // Media Actions
     public function list() : array {
-        $folder = optional_param('folder', '/', PARAM_PATH);
+        $folder = $this->params['folder'];
         if (!empty($folder) && $folder != '/') {
             $folder = '/'.$folder.'/';
         } else {
@@ -77,51 +79,68 @@ class Action extends Client {
 
         $list = array('folders' => $folders, 'docs' => $docs, 'images' => $images, 'videos' => $videos);
         $list['current_folder'] = rtrim(Framework::getTheme()->name . $folder, '/');
-        return $list;
+        return $this->responseData(['data' => \json_encode($list)]);
     }
 
     public function upload() : array {
-        if (empty($_FILES['file']['tmp_name'])) {
-            return ['success' => false, 'message' => 'No file uploaded'];
+        $fs = \get_file_storage();
+        if (!$fs->file_exists($this->params['fileInfo']['contextid'], $this->params['fileInfo']['component'], $this->params['fileInfo']['filearea'], $this->params['fileInfo']['itemid'], $this->params['fileInfo']['filepath'], $this->params['fileInfo']['filename'])) {
+            throw new \moodle_exception(Text::_('error_file_not_found'));
         }
-        $folder = optional_param('folder', '/', PARAM_PATH);
+
+        $file = $fs->get_file($this->params['fileInfo']['contextid'], $this->params['fileInfo']['component'], $this->params['fileInfo']['filearea'], $this->params['fileInfo']['itemid'], $this->params['fileInfo']['filepath'], $this->params['fileInfo']['filename']);
+
+        $folder = $this->params['folder'];
         if (!empty($folder) && $folder != '/') {
             $folder = '/'.$folder.'/';
         } else {
             $folder = '/';
         }
-        $storedfile = Media::upload($_FILES['file'], $folder, $this->filearea, $this->itemid);
+
+        global $USER;
+        $context = \context_system::instance();
+        $storedfile = $fs->create_file_from_storedfile([
+            'contextid' => $context->id,
+            'component' => 'theme_' . $this->params['theme'],
+            'filearea'  => $this->filearea,
+            'itemid'    => $this->itemid,
+            'filepath'  => $folder,
+            'userid'    => $USER->id ?? 0,
+        ], $file);
+
+        // Xóa file cũ
+        $file->delete();
 
         if (!$storedfile) {
-            return ['success' => false, 'message' => 'Failed to store file'];
+            return $this->responseData(['status' => 'error', 'message' => 'Failed to store file']);
         }
 
         // Lấy URL truy cập
         $url = Media::url($storedfile);
 
-        return [
+        return $this->responseData(['data' => \json_encode([
             'filename' => $storedfile->get_filename(),
             'url'      => $url,
             'size'     => display_size($storedfile->get_filesize()),
             'mimetype' => $storedfile->get_mimetype(),
-        ];
+        ])]);
     }
 
     public function folder(): array {
-        $folder = required_param('name', PARAM_PATH);
-        $dir = optional_param('dir', '', PARAM_PATH);
+        $folder = $this->params['name'];
+        $dir = $this->params['folder'];
         $created = Media::create_folder($dir.'/'.$folder, $this->filearea, $this->itemid);
-        return [
-            'folder' => $folder,
-            'message' => 'Folder created successfully',
-            'created' => $created
-        ];
+        if ($created) {
+            return $this->responseData(['data' => 'Folder '.$folder.' created successfully']);
+        } else {
+            return $this->responseData(['data' => 'Folder '.$folder.' created failed']);
+        }
     }
 
     public function delete(): array {
-        $name = required_param('name', PARAM_PATH);
-        $folder = optional_param('dir', '', PARAM_PATH);
-        $type = optional_param('type', '', PARAM_ALPHA);
+        $name = $this->params['name'];
+        $folder = $this->params['folder'];
+        $type = $this->params['type'];
         if (!empty($folder) && $folder != '/') {
             $folder = '/'.$folder.'/';
         } else {
@@ -132,48 +151,48 @@ class Action extends Client {
         } else {
             $deleted = Media::delete($name, $folder, $this->filearea, $this->itemid);
         }
-        return $deleted;
+        return $this->responseData(['data' => \json_encode($deleted)]);
     }
 
     public function rename() : array
     {
-        $oldname = required_param('name', PARAM_FILE);
-        $newname = required_param('new_name', PARAM_FILE);
-        $folder  = optional_param('dir', '', PARAM_PATH);
-        $type = optional_param('type', '', PARAM_ALPHA);
+        $oldname = $this->params['name'];
+        $newname = $this->params['new_name'];
+        $folder  = $this->params['folder'];
+        $type = $this->params['type'];
         if ($type == 'folder') {
             $result = Media::rename_folder($folder.'/'.$oldname, $folder.'/'.$newname, $this->filearea, $this->itemid);
         } else {
             $result = Media::rename_file($oldname, $newname, $this->filearea, $this->itemid, $folder);
         }
-        return $result;
+        return $this->responseData(['data' => \json_encode($result)]);
     }
 
     // Layout Actions
-    public function getLayouts(): void
+    public function getLayouts(): array
     {
         $return = Layout::getDatalayouts(Framework::getTheme()->name, $this->filearea);
-        $this->response($return);
+        return $this->responseData(['data' => \json_encode($return)]);
     }
 
     /**
      * @throws \coding_exception
      * @throws \moodle_exception
      */
-    public function saveLayout(): void
+    public function saveLayout(): array
     {
-        $filename = optional_param('name', '', PARAM_ALPHANUMEXT);
-        $layoutType = optional_param('layout', '', PARAM_ALPHANUMEXT);
-        $layoutData = required_param('data', PARAM_RAW);
+        $filename = $this->params['name'];
+        $layoutType = $this->params['layout'];
+        $layoutData = $this->params['data'];
         if (!Utilities::isJsonString($layoutData)) {
             throw new \moodle_exception('error_data_json_invalid', 'local_moon');
         }
 
         $layout = [
-            'title'     => optional_param('title', 'layout', PARAM_TEXT),
-            'desc'      => optional_param('desc', '', PARAM_TEXT),
+            'title'     => $this->params['title'],
+            'desc'      => $this->params['desc'],
             'layout'    => $layoutType,
-            'thumbnail' => optional_param('thumbnail_old', '', PARAM_TEXT),
+            'thumbnail' => $this->params['thumbnail_old'],
             'data'      => json_decode($layoutData, true),
         ];
 
@@ -194,37 +213,37 @@ class Action extends Client {
             $layout_name = $filename;
         }
 
-        $thumbnail_file =  $_FILES['thumbnail'] ?? null;
-
-        if (\is_array($thumbnail_file)) {
-            // Make sure that file uploads are enabled in php.
-            if (!(bool) \ini_get('file_uploads')) {
-                throw new \Exception('File upload is not enabled in PHP', 400);
-            }
-            // Is the PHP tmp directory missing?
-            if ($thumbnail_file['error'] && ($thumbnail_file['error'] == UPLOAD_ERR_NO_TMP_DIR)) {
-                throw new \Exception('There was an error uploading this thumbnail to the server.', 400);
-            }
-            $pathinfo = pathinfo($thumbnail_file['name']);
-            $uploadedFileExtension = $pathinfo['extension'];
-            $uploadedFileExtension = strtolower($uploadedFileExtension);
-            $validExts  =   ['jpg', 'jpeg', 'png', 'bmp'];
-            if (!in_array($uploadedFileExtension, $validExts)) {
-                throw new \Exception(Text::_('INVALID EXTENSION'));
-            }
-
-            $fileTemp       = $thumbnail_file['tmp_name'];
-            $thumbnail      = file_get_contents($fileTemp);
-            if ($layout['thumbnail'] != '' && Media::exists($layout['thumbnail'], '/', $this->filearea, $this->itemid)) {
-                Media::delete($layout['thumbnail'], '/', $this->filearea, $this->itemid);
-            }
-
-            $storedfile = Media::create_from_string($thumbnail, $layout_name.'.'.$uploadedFileExtension, '/', $this->filearea, $this->itemid);
-            $layout['thumbnail'] = Media::thumbnail($layout_name.'.'.$uploadedFileExtension, '/', $this->filearea, $this->itemid);
-            if (!$storedfile) {
-                throw new \Exception('Failed to store file');
-            }
-        }
+//        $thumbnail_file =  $_FILES['thumbnail'] ?? null;
+//
+//        if (\is_array($thumbnail_file)) {
+//            // Make sure that file uploads are enabled in php.
+//            if (!(bool) \ini_get('file_uploads')) {
+//                throw new \Exception('File upload is not enabled in PHP', 400);
+//            }
+//            // Is the PHP tmp directory missing?
+//            if ($thumbnail_file['error'] && ($thumbnail_file['error'] == UPLOAD_ERR_NO_TMP_DIR)) {
+//                throw new \Exception('There was an error uploading this thumbnail to the server.', 400);
+//            }
+//            $pathinfo = pathinfo($thumbnail_file['name']);
+//            $uploadedFileExtension = $pathinfo['extension'];
+//            $uploadedFileExtension = strtolower($uploadedFileExtension);
+//            $validExts  =   ['jpg', 'jpeg', 'png', 'bmp'];
+//            if (!in_array($uploadedFileExtension, $validExts)) {
+//                throw new \Exception(Text::_('INVALID EXTENSION'));
+//            }
+//
+//            $fileTemp       = $thumbnail_file['tmp_name'];
+//            $thumbnail      = file_get_contents($fileTemp);
+//            if ($layout['thumbnail'] != '' && Media::exists($layout['thumbnail'], '/', $this->filearea, $this->itemid)) {
+//                Media::delete($layout['thumbnail'], '/', $this->filearea, $this->itemid);
+//            }
+//
+//            $storedfile = Media::create_from_string($thumbnail, $layout_name.'.'.$uploadedFileExtension, '/', $this->filearea, $this->itemid);
+//            $layout['thumbnail'] = Media::thumbnail($layout_name.'.'.$uploadedFileExtension, '/', $this->filearea, $this->itemid);
+//            if (!$storedfile) {
+//                throw new \Exception('Failed to store file');
+//            }
+//        }
         $layout['name'] = $layout_name;
         $bakFile = null;
         $fileIsExist = Media::exists($layout_name . '.json', '/', $this->filearea, $this->itemid);
@@ -236,40 +255,41 @@ class Action extends Client {
         }
         $json = \json_encode($layout);
         $shouldCreate = !$fileIsExist || !empty($bakFile);
-
         if ($shouldCreate && Media::create_from_string($json, $layout_name . '.json', '/', $this->filearea, $this->itemid)) {
             if ($fileIsExist && !empty($bakFile)) {
                 $bakFile->delete();
             }
         }
-        $this->response($layout);
+        return $this->responseData(['data' => \json_encode($layout)]);
     }
 
-    public function getLayout() : void {
-        $filename       = optional_param('name', '', PARAM_ALPHANUMEXT);
-        $layout         = Layout::getDataLayout($filename, $this->filearea);
+    public function getLayout() : array {
+        $layout         = Layout::getDataLayout($this->params['name'], $this->filearea);
         if (!is_string($layout['data'])) {
             $layout['data'] = \json_encode($layout['data']);
         }
-        $this->response($layout);
+        return $this->responseData(['data' => \json_encode($layout)]);
     }
 
-    public function deleteLayouts() : void {
-        $layouts        = optional_param_array('layouts', null, PARAM_ALPHANUMEXT);
-        $this->response(Layout::deleteDatalayouts($layouts, $this->filearea));
+    public function deleteLayouts() : array {
+        $layouts        = $this->params['layouts'];
+        if (Layout::deleteDatalayouts($layouts, $this->filearea)) {
+            return $this->responseData(['message' => 'Layouts deleted successfully']);
+        } else {
+            return $this->responseData(['message' => 'Failed to delete layouts']);
+        }
     }
 
     // Font actions
-    public function getFonts() : void
+    public function getFonts() : array
     {
-        $this->format = 'html';
-        $this->response(Font::getAllFonts());
+        return $this->responseData(['data' => Font::getAllFonts()]);
     }
 
-    public function getIcons() : void
+    public function getIcons() : array
     {
         $this->format = 'html';
-        $source       = optional_param('source', '', PARAM_ALPHANUMEXT);
+        $source       = $this->params['source'];
         $return = ['success' => true];
         if ($source === 'astroid') {
             $return['results'] = Font::fontAstroidIcons();
@@ -277,17 +297,17 @@ class Action extends Client {
             $return['results'] = Font::fontAwesomeIcons(true);
         }
 
-        $this->response(json_encode($return), true);
+        return $this->responseData(['data' => \json_encode($return)]);
     }
 
-    public function clearCache() : void
+    public function clearCache() : array
     {
         theme_reset_all_caches();
         Media::empty_folder('/', 'css');
-        $this->response(['message' => Text::_('theme_cache_cleared')]);
+        return $this->responseData(['message' => Text::_('theme_cache_cleared')]);
     }
 
-    public function getPresets() : void
+    public function getPresets() : array
     {
         $theme = Framework::getTheme();
         $presets = $theme->getPresets();
@@ -310,16 +330,16 @@ class Action extends Client {
             $item['name']       = $preset['name'];
             $data[]             = $item;
         }
-        $this->response($data);
+        return $data;
     }
 
-    public function loadPreset() : void
+    public function loadPreset() : array|string
     {
         global $CFG;
         try {
             $theme = Framework::getTheme();
             $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
-            $file           = optional_param('name', '', PARAM_ALPHANUMEXT);
+            $file           = $this->params['name'];
             $file_name      = $presets_path.$file.'.json';
             if (file_exists($file_name)) {
                 $json           = file_get_contents($presets_path.$file.'.json');
@@ -330,7 +350,7 @@ class Action extends Client {
                 if (!isset($data['preset']) || empty($data['preset'])) {
                     throw new \Exception(Text::_('error_data_json_invalid'));
                 }
-                $this->response($data['preset']);
+                return $data['preset'];
             } else {
                 throw new \Exception(Text::_('error_file_not_found').': '.$presets_path.$file.'.json');
             }
@@ -339,58 +359,35 @@ class Action extends Client {
         }
     }
 
-    public function importPreset() : void
+    public function importPreset() : string
     {
         global $CFG;
         try {
             $theme = Framework::getTheme();
             $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
             $preset = [
-                'title' => required_param('title', PARAM_RAW),
-                'desc' => optional_param('desc', '', PARAM_RAW),
+                'title' => $this->params['title'],
+                'desc' => $this->params['desc'],
                 'thumbnail' => '', 'demo' => '',
                 'preset' => ''
             ];
             $preset_name = uniqid('preset-');
 
-            $file = $_FILES['file'] ?? null;
-            if (empty($file)) {
-                throw new \Exception(Text::_('ASTROID_ERROR_NO_FILE'));
+            $fs = \get_file_storage();
+            if (!$fs->file_exists($this->params['fileInfo']['contextid'], $this->params['fileInfo']['component'], $this->params['fileInfo']['filearea'], $this->params['fileInfo']['itemid'], $this->params['fileInfo']['filepath'], $this->params['fileInfo']['filename'])) {
+                throw new \Exception(Text::_('error_file_not_found'));
             }
 
-            // Ensure PHP file uploads are enabled and tmp dir exists.
-            if (!(bool) \ini_get('file_uploads')) {
-                throw new \Exception('File upload is not enabled in PHP', 400);
-            }
-            if (!empty($file['error']) && $file['error'] == UPLOAD_ERR_NO_TMP_DIR) {
-                throw new \Exception('There was an error uploading this file to the server.', 400);
-            }
+            $file = $fs->get_file($this->params['fileInfo']['contextid'], $this->params['fileInfo']['component'], $this->params['fileInfo']['filearea'], $this->params['fileInfo']['itemid'], $this->params['fileInfo']['filepath'], $this->params['fileInfo']['filename']);
 
-            $fileError = $file['error'] ?? UPLOAD_ERR_NO_FILE;
-            if ($fileError > 0) {
-                switch ($fileError) {
-                    case UPLOAD_ERR_INI_SIZE:
-                        throw new \Exception(Text::_('ASTROID_ERROR_LARGE_FILE'));
-                    case UPLOAD_ERR_FORM_SIZE:
-                        throw new \Exception(Text::_('ASTROID_ERROR_FILE_HTML_ALLOW'));
-                    case UPLOAD_ERR_PARTIAL:
-                        throw new \Exception(Text::_('ASTROID_ERROR_FILE_PARTIAL_ALLOW'));
-                    case UPLOAD_ERR_NO_FILE:
-                        throw new \Exception(Text::_('ASTROID_ERROR_NO_FILE'));
-                    default:
-                        throw new \Exception('File upload error code: ' . $fileError, 400);
-                }
-            }
-
-            $pathinfo = pathinfo($file['name']);
+            $pathinfo = pathinfo($this->params['fileInfo']['filename']);
             $uploadedFileExtension = $pathinfo['extension'];
             $uploadedFileExtension = strtolower($uploadedFileExtension);
             if ($uploadedFileExtension != 'json') {
-                throw new \Exception(Text::_('INVALID EXTENSION'));
+                throw new \Exception(Text::_('error_invalid_extension'));
             }
 
-            $fileTemp = $file['tmp_name'];
-            $json           = file_get_contents($fileTemp);
+            $json           = $file->get_content();
             $config         = json_decode($json, true);
             if (json_last_error() === JSON_ERROR_NONE) {
                 if (!isset($config['preset'])) {
@@ -399,7 +396,7 @@ class Action extends Client {
                     $preset['preset'] = $config['preset'];
                 }
             } else {
-                throw new \Exception(Text::_('INVALID FILETYPE'));
+                throw new \Exception(Text::_('error_data_json_invalid'));
             }
 
             $uploadPath = $presets_path . $preset_name . '.json';
@@ -411,28 +408,28 @@ class Action extends Client {
             if (file_put_contents($uploadPath, \json_encode($preset)) === false) {
                 throw new \Exception('Failed to write preset file: ' . $uploadPath);
             }
-            unlink($fileTemp);
-            $this->response($preset_name);
+            $file->delete();
+            return $preset_name;
         } catch (\Exception $e) {
             $this->errorResponse($e);
         }
     }
 
-    public function deletePreset() : void
+    public function deletePreset() : bool
     {
         global $CFG;
         try {
             // Check for request forgeries.
             $theme = Framework::getTheme();
             $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
-            $file           = optional_param('name', '', PARAM_ALPHANUMEXT);
+            $file           = $this->params['name'];
             $file_name      = $presets_path.$file.'.json';
             if (file_exists($file_name)) {
                 if (!@unlink($file_name)) {
                     throw new \Exception('Failed to delete preset file: ' . $file_name);
                 }
             }
-            $this->response('Preset Removed!');
+            return true;
         } catch (\Exception $e) {
             $this->errorResponse($e);
         }
