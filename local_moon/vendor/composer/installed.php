@@ -20,9 +20,9 @@
             'dev_requirement' => false,
         ),
         'phenx/php-font-lib' => array(
-            'pretty_version' => '1.0.1',
-            'version' => '1.0.1.0',
-            'reference' => '6137b7d4232b7f16c882c75e4ca3991dbcf6fe2d',
+            'pretty_version' => '1.0.2',
+            'version' => '1.0.2.0',
+            'reference' => 'a6e9a688a2a80016ac080b97be73d3e10c444c9a',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phenx/php-font-lib',
             'aliases' => array(),
