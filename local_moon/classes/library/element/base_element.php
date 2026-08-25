@@ -583,7 +583,7 @@ class base_element
         $custom_css = $this->params->get('custom_css', '');
         if (!empty($custom_css)) {
             $scss = new \ScssPhp\ScssPhp\Compiler();
-            $css = $scss->compileString('#' . $this->id .'{'.$custom_css.'}')->get_css();
+            $css = $scss->compileString('#' . $this->id .'{'.$custom_css.'}')->getCss();
             if (!empty($css)) {
                 framework::get_document()->add_style_declaration($css);
             }
