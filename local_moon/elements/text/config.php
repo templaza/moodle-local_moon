@@ -22,9 +22,9 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Font;
-class MoonElementText extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\font;
+class moon_element_text extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -36,15 +36,15 @@ class MoonElementText extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('content_options',  [
+        $this->add_field('content_options',  [
             "type" => "group",
             "label" => "content_options",
         ]);
 
-        $this->addField('heading',  [
+        $this->add_field('heading',  [
             "group" => "general",
             "type" => "text",
             "label" => "heading",
@@ -52,7 +52,7 @@ class MoonElementText extends MoonElement {
             "dynamic" => true,
         ]);
 
-        $this->addField('html_element', [
+        $this->add_field('html_element', [
             "group"      => "general",
             "type"       => "list",
             "label"      => "html_element",
@@ -69,7 +69,7 @@ class MoonElementText extends MoonElement {
             ],
         ]);
 
-        $this->addField('font_style', [
+        $this->add_field('font_style', [
             "group"      => "general",
             "type"       => "typography",
             "label"      => "font_style",
@@ -86,31 +86,31 @@ class MoonElementText extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value
             ],
             "conditions" => "[heading]!==''",
         ]);
 
-        $this->addField('heading_margin', [
+        $this->add_field('heading_margin', [
             "group"      => "general",
             "type"       => "spacing",
             "label"      => "margin",
             "conditions" => "[heading]!==''",
         ]);
 
-        $this->addField('content', [
+        $this->add_field('content', [
             "group"   => "content_options",
             "type"    => "editor",
             "label"   => "content",
             "dynamic" => true,
         ]);
 
-        $this->addField('text_column_responsive', [
+        $this->add_field('text_column_responsive', [
             "group"      => "content_options",
             "type"       => "radio",
             "width"      => "full",
@@ -126,7 +126,7 @@ class MoonElementText extends MoonElement {
             ],
         ]);
 
-        $this->addField('text_column_xxl', [
+        $this->add_field('text_column_xxl', [
             "group"      => "content_options",
             "type"       => "list",
             "label"      => "xxl_column",
@@ -142,7 +142,7 @@ class MoonElementText extends MoonElement {
             ],
         ]);
 
-        $this->addField('text_column_xl', [
+        $this->add_field('text_column_xl', [
             "group"      => "content_options",
             "type"       => "list",
             "label"      => "xl_column",
@@ -158,7 +158,7 @@ class MoonElementText extends MoonElement {
             ],
         ]);
 
-        $this->addField('text_column_lg', [
+        $this->add_field('text_column_lg', [
             "group"      => "content_options",
             "type"       => "list",
             "label"      => "lg_column",
@@ -174,7 +174,7 @@ class MoonElementText extends MoonElement {
             ],
         ]);
 
-        $this->addField('text_column_md', [
+        $this->add_field('text_column_md', [
             "group"      => "content_options",
             "type"       => "list",
             "label"      => "md_column",
@@ -190,7 +190,7 @@ class MoonElementText extends MoonElement {
             ],
         ]);
 
-        $this->addField('text_column_sm', [
+        $this->add_field('text_column_sm', [
             "group"      => "content_options",
             "type"       => "list",
             "label"      => "sm_column",
@@ -206,7 +206,7 @@ class MoonElementText extends MoonElement {
             ],
         ]);
 
-        $this->addField('text_column_xs', [
+        $this->add_field('text_column_xs', [
             "group"      => "content_options",
             "type"       => "list",
             "label"      => "xs_column",
@@ -222,13 +222,13 @@ class MoonElementText extends MoonElement {
             ],
         ]);
 
-        $this->addField('content_divider', [
+        $this->add_field('content_divider', [
             "group" => "content_options",
             "type"  => "divider",
             "name"  => "content_divider",
         ]);
 
-        $this->addField('content_font_style', [
+        $this->add_field('content_font_style', [
             "group"      => "content_options",
             "type"       => "typography",
             "attributes" => [
@@ -244,12 +244,12 @@ class MoonElementText extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value
             ],
             "label"      => "font_style",
             "conditions" => "[content]!==''",

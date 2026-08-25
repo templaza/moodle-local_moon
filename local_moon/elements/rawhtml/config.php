@@ -22,9 +22,9 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Font;
-class MoonElementRawHTML extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\font;
+class moon_element_rawhtml extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -36,10 +36,10 @@ class MoonElementRawHTML extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('content', [
+        $this->add_field('content', [
             "group"   => "general",
             "type"    => "textarea",
             "label"   => "content",

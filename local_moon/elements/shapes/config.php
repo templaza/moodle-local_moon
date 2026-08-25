@@ -22,11 +22,11 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Form;
-use local_moon\library\Helper\Constants;
-use local_moon\library\Helper\Font;
-class MoonElementShapes extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\form;
+use local_moon\library\helper\constants;
+use local_moon\library\helper\font;
+class moon_element_shapes extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -38,14 +38,14 @@ class MoonElementShapes extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('widget_styles', [
+        $this->add_field('widget_styles', [
             'type'  => 'group',
             'label' => 'widget_styles',
         ]);
-        $this->addField('shape_style', [
+        $this->add_field('shape_style', [
             'group'   => 'general',
             'type'    => 'list',
             'label'   => 'Shape',
@@ -57,7 +57,7 @@ class MoonElementShapes extends MoonElement {
             ],
         ]);
 
-        $this->addField('shape_color', [
+        $this->add_field('shape_color', [
             "group"      => "general",
             "type"       => "color",
             "label"      => "color",

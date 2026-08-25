@@ -22,9 +22,9 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\Style;
-use local_moon\library\Blocks\CourseHandler;
-use local_moon\library\Framework;
+use local_moon\library\helper\style;
+use local_moon\library\blocks\course_handler;
+use local_moon\library\framework;
 
 $params         = $this->params;
 $style = $this->style;
@@ -41,10 +41,10 @@ $navigation         = $params->get('navigation', 0);
 $dot                = $params->get('dot', 1);
 $category           = $params->get('course_category', '');
 $slider_column      = $params->get('slider_column', 'col-lg-4');
-$nav_color     = Style::getColor($params->get('navigation_color', ''));
-$nav_hover_color     = Style::getColor($params->get('navigation_color_hover', ''));
-$nav_bg_color     = Style::getColor($params->get('navigation_bg_color', ''));
-$nav_bg_hover_color     = Style::getColor($params->get('navigation_bg_color_hover', ''));
+$nav_color     = style::get_color($params->get('navigation_color', ''));
+$nav_hover_color     = style::get_color($params->get('navigation_color_hover', ''));
+$nav_bg_color     = style::get_color($params->get('navigation_bg_color', ''));
+$nav_bg_hover_color     = style::get_color($params->get('navigation_bg_color_hover', ''));
 
 $dot_margin =  $params->get('dot_margin', '');
 
@@ -52,12 +52,12 @@ $attrs_slider[] = '';
 $attrs_slider[] = (  $autoplay  ) ? 'autoplay: 1' : '';
 $attrs_slider   = ' data-uk-slider="' . implode( '; ', array_filter( $attrs_slider ) ) . '"';
 
-$document = Framework::getDocument();
-$document->loadUIKit();
+$document = framework::get_document();
+$document->load_ui_kit();
 
 $categories = json_decode($category, true);
 
-$moonCourseHandler = new CourseHandler();
+$moonCourseHandler = new course_handler();
 
 $courses = [];
 
@@ -72,7 +72,7 @@ $text .= '<div class="course-filter-style2 container p-0 uk-position-relative uk
 $text .= '<div class="uk-slider-items row flex-nowrap">';
 
 foreach ($courses as $course) {
-    $moonCourse = $moonCourseHandler->moonGetCourseDetails($course->id);
+    $moonCourse = $moonCourseHandler->moon_get_course_details($course->id);
     // Rating Control
     $filepath = $CFG->dirroot . '/admin/tool/courserating/version.php';
     if (file_exists($filepath) && !empty($course->id) && is_int($course->id)) {
@@ -99,13 +99,13 @@ foreach ($courses as $course) {
                                 <h3 class="coursename text-left">
                                     <a href="'. $moonCourse->url .'">'.$moonCourse->fullName.'</a>
                                 </h3>';
-    $studentcount = $moonCourseHandler->moonCountstudents($course->id);
-    $sectioncount = $moonCourseHandler->moonCourseSections($course->id);
+    $studentcount = $moonCourseHandler->moon_countstudents($course->id);
+    $sectioncount = $moonCourseHandler->moon_course_sections($course->id);
     $text .= '<div class="course-middle">';
     $text .= '<div class="course-learners course-middle-left"><i class="fa-solid fa-users"></i>'.$studentcount .' '. get_string('course-learners', 'local_moon').'</div>';
     $text .= '<div class="course-lectures"><i class="fa-solid fa-file-lines"></i>'.$sectioncount .' '. get_string('course-lectures', 'local_moon').'</div>';
     $text .= '</div>';
-    $cp = $moonCourseHandler->moonGetCourseprice($course->id);
+    $cp = $moonCourseHandler->moon_get_courseprice($course->id);
     $cp_badge = '';
     if ($cp->hascourseprice) {
         $cp_badge = '<span class="cp badge-price">'.$cp->courseprice->currency.' '.number_format($cp->courseprice->cost, 2, '.', '').'</span>';
@@ -202,22 +202,22 @@ $text .= '</div>';
 echo $text;
 
 if (!empty($title_style)) {
-    Style::renderTypography('#'.$this->id.' .coursename a', $title_style, null, $this->isRoot);
+    style::render_typography('#'.$this->id.' .coursename a', $title_style, null, $this->isRoot);
 }
 if (!empty($dot_margin)) {
-    Style::setSpacingStyle($this->style->child('.uk-dotnav'), $dot_margin, 'margin');
+    style::set_spacing_style($this->style->child('.uk-dotnav'), $dot_margin, 'margin');
 }
-$style->child('.uk-slidenav')->addCss('color', $nav_color['light']);
-$style_dark->child('.uk-slidenav')->addCss('color', $nav_color['dark']);
-$style->child('.uk-slidenav:hover')->addCss('color', $nav_hover_color['light']);
-$style_dark->child('.uk-slidenav:hover')->addCss('color', $nav_hover_color['dark']);
+$style->child('.uk-slidenav')->add_css('color', $nav_color['light']);
+$style_dark->child('.uk-slidenav')->add_css('color', $nav_color['dark']);
+$style->child('.uk-slidenav:hover')->add_css('color', $nav_hover_color['light']);
+$style_dark->child('.uk-slidenav:hover')->add_css('color', $nav_hover_color['dark']);
 
-$style->child('.uk-slidenav')->addCss('background-color', $nav_bg_color['light']);
-$style_dark->child('.uk-slidenav')->addCss('background-color', $nav_bg_color['dark']);
-$style->child('.uk-slidenav:hover')->addCss('background-color', $nav_bg_hover_color['light']);
-$style_dark->child('.uk-slidenav:hover')->addCss('background-color', $nav_bg_hover_color['dark']);
+$style->child('.uk-slidenav')->add_css('background-color', $nav_bg_color['light']);
+$style_dark->child('.uk-slidenav')->add_css('background-color', $nav_bg_color['dark']);
+$style->child('.uk-slidenav:hover')->add_css('background-color', $nav_bg_hover_color['light']);
+$style_dark->child('.uk-slidenav:hover')->add_css('background-color', $nav_bg_hover_color['dark']);
 
 $nav_padding   =   $params->get('navigation_padding', '');
 if (!empty($nav_padding)) {
-    Style::setSpacingStyle($this->style->child('.uk-slidenav'), $nav_padding);
+    style::set_spacing_style($this->style->child('.uk-slidenav'), $nav_padding);
 }

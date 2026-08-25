@@ -22,9 +22,9 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\Style;
-use local_moon\library\Blocks\CourseHandler;
-use local_moon\library\Framework;
+use local_moon\library\helper\style;
+use local_moon\library\blocks\course_handler;
+use local_moon\library\framework;
 
 $params         = $this->params;
 $style = $this->style;
@@ -44,10 +44,10 @@ $slider_column      = $params->get('slider_column', 'col-lg-4');
 $layout             = $params->get('layout', 'style1');
 $tab_margin             = $params->get('tab_margin', '');
 
-$nav_color     = Style::getColor($params->get('navigation_color', ''));
-$nav_hover_color     = Style::getColor($params->get('navigation_color_hover', ''));
-$nav_bg_color     = Style::getColor($params->get('navigation_bg_color', ''));
-$nav_bg_hover_color     = Style::getColor($params->get('navigation_bg_color_hover', ''));
+$nav_color     = style::get_color($params->get('navigation_color', ''));
+$nav_hover_color     = style::get_color($params->get('navigation_color_hover', ''));
+$nav_bg_color     = style::get_color($params->get('navigation_bg_color', ''));
+$nav_bg_hover_color     = style::get_color($params->get('navigation_bg_color_hover', ''));
 
 $dot_margin =  $params->get('dot_margin', '');
 
@@ -55,12 +55,12 @@ $attrs_slider[] = '';
 $attrs_slider[] = (  $autoplay  ) ? 'autoplay: 1' : '';
 $attrs_slider   = ' data-uk-slider="' . implode( '; ', array_filter( $attrs_slider ) ) . '"';
 
-$document = Framework::getDocument();
-$document->loadUIKit();
+$document = framework::get_document();
+$document->load_ui_kit();
 
 $categories = json_decode($category, true);
 
-$moonCourseHandler = new CourseHandler();
+$moonCourseHandler = new course_handler();
 
 $courses = [];
 
@@ -122,9 +122,9 @@ foreach ($categories as $cat) {
         $i = 1;
         foreach ($courses as $course) {
             if ($course->category == $cat['value'] && $DB->record_exists('course', array('id' => $course->id))) {
-                $moonCourseHandler = new CourseHandler();
-                $moonCourse = $moonCourseHandler->moonGetCourseDetails($course->id);
-                $courseDescriptionRaw = $moonCourseHandler->moonGetCourseDescription($course->id, 5000);
+                $moonCourseHandler = new course_handler();
+                $moonCourse = $moonCourseHandler->moon_get_course_details($course->id);
+                $courseDescriptionRaw = $moonCourseHandler->moon_get_course_description($course->id, 5000);
                 $wordsArray = explode(' ', strip_tags($courseDescriptionRaw ?? ''));
                 $first20Words = array_slice($wordsArray, 0, 15);
                 $moonCourseDescription = implode(' ', $first20Words);
@@ -155,13 +155,13 @@ foreach ($categories as $cat) {
                                     <h3 class="coursename text-left">
                                         <a href="'. $moonCourse->url .'">'.$moonCourse->fullName.'</a>
                                     </h3>';
-                $studentcount = $moonCourseHandler->moonCountstudents($course->id);
-                $sectioncount = $moonCourseHandler->moonCourseSections($course->id);
+                $studentcount = $moonCourseHandler->moon_countstudents($course->id);
+                $sectioncount = $moonCourseHandler->moon_course_sections($course->id);
                 $text .= '<div class="course-middle">';
                 $text .= '<div class="course-learners course-middle-left"><i class="fa-solid fa-users"></i>'.$studentcount .' '. get_string('course-learners', 'local_moon').'</div>';
                 $text .= '<div class="course-lectures"><i class="fa-solid fa-file-lines"></i>'.$sectioncount .' '. get_string('course-lectures', 'local_moon').'</div>';
                 $text .= '</div>';
-                $cp = $moonCourseHandler->moonGetCourseprice($course->id);
+                $cp = $moonCourseHandler->moon_get_courseprice($course->id);
                 $cp_badge = '';
                 if ($cp->hascourseprice) {
                     $cp_badge = '<span class="cp badge-price">'.$cp->courseprice->currency.' '.number_format($cp->courseprice->cost, 2, '.', '').'</span>';
@@ -258,9 +258,9 @@ foreach ($categories as $cat) {
         $i = 1;
         foreach ($courses as $course) {
             if ($course->category == $cat['value'] && $DB->record_exists('course', array('id' => $course->id))) {
-                $moonCourseHandler = new CourseHandler();
-                $moonCourse = $moonCourseHandler->moonGetCourseDetails($course->id);
-                $courseDescriptionRaw = $moonCourseHandler->moonGetCourseDescription($course->id, 5000);
+                $moonCourseHandler = new course_handler();
+                $moonCourse = $moonCourseHandler->moon_get_course_details($course->id);
+                $courseDescriptionRaw = $moonCourseHandler->moon_get_course_description($course->id, 5000);
                 $wordsArray = explode(' ', strip_tags($courseDescriptionRaw ?? ''));
                 $first20Words = array_slice($wordsArray, 0, 15);
                 $moonCourseDescription = implode(' ', $first20Words);
@@ -291,13 +291,13 @@ foreach ($categories as $cat) {
                                                                     <h3 class="coursename text-left">
                                                                         <a href="'. $moonCourse->url .'">'.$moonCourse->fullName.'</a>
                                                                     </h3>';
-                $studentcount = $moonCourseHandler->moonCountstudents($course->id);
-                $sectioncount = $moonCourseHandler->moonCourseSections($course->id);
+                $studentcount = $moonCourseHandler->moon_countstudents($course->id);
+                $sectioncount = $moonCourseHandler->moon_course_sections($course->id);
                 $text .= '<div class="course-middle">';
                 $text .= '<div class="course-learners course-middle-left"><i class="fa-solid fa-users"></i>'.$studentcount .' '. get_string('course-learners', 'local_moon').'</div>';
                 $text .= '<div class="course-lectures"><i class="fa-solid fa-file-lines"></i>'.$sectioncount .' '. get_string('course-lectures', 'local_moon').'</div>';
                 $text .= '</div>';
-                $cp = $moonCourseHandler->moonGetCourseprice($course->id);
+                $cp = $moonCourseHandler->moon_get_courseprice($course->id);
                 $cp_badge = '';
                 if ($cp->hascourseprice) {
                     $cp_badge = '<span class="cp badge-price">'.$cp->courseprice->currency.' '.number_format($cp->courseprice->cost, 2, '.', '').'</span>';
@@ -399,26 +399,26 @@ $text .= '
 echo $text;
 
 if (!empty($title_style)) {
-    Style::renderTypography('#'.$this->id.' .coursename a', $title_style, null, $this->isRoot);
+    style::render_typography('#'.$this->id.' .coursename a', $title_style, null, $this->isRoot);
 }
 if (!empty($dot_margin)) {
-    Style::setSpacingStyle($this->style->child('.uk-dotnav'), $dot_margin, 'margin');
+    style::set_spacing_style($this->style->child('.uk-dotnav'), $dot_margin, 'margin');
 }
-$style->child('.uk-slidenav')->addCss('color', $nav_color['light']);
-$style_dark->child('.uk-slidenav')->addCss('color', $nav_color['dark']);
-$style->child('.uk-slidenav:hover')->addCss('color', $nav_hover_color['light']);
-$style_dark->child('.uk-slidenav:hover')->addCss('color', $nav_hover_color['dark']);
+$style->child('.uk-slidenav')->add_css('color', $nav_color['light']);
+$style_dark->child('.uk-slidenav')->add_css('color', $nav_color['dark']);
+$style->child('.uk-slidenav:hover')->add_css('color', $nav_hover_color['light']);
+$style_dark->child('.uk-slidenav:hover')->add_css('color', $nav_hover_color['dark']);
 
-$style->child('.uk-slidenav')->addCss('background-color', $nav_bg_color['light']);
-$style_dark->child('.uk-slidenav')->addCss('background-color', $nav_bg_color['dark']);
-$style->child('.uk-slidenav:hover')->addCss('background-color', $nav_bg_hover_color['light']);
-$style_dark->child('.uk-slidenav:hover')->addCss('background-color', $nav_bg_hover_color['dark']);
+$style->child('.uk-slidenav')->add_css('background-color', $nav_bg_color['light']);
+$style_dark->child('.uk-slidenav')->add_css('background-color', $nav_bg_color['dark']);
+$style->child('.uk-slidenav:hover')->add_css('background-color', $nav_bg_hover_color['light']);
+$style_dark->child('.uk-slidenav:hover')->add_css('background-color', $nav_bg_hover_color['dark']);
 
 $nav_padding   =   $params->get('navigation_padding', '');
 if (!empty($nav_padding)) {
-    Style::setSpacingStyle($this->style->child('.uk-slidenav'), $nav_padding);
+    style::set_spacing_style($this->style->child('.uk-slidenav'), $nav_padding);
 }
 
 if (!empty($tab_margin)) {
-    Style::setSpacingStyle($this->style->child('.nav-tabs'), $tab_margin, 'margin');
+    style::set_spacing_style($this->style->child('.nav-tabs'), $tab_margin, 'margin');
 }

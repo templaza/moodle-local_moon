@@ -22,7 +22,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\Style;
+use local_moon\library\helper\style;
 $params         = $this->params;
 $element = $this;
 
@@ -36,7 +36,7 @@ $link           = $params->get('link', '');
 // Meta
 $title_border    =   json_decode($params->get('title_border', ''), true);
 if (!empty($title_border)) {
-    Style::addBorderStyle('#'. $element->id . ' .heading-meta', $title_border, 'global', $element->isRoot);
+    style::add_border_style('#'. $element->id . ' .heading-meta', $title_border, 'global', $element->isRoot);
 }
 $hover_rotate         = $params->get('hover_rotate', 0);
 $auto_rotate         = $params->get('auto_rotate', 0);
@@ -87,44 +87,44 @@ if (!empty($title)) {
 
 }
 if (!empty($font_style)) {
-    Style::renderTypography('#'.$this->id.' .circletext textPath', $font_style, null, $this->isRoot);
+    style::render_typography('#'.$this->id.' .circletext textPath', $font_style, null, $this->isRoot);
 }
-$title_bg_color     = Style::getColor($params->get('title_bg_color', ''));
-$style->child('.circletext')->addCss('background-color', $title_bg_color['light']);
-$style_dark->child('.circletext')->addCss('background-color', $title_bg_color['dark']);
+$title_bg_color     = style::get_color($params->get('title_bg_color', ''));
+$style->child('.circletext')->add_css('background-color', $title_bg_color['light']);
+$style_dark->child('.circletext')->add_css('background-color', $title_bg_color['dark']);
 
 $title_border    =   json_decode($params->get('title_border', ''), true);
 if (!empty($title_border)) {
-    Style::addBorderStyle('#'. $element->id . ' .circletext', $title_border, 'global', $element->isRoot);
+    style::add_border_style('#'. $element->id . ' .circletext', $title_border, 'global', $element->isRoot);
 }
 
 $title_radius  =   $params->get('title_radius', '');
 if (!empty($title_radius)) {
-    Style::setSpacingStyle($element->style->child('svg.circletext'), $title_radius,'radius');
+    style::set_spacing_style($element->style->child('svg.circletext'), $title_radius,'radius');
 }
 
 $title_padding   =   $params->get('title_padding', '');
 if (!empty($title_padding)) {
-    Style::setSpacingStyle($element->style->child('svg.circletext'), $title_padding);
+    style::set_spacing_style($element->style->child('svg.circletext'), $title_padding);
 }
 $title_margin   =   $params->get('title_margin', '');
 if (!empty($title_margin)) {
-    Style::setSpacingStyle($element->style->child('.ui-text'), $title_margin,'margin');
+    style::set_spacing_style($element->style->child('.ui-text'), $title_margin,'margin');
 }
 
 $title_width      =   $params->get('title_width', '');
 $box_width = json_decode($title_width, true);
 if (json_last_error() === JSON_ERROR_NONE && is_array($box_width)) {
-    $style->child('svg.circletext')->addResponsiveCSS('max-width', $box_width, $box_width['postfix']);
-    $style->child('.circletext-icon')->addResponsiveCSS('max-width', $box_width, $box_width['postfix']);
+    $style->child('svg.circletext')->add_responsive_css('max-width', $box_width, $box_width['postfix']);
+    $style->child('.circletext-icon')->add_responsive_css('max-width', $box_width, $box_width['postfix']);
 }
 
 $title_icon_size        =   $params->get('title_icon_size', '30');
 $icon_size = json_decode($title_icon_size, true);
 if (json_last_error() === JSON_ERROR_NONE && is_array($icon_size)) {
-    $style->child('.circletext-icon i')->addResponsiveCSS('font-size', $icon_size, $icon_size['postfix']);
+    $style->child('.circletext-icon i')->add_responsive_css('font-size', $icon_size, $icon_size['postfix']);
 }
 
-$title_icon_color     = Style::getColor($params->get('title_icon_color', ''));
-$style->child('.circletext-icon i')->addCss('color', $title_icon_color['light']);
-$style_dark->child('.circletext-icon i')->addCss('color', $title_icon_color['dark']);
+$title_icon_color     = style::get_color($params->get('title_icon_color', ''));
+$style->child('.circletext-icon i')->add_css('color', $title_icon_color['light']);
+$style_dark->child('.circletext-icon i')->add_css('color', $title_icon_color['dark']);

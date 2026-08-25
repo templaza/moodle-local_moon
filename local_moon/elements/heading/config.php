@@ -22,9 +22,9 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Font;
-class MoonElementHeading extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\font;
+class moon_element_heading extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -36,28 +36,28 @@ class MoonElementHeading extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
 
-        $this->addField('title_options', [
+        $this->add_field('title_options', [
             'type'  => 'group',
             'label' => 'title_options',
         ]);
 
-        $this->addField('meta_options',  [
+        $this->add_field('meta_options',  [
             "type" => "group",
             "label" => "meta_options",
         ]);
 
-        $this->addField('title', [
+        $this->add_field('title', [
             "group"       => "general",
             "type"        => "text",
             "label"       => "title",
             "dynamic"     => true,
         ]);
 
-        $this->addField('use_link', [
+        $this->add_field('use_link', [
             "group"       => "general",
             "type"        => "radio",
             "label"       => "use_link",
@@ -68,7 +68,7 @@ class MoonElementHeading extends MoonElement {
             "default"     => 0,
         ]);
 
-        $this->addField('link', [
+        $this->add_field('link', [
             "group"      => "general",
             "type"       => "text",
             "label"      => "link_url",
@@ -78,7 +78,7 @@ class MoonElementHeading extends MoonElement {
             "conditions" => "[use_link]==1",
         ]);
 
-        $this->addField('add_icon', [
+        $this->add_field('add_icon', [
             "group"       => "general",
             "type"        => "radio",
             "label"       => "add_icon",
@@ -89,7 +89,7 @@ class MoonElementHeading extends MoonElement {
             "default"     => 0,
         ]);
 
-        $this->addField('icon', [
+        $this->add_field('icon', [
             "group"      => "general",
             "type"       => "icons",
             "label"      => "icon",
@@ -97,14 +97,14 @@ class MoonElementHeading extends MoonElement {
             "conditions" => "[add_icon]==1",
         ]);
 
-        $this->addField('icon_color', [
+        $this->add_field('icon_color', [
             "group"      => "general",
             "type"       => "color",
             "label"      => "icon_color",
             "conditions" => "[add_icon]==1",
         ]);
 
-        $this->addField('html_element', [
+        $this->add_field('html_element', [
             "group"      => "general",
             "type"       => "list",
             "label"      => "html_element",
@@ -121,7 +121,7 @@ class MoonElementHeading extends MoonElement {
             ],
         ]);
 
-        $this->addField('font_style', [
+        $this->add_field('font_style', [
             "group"      => "general",
             "type"       => "typography",
             "attributes" => [
@@ -137,21 +137,21 @@ class MoonElementHeading extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value
             ],
         ]);
 
-        $this->addField('title_heading_margin', [
+        $this->add_field('title_heading_margin', [
             "group" => "general",
             "type"  => "spacing",
             "label" => "margin",
         ]);
-        $this->addField('title_clone', [
+        $this->add_field('title_clone', [
             "group"       => "general",
             "type"        => "radio",
             "label"       => "title_clone",
@@ -160,19 +160,19 @@ class MoonElementHeading extends MoonElement {
             ],
             "default"     => 0,
         ]);
-        $this->addField('title_clone_txt', [
+        $this->add_field('title_clone_txt', [
             "group"       => "general",
             "type"        => "text",
             "label"       => "title_custom_clone",
             "dynamic"     => true,
             "conditions" => "[title_clone]==1",
         ]);
-        $this->addField('title_clone_margin', [
+        $this->add_field('title_clone_margin', [
             "group" => "general",
             "type"  => "spacing",
             "label" => "margin",
         ]);
-        $this->addField('title_clone_font_style', [
+        $this->add_field('title_clone_font_style', [
             "group"   => "general",
             "type"    => "typography",
             "label"   => "font_style",
@@ -189,23 +189,23 @@ class MoonElementHeading extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
 
-        $this->addField('meta_text', [
+        $this->add_field('meta_text', [
             "group"       => "meta_options",
             "type"        => "text",
             "label"       => "meta",
             "dynamic"     => true,
         ]);
 
-        $this->addField('meta_font_style', [
+        $this->add_field('meta_font_style', [
             "group"   => "meta_options",
             "type"    => "typography",
             "label"   => "font_style",
@@ -222,38 +222,38 @@ class MoonElementHeading extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
 
-        $this->addField('meta_heading_margin', [
+        $this->add_field('meta_heading_margin', [
             "group" => "meta_options",
             "type"  => "spacing",
             "label" => "margin",
         ]);
 
-        $this->addField('meta_heading_padding', [
+        $this->add_field('meta_heading_padding', [
             "group" => "meta_options",
             "type"  => "spacing",
             "label" => "padding",
         ]);
-        $this->addField('meta_border', [
+        $this->add_field('meta_border', [
             "group"      => "meta_options",
             "type"       => "border",
             "label"      => "border",
         ]);
-        $this->addField('meta_radius', [
+        $this->add_field('meta_radius', [
             'group' => 'meta_options',
             'type'  => 'spacing',
             'name'  => 'image_radius',
             'label' => 'radius',
         ]);
-        $this->addField('meta_line', [
+        $this->add_field('meta_line', [
             "group"       => "meta_options",
             "type"        => "radio",
             "label"       => "meta_line",
@@ -262,7 +262,7 @@ class MoonElementHeading extends MoonElement {
             ],
             "default"     => 0,
         ]);
-        $this->addField('line_width', [
+        $this->add_field('line_width', [
             'group'   => 'meta_options',
             'type'    => 'range',
             'label'      => 'width',
@@ -275,7 +275,7 @@ class MoonElementHeading extends MoonElement {
             ],
             "conditions" => "[meta_line]==1",
         ]);
-        $this->addField('line_height', [
+        $this->add_field('line_height', [
             'group'   => 'meta_options',
             'type'    => 'range',
             'label'      => 'height',
@@ -288,14 +288,14 @@ class MoonElementHeading extends MoonElement {
             ],
             "conditions" => "[meta_line]==1",
         ]);
-        $this->addField('line_color', [
+        $this->add_field('line_color', [
             "group"      => "meta_options",
             "type"       => "color",
             "label"      => "color",
             "conditions" => "[meta_line]==1",
         ]);
 
-        $this->addField('meta_position', [
+        $this->add_field('meta_position', [
             "group"   => "meta_options",
             "type"    => "list",
             "label"   => "meta_position",

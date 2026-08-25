@@ -22,13 +22,13 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\Style;
-use local_moon\library\Helper\SubForm;
-use local_moon\library\Framework;
+use local_moon\library\helper\style;
+use local_moon\library\helper\sub_form;
+use local_moon\library\framework;
 $params = $this->params;
 $element = $this;
-$testimonials     = new SubForm($params->get('testimonials', ''));
-if (!count($testimonials->getData())) {
+$testimonials     = new sub_form($params->get('testimonials', ''));
+if (!count($testimonials->get_data())) {
     return false;
 }
 $style = $element->style;
@@ -164,13 +164,13 @@ $box_shadow_hover   =   $box_shadow_hover ? ' ' . $box_shadow_hover : '';
 $title_html_element =   $params->get('title_html_element', 'h3');
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
-    Style::renderTypography('#'.$element->id.' .as-author-name', $title_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .as-author-name', $title_font_style, null, $element->isRoot);
 }
 $title_heading_margin=  $params->get('title_heading_margin', '');
 
 $designation_font_style    =   $params->get('designation_font_style');
 if (!empty($designation_font_style)) {
-    Style::renderTypography('#'.$element->id.' .as-author-designation', $designation_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .as-author-designation', $designation_font_style, null, $element->isRoot);
 }
 
 $designation_heading_margin=   $params->get('designation_heading_margin', '');
@@ -179,7 +179,7 @@ $designation_position      =   $params->get('designation_position', 'after');
 $content_margin     =   $params->get('content_margin', '');
 $content_font_style =   $params->get('content_font_style');
 if (!empty($content_font_style)) {
-    Style::renderTypography('#'.$element->id.' .as-author-message', $content_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .as-author-message', $content_font_style, null, $element->isRoot);
 }
 
 $image_max_width        =   $params->get('image_max_width', '200');
@@ -225,10 +225,10 @@ if ($enable_slider) {
     $item_cl = 'swiper-slide';
 }
 echo '<div class="moon-grid '.($enable_slider ? 'swiper-wrapper' : $row_column_cls.$gutter_cls . ($use_masonry ? ' as-masonry as-loading' : '')).$overlay_text_color.'">';
-foreach ($testimonials->getData() as $key => $testimonial) {
-    $item_bg_color   =   Style::getColor($testimonial->params->get('item_bg_color', ''));
-    $element->style->child('#testimonial-'. $testimonial -> id .' .card-body')->addCss('background-color', $item_bg_color['light']);
-    $element->style_dark->child('#testimonial-'. $testimonial -> id .' .card-body')->addCss('background-color', $item_bg_color['dark']);
+foreach ($testimonials->get_data() as $key => $testimonial) {
+    $item_bg_color   =   style::get_color($testimonial->params->get('item_bg_color', ''));
+    $element->style->child('#testimonial-'. $testimonial -> id .' .card-body')->add_css('background-color', $item_bg_color['light']);
+    $element->style_dark->child('#testimonial-'. $testimonial -> id .' .card-body')->add_css('background-color', $item_bg_color['dark']);
 
     $avatar =   $testimonial->params->get('avatar', '');
     $rating =   $testimonial->params->get('rating', 5);
@@ -391,149 +391,149 @@ if ($enable_slider) {
     }
     echo '</div>';
 }
-$document = Framework::getDocument();
+$document = framework::get_document();
 
 if ($enable_slider) {
-    $document->loadSwiper('#'.$element->id.' .swiper', implode(',', $slide_settings));
+    $document->load_swiper('#'.$element->id.' .swiper', implode(',', $slide_settings));
 } elseif ($use_masonry) {
-    $document->loadMasonry('#'. $element->id .' .as-masonry');
+    $document->load_masonry('#'. $element->id .' .as-masonry');
 }
-$document->loadUIKit();
+$document->load_ui_kit();
 if ($params->get('card_size', '') == 'custom') {
     $card_padding   =   $params->get('card_padding', '');
     if (!empty($card_padding)) {
-        Style::setSpacingStyle($element->style->child('.card-size-custom'), $card_padding);
+        style::set_spacing_style($element->style->child('.card-size-custom'), $card_padding);
     }
 }
 if ($params->get('card_size', '') == 'custom') {
     $card_margin   =   $params->get('card_margin', '');
     if (!empty($card_margin)) {
-        Style::setSpacingStyle($element->style->child('.card-size-custom'), $card_margin, 'margin');
+        style::set_spacing_style($element->style->child('.card-size-custom'), $card_margin, 'margin');
     }
 }
 if (!empty($image_max_width)) {
-    $element->style->child('.as-author-avatar > img')->addCss('max-width', $image_max_width . 'px');
+    $element->style->child('.as-author-avatar > img')->add_css('max-width', $image_max_width . 'px');
 }
 if (!empty($title_heading_margin)) {
-    Style::setSpacingStyle($element->style->child('.as-author-name'), $title_heading_margin, 'margin');
+    style::set_spacing_style($element->style->child('.as-author-name'), $title_heading_margin, 'margin');
 }
 if (!empty($designation_heading_margin)) {
-    Style::setSpacingStyle($element->style->child('.as-author-designation'), $designation_heading_margin, 'margin');
+    style::set_spacing_style($element->style->child('.as-author-designation'), $designation_heading_margin, 'margin');
 }
 if (!empty($content_margin)) {
-    Style::setSpacingStyle($element->style->child('.as-author-message'), $content_margin, 'margin');
+    style::set_spacing_style($element->style->child('.as-author-message'), $content_margin, 'margin');
 }
 if (!empty($image_border)) {
-    Style::addBorderStyle('#'. $element->id . ' .as-author-avatar', $image_border);
+    style::add_border_style('#'. $element->id . ' .as-author-avatar', $image_border);
 }
 if (!empty($enable_rating)) {
-    $rating_color   =   Style::getColor($params->get('rating_color', ''));
+    $rating_color   =   style::get_color($params->get('rating_color', ''));
     $rating_margin=   $params->get('rating_margin', '');
-    $element->style->child('.as-rating-block')->addCss('color', $rating_color['light']);
-    $element->style_dark->child('.as-rating-block')->addCss('color', $rating_color['dark']);
+    $element->style->child('.as-rating-block')->add_css('color', $rating_color['light']);
+    $element->style_dark->child('.as-rating-block')->add_css('color', $rating_color['dark']);
     if (!empty($rating_margin)) {
-        Style::setSpacingStyle($element->style->child('.as-rating-block'), $rating_margin, 'margin');
+        style::set_spacing_style($element->style->child('.as-rating-block'), $rating_margin, 'margin');
     }
 }
 if ($params->get('card_style', '') == 'custom') {
-    $text_color     =   Style::getColor($params->get('text_color', ''));
-    $style->child('.card')->addCss('color', $text_color['light']);
-    $style_dark->child('.card')->addCss('color', $text_color['dark']);
+    $text_color     =   style::get_color($params->get('text_color', ''));
+    $style->child('.card')->add_css('color', $text_color['light']);
+    $style_dark->child('.card')->add_css('color', $text_color['dark']);
 
-    $bg_color       =   Style::getColor($params->get('bg_color', ''));
+    $bg_color       =   style::get_color($params->get('bg_color', ''));
     if ($avatar_position == 'left' || $avatar_position == 'right') {
-        $style->child('.card-body')->addCss('background-color', $bg_color['light']);
-        $style_dark->child('.card-body')->addCss('background-color', $bg_color['dark']);
+        $style->child('.card-body')->add_css('background-color', $bg_color['light']);
+        $style_dark->child('.card-body')->add_css('background-color', $bg_color['dark']);
     }else{
-        $style->child('.card')->addCss('background-color', $bg_color['light']);
-        $style_dark->child('.card')->addCss('background-color', $bg_color['dark']);
+        $style->child('.card')->add_css('background-color', $bg_color['light']);
+        $style_dark->child('.card')->add_css('background-color', $bg_color['dark']);
     }
 
     $card_border    =   json_decode($params->get('card_border', ''), true);
     if (!empty($card_border)) {
-        Style::addBorderStyle('#'. $element->id . ' .card', $card_border, 'global', $element->isRoot);
+        style::add_border_style('#'. $element->id . ' .card', $card_border, 'global', $element->isRoot);
     }
 
 }
 $slider_padding   =   $params->get('slider_padding', '');
 if (!empty($slider_padding)) {
-    Style::setSpacingStyle($element->style->child('.swiper'), $slider_padding);
+    style::set_spacing_style($element->style->child('.swiper'), $slider_padding);
 }
 
 $next_margin   =   $params->get('next_margin', '');
 if (!empty($next_margin)) {
-    Style::setSpacingStyle($element->style->child('.swiper-button-next'), $next_margin, 'margin');
+    style::set_spacing_style($element->style->child('.swiper-button-next'), $next_margin, 'margin');
 }
 $preview_margin   =   $params->get('preview_margin', '');
 if (!empty($preview_margin)) {
-    Style::setSpacingStyle($element->style->child('.swiper-button-prev'), $preview_margin, 'margin');
+    style::set_spacing_style($element->style->child('.swiper-button-prev'), $preview_margin, 'margin');
 }
 $slider_nav_height      =   $params->get('slider_nav_height', '');
 $nav_height = json_decode($slider_nav_height, true);
 if (json_last_error() === JSON_ERROR_NONE && is_array($nav_height)) {
-    $style->child('.swiper-nav-button')->addResponsiveCSS('height', $nav_height, $nav_height['postfix']);
+    $style->child('.swiper-nav-button')->add_responsive_css('height', $nav_height, $nav_height['postfix']);
 }
 $slider_nav_width      =   $params->get('slider_nav_width', '');
 $nav_width = json_decode($slider_nav_width, true);
 if (json_last_error() === JSON_ERROR_NONE && is_array($nav_width)) {
-    $style->child('.swiper-nav-button')->addResponsiveCSS('width', $nav_width, $nav_width['postfix']);
+    $style->child('.swiper-nav-button')->add_responsive_css('width', $nav_width, $nav_width['postfix']);
 }
 $nav_border    =   json_decode($params->get('slider_nav_border', ''), true);
 if (!empty($nav_border)) {
-    Style::addBorderStyle('#'. $element->id . ' .swiper-nav-button', $nav_border, 'global', $element->isRoot);
+    style::add_border_style('#'. $element->id . ' .swiper-nav-button', $nav_border, 'global', $element->isRoot);
 }
 $nav_radius  =   $params->get('slider_nav_radius', '');
 if (!empty($nav_radius)) {
-    Style::setSpacingStyle($element->style->child('.swiper-nav-button'), $nav_radius,'radius');
+    style::set_spacing_style($element->style->child('.swiper-nav-button'), $nav_radius,'radius');
 }
 
-$nav_color     = Style::getColor($params->get('nav_color', ''));
-$style->child('.swiper-nav-button')->addCss('color', $nav_color['light']);
-$style_dark->child('.swiper-nav-button')->addCss('color', $nav_color['dark']);
+$nav_color     = style::get_color($params->get('nav_color', ''));
+$style->child('.swiper-nav-button')->add_css('color', $nav_color['light']);
+$style_dark->child('.swiper-nav-button')->add_css('color', $nav_color['dark']);
 
-$nav_bg_color     = Style::getColor($params->get('nav_bg_color', ''));
-$style->child('.swiper-nav-button')->addCss('background-color', $nav_bg_color['light']);
-$style_dark->child('.swiper-nav-button')->addCss('background-color', $nav_bg_color['dark']);
+$nav_bg_color     = style::get_color($params->get('nav_bg_color', ''));
+$style->child('.swiper-nav-button')->add_css('background-color', $nav_bg_color['light']);
+$style_dark->child('.swiper-nav-button')->add_css('background-color', $nav_bg_color['dark']);
 
-$nav_bg_color_hover     = Style::getColor($params->get('nav_bg_color_hover', ''));
-$style->child('.swiper-nav-button:hover')->addCss('background-color', $nav_bg_color_hover['light']);
-$style_dark->child('.swiper-nav-button:hover')->addCss('background-color', $nav_bg_color_hover['dark']);
+$nav_bg_color_hover     = style::get_color($params->get('nav_bg_color_hover', ''));
+$style->child('.swiper-nav-button:hover')->add_css('background-color', $nav_bg_color_hover['light']);
+$style_dark->child('.swiper-nav-button:hover')->add_css('background-color', $nav_bg_color_hover['dark']);
 
-$nav_color_hover     = Style::getColor($params->get('nav_color_hover', ''));
-$style->child('.swiper-nav-button:hover')->addCss('color', $nav_color_hover['light']);
-$style_dark->child('.swiper-nav-button:hover')->addCss('color', $nav_color_hover['dark']);
+$nav_color_hover     = style::get_color($params->get('nav_color_hover', ''));
+$style->child('.swiper-nav-button:hover')->add_css('color', $nav_color_hover['light']);
+$style_dark->child('.swiper-nav-button:hover')->add_css('color', $nav_color_hover['dark']);
 
 $nav_border_hover    =   json_decode($params->get('slider_nav_border_hover', ''), true);
 if (!empty($nav_border_hover)) {
-    Style::addBorderStyle('#'. $element->id . ' .swiper-nav-button:hover', $nav_border_hover, 'global', $element->isRoot);
+    style::add_border_style('#'. $element->id . ' .swiper-nav-button:hover', $nav_border_hover, 'global', $element->isRoot);
 }
 $testimonial_icon_size        =   $params->get('testimonial_icon_size', '30');
 $icon_size = json_decode($testimonial_icon_size, true);
 if (json_last_error() === JSON_ERROR_NONE && is_array($icon_size)) {
-    $style->child('.testimonial_icon')->addResponsiveCSS('font-size', $icon_size, $icon_size['postfix']);
+    $style->child('.testimonial_icon')->add_responsive_css('font-size', $icon_size, $icon_size['postfix']);
 }
 
-$testimonial_icon_color     = Style::getColor($params->get('testimonial_icon_color', ''));
-$style->child('.testimonial_icon')->addCss('color', $testimonial_icon_color['light']);
-$style_dark->child('.testimonial_icon')->addCss('color', $testimonial_icon_color['dark']);
+$testimonial_icon_color     = style::get_color($params->get('testimonial_icon_color', ''));
+$style->child('.testimonial_icon')->add_css('color', $testimonial_icon_color['light']);
+$style_dark->child('.testimonial_icon')->add_css('color', $testimonial_icon_color['dark']);
 
 if($border_radius  == 'custom'){
     $card_radius_custom  =   $params->get('card_radius_custom', '');
     if ($avatar_position == 'left' || $avatar_position == 'right') {
         if (!empty($card_radius_custom)) {
-            Style::setSpacingStyle($element->style->child('.card-body'), $card_radius_custom,'radius');
+            style::set_spacing_style($element->style->child('.card-body'), $card_radius_custom,'radius');
         }
     }else{
         if (!empty($card_radius_custom)) {
-            Style::setSpacingStyle($element->style->child('.card'), $card_radius_custom,'radius');
+            style::set_spacing_style($element->style->child('.card'), $card_radius_custom,'radius');
         }
     }
 }
 $image_margin   =   $params->get('image_margin', '');
 if (!empty($image_margin)) {
-    Style::setSpacingStyle($element->style->child('.as-author-avatar'), $image_margin, 'margin');
+    style::set_spacing_style($element->style->child('.as-author-avatar'), $image_margin, 'margin');
 }
 $icon_margin   =   $params->get('icon_margin', '');
 if (!empty($image_margin)) {
-    Style::setSpacingStyle($element->style->child('.testimonial_icon'), $icon_margin, 'margin');
+    style::set_spacing_style($element->style->child('.testimonial_icon'), $icon_margin, 'margin');
 }

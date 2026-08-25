@@ -22,11 +22,11 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Form;
-use local_moon\library\Helper\Constants;
-use local_moon\library\Helper\Font;
-class MoonElementTestimonials extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\form;
+use local_moon\library\helper\constants;
+use local_moon\library\helper\font;
+class moon_element_testimonials extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -38,50 +38,50 @@ class MoonElementTestimonials extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('grid_options', [
+        $this->add_field('grid_options', [
             'type'  => 'group',
             'label' => 'grid_options',
         ]);
 
-        $this->addField('card_options', [
+        $this->add_field('card_options', [
             'type'  => 'group',
             'label' => 'card_options',
         ]);
 
-        $this->addField('slider_options', [
+        $this->add_field('slider_options', [
             'type'  => 'group',
             'label' => 'slider_options',
         ]);
 
-        $this->addField('avatar_options', [
+        $this->add_field('avatar_options', [
             'type'  => 'group',
             'label' => 'avatar_options',
         ]);
 
-        $this->addField('icon_options', [
+        $this->add_field('icon_options', [
             'type'  => 'group',
             'label' => 'icon_options',
         ]);
 
-        $this->addField('name_options', [
+        $this->add_field('name_options', [
             'type'  => 'group',
             'label' => 'name_options',
         ]);
 
-        $this->addField('designation_options', [
+        $this->add_field('designation_options', [
             'type'  => 'group',
             'label' => 'designation_options',
         ]);
 
-        $this->addField('content_options', [
+        $this->add_field('content_options', [
             'type'  => 'group',
             'label' => 'content_options',
         ]);
 
-        $this->addField('rating_options', [
+        $this->add_field('rating_options', [
             'type'  => 'group',
             'label' => 'rating_options',
         ]);
@@ -148,16 +148,16 @@ class MoonElementTestimonials extends MoonElement {
                 ]
             ],
         ];
-        $repeater   = new Form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
-        $this->addField('testimonials',  [
+        $repeater   = new form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
+        $this->add_field('testimonials',  [
             "group" => "general",
             "type" => "subform",
             "label" => "testimonials",
             "attributes" => [
-                'form'    =>  $repeater->renderJson('subform')
+                'form'    =>  $repeater->render_json('subform')
             ],
         ]);
-        $this->addField('overlay_text_color', [
+        $this->add_field('overlay_text_color', [
             'group'   => 'general',
             'type'    => 'list',
             'label'   => 'text_color',
@@ -169,7 +169,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_responsive', [
+        $this->add_field('column_responsive', [
             'group'   => 'grid_options',
             'type'    => 'radio',
             "attributes" => [
@@ -186,7 +186,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('xxl_column', [
+        $this->add_field('xxl_column', [
             'group'      => 'grid_options',
             'type'       => 'list',
             'label'      => 'xxl_column',
@@ -203,7 +203,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('xl_column', [
+        $this->add_field('xl_column', [
             'group'      => 'grid_options',
             'type'       => 'list',
             'label'      => 'xl_column',
@@ -220,7 +220,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('lg_column', [
+        $this->add_field('lg_column', [
             'group'      => 'grid_options',
             'type'       => 'list',
             'label'      => 'lg_column',
@@ -237,7 +237,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('md_column', [
+        $this->add_field('md_column', [
             'group'      => 'grid_options',
             'type'       => 'list',
             'label'      => 'md_column',
@@ -254,7 +254,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('sm_column', [
+        $this->add_field('sm_column', [
             'group'      => 'grid_options',
             'type'       => 'list',
             'label'      => 'sm_column',
@@ -271,7 +271,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('xs_column', [
+        $this->add_field('xs_column', [
             'group'      => 'grid_options',
             'type'       => 'list',
             'label'      => 'xs_column',
@@ -288,7 +288,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_xxl', [
+        $this->add_field('row_gutter_xxl', [
             'group'      => 'grid_options',
             'type'       => 'list',
             'label'      => 'row_gutter_xxl',
@@ -305,7 +305,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_xl', [
+        $this->add_field('row_gutter_xl', [
             'group'      => 'grid_options',
             'type'       => 'list',
             'label'      => 'row_gutter_xl',
@@ -322,7 +322,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_lg', [
+        $this->add_field('row_gutter_lg', [
             'group'      => 'grid_options',
             'type'       => 'list',
             'label'      => 'row_gutter_lg',
@@ -339,7 +339,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_md', [
+        $this->add_field('row_gutter_md', [
             'group'      => 'grid_options',
             'type'       => 'list',
             'label'      => 'row_gutter_md',
@@ -356,7 +356,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_sm', [
+        $this->add_field('row_gutter_sm', [
             'group'      => 'grid_options',
             'type'       => 'list',
             'label'      => 'row_gutter_sm',
@@ -373,7 +373,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter', [
+        $this->add_field('row_gutter', [
             'group'      => 'grid_options',
             'type'       => 'list',
             'label'      => 'row_gutter_xs',
@@ -389,7 +389,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_xxl', [
+        $this->add_field('column_gutter_xxl', [
             'group'      => 'grid_options',
             'type'       => 'list',
             'label'      => 'column_gutter_xxl',
@@ -406,7 +406,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_xl', [
+        $this->add_field('column_gutter_xl', [
             'group'      => 'grid_options',
             'type'       => 'list',
             'label'      => 'column_gutter_xl',
@@ -423,7 +423,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_lg', [
+        $this->add_field('column_gutter_lg', [
             'group'      => 'grid_options',
             'type'       => 'list',
             'label'      => 'column_gutter_lg',
@@ -440,7 +440,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_md', [
+        $this->add_field('column_gutter_md', [
             'group'      => 'grid_options',
             'type'       => 'list',
             'label'      => 'column_gutter_md',
@@ -457,7 +457,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_sm', [
+        $this->add_field('column_gutter_sm', [
             'group'      => 'grid_options',
             'type'       => 'list',
             'label'      => 'column_gutter_sm',
@@ -474,7 +474,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter', [
+        $this->add_field('column_gutter', [
             'group'      => 'grid_options',
             'type'       => 'list',
             'label'      => 'column_gutter',
@@ -490,7 +490,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('use_masonry', [
+        $this->add_field('use_masonry', [
             'group'      => 'grid_options',
             'type'       => 'radio',
             'default'    => '0',
@@ -498,7 +498,7 @@ class MoonElementTestimonials extends MoonElement {
             'attributes' => ["role" => "switch"],
         ]);
 
-        $this->addField('card_style', [
+        $this->add_field('card_style', [
             'group'   => 'card_options',
             'type'    => 'list',
             'label'   => 'card_style',
@@ -517,28 +517,28 @@ class MoonElementTestimonials extends MoonElement {
                 "custom"    => "custom",
             ],
         ]);
-        $this->addField('text_color', [
+        $this->add_field('text_color', [
             "group"      => "card_options",
             "type"       => "color",
             "label"      => "color",
             "conditions" => "[card_style]=='custom'",
         ]);
 
-        $this->addField('bg_color', [
+        $this->add_field('bg_color', [
             "group"      => "card_options",
             "type"       => "color",
             "label"      => "background_color",
             "conditions" => "[card_style]=='custom'",
         ]);
 
-        $this->addField('card_border', [
+        $this->add_field('card_border', [
             "group"      => "card_options",
             "type"       => "border",
             "label"      => "border",
             "conditions" => "[card_style]=='custom'",
         ]);
 
-        $this->addField('card_size', [
+        $this->add_field('card_size', [
             'group'   => 'card_options',
             'type'    => 'list',
             'label'   => 'card_size',
@@ -552,21 +552,21 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('card_padding', [
+        $this->add_field('card_padding', [
             'group'      => 'card_options',
             'type'       => 'spacing',
             'label'      => 'padding',
             'conditions' => "[card_size]=='custom'",
         ]);
 
-        $this->addField('card_margin', [
+        $this->add_field('card_margin', [
             'group'      => 'card_options',
             'type'       => 'spacing',
             'label'      => 'margin',
             'conditions' => "[card_size]=='custom'",
         ]);
 
-        $this->addField('card_border_radius', [
+        $this->add_field('card_border_radius', [
             'group'   => 'card_options',
             'type'    => 'list',
             'label'   => 'border_radius',
@@ -579,14 +579,14 @@ class MoonElementTestimonials extends MoonElement {
                 'custom'   => 'custom',
             ],
         ]);
-        $this->addField('card_radius_custom', [
+        $this->add_field('card_radius_custom', [
             'group' => 'card_options',
             'type'  => 'spacing',
             'label' => 'radius',
             'conditions' => "[card_border_radius]=='custom'",
         ]);
 
-        $this->addField('card_rounded_size', [
+        $this->add_field('card_rounded_size', [
             'group'      => 'card_options',
             'type'       => 'list',
             'label'      => 'rounded_size',
@@ -603,7 +603,7 @@ class MoonElementTestimonials extends MoonElement {
 
 
 
-        $this->addField('enable_grid_match', [
+        $this->add_field('enable_grid_match', [
             'group'      => 'card_options',
             'type'       => 'radio',
             'default'    => '0',
@@ -611,15 +611,15 @@ class MoonElementTestimonials extends MoonElement {
             'attributes' => ["role" => "switch"],
         ]);
 
-        $this->addField('card_hover_transition', [
+        $this->add_field('card_hover_transition', [
             'group'   => 'card_options',
             'type'    => 'list',
             'label'   => 'hover_transition',
             'default' => '',
-            'options' => Constants::$hover_transition,
+            'options' => constants::$hover_transition,
         ]);
 
-        $this->addField('card_box_shadow', [
+        $this->add_field('card_box_shadow', [
             'group'   => 'card_options',
             'type'    => 'list',
             'label'   => 'box_shadow',
@@ -633,7 +633,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('card_box_shadow_hover', [
+        $this->add_field('card_box_shadow_hover', [
             'group'   => 'card_options',
             'type'    => 'list',
             'label'   => 'box_shadow_hover',
@@ -646,7 +646,7 @@ class MoonElementTestimonials extends MoonElement {
                 'shadow-lg'   => 'lg',
             ],
         ]);
-        $this->addField('card_vertical_align', [
+        $this->add_field('card_vertical_align', [
             'group'   => 'card_options',
             'type'    => 'list',
             'label'   => 'vertical_alignment',
@@ -659,20 +659,20 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('enable_slider', [
+        $this->add_field('enable_slider', [
             'group'      => 'slider_options',
             'type'       => 'radio',
             'default'    => '0',
             'label'      => 'enable_slider',
             'attributes' => ["role" => "switch"],
         ]);
-        $this->addField('slider_padding', [
+        $this->add_field('slider_padding', [
             'group' => 'slider_options',
             'type'  => 'spacing',
             'label' => 'slider_padding',
         ]);
 
-        $this->addField('slider_autoplay', [
+        $this->add_field('slider_autoplay', [
             'group'      => 'slider_options',
             'type'       => 'radio',
             'attributes' => ['role' => 'switch'],
@@ -681,7 +681,7 @@ class MoonElementTestimonials extends MoonElement {
             'conditions' => "[enable_slider]==1",
         ]);
 
-        $this->addField('interval', [
+        $this->add_field('interval', [
             'group'      => 'slider_options',
             'type'       => 'range',
             'conditions' => "[enable_slider]==1 AND [slider_autoplay]==1",
@@ -695,7 +695,7 @@ class MoonElementTestimonials extends MoonElement {
             'label'      => 'interval',
         ]);
 
-        $this->addField('speed', [
+        $this->add_field('speed', [
             'group'      => 'slider_options',
             'type'       => 'range',
             'attributes' => [
@@ -709,7 +709,7 @@ class MoonElementTestimonials extends MoonElement {
             'conditions' => "[enable_slider]==1",
         ]);
 
-        $this->addField('freemode', [
+        $this->add_field('freemode', [
             'group'      => 'slider_options',
             'type'       => 'radio',
             'attributes' => ['role' => 'switch'],
@@ -718,7 +718,7 @@ class MoonElementTestimonials extends MoonElement {
             'conditions' => "[enable_slider]==1",
         ]);
 
-        $this->addField('loop', [
+        $this->add_field('loop', [
             'group'      => 'slider_options',
             'type'       => 'radio',
             'attributes' => ['role' => 'switch'],
@@ -727,7 +727,7 @@ class MoonElementTestimonials extends MoonElement {
             'conditions' => "[enable_slider]==1",
         ]);
 
-        $this->addField('slider_nav', [
+        $this->add_field('slider_nav', [
             'group'      => 'slider_options',
             'type'       => 'radio',
             'attributes' => ['role' => 'switch'],
@@ -735,7 +735,7 @@ class MoonElementTestimonials extends MoonElement {
             'label'      => 'navigation',
             'conditions' => "[enable_slider]==1",
         ]);
-        $this->addField('slider_nav_position', [
+        $this->add_field('slider_nav_position', [
             'group'   => 'slider_options',
             'type'    => 'list',
             'label'   => 'position',
@@ -753,7 +753,7 @@ class MoonElementTestimonials extends MoonElement {
             ),
             'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
         ]);
-        $this->addField('slider_nav_height', [
+        $this->add_field('slider_nav_height', [
             'group'      => 'slider_options',
             'type'       => 'range',
             'label'      => 'nav_height',
@@ -766,7 +766,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
             'default'    => 50,
         ]);
-        $this->addField('slider_nav_width', [
+        $this->add_field('slider_nav_width', [
             'group'      => 'slider_options',
             'type'       => 'range',
             'label'      => 'nav_height',
@@ -779,64 +779,64 @@ class MoonElementTestimonials extends MoonElement {
             ],
             'default'    => 50,
         ]);
-        $this->addField('slider_nav_border', [
+        $this->add_field('slider_nav_border', [
             "group"      => "slider_options",
             "type"       => "border",
             "label"      => "border",
             'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
         ]);
 
-        $this->addField('slider_nav_radius', [
+        $this->add_field('slider_nav_radius', [
             'group' => 'slider_options',
             'type'  => 'spacing',
             'label' => 'radius',
             'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
         ]);
-        $this->addField('next_margin', [
+        $this->add_field('next_margin', [
             'group' => 'slider_options',
             'type'  => 'spacing',
             'label' => 'next_margin',
             'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
         ]);
-        $this->addField('preview_margin', [
+        $this->add_field('preview_margin', [
             'group' => 'slider_options',
             'type'  => 'spacing',
             'label' => 'preview_margin',
             'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
         ]);
 
-        $this->addField('nav_color', [
+        $this->add_field('nav_color', [
             'group' => 'slider_options',
             'type'  => 'color',
             'label' => 'color_hover',
             'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
         ]);
-        $this->addField('nav_bg_color', [
+        $this->add_field('nav_bg_color', [
             'group' => 'slider_options',
             'type'  => 'color',
             'label' => 'background_color',
             'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
         ]);
-        $this->addField('nav_color_hover', [
+        $this->add_field('nav_color_hover', [
             'group' => 'slider_options',
             'type'  => 'color',
             'label' => 'color_hover',
             'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
         ]);
-        $this->addField('nav_bg_color_hover', [
+        $this->add_field('nav_bg_color_hover', [
             'group' => 'slider_options',
             'type'  => 'color',
             'label' => 'background_color_hover',
             'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
         ]);
-        $this->addField('slider_nav_border_hover', [
+        $this->add_field('slider_nav_border_hover', [
             "group"      => "slider_options",
             "type"       => "border",
             "label"      => "border_hover",
             'conditions' => "[slider_nav]==1 AND [enable_slider]==1",
         ]);
 
-        $this->addField('slider_dotnav', [
+        $this->add_field('slider_dotnav', [
             'group'      => 'slider_options',
             'type'       => 'radio',
             'attributes' => ['role' => 'switch'],
@@ -845,7 +845,7 @@ class MoonElementTestimonials extends MoonElement {
             'conditions' => "[enable_slider]==1",
         ]);
 
-        $this->addField('slider_scrollbar', [
+        $this->add_field('slider_scrollbar', [
             'group'      => 'slider_options',
             'type'       => 'radio',
             'attributes' => ['role' => 'switch'],
@@ -854,7 +854,7 @@ class MoonElementTestimonials extends MoonElement {
             'conditions' => "[enable_slider]==1",
         ]);
 
-        $this->addField('slidesPerGroup_responsive', [
+        $this->add_field('slidesPerGroup_responsive', [
             'group'   => 'slider_options',
             'type'    => 'radio',
             "attributes" => [
@@ -872,7 +872,7 @@ class MoonElementTestimonials extends MoonElement {
             'conditions'  => "[enable_slider]==1",
         ]);
 
-        $this->addField('xxl_slidesPerGroup', [
+        $this->add_field('xxl_slidesPerGroup', [
             'group'   => 'slider_options',
             'type'    => 'list',
             'label'   => 'slides_per_group',
@@ -890,7 +890,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('xl_slidesPerGroup', [
+        $this->add_field('xl_slidesPerGroup', [
             'group'   => 'slider_options',
             'type'    => 'list',
             'label'   => 'slides_per_group',
@@ -908,7 +908,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('lg_slidesPerGroup', [
+        $this->add_field('lg_slidesPerGroup', [
             'group'   => 'slider_options',
             'type'    => 'list',
             'label'   => 'slides_per_group',
@@ -926,7 +926,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('md_slidesPerGroup', [
+        $this->add_field('md_slidesPerGroup', [
             'group'   => 'slider_options',
             'type'    => 'list',
             'label'   => 'slides_per_group',
@@ -944,7 +944,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('sm_slidesPerGroup', [
+        $this->add_field('sm_slidesPerGroup', [
             'group'   => 'slider_options',
             'type'    => 'list',
             'label'   => 'slides_per_group',
@@ -962,7 +962,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('xs_slidesPerGroup', [
+        $this->add_field('xs_slidesPerGroup', [
             'group'   => 'slider_options',
             'type'    => 'list',
             'label'   => 'slides_per_group',
@@ -980,7 +980,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('avatar_position', [
+        $this->add_field('avatar_position', [
             'group'   => 'avatar_options',
             'type'    => 'list',
             'label'   => 'avatar_position',
@@ -992,7 +992,7 @@ class MoonElementTestimonials extends MoonElement {
                 'right'  => 'right',
             ],
         ]);
-        $this->addField('avatar_column_responsive', [
+        $this->add_field('avatar_column_responsive', [
             'group'      => 'card_options',
             'type'       => 'radio',
             'attributes' => ['width'      => 'full'],
@@ -1008,7 +1008,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('xxl_column_avatar', [
+        $this->add_field('xxl_column_avatar', [
             'group'      => 'card_options',
             'type'       => 'list',
             'label'      => 'xxl_column_avatar_width',
@@ -1028,7 +1028,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('xl_column_avatar', [
+        $this->add_field('xl_column_avatar', [
             'group'      => 'card_options',
             'type'       => 'list',
             'label'      => 'xl_column_avatar_width',
@@ -1048,7 +1048,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('lg_column_avatar', [
+        $this->add_field('lg_column_avatar', [
             'group'      => 'card_options',
             'type'       => 'list',
             'label'      => 'lg_column_avatar_width',
@@ -1068,7 +1068,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('md_column_avatar', [
+        $this->add_field('md_column_avatar', [
             'group'      => 'card_options',
             'type'       => 'list',
             'label'      => 'md_column_avatar_width',
@@ -1088,7 +1088,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('sm_column_avatar', [
+        $this->add_field('sm_column_avatar', [
             'group'      => 'card_options',
             'type'       => 'list',
             'label'      => 'sm_column_avatar_width',
@@ -1108,7 +1108,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('xs_column_avatar', [
+        $this->add_field('xs_column_avatar', [
             'group'      => 'card_options',
             'type'       => 'list',
             'label'      => 'xs_column_avatar_width',
@@ -1128,26 +1128,26 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('image_max_width', [
+        $this->add_field('image_max_width', [
             'group'      => 'avatar_options',
             'type'       => 'range',
             'label'      => 'max_width',
             'default'    => '200',
             'attributes' => ['min' => 1, 'max' => 1200, 'step' => 1, 'postfix' => 'px'],
         ]);
-        $this->addField('image_margin', [
+        $this->add_field('image_margin', [
             'group' => 'avatar_options',
             'type'  => 'spacing',
             'label' => 'margin',
         ]);
 
-        $this->addField('image_border', [
+        $this->add_field('image_border', [
             'group' => 'avatar_options',
             'type'  => 'border',
             'label' => 'border',
         ]);
 
-        $this->addField('image_border_radius', [
+        $this->add_field('image_border_radius', [
             'group'   => 'avatar_options',
             'type'    => 'list',
             'label'   => 'border_radius',
@@ -1160,7 +1160,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('image_rounded_size', [
+        $this->add_field('image_rounded_size', [
             'group'      => 'avatar_options',
             'type'       => 'list',
             'label'      => 'rounded_size',
@@ -1175,7 +1175,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('hover_effect', [
+        $this->add_field('hover_effect', [
             'group'   => 'avatar_options',
             'type'    => 'list',
             'label'   => 'hover_effect',
@@ -1188,15 +1188,15 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('hover_transition', [
+        $this->add_field('hover_transition', [
             'group'   => 'avatar_options',
             'type'    => 'list',
             'label'   => 'hover_transition',
             'default' => '',
-            'options' => Constants::$hover_transition,
+            'options' => constants::$hover_transition,
         ]);
 
-        $this->addField('title_html_element', [
+        $this->add_field('title_html_element', [
             'group'   => 'name_options',
             'type'    => 'list',
             'label'   => 'html_element',
@@ -1212,7 +1212,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('title_font_style', [
+        $this->add_field('title_font_style', [
             "group"   => "name_options",
             "type"    => "typography",
             "label"   => "font_style",
@@ -1229,22 +1229,22 @@ class MoonElementTestimonials extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
 
-        $this->addField('title_heading_margin', [
+        $this->add_field('title_heading_margin', [
             'group' => 'name_options',
             'type'  => 'spacing',
             'label' => 'margin',
         ]);
 
-        $this->addField('designation_font_style', [
+        $this->add_field('designation_font_style', [
             'group'   => 'designation_options',
             'type'    => 'typography',
             'label'   => 'font_style',
@@ -1261,22 +1261,22 @@ class MoonElementTestimonials extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
 
-        $this->addField('designation_heading_margin', [
+        $this->add_field('designation_heading_margin', [
             'group' => 'designation_options',
             'type'  => 'spacing',
             'label' => 'margin',
         ]);
 
-        $this->addField('designation_position', [
+        $this->add_field('designation_position', [
             'group'   => 'designation_options',
             'type'    => 'list',
             'label'   => 'meta',
@@ -1287,7 +1287,7 @@ class MoonElementTestimonials extends MoonElement {
             ],
         ]);
 
-        $this->addField('content_font_style', [
+        $this->add_field('content_font_style', [
             'group'   => 'content_options',
             'type'    => 'typography',
             'label'   => 'font_style',
@@ -1304,22 +1304,22 @@ class MoonElementTestimonials extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
 
-        $this->addField('content_margin', [
+        $this->add_field('content_margin', [
             'group' => 'content_options',
             'type'  => 'spacing',
             'label' => 'margin',
         ]);
 
-        $this->addField('enable_rating', [
+        $this->add_field('enable_rating', [
             'group'      => 'rating_options',
             'type'       => 'radio',
             'default'    => '0',
@@ -1327,22 +1327,22 @@ class MoonElementTestimonials extends MoonElement {
             'attributes' => ["role" => "switch"],
         ]);
 
-        $this->addField('rating_color', [
+        $this->add_field('rating_color', [
             'group' => 'rating_options',
             'type'  => 'color',
             'label' => 'rating_color',
         ]);
-        $this->addField('rating_margin', [
+        $this->add_field('rating_margin', [
             'group' => 'rating_options',
             'type'  => 'spacing',
             'label' => 'margin',
         ]);
-        $this->addField('testimonial_icon', [
+        $this->add_field('testimonial_icon', [
             "type"       => "icons",
             'group' => 'icon_options',
             "label"      => "fa_icon",
         ]);
-        $this->addField('testimonial_icon_size', [
+        $this->add_field('testimonial_icon_size', [
             'group'      => 'icon_options',
             'type'       => 'range',
             'label'      => 'icon_size',
@@ -1355,12 +1355,12 @@ class MoonElementTestimonials extends MoonElement {
             ],
             'default'    => 30,
         ]);
-        $this->addField('icon_margin', [
+        $this->add_field('icon_margin', [
             'group' => 'icon_options',
             'type'  => 'spacing',
             'label' => 'margin',
         ]);
-        $this->addField('testimonial_icon_color', [
+        $this->add_field('testimonial_icon_color', [
             "group"      => "icon_options",
             "type"       => "color",
             "label"      => "color",

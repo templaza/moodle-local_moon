@@ -22,11 +22,11 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Form;
-use local_moon\library\Helper\Constants;
-use local_moon\library\Helper\Font;
-class MoonElementMap extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\form;
+use local_moon\library\helper\constants;
+use local_moon\library\helper\font;
+class moon_element_map extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -38,20 +38,20 @@ class MoonElementMap extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('map_options', [
+        $this->add_field('map_options', [
             'type'  => 'group',
             'label' => 'map_options',
         ]);
 
-        $this->addField('multiple_maps', [
+        $this->add_field('multiple_maps', [
             'type'  => 'group',
             'label' => 'multiple_maps',
         ]);
 
-        $this->addField('map_option', [
+        $this->add_field('map_option', [
             'group'   => 'general',
             'type'    => 'list',
             'default' => 'basic',
@@ -61,7 +61,7 @@ class MoonElementMap extends MoonElement {
             ],
         ]);
 
-        $this->addField('location', [
+        $this->add_field('location', [
             'group'       => 'general',
             'conditions'  => "[map_option]=='basic'",
             'type'        => 'text',
@@ -72,7 +72,7 @@ class MoonElementMap extends MoonElement {
             ],
         ]);
 
-        $this->addField('map', [
+        $this->add_field('map', [
             'group'       => 'general',
             'conditions'  => "[map_option]=='advanced'",
             'type'        => 'text',
@@ -83,7 +83,7 @@ class MoonElementMap extends MoonElement {
             ],
         ]);
 
-        $this->addField('type', [
+        $this->add_field('type', [
             'group'   => 'general',
             'conditions'=> "[map_option]=='advanced'",
             'type'    => 'list',
@@ -98,7 +98,7 @@ class MoonElementMap extends MoonElement {
             ],
         ]);
 
-        $this->addField('height', [
+        $this->add_field('height', [
             'group'      => 'general',
             'type'       => 'range',
             'attributes' => [
@@ -112,7 +112,7 @@ class MoonElementMap extends MoonElement {
             'description' => 'map_height_desc'
         ]);
 
-        $this->addField('infowindow', [
+        $this->add_field('infowindow', [
             'group'      => 'map_options',
             'conditions' => "[map_option]=='advanced'",
             'type'       => 'textarea',
@@ -120,7 +120,7 @@ class MoonElementMap extends MoonElement {
             'description'=> 'infowindow_desc',
         ]);
 
-        $this->addField('zoom', [
+        $this->add_field('zoom', [
             'group'      => 'map_options',
             'type'       => 'range',
             'attributes' => [
@@ -132,7 +132,7 @@ class MoonElementMap extends MoonElement {
             'label'   => 'zoom',
         ]);
 
-        $this->addField('mousescroll', [
+        $this->add_field('mousescroll', [
             'group'      => 'map_options',
             'conditions' => "[map_option]=='advanced'",
             'type'       => 'radio',
@@ -142,7 +142,7 @@ class MoonElementMap extends MoonElement {
             'description'=> 'mousescroll_desc',
         ]);
 
-        $this->addField('show_controllers', [
+        $this->add_field('show_controllers', [
             'group'      => 'map_options',
             'conditions' => "[map_option]=='advanced'",
             'type'       => 'radio',
@@ -152,7 +152,7 @@ class MoonElementMap extends MoonElement {
             'description'=> 'show_controllers_desc',
         ]);
 
-        $this->addField('multi_location', [
+        $this->add_field('multi_location', [
             'group'      => 'multiple_maps',
             'conditions' => "[map_option]=='advanced'",
             'type'       => 'radio',
@@ -179,13 +179,13 @@ class MoonElementMap extends MoonElement {
                 ]
             ],
         ];
-        $repeater   = new Form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
-        $this->addField('multi_location_items',  [
+        $repeater   = new form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
+        $this->add_field('multi_location_items',  [
             "group" => "multiple_maps",
             "type" => "subform",
             "label" => "multi_location_items",
             "attributes" => [
-                'form'    =>  $repeater->renderJson('subform')
+                'form'    =>  $repeater->render_json('subform')
             ],
             'conditions' => "[multi_location]=='1' AND [map_option]=='advanced'",
         ]);

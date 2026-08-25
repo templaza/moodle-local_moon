@@ -22,10 +22,10 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Font;
-use local_moon\library\Blocks\CourseHandler;
-class MoonElementBlog_Recent extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\font;
+use local_moon\library\blocks\course_handler;
+class moon_element_blog_recent extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -37,39 +37,39 @@ class MoonElementBlog_Recent extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('grid_options',  [
+        $this->add_field('grid_options',  [
             "type" => "group",
             "label" => "grid_options",
         ]);
-        $this->addField('item_options',  [
+        $this->add_field('item_options',  [
             "type" => "group",
             "label" => "item_options",
         ]);
-        $this->addField('title_options',  [
+        $this->add_field('title_options',  [
             "type" => "group",
             "label" => "title_options",
         ]);
-        $this->addField('meta_options',  [
+        $this->add_field('meta_options',  [
             "type" => "group",
             "label" => "meta_options",
         ]);
-        $this->addField('content_options',  [
+        $this->add_field('content_options',  [
             "type" => "group",
             "label" => "content_options",
         ]);
-        $this->addField('image_options',  [
+        $this->add_field('image_options',  [
             "type" => "group",
             "label" => "image_options",
         ]);
 
-        $this->addField('slider_options',  [
+        $this->add_field('slider_options',  [
             "type" => "group",
             "label" => "slider_options",
         ]);
-        $this->addField('blog_style', [
+        $this->add_field('blog_style', [
             "group"      => "general",
             "type"       => "list",
             "label"      => "style",
@@ -80,7 +80,7 @@ class MoonElementBlog_Recent extends MoonElement {
                 "style3" => "style3",
             ],
         ]);
-        $this->addField('blog_since', [
+        $this->add_field('blog_since', [
             "group"      => "general",
             "type"       => "list",
             "label"      => "blog_recent_time",
@@ -100,13 +100,13 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('blog_limit', [
+        $this->add_field('blog_limit', [
             "group"       => "general",
             "type"        => "text",
             "label"       => "limit",
             "dynamic"     => true,
         ]);
-        $this->addField('title_font_style', [
+        $this->add_field('title_font_style', [
             "group"      => "title_options",
             "type"       => "typography",
             "attributes" => [
@@ -122,20 +122,20 @@ class MoonElementBlog_Recent extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value
             ],
         ]);
-        $this->addField('title_margin', [
+        $this->add_field('title_margin', [
             "group" => "title_options",
             "type"  => "spacing",
             "label" => "margin",
         ]);
-        $this->addField('show_content', [
+        $this->add_field('show_content', [
             'group'   => 'content_options',
             'type'    => 'radio',
             "attributes" => [
@@ -144,7 +144,7 @@ class MoonElementBlog_Recent extends MoonElement {
             'default' => '1',
             'label'   => 'show_content',
         ]);
-        $this->addField('content_font_style', [
+        $this->add_field('content_font_style', [
             "group"      => "content_options",
             "type"       => "typography",
             "attributes" => [
@@ -160,20 +160,20 @@ class MoonElementBlog_Recent extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value
             ],
         ]);
-        $this->addField('content_margin', [
+        $this->add_field('content_margin', [
             "group" => "content_options",
             "type"  => "spacing",
             "label" => "margin",
         ]);
-        $this->addField('meta_font_style', [
+        $this->add_field('meta_font_style', [
             "group"      => "meta_options",
             "type"       => "typography",
             "attributes" => [
@@ -189,15 +189,15 @@ class MoonElementBlog_Recent extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value
             ],
         ]);
-        $this->addField('show_author', [
+        $this->add_field('show_author', [
             'group'   => 'meta_options',
             'type'    => 'radio',
             "attributes" => [
@@ -206,7 +206,7 @@ class MoonElementBlog_Recent extends MoonElement {
             'default' => '1',
             'label'   => 'show_author',
         ]);
-        $this->addField('show_comment', [
+        $this->add_field('show_comment', [
             'group'   => 'meta_options',
             'type'    => 'radio',
             "attributes" => [
@@ -216,12 +216,12 @@ class MoonElementBlog_Recent extends MoonElement {
             'label'   => 'show_comment',
         ]);
 
-        $this->addField('meta_margin', [
+        $this->add_field('meta_margin', [
             "group" => "meta_options",
             "type"  => "spacing",
             "label" => "margin",
         ]);
-        $this->addField('image_position', [
+        $this->add_field('image_position', [
             "group"   => "image_options",
             "type"    => "list",
             "label"   => "image_position",
@@ -231,7 +231,7 @@ class MoonElementBlog_Recent extends MoonElement {
                 "left"   => "left",
             ],
         ]);
-        $this->addField('media_column_responsive', [
+        $this->add_field('media_column_responsive', [
             "group"   => "image_options",
             "type"    => "radio",
             "attributes" => [
@@ -250,7 +250,7 @@ class MoonElementBlog_Recent extends MoonElement {
         ]);
 
         // media columns (xxl/xl/lg/md/sm/xs) with conditions
-        $this->addField('xxl_column_media', [
+        $this->add_field('xxl_column_media', [
             "group"      => "image_options",
             "type"       => "list",
             "label"      => "xxl_column_media_width",
@@ -272,7 +272,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('xl_column_media', [
+        $this->add_field('xl_column_media', [
             "group"      => "image_options",
             "type"       => "list",
             "label"      => "xl_column_media_width",
@@ -294,7 +294,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('lg_column_media', [
+        $this->add_field('lg_column_media', [
             "group"      => "image_options",
             "type"       => "list",
             "label"      => "lg_column_media_width",
@@ -316,7 +316,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('md_column_media', [
+        $this->add_field('md_column_media', [
             "group"      => "image_options",
             "type"       => "list",
             "label"      => "md_column_media_width",
@@ -338,7 +338,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('sm_column_media', [
+        $this->add_field('sm_column_media', [
             "group"      => "image_options",
             "type"       => "list",
             "label"      => "sm_column_media_width",
@@ -360,7 +360,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('xs_column_media', [
+        $this->add_field('xs_column_media', [
             "group"      => "image_options",
             "type"       => "list",
             "label"      => "xs_column_media_width",
@@ -382,7 +382,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('vertical_middle', [
+        $this->add_field('vertical_middle', [
             "group"      => "image_options",
             "type"       => "radio",
             "default"    => "0",
@@ -392,12 +392,12 @@ class MoonElementBlog_Recent extends MoonElement {
             "label"      => "vertical_middle",
             "conditions" => "[image_position]=='left'",
         ]);
-        $this->addField('image_border_radius', [
+        $this->add_field('image_border_radius', [
             'group' => 'image_options',
             'type'  => 'spacing',
             'label' => 'border_radius',
         ]);
-        $this->addField('image_min_height', [
+        $this->add_field('image_min_height', [
             'group'      => 'image_options',
             'type'       => 'range',
             'label'      => 'min_height',
@@ -410,37 +410,37 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
             'default'    => 300,
         ]);
-        $this->addField('image_margin', [
+        $this->add_field('image_margin', [
             'group'      => 'image_options',
             'type'       => 'spacing',
             'label'      => 'margin',
         ]);
-        $this->addField('item_bg_color', [
+        $this->add_field('item_bg_color', [
             "group"      => "item_options",
             "type"       => "color",
             "label"      => "background_color",
         ]);
-        $this->addField('item_border', [
+        $this->add_field('item_border', [
             "group"      => "item_options",
             "type"       => "border",
             "label"      => "border",
         ]);
-        $this->addField('item_padding', [
+        $this->add_field('item_padding', [
             'group'      => 'item_options',
             'type'       => 'spacing',
             'label'      => 'padding',
         ]);
-        $this->addField('item_border_radius', [
+        $this->add_field('item_border_radius', [
             'group' => 'item_options',
             'type'  => 'spacing',
             'label' => 'border_radius',
         ]);
-        $this->addField('item_content_padding', [
+        $this->add_field('item_content_padding', [
             'group'      => 'item_options',
             'type'       => 'spacing',
             'label'      => 'content_padding',
         ]);
-        $this->addField('column_responsive', [
+        $this->add_field('column_responsive', [
             "group"   => "grid_options",
             "type"    => "radio",
             "attributes" => [
@@ -458,7 +458,7 @@ class MoonElementBlog_Recent extends MoonElement {
             "conditions" => "[blog_style]!='style2'",
         ]);
 
-        $this->addField('xxl_column', [
+        $this->add_field('xxl_column', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "xxl_column",
@@ -475,7 +475,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('xl_column', [
+        $this->add_field('xl_column', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "xl_column",
@@ -492,7 +492,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('lg_column', [
+        $this->add_field('lg_column', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "lg_column",
@@ -509,7 +509,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('md_column', [
+        $this->add_field('md_column', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "md_column",
@@ -526,7 +526,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('sm_column', [
+        $this->add_field('sm_column', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "sm_column",
@@ -543,7 +543,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('xs_column', [
+        $this->add_field('xs_column', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "xs_column",
@@ -560,7 +560,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_xxl', [
+        $this->add_field('row_gutter_xxl', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "row_gutter_xxl",
@@ -577,7 +577,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_xl', [
+        $this->add_field('row_gutter_xl', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "row_gutter_xl",
@@ -594,7 +594,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_lg', [
+        $this->add_field('row_gutter_lg', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "row_gutter_lg",
@@ -611,7 +611,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_md', [
+        $this->add_field('row_gutter_md', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "row_gutter_md",
@@ -628,7 +628,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_sm', [
+        $this->add_field('row_gutter_sm', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "row_gutter_sm",
@@ -645,7 +645,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter', [
+        $this->add_field('row_gutter', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "row_gutter_xs",
@@ -661,7 +661,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_xxl', [
+        $this->add_field('column_gutter_xxl', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "column_gutter_xxl",
@@ -678,7 +678,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_xl', [
+        $this->add_field('column_gutter_xl', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "column_gutter_xl",
@@ -695,7 +695,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_lg', [
+        $this->add_field('column_gutter_lg', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "column_gutter_lg",
@@ -712,7 +712,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_md', [
+        $this->add_field('column_gutter_md', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "column_gutter_md",
@@ -729,7 +729,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_sm', [
+        $this->add_field('column_gutter_sm', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "column_gutter_sm",
@@ -746,7 +746,7 @@ class MoonElementBlog_Recent extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter', [
+        $this->add_field('column_gutter', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "column_gutter_xs",
@@ -761,7 +761,7 @@ class MoonElementBlog_Recent extends MoonElement {
                 "5" => "X-Large",
             ],
         ]);
-        $this->addField('enable_slider', [
+        $this->add_field('enable_slider', [
             'group'   => 'slider_options',
             'type'    => 'radio',
             "attributes" => [
@@ -771,7 +771,7 @@ class MoonElementBlog_Recent extends MoonElement {
             'label'   => 'enable_slider',
             "conditions" => "[blog_style]!='style2'",
         ]);
-        $this->addField('autoplay', [
+        $this->add_field('autoplay', [
             'group'   => 'slider_options',
             'type'    => 'radio',
             "attributes" => [
@@ -782,7 +782,7 @@ class MoonElementBlog_Recent extends MoonElement {
             "conditions" => "[blog_style]!='style2' AND [enable_slider]==1",
         ]);
 
-        $this->addField('navigation', [
+        $this->add_field('navigation', [
             'group'   => 'slider_options',
             'type'    => 'radio',
             "attributes" => [
@@ -792,38 +792,38 @@ class MoonElementBlog_Recent extends MoonElement {
             'label'   => 'Navigation',
             "conditions" => "[blog_style]!='style2' AND [enable_slider]==1",
         ]);
-        $this->addField('navigation_color', [
+        $this->add_field('navigation_color', [
             "group"      => "slider_options",
             "type"       => "color",
             "label"      => "color",
             "conditions" => "[navigation]==1 AND [blog_style]!='style2' AND [enable_slider]==1",
         ]);
-        $this->addField('navigation_bg_color', [
+        $this->add_field('navigation_bg_color', [
             "group"      => "slider_options",
             "type"       => "color",
             "label"      => "background_color",
             "conditions" => "[navigation]==1 AND [blog_style]!='style2' AND [enable_slider]==1",
         ]);
-        $this->addField('navigation_color_hover', [
+        $this->add_field('navigation_color_hover', [
             "group"      => "slider_options",
             "type"       => "color",
             "label"      => "color_hover",
             "conditions" => "[navigation]==1 AND [blog_style]!='style2' AND [enable_slider]==1",
         ]);
-        $this->addField('navigation_bg_color_hover', [
+        $this->add_field('navigation_bg_color_hover', [
             "group"      => "slider_options",
             "type"       => "color",
             "label"      => "background_hover_color",
             "conditions" => "[navigation]==1 AND [blog_style]!='style2' AND [enable_slider]==1",
         ]);
-        $this->addField('navigation_padding', [
+        $this->add_field('navigation_padding', [
             'group'      => 'slider_options',
             'type'       => 'spacing',
             'label'      => 'padding',
             'conditions' => "[navigation]==1 AND [blog_style]!='style2' AND [enable_slider]==1",
         ]);
 
-        $this->addField('dot', [
+        $this->add_field('dot', [
             'group'   => 'slider_options',
             'type'    => 'radio',
             "attributes" => [
@@ -833,7 +833,7 @@ class MoonElementBlog_Recent extends MoonElement {
             'label'   => 'Dotnav',
             "conditions" => "[blog_style]!='style2' AND [enable_slider]==1",
         ]);
-        $this->addField('dot_margin', [
+        $this->add_field('dot_margin', [
             "group" => "slider_options",
             "type"  => "spacing",
             "label" => "margin",

@@ -22,11 +22,11 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Form;
-use local_moon\library\Helper\Constants;
-use local_moon\library\Helper\Font;
-class MoonElementPricing_Table extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\form;
+use local_moon\library\helper\constants;
+use local_moon\library\helper\font;
+class moon_element_pricing_table extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -38,72 +38,72 @@ class MoonElementPricing_Table extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('title_options', [
+        $this->add_field('title_options', [
             'type'  => 'group',
             'label' => 'title',
         ]);
 
-        $this->addField('meta_options', [
+        $this->add_field('meta_options', [
             'type'  => 'group',
             'label' => 'meta_options',
         ]);
 
-        $this->addField('pricing_options', [
+        $this->add_field('pricing_options', [
             'type'  => 'group',
             'label' => 'pricing_options',
         ]);
 
-        $this->addField('symbol_options', [
+        $this->add_field('symbol_options', [
             'type'  => 'group',
             'label' => 'symbol_options',
         ]);
 
-        $this->addField('description_options', [
+        $this->add_field('description_options', [
             'type'  => 'group',
             'label' => 'description_options',
         ]);
 
-        $this->addField('listing_options', [
+        $this->add_field('listing_options', [
             'type'  => 'group',
             'label' => 'listing_options',
         ]);
 
-        $this->addField('button_options', [
+        $this->add_field('button_options', [
             'type'  => 'group',
             'label' => 'button_options',
         ]);
 
-        $this->addField('title', [
+        $this->add_field('title', [
             'group' => 'general',
             'type'  => 'text',
             'label' => 'title',
         ]);
 
-        $this->addField('meta', [
+        $this->add_field('meta', [
             'group' => 'general',
             'type'  => 'text',
             'label' => 'meta',
         ]);
-        $this->addField('description', [
+        $this->add_field('description', [
             "group"   => "general",
             "type"    => "editor",
             "label"   => "content",
             "dynamic" => true,
         ]);
-        $this->addField('price', [
+        $this->add_field('price', [
             'group' => 'general',
             'type'  => 'text',
             'label' => 'price',
         ]);
-        $this->addField('price_symbol', [
+        $this->add_field('price_symbol', [
             'group' => 'general',
             'type'  => 'text',
             'label' => 'price_symbol',
         ]);
-        $this->addField('label_text', [
+        $this->add_field('label_text', [
             'group' => 'general',
             'type'  => 'text',
             'label' => 'highlight',
@@ -140,17 +140,17 @@ class MoonElementPricing_Table extends MoonElement {
                 ]
             ],
         ];
-        $repeater   = new Form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
-        $this->addField('pricing_items',  [
+        $repeater   = new form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
+        $this->add_field('pricing_items',  [
             "group" => "general",
             "type" => "subform",
             "label" => "Pricing Items",
             "attributes" => [
-                'form'    =>  $repeater->renderJson('subform')
+                'form'    =>  $repeater->render_json('subform')
             ],
         ]);
 
-        $this->addField('button_url', [
+        $this->add_field('button_url', [
             "group"      => "general",
             'type'    => 'text',
             'label'   => 'link_url',
@@ -160,7 +160,7 @@ class MoonElementPricing_Table extends MoonElement {
             ],
         ]);
 
-        $this->addField('button_text', [
+        $this->add_field('button_text', [
             "group"      => "general",
             'type'       => 'text',
             'label'      => 'link_text',
@@ -171,7 +171,7 @@ class MoonElementPricing_Table extends MoonElement {
             'conditions' => "[button_url]!==''",
         ]);
 
-        $this->addField('button_target', [
+        $this->add_field('button_target', [
             "group"      => "general",
             'type'       => 'list',
             'label'      => 'link_target',
@@ -185,7 +185,7 @@ class MoonElementPricing_Table extends MoonElement {
             ],
         ]);
 
-        $this->addField('meta_alignment', [
+        $this->add_field('meta_alignment', [
             "group"      => "meta_options",
             "type"       => "list",
             "label"      => "meta_alignment",
@@ -198,7 +198,7 @@ class MoonElementPricing_Table extends MoonElement {
         ]);
 
 
-        $this->addField('title_font_style', [
+        $this->add_field('title_font_style', [
             'group'   => 'title_options',
             'type'    => 'typography',
             'label'   => 'font_style',
@@ -215,33 +215,33 @@ class MoonElementPricing_Table extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
 
-        $this->addField('title_heading_margin', [
+        $this->add_field('title_heading_margin', [
             'group' => 'title_options',
             'type'  => 'spacing',
             'name'  => 'title_heading_margin',
             'label' => 'margin',
         ]);
-        $this->addField('title_heading_padding', [
+        $this->add_field('title_heading_padding', [
             'group' => 'title_options',
             'type'  => 'spacing',
             'name'  => 'title_heading_padding',
             'label' => 'padding',
         ]);
-        $this->addField('title_border', [
+        $this->add_field('title_border', [
             "group"      => "title_options",
             "type"       => "border",
             "label"      => "border",
         ]);
-        $this->addField('title_radius', [
+        $this->add_field('title_radius', [
             'group' => 'title_options',
             'type'  => 'spacing',
             'name'  => 'title_radius',
@@ -249,7 +249,7 @@ class MoonElementPricing_Table extends MoonElement {
         ]);
 
 
-        $this->addField('pricing_font_style', [
+        $this->add_field('pricing_font_style', [
             'group'   => 'pricing_options',
             'type'    => 'typography',
             'label'   => 'font_style',
@@ -266,20 +266,20 @@ class MoonElementPricing_Table extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
-        $this->addField('price_color', [
+        $this->add_field('price_color', [
             'group' => 'pricing_options',
             'type'  => 'color',
             'label' => 'color',
         ]);
-        $this->addField('price_icon', [
+        $this->add_field('price_icon', [
             'group' => 'pricing_options',
             'type'  => 'icons',
             "attributes" => [
@@ -287,7 +287,7 @@ class MoonElementPricing_Table extends MoonElement {
             ],
             'label' => 'icon',
         ]);
-        $this->addField('price_icon_size', [
+        $this->add_field('price_icon_size', [
             'group'      => 'pricing_options',
             'type'       => 'range',
             'label'      => 'icon_size',
@@ -300,18 +300,18 @@ class MoonElementPricing_Table extends MoonElement {
             ],
             'default'    => 30,
         ]);
-        $this->addField('price_icon_color', [
+        $this->add_field('price_icon_color', [
             'group' => 'pricing_options',
             'type'  => 'color',
             'label' => 'icon_color',
         ]);
-        $this->addField('price_margin', [
+        $this->add_field('price_margin', [
             'group' => 'pricing_options',
             'type'  => 'spacing',
             'label' => 'margin',
         ]);
 
-        $this->addField('symbol_font_style', [
+        $this->add_field('symbol_font_style', [
             'group'   => 'symbol_options',
             'type'    => 'typography',
             'label'   => 'font_style',
@@ -328,16 +328,16 @@ class MoonElementPricing_Table extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
 
-        $this->addField('symbol_pos', [
+        $this->add_field('symbol_pos', [
             "group"      => "symbol_options",
             "type"       => "list",
             "label"      => "position",
@@ -347,14 +347,14 @@ class MoonElementPricing_Table extends MoonElement {
                 'right'   => 'right',
             ],
         ]);
-        $this->addField('symbol_margin', [
+        $this->add_field('symbol_margin', [
             'group' => 'symbol_options',
             'type'  => 'spacing',
             'name'  => 'symbol_margin',
             'label' => 'margin',
         ]);
 
-        $this->addField('description_font_style', [
+        $this->add_field('description_font_style', [
             'group'   => 'description_options',
             'type'    => 'typography',
             'label'   => 'font_style',
@@ -371,32 +371,32 @@ class MoonElementPricing_Table extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
 
-        $this->addField('listing_border', [
+        $this->add_field('listing_border', [
             "group"      => "listing_options",
             "type"       => "border",
             "label"      => "border",
         ]);
-        $this->addField('listing_margin', [
+        $this->add_field('listing_margin', [
             'group' => 'listing_options',
             'type'  => 'spacing',
             'label' => 'margin',
         ]);
-        $this->addField('listing_padding', [
+        $this->add_field('listing_padding', [
             'group' => 'listing_options',
             'type'  => 'spacing',
             'label' => 'padding',
         ]);
 
-        $this->addField('button_font_style', [
+        $this->add_field('button_font_style', [
             'group'   => 'button_options',
             'type'    => 'typography',
             'label'   => 'font_style',
@@ -413,45 +413,45 @@ class MoonElementPricing_Table extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
-        $this->addField('button_margin', [
+        $this->add_field('button_margin', [
             'group' => 'button_options',
             'type'  => 'spacing',
             'label' => 'margin',
         ]);
-        $this->addField('button_padding', [
+        $this->add_field('button_padding', [
             'group' => 'button_options',
             'type'  => 'spacing',
             'label' => 'padding',
         ]);
-        $this->addField('button_border', [
+        $this->add_field('button_border', [
             "group"      => "button_options",
             "type"       => "border",
             "label"      => "border",
         ]);
-        $this->addField('button_radius', [
+        $this->add_field('button_radius', [
             'group' => 'button_options',
             'type'  => 'spacing',
             'label' => 'radius',
         ]);
-        $this->addField('button_bg_color', [
+        $this->add_field('button_bg_color', [
             'group' => 'button_options',
             'type'  => 'color',
             'label' => 'background_color',
         ]);
-        $this->addField('button_color_hover', [
+        $this->add_field('button_color_hover', [
             'group' => 'button_options',
             'type'  => 'color',
             'label' => 'color_hover',
         ]);
-        $this->addField('button_bg_color_hover', [
+        $this->add_field('button_bg_color_hover', [
             'group' => 'button_options',
             'type'  => 'color',
             'label' => 'background_color_hover',

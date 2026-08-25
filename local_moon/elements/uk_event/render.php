@@ -22,19 +22,19 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Framework;
-use local_moon\library\Helper\Style;
-use local_moon\library\Helper\SubForm;
-use local_moon\library\Blocks\EventHandler;
+use local_moon\library\framework;
+use local_moon\library\helper\style;
+use local_moon\library\helper\sub_form;
+use local_moon\library\blocks\event_handler;
 
 $params = $this->params;
 $style = $this->style;
 $style_dark = $this->style_dark;
-$document = Framework::getDocument();
-$document->loadUIKit();
-$list_events     = new SubForm($params->get('list_events', ''));
+$document = framework::get_document();
+$document->load_ui_kit();
+$list_events     = new sub_form($params->get('list_events', ''));
 
-if (!count($list_events->getData())) {
+if (!count($list_events->get_data())) {
     return false;
 }
 $row_column_cls     =   '';
@@ -106,7 +106,7 @@ foreach ($list_events->data as $key => $grid) {
     $eventid = $grid->params->get('event', '');
     if($eventid){
         $event = $DB->get_record('event', ['id' => $eventid]);
-        $moonEventHandler = new EventHandler();
+        $moonEventHandler = new event_handler();
         $url = $moonEventHandler->moon_get_event_link($eventid);
     }
     if ($grid->params->get('image', '')) {
@@ -156,98 +156,98 @@ foreach ($list_events->data as $key => $grid) {
 }
 echo '</div>';
 
-$item_bg_color     = Style::getColor($params->get('item_bg_color', ''));
-$style->child('.event-item')->addCss('background-color', $item_bg_color['light']);
-$style_dark->child('.event-item')->addCss('background-color', $item_bg_color['dark']);
+$item_bg_color     = style::get_color($params->get('item_bg_color', ''));
+$style->child('.event-item')->add_css('background-color', $item_bg_color['light']);
+$style_dark->child('.event-item')->add_css('background-color', $item_bg_color['dark']);
 $item_border    =   json_decode($params->get('item_border', ''), true);
 if (!empty($item_border)) {
-    Style::addBorderStyle('#'. $this->id . ' .event-item', $item_border, 'global', $this->isRoot);
+    style::add_border_style('#'. $this->id . ' .event-item', $item_border, 'global', $this->isRoot);
 }
 $item_border_radius      =   $params->get('item_border_radius', '');
 if (!empty($item_border_radius)) {
-    Style::setSpacingStyle($this->style->child('.event-item'), $item_border_radius,'radius');
+    style::set_spacing_style($this->style->child('.event-item'), $item_border_radius,'radius');
 }
 $item_card_padding   =   $params->get('item_card_padding', '');
 if (!empty($item_card_padding)) {
-    Style::setSpacingStyle($this->style->child('.event-item'), $item_card_padding);
+    style::set_spacing_style($this->style->child('.event-item'), $item_card_padding);
 }
 $content_padding   =   $params->get('content_padding', '');
 if (!empty($content_padding)) {
-    Style::setSpacingStyle($this->style->child('.event-summary'), $content_padding);
+    style::set_spacing_style($this->style->child('.event-summary'), $content_padding);
 }
 $overlay_type       =   $params->get('overlay_type', '');
 switch ($overlay_type) {
     case 'color':
-        $overlay_color      =   Style::getColor($params->get('overlay_color', ''));
-        $style->child('.moon-bg-overlay')->addCss('background-color', $overlay_color['light']);
-        $style_dark->child('.moon-bg-overlay')->addCss('background-color', $overlay_color['dark']);
+        $overlay_color      =   style::get_color($params->get('overlay_color', ''));
+        $style->child('.moon-bg-overlay')->add_css('background-color', $overlay_color['light']);
+        $style_dark->child('.moon-bg-overlay')->add_css('background-color', $overlay_color['dark']);
         break;
     case 'gradient':
         $overlay_gradient   =   $params->get('overlay_gradient', '');
         if (!empty($overlay_gradient)) {
-            $style->child('.moon-bg-overlay')->addCss('background-image', Style::getGradientValue($overlay_gradient));
+            $style->child('.moon-bg-overlay')->add_css('background-image', style::get_gradient_value($overlay_gradient));
         }
         break;
 }
 
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
-    Style::renderTypography('#'.$this->id.' .event-title a', $title_font_style, null, $this->isRoot);
+    style::render_typography('#'.$this->id.' .event-title a', $title_font_style, null, $this->isRoot);
 }
 $title_heading_margin=  $params->get('title_heading_margin', '');
 if (!empty($title_heading_margin)) {
-    Style::setSpacingStyle($this->style->child('.event-title'), $title_heading_margin, 'margin');
+    style::set_spacing_style($this->style->child('.event-title'), $title_heading_margin, 'margin');
 }
 $duration_font_style   =   $params->get('duration_font_style');
 if (!empty($duration_font_style)) {
-    Style::renderTypography('#'.$this->id.' .event-duration', $duration_font_style, null, $this->isRoot);
+    style::render_typography('#'.$this->id.' .event-duration', $duration_font_style, null, $this->isRoot);
 }
 $title_heading_margin=  $params->get('title_heading_margin', '');
 if (!empty($title_heading_margin)) {
-    Style::setSpacingStyle($this->style->child('.event-title'), $title_heading_margin, 'margin');
+    style::set_spacing_style($this->style->child('.event-title'), $title_heading_margin, 'margin');
 }
 $image_radius      =   $params->get('image_radius', '');
 if (!empty($image_radius)) {
-    Style::setSpacingStyle($this->style->child('.event-media'), $image_radius,'radius');
+    style::set_spacing_style($this->style->child('.event-media'), $image_radius,'radius');
 }
 if (json_last_error() === JSON_ERROR_NONE && is_array($image_height_data)) {
-    $style->child('.event-media')->addResponsiveCSS('height', $image_height_data, $image_height_data['postfix']);
+    $style->child('.event-media')->add_responsive_css('height', $image_height_data, $image_height_data['postfix']);
 }
 $icon_size        =   $params->get('icon_size', '12');
 $icon_size = json_decode($icon_size, true);
 if (json_last_error() === JSON_ERROR_NONE && is_array($icon_size)) {
-    $style->child('.event-duration i')->addResponsiveCSS('font-size', $icon_size, $icon_size['postfix']);
+    $style->child('.event-duration i')->add_responsive_css('font-size', $icon_size, $icon_size['postfix']);
 }
 $icon_margin   =   $params->get('icon_margin', '');
 if (!empty($icon_margin)) {
-    Style::setSpacingStyle($style->child('.event-duration i'), $icon_margin,'margin');
+    style::set_spacing_style($style->child('.event-duration i'), $icon_margin,'margin');
 }
 
-$button_color     = Style::getColor($params->get('button_color', ''));
-$button_hover_color     = Style::getColor($params->get('button_color_hover', ''));
-$button_bg_color     = Style::getColor($params->get('button_bg_color', ''));
-$button_bg_hover_color     = Style::getColor($params->get('button_bg_color_hover', ''));
+$button_color     = style::get_color($params->get('button_color', ''));
+$button_hover_color     = style::get_color($params->get('button_color_hover', ''));
+$button_bg_color     = style::get_color($params->get('button_bg_color', ''));
+$button_bg_hover_color     = style::get_color($params->get('button_bg_color_hover', ''));
 
-$style->child('.event-readmore')->addCss('color', $button_color['light']);
-$style_dark->child('.event-readmore')->addCss('color', $button_color['dark']);
-$style->child('.event-readmore:hover')->addCss('color', $button_hover_color['light']);
-$style_dark->child('.event-readmore:hover')->addCss('color', $button_hover_color['dark']);
+$style->child('.event-readmore')->add_css('color', $button_color['light']);
+$style_dark->child('.event-readmore')->add_css('color', $button_color['dark']);
+$style->child('.event-readmore:hover')->add_css('color', $button_hover_color['light']);
+$style_dark->child('.event-readmore:hover')->add_css('color', $button_hover_color['dark']);
 
-$style->child('.event-readmore')->addCss('background-color', $button_bg_color['light']);
-$style_dark->child('.event-readmore')->addCss('background-color', $button_bg_color['dark']);
-$style->child('.event-readmore:hover')->addCss('background-color', $button_bg_hover_color['light']);
-$style_dark->child('.event-readmore:hover')->addCss('background-color', $button_bg_hover_color['dark']);
+$style->child('.event-readmore')->add_css('background-color', $button_bg_color['light']);
+$style_dark->child('.event-readmore')->add_css('background-color', $button_bg_color['dark']);
+$style->child('.event-readmore:hover')->add_css('background-color', $button_bg_hover_color['light']);
+$style_dark->child('.event-readmore:hover')->add_css('background-color', $button_bg_hover_color['dark']);
 
 $button_padding   =   $params->get('button_padding', '');
 if (!empty($button_padding)) {
-    Style::setSpacingStyle($this->style->child('.event-readmore'), $button_padding);
+    style::set_spacing_style($this->style->child('.event-readmore'), $button_padding);
 }
 $button_margin   =   $params->get('button_margin', '');
 if (!empty($button_margin)) {
-    Style::setSpacingStyle($this->style->child('.event-readmore'), $button_margin,'margin');
+    style::set_spacing_style($this->style->child('.event-readmore'), $button_margin,'margin');
 }
 
 $button_radius=  $params->get('button_radius', '');
 if (!empty($button_radius)) {
-    Style::setSpacingStyle($this->style->child('.event-readmore'), $button_radius, 'radius');
+    style::set_spacing_style($this->style->child('.event-readmore'), $button_radius, 'radius');
 }

@@ -22,17 +22,17 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Framework;
-use local_moon\library\Helper\Header;
-use local_moon\library\Helper\Style;
+use local_moon\library\framework;
+use local_moon\library\helper\header;
+use local_moon\library\helper\style;
 global $OUTPUT, $PAGE, $SITE, $CFG;
 
 $primary = new core\navigation\output\primary($PAGE);
 $renderer = $PAGE->get_renderer('core');
 $primarymenu = $primary->export_for_template($renderer);
 
-$theme = Framework::getTheme();
-$params = $theme->getParams();
+$theme = framework::get_theme();
+$params = $theme->get_params();
 
 $header = $params->get('header', TRUE);
 $mode = $params->get('header_mode', 'horizontal');
@@ -72,13 +72,13 @@ if ($logo_type == 'text') {
 
     $default_logo_width  = trim((string) $params->get('default_logo_width', ''));
     $default_logo_height = trim((string) $params->get('default_logo_height', ''));
-    $style = new Style('.moon-logo', '', true);
+    $style = new style('.moon-logo', '', true);
 
     if ($default_logo_width !== '' && preg_match('/^\d+(\.\d+)?(px|rem|em|%|vw|vh)?$/', $default_logo_width)) {
-        $style->child('.moon-logo-image > .moon-logo-default')->addCss('max-width', $default_logo_width);
+        $style->child('.moon-logo-image > .moon-logo-default')->add_css('max-width', $default_logo_width);
     }
     if ($default_logo_height !== '' && preg_match('/^\d+(\.\d+)?(px|rem|em|%|vw|vh)?$/', $default_logo_height)) {
-        $style->child('.moon-logo-image > .moon-logo-default')->addCss('max-height', $default_logo_height);
+        $style->child('.moon-logo-image > .moon-logo-default')->add_css('max-height', $default_logo_height);
     }
     $style->render();
 }
@@ -103,7 +103,7 @@ if ($logo->link_type === 'custom') {
     $logo->link = '';
 }
 
-$header_options = new Header($mode);
+$header_options = new header($mode);
 $templatecontext = [
     'output' => $OUTPUT,
     'primarymoremenu' => $primarymenu['moremenu'],
@@ -111,7 +111,7 @@ $templatecontext = [
     'usermenu' => $primarymenu['user'],
     'langmenu' => $primarymenu['lang'],
     'header_mode' => $header_mode,
-    'header' => $header_options->getOptions(),
+    'header' => $header_options->get_options(),
     'logo' => $logo,
 ];
 

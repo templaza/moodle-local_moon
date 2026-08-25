@@ -1,0 +1,939 @@
+<?php
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle. If not, see <https://www.gnu.org/licenses/>.
+
+/**
+ * @package   Moon Framework
+ * @author    Moon Framework Team https://moonframe.work
+ * @copyright Copyright (C) 2026 MoonFrame.work.
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
+ */
+
+namespace local_moon\library\helper;
+
+/**
+ * Registry class
+ *
+ * @since  1.0.0
+ * @since  2.0.0  `Registry::getInstance()` was removed. Instantiate a new Registry instance instead.
+ */
+class registry implements \JsonSerializable, \ArrayAccess, \IteratorAggregate, \Countable
+{
+    /**
+     * Registry Object
+     *
+     * @var    \stdClass
+     * @since  1.0.0
+     */
+    protected $data;
+
+    /**
+     * Flag if the Registry data object has been initialized
+     *
+     * @var    boolean
+     * @since  1.5.2
+     */
+    protected $initialized = false;
+
+    /**
+     * Path separator
+     *
+     * @var    string
+     * @since  1.4.0
+     */
+    protected $separator = '.';
+
+    /**
+     * Constructor
+     *
+     * @param  mixed   $data       The data to bind to the new Registry object.
+     * @param  string  $separator  The path separator, and empty string will flatten the registry.
+     *
+     * @since   1.0.0
+     */
+    public function __construct($data = null, string $separator = '.')
+    {
+        $this->separator = $separator;
+
+        // Instantiate the internal data object.
+        $this->data = new \stdClass();
+
+        // Optionally load supplied data.
+        if ($data instanceof self) {
+            $this->merge($data);
+        } elseif (\is_array($data) || \is_object($data)) {
+            $this->bind_data($this->data, $data);
+        } elseif (!empty($data) && \is_string($data)) {
+            $this->load_string($data);
+        }
+    }
+
+    /**
+     * Magic function to clone the registry object.
+     *
+     * @return  void
+     *
+     * @since   1.0.0
+     */
+    public function __clone()
+    {
+        $this->data = \unserialize(\serialize($this->data));
+    }
+
+    /**
+     * Magic function to render this object as a string using default args of toString method.
+     *
+     * @return  string
+     *
+     * @since   1.0.0
+     */
+    public function __toString()
+    {
+        return $this->to_string();
+    }
+
+    /**
+     * Count elements of the data object
+     *
+     * @return  integer  The custom count as an integer.
+     *
+     * @link    https://www.php.net/manual/en/countable.count.php
+     * @since   1.3.0
+     */
+    #[\ReturnTypeWillChange]
+    public function count()
+    {
+        return \count(\get_object_vars($this->data));
+    }
+
+    /**
+     * Implementation for the JsonSerializable interface.
+     * Allows us to pass Registry objects to json_encode.
+     *
+     * @return  object
+     *
+     * @since   1.0.0
+     * @note    The interface is only present in PHP 5.4 and up.
+     */
+    #[\ReturnTypeWillChange]
+    public function jsonSerialize()
+    {
+        return $this->data;
+    }
+
+    /**
+     * Sets a default value if not already assigned.
+     *
+     * @param  string  $key      The name of the parameter.
+     * @param  mixed   $default  An optional value for the parameter.
+     *
+     * @return  mixed  The value set, or the default if the value was not previously set (or null).
+     *
+     * @since   1.0.0
+     */
+    public function def($key, $default = '')
+    {
+        $value = $this->get($key, $default);
+        $this->set($key, $value);
+
+        return $value;
+    }
+
+    /**
+     * Check if a registry path exists.
+     *
+     * @param  string  $path  Registry path (e.g. joomla.content.showauthor)
+     *
+     * @return  boolean
+     *
+     * @since   1.0.0
+     */
+    public function exists($path)
+    {
+        // Return default value if path is empty
+        if (empty($path)) {
+            return false;
+        }
+
+        // Explode the registry path into an array
+        if ($this->separator === null || $this->separator === '') {
+            $nodes = [$path];
+        } else {
+            $nodes = \explode($this->separator, $path);
+        }
+
+        // Initialize the current node to be the registry root.
+        $node  = $this->data;
+        $found = false;
+
+        // Traverse the registry to find the correct node for the result.
+        foreach ($nodes as $n) {
+            if (\is_array($node) && isset($node[$n])) {
+                $node  = $node[$n];
+                $found = true;
+
+                continue;
+            }
+
+            if (!isset($node->$n)) {
+                return false;
+            }
+
+            $node  = $node->$n;
+            $found = true;
+        }
+
+        return $found;
+    }
+
+    /**
+     * Get a registry value.
+     *
+     * @param  string  $path     Registry path (e.g. joomla.content.showauthor)
+     * @param  mixed   $default  Optional default value, returned if the internal value is null.
+     *
+     * @return  mixed  Value of entry or null
+     *
+     * @since   1.0.0
+     */
+    public function get($path, $default = null)
+    {
+        // Return default value if path is empty
+        if (empty($path)) {
+            return $default;
+        }
+
+        if ($this->separator === null || $this->separator === '' || !\strpos($path, $this->separator)) {
+            return (isset($this->data->$path) && $this->data->$path !== null && $this->data->$path !== '')
+                ? $this->data->$path
+                : $default;
+        }
+
+        // Explode the registry path into an array
+        $nodes = \explode($this->separator, \trim($path));
+
+        // Initialize the current node to be the registry root.
+        $node  = $this->data;
+        $found = false;
+
+        // Traverse the registry to find the correct node for the result.
+        foreach ($nodes as $n) {
+            if (\is_array($node) && isset($node[$n])) {
+                $node  = $node[$n];
+                $found = true;
+
+                continue;
+            }
+
+            if (!isset($node->$n)) {
+                return $default;
+            }
+
+            $node  = $node->$n;
+            $found = true;
+        }
+
+        if (!$found || $node === null || $node === '') {
+            return $default;
+        }
+
+        return $node;
+    }
+
+    /**
+     * Gets this object represented as an ArrayIterator.
+     *
+     * This allows the data properties to be accessed via a foreach statement.
+     *
+     * @return  \ArrayIterator  This object represented as an ArrayIterator.
+     *
+     * @see     \IteratorAggregate::getIterator()
+     * @since   1.3.0
+     */
+    #[\ReturnTypeWillChange]
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->to_array());
+    }
+
+    /**
+     * Load an associative array of values into the default namespace
+     *
+     * @param  array    $array      Associative array of value to load
+     * @param  boolean  $flattened  Load from a one-dimensional array
+     *
+     * @return  $this
+     *
+     * @since   1.0.0
+     * @since   2.0.0  The parameter `$array` is now type hinted as `array`. Before 2.0.0, the type was not enforced.
+     */
+    public function load_array(array $array, $flattened = false)
+    {
+        if (!$flattened) {
+            $this->bind_data($this->data, $array);
+
+            return $this;
+        }
+
+        foreach ($array as $k => $v) {
+            $this->set($k, $v);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Load the public variables of the object into the default namespace.
+     *
+     * @param  object  $object  The object holding the publics to load
+     *
+     * @return  $this
+     *
+     * @since   1.0.0
+     */
+    public function load_object($object)
+    {
+        $this->bind_data($this->data, $object);
+
+        return $this;
+    }
+
+    /**
+     * Load the contents of a file into the registry
+     *
+     * @param  string  $file     Path to file to load
+     * @param  string  $format   Format of the file [optional: defaults to JSON]
+     * @param  array   $options  Options used by the formatter
+     *
+     * @return  $this
+     *
+     * @since   1.0.0
+     * @since   2.0.0  The parameter `$options` is now type hinted as `array`. Before 2.0.0, the type was not enforced.
+     */
+    public function load_file($file, $format = 'JSON', array $options = [])
+    {
+        $data = \file_get_contents($file);
+
+        return $this->load_string($data, $format, $options);
+    }
+
+    /**
+     * Load a string into the registry
+     *
+     * @param  string  $data     String to load into the registry
+     * @param  string  $format   Format of the string
+     * @param  array   $options  Options used by the formatter
+     *
+     * @return  $this
+     *
+     * @since   1.0.0
+     * @since   2.0.0  The parameter `$options` is now type hinted as `array`. Before 2.0.0, the type was not enforced.
+     */
+    public function load_string($data, $format = 'JSON', array $options = [])
+    {
+        // Load a string into the given namespace [or default namespace if not given]
+        $obj = $this->parse_string($data, $format);
+
+        // If the data object has not yet been initialized, direct assign the object
+        if (!$this->initialized) {
+            $this->data        = $obj;
+            $this->initialized = true;
+
+            return $this;
+        }
+
+        $this->load_object($obj);
+
+        return $this;
+    }
+
+    /**
+     * Convert a formatted string into a stdClass object for Moodle.
+     *
+     * @param string $data    The input string.
+     * @param string $format  Format name (case-insensitive): "JSON", "XML", "INI".
+     * @return \stdClass
+     * @throws \InvalidArgumentException
+     */
+    protected function parse_string(string $data, string $format = 'JSON'): object
+    {
+        $format = strtoupper($format);
+
+        if ($format === 'JSON') {
+            $obj = json_decode($data, false);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new \InvalidArgumentException('Invalid JSON: ' . json_last_error_msg());
+            }
+            return (object) $obj;
+        }
+
+        if ($format === 'XML') {
+            $xml = @simplexml_load_string($data, 'SimpleXMLElement', LIBXML_NOCDATA);
+            if ($xml === false) {
+                throw new \InvalidArgumentException('Invalid XML string.');
+            }
+            // Convert SimpleXMLElement to stdClass via json encode/decode
+            return json_decode(json_encode($xml), false) ?? new \stdClass();
+        }
+
+        if ($format === 'INI') {
+            $arr = parse_ini_string($data, true, INI_SCANNER_TYPED);
+            if ($arr === false) {
+                throw new \InvalidArgumentException('Invalid INI string.');
+            }
+            return json_decode(json_encode($arr), false);
+        }
+
+        throw new \InvalidArgumentException('Unsupported format: ' . $format);
+    }
+
+    /**
+     * Merge a Registry object into this one
+     *
+     * @param  registry  $source     Source Registry object to merge.
+     * @param  boolean   $recursive  True to support recursive merge the children values.
+     *
+     * @return  $this
+     *
+     * @since   1.0.0
+     * @since   2.0.0  The parameter `$source` is now type hinted as `Registry`. Before 2.0.0, `Registry::merge()` just
+     *          returned `false` if `$source` was not a `Registry`.
+     */
+    public function merge(registry $source, $recursive = false)
+    {
+        $this->bind_data($this->data, $source->to_array(), $recursive, false);
+
+        return $this;
+    }
+
+    /**
+     * Method to extract a sub-registry from path
+     *
+     * @param  string  $path  Registry path (e.g. joomla.content.showauthor)
+     *
+     * @return  registry  Registry object (empty if no data is present)
+     *
+     * @since   1.2.0
+     * @since   2.0.0  `Registry:extract()` now always returns a `Registry` object. Before 2.0.0, `null` was returned
+     *          if there was no data for the key.
+     */
+    public function extract($path)
+    {
+        $data = $this->get($path);
+
+        return new registry($data);
+    }
+
+    /**
+     * Checks whether an offset exists in the iterator.
+     *
+     * @param  mixed  $offset  The array offset.
+     *
+     * @return  boolean  True if the offset exists, false otherwise.
+     *
+     * @since   1.0.0
+     */
+    #[\ReturnTypeWillChange]
+    public function offsetExists($offset)
+    {
+        return $this->exists($offset);
+    }
+
+    /**
+     * Gets an offset in the iterator.
+     *
+     * @param  mixed  $offset  The array offset.
+     *
+     * @return  mixed  The array value if it exists, null otherwise.
+     *
+     * @since   1.0.0
+     */
+    #[\ReturnTypeWillChange]
+    public function offsetGet($offset)
+    {
+        return $this->get($offset);
+    }
+
+    /**
+     * Sets an offset in the iterator.
+     *
+     * @param  mixed  $offset  The array offset.
+     * @param  mixed  $value   The array value.
+     *
+     * @return  void
+     *
+     * @since   1.0.0
+     */
+    #[\ReturnTypeWillChange]
+    public function offsetSet($offset, $value)
+    {
+        $this->set($offset, $value);
+    }
+
+    /**
+     * Unsets an offset in the iterator.
+     *
+     * @param  mixed  $offset  The array offset.
+     *
+     * @return  void
+     *
+     * @since   1.0.0
+     */
+    #[\ReturnTypeWillChange]
+    public function offsetUnset($offset)
+    {
+        $this->remove($offset);
+    }
+
+    /**
+     * Set a registry value.
+     *
+     * @param  string  $path       Registry Path (e.g. joomla.content.showauthor)
+     * @param  mixed   $value      Value of entry
+     *
+     * @return  mixed  The value of the that has been set.
+     *
+     * @since   1.0.0
+     */
+    public function set($path, $value)
+    {
+        /*
+         * Explode the registry path into an array and remove empty
+         * nodes that occur as a result of a double separator. ex: joomla..test
+         * Finally, re-key the array so they are sequential.
+         */
+        if ($this->separator === null || $this->separator === '') {
+            $nodes = [$path];
+        } else {
+            $nodes = \array_values(\array_filter(\explode($this->separator, $path), 'strlen'));
+        }
+
+        if (!$nodes) {
+            return null;
+        }
+
+        // Initialize the current node to be the registry root.
+        $node = $this->data;
+
+        // Traverse the registry to find the correct node for the result.
+        for ($i = 0, $n = \count($nodes) - 1; $i < $n; $i++) {
+            if (\is_object($node)) {
+                if (!isset($node->{$nodes[$i]})) {
+                    $node->{$nodes[$i]} = new \stdClass();
+                }
+
+                // Pass the child as pointer in case it is an object
+                $node = &$node->{$nodes[$i]};
+
+                continue;
+            }
+
+            if (\is_array($node)) {
+                if (!isset($node[$nodes[$i]])) {
+                    $node[$nodes[$i]] = new \stdClass();
+                }
+
+                // Pass the child as pointer in case it is an array
+                $node = &$node[$nodes[$i]];
+            }
+        }
+
+        // Get the old value if exists so we can return it
+        switch (true) {
+            case (\is_object($node)):
+                $result             = $node->{$nodes[$i]} ?? null;
+                $node->{$nodes[$i]} = $value;
+                break;
+
+            case (\is_array($node)):
+                $result           = $node[$nodes[$i]] ?? null;
+                $node[$nodes[$i]] = $value;
+                break;
+
+            default:
+                $result = null;
+                break;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Append value to a path in registry
+     *
+     * @param  string  $path   Parent registry Path (e.g. joomla.content.showauthor)
+     * @param  mixed   $value  Value of entry
+     *
+     * @return  mixed  The value of the that has been set.
+     *
+     * @since   1.4.0
+     */
+    public function append($path, $value)
+    {
+        $result = null;
+
+        /*
+         * Explode the registry path into an array and remove empty
+         * nodes that occur as a result of a double dot. ex: joomla..test
+         * Finally, re-key the array so they are sequential.
+         */
+        if ($this->separator === null || $this->separator === '') {
+            $nodes = [$path];
+        } else {
+            $nodes = \array_values(\array_filter(\explode($this->separator, $path), 'strlen'));
+        }
+
+        if ($nodes) {
+            // Initialize the current node to be the registry root.
+            $node = $this->data;
+
+            // Traverse the registry to find the correct node for the result.
+            // TODO Create a new private method from part of code below, as it is almost equal to 'set' method
+            for ($i = 0, $n = \count($nodes) - 1; $i <= $n; $i++) {
+                if (\is_object($node)) {
+                    if (!isset($node->{$nodes[$i]}) && ($i !== $n)) {
+                        $node->{$nodes[$i]} = new \stdClass();
+                    }
+
+                    // Pass the child as pointer in case it is an array
+                    $node = &$node->{$nodes[$i]};
+                } elseif (\is_array($node)) {
+                    if (($i !== $n) && !isset($node[$nodes[$i]])) {
+                        $node[$nodes[$i]] = new \stdClass();
+                    }
+
+                    // Pass the child as pointer in case it is an array
+                    $node = &$node[$nodes[$i]];
+                }
+            }
+
+            if (!\is_array($node)) {
+                // Convert the node to array to make append possible
+                $node = \get_object_vars($node);
+            }
+
+            $node[] = $value;
+            $result = $value;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Delete a registry value
+     *
+     * @param  string  $path  Registry Path (e.g. joomla.content.showauthor)
+     *
+     * @return  mixed  The value of the removed node or null if not set
+     *
+     * @since   1.6.0
+     */
+    public function remove($path)
+    {
+        // Cheap optimisation to direct remove the node if there is no separator
+        if ($this->separator === null || $this->separator === '' || !\strpos($path, $this->separator)) {
+            $result = (isset($this->data->$path) && $this->data->$path !== null && $this->data->$path !== '')
+                ? $this->data->$path
+                : null;
+
+            unset($this->data->$path);
+
+            return $result;
+        }
+
+        /*
+         * Explode the registry path into an array and remove empty
+         * nodes that occur as a result of a double separator. ex: joomla..test
+         * Finally, re-key the array so they are sequential.
+         */
+        $nodes = \array_values(\array_filter(\explode($this->separator, $path), 'strlen'));
+
+        if (!$nodes) {
+            return null;
+        }
+
+        // Initialize the current node to be the registry root.
+        $node   = $this->data;
+        $parent = null;
+
+        // Traverse the registry to find the correct node for the result.
+        for ($i = 0, $n = \count($nodes) - 1; $i < $n; $i++) {
+            if (\is_object($node)) {
+                if (!isset($node->{$nodes[$i]})) {
+                    continue;
+                }
+
+                $parent = &$node;
+                $node   = $node->{$nodes[$i]};
+
+                continue;
+            }
+
+            if (\is_array($node)) {
+                if (!isset($node[$nodes[$i]])) {
+                    continue;
+                }
+
+                $parent = &$node;
+                $node   = $node[$nodes[$i]];
+
+                continue;
+            }
+        }
+
+        // Get the old value if exists so we can return it
+        switch (true) {
+            case \is_object($node):
+                $result = $node->{$nodes[$i]} ?? null;
+                unset($parent->{$nodes[$i]});
+                break;
+
+            case \is_array($node):
+                $result = $node[$nodes[$i]] ?? null;
+                unset($parent[$nodes[$i]]);
+                break;
+
+            default:
+                $result = null;
+                break;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Transforms a namespace to an array
+     *
+     * @return  array  An associative array holding the namespace data
+     *
+     * @since   1.0.0
+     */
+    public function to_array()
+    {
+        return $this->as_array($this->data);
+    }
+
+    /**
+     * Transforms a namespace to an object
+     *
+     * @return  object   An an object holding the namespace data
+     *
+     * @since   1.0.0
+     */
+    public function to_object()
+    {
+        return $this->data;
+    }
+
+    /**
+     * Get a namespace in a given string format
+     *
+     * @param string $format   Format to return the string in
+     * @param  array   $options  Parameters used by the formatter, see formatters for more info
+     *
+     * @return  string   Namespace in string format
+     *
+     * @since   1.0.0
+     */
+    public function to_string(string $format = 'JSON', array $options = []): string
+    {
+        return $this->format_object_to_string($format, $options);
+    }
+
+    protected function format_object_to_string(string $format = 'JSON', array $options = []): string
+    {
+        $format = strtoupper($format);
+        $data = $this->to_array();
+
+        switch ($format) {
+            case 'JSON':
+                $flags = $options['json_flags'] ?? (JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+                $result = json_encode($data, $flags);
+                if ($result === false) {
+                    throw new \InvalidArgumentException('Failed to encode JSON: ' . json_last_error_msg());
+                }
+                return $result;
+
+            case 'XML':
+                $root = $options['root'] ?? 'root';
+                $xml = new \SimpleXMLElement("<{$root}></{$root}>");
+                $this->array_to_xml($data, $xml);
+                return $xml->asXML() ?: '';
+
+            case 'INI':
+                $flat = $this->flatten();
+                $lines = [];
+                foreach ($flat as $k => $v) {
+                    if (\is_bool($v)) {
+                        $v = $v ? 'true' : 'false';
+                    } elseif ($v === null) {
+                        $v = '';
+                    }
+                    $lines[] = $k . ' = ' . $this->escape_ini_value($v);
+                }
+                return implode(PHP_EOL, $lines);
+
+            default:
+                throw new \InvalidArgumentException('Unsupported format: ' . $format);
+        }
+    }
+
+    protected function array_to_xml($data, \SimpleXMLElement &$xml): void
+    {
+        foreach ((array) $data as $key => $value) {
+            $key = \is_numeric($key) ? 'item' . $key : preg_replace('/[^a-z0-9\-_:\.]/i', '_', (string) $key);
+
+            if (\is_array($value) || \is_object($value)) {
+                $child = $xml->add_child($key);
+                $this->array_to_xml($value, $child);
+            } else {
+                $xml->add_child($key, htmlspecialchars((string) $value, ENT_XML1 | ENT_COMPAT, 'UTF-8'));
+            }
+        }
+    }
+
+    protected function escape_ini_value($value): string
+    {
+        if (\is_numeric($value)) {
+            return (string) $value;
+        }
+        return '"' . str_replace('"', '\"', (string) $value) . '"';
+    }
+
+    /**
+     * Method to recursively bind data to a parent object.
+     *
+     * @param  object   $parent     The parent object on which to attach the data values.
+     * @param  mixed    $data       An array or object of data to bind to the parent object.
+     * @param  boolean  $recursive  True to support recursive bindData.
+     * @param  boolean  $allowNull  True to allow null values.
+     *
+     * @return  void
+     *
+     * @since   1.0.0
+     */
+    protected function bind_data($parent, $data, $recursive = true, $allowNull = true)
+    {
+        // The data object is now initialized
+        $this->initialized = true;
+
+        // Ensure the input data is an array.
+        $data = \is_object($data) ? \get_object_vars($data) : (array) $data;
+
+        foreach ($data as $k => $v) {
+            if (!$allowNull && !(($v !== null) && ($v !== ''))) {
+                continue;
+            }
+
+            if ($recursive && ((\is_array($v) && array_helper::is_associative($v)) || \is_object($v))) {
+                if (!isset($parent->$k)) {
+                    $parent->$k = new \stdClass();
+                }
+
+                $this->bind_data($parent->$k, $v);
+
+                continue;
+            }
+
+            $parent->$k = $v;
+        }
+    }
+
+    /**
+     * Method to recursively convert an object of data to an array.
+     *
+     * @param  object|array  $data  An object of data to return as an array.
+     *
+     * @return  array  Array representation of the input object.
+     *
+     * @since   1.0.0
+     */
+    protected function as_array($data)
+    {
+        $array = [];
+
+        if (\is_object($data)) {
+            $data = \get_object_vars($data);
+        }
+
+        foreach ($data as $k => $v) {
+            if (\is_object($v) || \is_array($v)) {
+                $array[$k] = $this->as_array($v);
+
+                continue;
+            }
+
+            $array[$k] = $v;
+        }
+
+        return $array;
+    }
+
+    /**
+     * Dump to one dimension array.
+     *
+     * @param  string  $separator  The key separator.
+     *
+     * @return  string[]  Dumped array.
+     *
+     * @since   1.3.0
+     */
+    public function flatten($separator = null)
+    {
+        $array = [];
+
+        if (empty($separator)) {
+            $separator = $this->separator;
+        }
+
+        $this->to_flatten($separator, $this->data, $array);
+
+        return $array;
+    }
+
+    /**
+     * Method to recursively convert data to one dimension array.
+     *
+     * @param  string        $separator  The key separator.
+     * @param  array|object  $data       Data source of this scope.
+     * @param  array         $array      The result array, it is passed by reference.
+     * @param  string        $prefix     Last level key prefix.
+     *
+     * @return  void
+     *
+     * @since   1.3.0
+     * @since   2.0.0  The parameter `$array` is now type hinted as `array`. Before 2.0.0, the type was not enforced.
+     */
+    protected function to_flatten($separator = null, $data = null, array &$array = [], $prefix = '')
+    {
+        $data = (array) $data;
+
+        if (empty($separator)) {
+            $separator = $this->separator;
+        }
+
+        foreach ($data as $k => $v) {
+            $key = $prefix ? $prefix . $separator . $k : $k;
+
+            if (\is_object($v) || \is_array($v)) {
+                $this->to_flatten($separator, $v, $array, $key);
+
+                continue;
+            }
+
+            $array[$key] = $v;
+        }
+    }
+}

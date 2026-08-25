@@ -22,20 +22,20 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Framework;
-use local_moon\library\Helper\Style;
-use local_moon\library\Helper\SubForm;
+use local_moon\library\framework;
+use local_moon\library\helper\style;
+use local_moon\library\helper\sub_form;
 $params = $this->params;
 $element = $this;
 
-$galleries     = new SubForm($params->get('galleries', ''));
-if (!count($galleries->getData())) {
+$galleries     = new sub_form($params->get('galleries', ''));
+if (!count($galleries->get_data())) {
     return false;
 }
 
-$document = Framework::getDocument();
-$document->loadUIKit();
-$document->loadFancyBox();
+$document = framework::get_document();
+$document->load_ui_kit();
+$document->load_fancy_box();
 $style = $element->style;
 $style_dark = $element->style_dark;
 
@@ -61,29 +61,29 @@ $gallery_column =   $params->get('gallery_column', 'col-lg-4');
 
 $image_radius=  $params->get('image_radius', '');
 if (!empty($image_radius)) {
-    Style::setSpacingStyle($element->style->child('.ui-gallery-thumbnail'), $image_radius, 'radius');
-    Style::setSpacingStyle($element->style->child('.uk-position-cover'), $image_radius, 'radius');
-    $style->child('.ui-gallery-thumbnail')->addCss('overflow', 'hidden');
+    style::set_spacing_style($element->style->child('.ui-gallery-thumbnail'), $image_radius, 'radius');
+    style::set_spacing_style($element->style->child('.uk-position-cover'), $image_radius, 'radius');
+    $style->child('.ui-gallery-thumbnail')->add_css('overflow', 'hidden');
 }
 $overlay_padding   =   $params->get('overlay_padding', '');
 if (!empty($overlay_padding)) {
-    Style::setSpacingStyle($this->style->child('.uk-card-body'), $overlay_padding);
+    style::set_spacing_style($this->style->child('.uk-card-body'), $overlay_padding);
 }
 $column_padding   =   $params->get('column_padding', '');
 if (!empty($column_padding)) {
-    Style::setSpacingStyle($this->style->child('.gallery-item'), $column_padding);
+    style::set_spacing_style($this->style->child('.gallery-item'), $column_padding);
 }
 $row_margin   =   $params->get('row_margin', '');
 if (!empty($row_margin)) {
-    Style::setSpacingStyle($this->style->child('* + .uk-grid-margin'), $row_margin,'margin');
+    style::set_spacing_style($this->style->child('* + .uk-grid-margin'), $row_margin,'margin');
 }
-$overlay_bg_color     = Style::getColor($params->get('overlay_bg_color', ''));
-$style->child('.uk-overlay')->addCss('background-color', $overlay_bg_color['light']);
-$style_dark->child('.uk-overlay')->addCss('background-color', $overlay_bg_color['dark']);
+$overlay_bg_color     = style::get_color($params->get('overlay_bg_color', ''));
+$style->child('.uk-overlay')->add_css('background-color', $overlay_bg_color['light']);
+$style_dark->child('.uk-overlay')->add_css('background-color', $overlay_bg_color['dark']);
 
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
-    Style::renderTypography('#'.$element->id.' .moon-heading', $title_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .moon-heading', $title_font_style, null, $element->isRoot);
 }
 $title_heading_margin=  $params->get('title_heading_margin', '');
 
@@ -92,7 +92,7 @@ $output  =   '';
 $output  .=   '<div class="ui-gallery">';
 $output  .=   '<div class="ui-gallery-inner">';
 $output  .=   '<div class="ui-gallery-items row g-4"  data-uk-grid="masonry:true;">';
-foreach ($galleries->getData() as $key => $slide) {
+foreach ($galleries->get_data() as $key => $slide) {
     $output .= '<div class="'.$gallery_column.' col-md-4 col-sm-12 gallery-item '.$thumbnail_hover.'">';
     $output .= '<div class="uk-article uk-card uk-overflow-hidden ">';
 
@@ -122,4 +122,4 @@ $output     .=  '</div>';
 
 echo $output;
 
-$document->addScriptDeclaration("Fancybox.bind('[data-fancybox=\"gallery-{$this->id}\"]');");
+$document->add_script_declaration("Fancybox.bind('[data-fancybox=\"gallery-{$this->id}\"]');");

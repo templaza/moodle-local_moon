@@ -25,11 +25,11 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/behat/lib.php');
 require_once($CFG->dirroot . '/course/lib.php');
-use local_moon\library\Element\Layout;
-use local_moon\library\Framework;
+use local_moon\library\element\layout;
+use local_moon\library\framework;
 // Moon Asset Manager.
-$document = Framework::getDocument();
-$params = Framework::getTheme()->getParams();
+$document = framework::get_document();
+$params = framework::get_theme()->get_params();
 
 $header = $params->get('header', TRUE);
 $header_mode = $params->get('header_mode', 'horizontal');
@@ -100,7 +100,7 @@ $templatecontext = [
     'hasregionmainsettingsmenu' => !empty($regionmainsettingsmenu),
     'addblockbutton' => $addblockbutton,
     'document' => $document,
-    'layoutbuilder' => Layout::render('root'),
+    'layoutbuilder' => layout::render('root'),
     'has_sidebar' => $header_mode == 'sidebar',
     'layout_container_class' => implode(' ', $layout_container_class),
     'layout_content_class' => implode(' ', $layout_content_class),

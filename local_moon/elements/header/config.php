@@ -22,8 +22,8 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-class MoonElementHeader extends MoonElement {
+use local_moon\library\helper\moon_element;
+class moon_element_header extends moon_element {
     public function __construct()
     {
         parent::__construct([

@@ -22,12 +22,12 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Form;
-use local_moon\library\Helper\Constants;
-use local_moon\library\Helper\Font;
-use local_moon\library\Blocks\EventHandler;
-class MoonElementUk_Event extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\form;
+use local_moon\library\helper\constants;
+use local_moon\library\helper\font;
+use local_moon\library\blocks\event_handler;
+class moon_element_uk_event extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -40,39 +40,39 @@ class MoonElementUk_Event extends MoonElement {
         ]);
 
     }
-    public function setFields(): void {
-        $moonEventHandler = new EventHandler();
+    public function set_fields(): void {
+        $moonEventHandler = new event_handler();
         $events = $moonEventHandler->moon_get_moodle_events_options();
 
-        $this->setFieldSet('general-settings');
-        $this->addField('grid_options', [
+        $this->set_field_set('general-settings');
+        $this->add_field('grid_options', [
             'type'  => 'group',
             'label' => 'grid_options',
         ]);
-        $this->addField('item_options', [
+        $this->add_field('item_options', [
             "type"  => "group",
             "label" => "item_options",
         ]);
-        $this->addField('image_options', [
+        $this->add_field('image_options', [
             "type"  => "group",
             "label" => "image_options",
         ]);
 
-        $this->addField('title_options', [
+        $this->add_field('title_options', [
             "type"  => "group",
             "label" => "title_options",
         ]);
 
-        $this->addField('content_options', [
+        $this->add_field('content_options', [
             "type"  => "group",
             "label" => "content_options",
         ]);
-        $this->addField('readmore_options', [
+        $this->add_field('readmore_options', [
             "type"  => "group",
             "label" => "readmore_options",
         ]);
 
-        $this->addField('event_layout', [
+        $this->add_field('event_layout', [
             "group"   => "general",
             "type"    => "list",
             "label" => "layout",
@@ -100,17 +100,17 @@ class MoonElementUk_Event extends MoonElement {
                 ]
             ],
         ];
-        $repeater   = new Form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
+        $repeater   = new form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
 
-        $this->addField('list_events', [
+        $this->add_field('list_events', [
             "group" => "general",
             "type"  => "subform",
             "label" => "list_items",
             "attributes" => [
-                'form'    =>  $repeater->renderJson('subform')
+                'form'    =>  $repeater->render_json('subform')
             ],
         ]);
-        $this->addField('column_responsive', [
+        $this->add_field('column_responsive', [
             "group"   => "grid_options",
             "type"    => "radio",
             "attributes" => [
@@ -128,7 +128,7 @@ class MoonElementUk_Event extends MoonElement {
             "conditions" => "[event_layout]=='' ",
         ]);
 
-        $this->addField('xxl_column', [
+        $this->add_field('xxl_column', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "xxl_column",
@@ -145,7 +145,7 @@ class MoonElementUk_Event extends MoonElement {
             ],
         ]);
 
-        $this->addField('xl_column', [
+        $this->add_field('xl_column', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "xl_column",
@@ -162,7 +162,7 @@ class MoonElementUk_Event extends MoonElement {
             ],
         ]);
 
-        $this->addField('lg_column', [
+        $this->add_field('lg_column', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "lg_column",
@@ -179,7 +179,7 @@ class MoonElementUk_Event extends MoonElement {
             ],
         ]);
 
-        $this->addField('md_column', [
+        $this->add_field('md_column', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "md_column",
@@ -196,7 +196,7 @@ class MoonElementUk_Event extends MoonElement {
             ],
         ]);
 
-        $this->addField('sm_column', [
+        $this->add_field('sm_column', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "sm_column",
@@ -213,7 +213,7 @@ class MoonElementUk_Event extends MoonElement {
             ],
         ]);
 
-        $this->addField('xs_column', [
+        $this->add_field('xs_column', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "xs_column",
@@ -230,7 +230,7 @@ class MoonElementUk_Event extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_xxl', [
+        $this->add_field('row_gutter_xxl', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "row_gutter_xxl",
@@ -247,7 +247,7 @@ class MoonElementUk_Event extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_xl', [
+        $this->add_field('row_gutter_xl', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "row_gutter_xl",
@@ -264,7 +264,7 @@ class MoonElementUk_Event extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_lg', [
+        $this->add_field('row_gutter_lg', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "row_gutter_lg",
@@ -281,7 +281,7 @@ class MoonElementUk_Event extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_md', [
+        $this->add_field('row_gutter_md', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "row_gutter_md",
@@ -298,7 +298,7 @@ class MoonElementUk_Event extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_sm', [
+        $this->add_field('row_gutter_sm', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "row_gutter_sm",
@@ -315,7 +315,7 @@ class MoonElementUk_Event extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter', [
+        $this->add_field('row_gutter', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "row_gutter_xs",
@@ -331,7 +331,7 @@ class MoonElementUk_Event extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_xxl', [
+        $this->add_field('column_gutter_xxl', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "column_gutter_xxl",
@@ -348,7 +348,7 @@ class MoonElementUk_Event extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_xl', [
+        $this->add_field('column_gutter_xl', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "column_gutter_xl",
@@ -365,7 +365,7 @@ class MoonElementUk_Event extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_lg', [
+        $this->add_field('column_gutter_lg', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "column_gutter_lg",
@@ -382,7 +382,7 @@ class MoonElementUk_Event extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_md', [
+        $this->add_field('column_gutter_md', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "column_gutter_md",
@@ -399,7 +399,7 @@ class MoonElementUk_Event extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_sm', [
+        $this->add_field('column_gutter_sm', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "column_gutter_sm",
@@ -416,7 +416,7 @@ class MoonElementUk_Event extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter', [
+        $this->add_field('column_gutter', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "column_gutter_xs",
@@ -431,34 +431,34 @@ class MoonElementUk_Event extends MoonElement {
                 "5" => "X-Large",
             ],
         ]);
-        $this->addField('item_bg_color', [
+        $this->add_field('item_bg_color', [
             "group"      => "item_options",
             "type"       => "color",
             "label"      => "background_color",
         ]);
-        $this->addField('item_border', [
+        $this->add_field('item_border', [
             "group"      => "item_options",
             "type"       => "border",
             "label"      => "border",
         ]);
-        $this->addField('item_border_radius', [
+        $this->add_field('item_border_radius', [
             'group' => 'item_options',
             'type'  => 'spacing',
             'label' => 'radius',
         ]);
 
-        $this->addField('item_card_padding', [
+        $this->add_field('item_card_padding', [
             'group'      => 'item_options',
             'type'       => 'spacing',
             'label'      => 'card_padding',
         ]);
 
-        $this->addField('content_padding', [
+        $this->add_field('content_padding', [
             'group'      => 'item_options',
             'type'       => 'spacing',
             'label'      => 'content_padding',
         ]);
-        $this->addField('image_layout', [
+        $this->add_field('image_layout', [
             "group"      => "image_options",
             "type"       => "list",
             "label"      => "image_layout",
@@ -468,7 +468,7 @@ class MoonElementUk_Event extends MoonElement {
                 "overlay" => "content_overlay",
             ],
         ]);
-        $this->addField('content_position', [
+        $this->add_field('content_position', [
             "group"   => "image_options",
             "type"    => "list",
             "label"   => "content_position",
@@ -480,7 +480,7 @@ class MoonElementUk_Event extends MoonElement {
             ],
             "conditions" => "[image_layout]=='overlay'",
         ]);
-        $this->addField('image_height', [
+        $this->add_field('image_height', [
             'group'   => 'image_options',
             'type'    => 'range',
             'label'      => 'image_height',
@@ -492,12 +492,12 @@ class MoonElementUk_Event extends MoonElement {
                 'postfix' => 'px|%',
             ],
         ]);
-        $this->addField('image_radius', [
+        $this->add_field('image_radius', [
             'group' => 'image_options',
             'type'  => 'spacing',
             'label' => 'border_radius',
         ]);
-        $this->addField('overlay_type', [
+        $this->add_field('overlay_type', [
             "group"      => "image_options",
             "type"       => "radio",
             "attributes" => [
@@ -513,20 +513,20 @@ class MoonElementUk_Event extends MoonElement {
             ],
         ]);
 
-        $this->addField('overlay_color', [
+        $this->add_field('overlay_color', [
             "group"      => "image_options",
             "type"       => "color",
             "label"      => "overlay_color",
             "conditions" => "[image_layout]=='overlay' AND [overlay_type]=='color'",
         ]);
 
-        $this->addField('overlay_gradient', [
+        $this->add_field('overlay_gradient', [
             "group"      => "image_options",
             "type"       => "gradient",
             "label"      => "overlay_gradient",
             "conditions" => "[image_layout]=='overlay' AND [overlay_type]=='gradient'",
         ]);
-        $this->addField('image_hover_transition', [
+        $this->add_field('image_hover_transition', [
             "group"      => "image_options",
             "type"       => "list",
             "label"      => "hover_transition",
@@ -537,7 +537,7 @@ class MoonElementUk_Event extends MoonElement {
                 'uk-transition-scale-down' => 'scale_down',
             ],
         ]);
-        $this->addField('title_font_style', [
+        $this->add_field('title_font_style', [
             "group"      => "title_options",
             "type"       => "typography",
             "label"       => "font_style",
@@ -554,22 +554,22 @@ class MoonElementUk_Event extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
 
-        $this->addField('title_heading_margin', [
+        $this->add_field('title_heading_margin', [
             "group" => "title_options",
             "type"  => "spacing",
             "label"  => "margin",
         ]);
 
-        $this->addField('duration_font_style', [
+        $this->add_field('duration_font_style', [
             "group"      => "content_options",
             "type"       => "typography",
             "label"       => "font_style",
@@ -586,25 +586,25 @@ class MoonElementUk_Event extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
-        $this->addField('start_icon', [
+        $this->add_field('start_icon', [
             "group" => "content_options",
             "type"  => "icons",
             "label"  => "icon_start_date",
         ]);
-        $this->addField('end_icon', [
+        $this->add_field('end_icon', [
             "group" => "content_options",
             "type"  => "icons",
             "label"  => "icon_end_date",
         ]);
-        $this->addField('icon_size', [
+        $this->add_field('icon_size', [
             'group'      => 'content_options',
             'type'       => 'range',
             'label'      => 'icon_size',
@@ -617,66 +617,66 @@ class MoonElementUk_Event extends MoonElement {
             ],
             'default'    => 12,
         ]);
-        $this->addField('icon_margin', [
+        $this->add_field('icon_margin', [
             'group' => 'content_options',
             'type'  => 'spacing',
             'label' => 'margin',
         ]);
-        $this->addField('button_text',  [
+        $this->add_field('button_text',  [
             "group" => "readmore_options",
             "type" => "text",
             "label" => "title",
             "conditions" => "[event_layout]=='list'",
         ]);
-        $this->addField('button_icon', [
+        $this->add_field('button_icon', [
             "group" => "readmore_options",
             "type"  => "icons",
             "label"  => "icon",
             "conditions" => "[event_layout]=='list'",
         ]);
-        $this->addField('button_color', [
+        $this->add_field('button_color', [
             "group"      => "readmore_options",
             "type"       => "color",
             "label"      => "color",
             "conditions" => "[event_layout]=='list'",
         ]);
-        $this->addField('button_bg_color', [
+        $this->add_field('button_bg_color', [
             "group"      => "readmore_options",
             "type"       => "color",
             "label"      => "background_color",
             "conditions" => "[event_layout]=='list'",
         ]);
-        $this->addField('button_color_hover', [
+        $this->add_field('button_color_hover', [
             "group"      => "readmore_options",
             "type"       => "color",
             "label"      => "color_hover",
             "conditions" => "[event_layout]=='list'",
         ]);
-        $this->addField('button_bg_color_hover', [
+        $this->add_field('button_bg_color_hover', [
             "group"      => "readmore_options",
             "type"       => "color",
             "label"      => "background_color_hover",
             "conditions" => "[event_layout]=='list'",
         ]);
-        $this->addField('button_padding', [
+        $this->add_field('button_padding', [
             'group'      => 'readmore_options',
             'type'       => 'spacing',
             'label'      => 'padding',
             "conditions" => "[event_layout]=='list'",
         ]);
-        $this->addField('button_margin', [
+        $this->add_field('button_margin', [
             "group" => "readmore_options",
             "type"  => "spacing",
             "label"  => "margin",
             "conditions" => "[event_layout]=='list'",
         ]);
-        $this->addField('button_radius', [
+        $this->add_field('button_radius', [
             'group' => 'readmore_options',
             'type'  => 'spacing',
             'label' => 'border_radius',
             "conditions" => "[event_layout]=='list'",
         ]);
-        $this->addField('button_align', [
+        $this->add_field('button_align', [
             'group'   => 'readmore_options',
             'type'    => 'list',
             'label'   => 'alignment',

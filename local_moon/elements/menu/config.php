@@ -22,9 +22,9 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Framework;
-class MoonElementMenu extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\framework;
+class moon_element_menu extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -36,9 +36,9 @@ class MoonElementMenu extends MoonElement {
             'element_type' => 'system',
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
-        $this->addField( 'menu_type',  [
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
+        $this->add_field( 'menu_type',  [
             "group" => "general",
             "type" => "list",
             "label" => "menu_type",

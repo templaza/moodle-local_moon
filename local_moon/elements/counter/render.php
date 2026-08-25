@@ -22,16 +22,16 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Framework;
-use local_moon\library\Helper\Style;
-use local_moon\library\Helper\SubForm;
+use local_moon\library\framework;
+use local_moon\library\helper\style;
+use local_moon\library\helper\sub_form;
 $params = $this->params;
 $element = $this;
-$items     = new SubForm($params->get('items', ''));
+$items     = new sub_form($params->get('items', ''));
 if (!count($items->data)) {
     return false;
 }
-$document = Framework::getDocument();
+$document = framework::get_document();
 $style = $element->style;
 $style_dark = $element->style_dark;
 $row_column_cls     =   '';
@@ -83,7 +83,7 @@ $box_shadow_hover   =   $box_shadow_hover ? ' ' . $box_shadow_hover : '';
 
 $content_font_style =   $params->get('content_font_style');
 if (!empty($content_font_style)) {
-    Style::renderTypography('#'.$element->id.' .moon-text', $content_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .moon-text', $content_font_style, null, $element->isRoot);
 }
 
 $transition     = $params->get('hover_transition', '');
@@ -110,19 +110,19 @@ foreach ($items->data as $key => $grid) {
 }
 echo '</div>';
 if ($use_masonry) {
-    $document->loadMasonry('#'. $element->id .' .as-masonry');
+    $document->load_masonry('#'. $element->id .' .as-masonry');
 }
 if ($params->get('card_style', '') == 'custom') {
-    $text_color     =   Style::getColor($params->get('text_color', ''));
-    $style->child('.as-grid > .card')->addCss('color', $text_color['light']);
-    $style_dark->child('.as-grid > .card')->addCss('color', $text_color['dark']);
+    $text_color     =   style::get_color($params->get('text_color', ''));
+    $style->child('.as-grid > .card')->add_css('color', $text_color['light']);
+    $style_dark->child('.as-grid > .card')->add_css('color', $text_color['dark']);
 
-    $bg_color       =   Style::getColor($params->get('bg_color', ''));
-    $style->child('.as-grid > .card')->addCss('background-color', $bg_color['light']);
-    $style_dark->child('.as-grid > .card')->addCss('background-color', $bg_color['dark']);
+    $bg_color       =   style::get_color($params->get('bg_color', ''));
+    $style->child('.as-grid > .card')->add_css('background-color', $bg_color['light']);
+    $style_dark->child('.as-grid > .card')->add_css('background-color', $bg_color['dark']);
 
     $card_border    =   json_decode($params->get('card_border', ''), true);
     if (!empty($card_border)) {
-        Style::addBorderStyle('#'. $element->id . ' .as-grid > .card', $card_border, 'global', $element->isRoot);
+        style::add_border_style('#'. $element->id . ' .as-grid > .card', $card_border, 'global', $element->isRoot);
     }
 }

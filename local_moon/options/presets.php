@@ -21,9 +21,9 @@
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
  */
 
-use local_moon\library\Framework;
+use local_moon\library\framework;
 
-Framework::getTheme()->addFields(
+framework::get_theme()->add_fields(
     'presets',
     [
         'label' => 'presets',

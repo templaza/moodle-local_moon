@@ -22,9 +22,9 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-use local_moon\library\Framework;
+use local_moon\library\framework;
 global $OUTPUT;
-$params = Framework::getTheme()->getParams();
+$params = framework::get_theme()->get_params();
 $contact_details = $params->get('contact_details', 1);
 if (!$contact_details) {
     return;

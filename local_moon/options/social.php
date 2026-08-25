@@ -21,10 +21,10 @@
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
  */
 
-use local_moon\library\Framework;
-use local_moon\library\Helper\Constants;
-use local_moon\library\Helper\Text;
-Framework::getTheme()->addFields(
+use local_moon\library\framework;
+use local_moon\library\helper\constants;
+use local_moon\library\helper\text;
+framework::get_theme()->add_fields(
     'social_profile',
     [
         'label' => 'social_profiles',
@@ -131,24 +131,24 @@ Framework::getTheme()->addFields(
                 'type' => 'socialprofiles',
                 'conditions' => "[enable_social_profiler]==true",
                 'attributes' => [
-                    'options' =>  Constants::$social_profiles,
+                    'options' =>  constants::$social_profiles,
                     'lang'   => [
-                        'social_brands'  => Text::_('social_brands'),
-                        'social_search'  => Text::_('social_search'),
-                        'add_profile'  => Text::_('add_profile'),
-                        'add_custom_social_label'  => Text::_('add_custom_profile'),
-                        'astroid_color'  => Text::_('color'),
-                        'astroid_icon'  => Text::_('icon'),
-                        'astroid_title'  => Text::_('title'),
-                        'astroid_icon_class'  => Text::_('icon_class'),
-                        'astroid_link'  => Text::_('link_url'),
-                        'astroid_mobile_number'  => Text::_('mobile_number'),
-                        'astroid_skype_id'  => Text::_('skype_id'),
-                        'astroid_username'  => Text::_('username'),
-                        'astroid_social_link_placeholder'  => Text::_('social_link_placeholder'),
-                        'astroid_social_whatsapp_placeholder'  => Text::_('social_whatsapp_placeholder'),
-                        'astroid_social_telegram_placeholder'  => Text::_('social_telegram_placeholder'),
-                        'astroid_social_skype_placeholder'  => Text::_('social_skype_placeholder'),
+                        'social_brands'  => text::_('social_brands'),
+                        'social_search'  => text::_('social_search'),
+                        'add_profile'  => text::_('add_profile'),
+                        'add_custom_social_label'  => text::_('add_custom_profile'),
+                        'astroid_color'  => text::_('color'),
+                        'astroid_icon'  => text::_('icon'),
+                        'astroid_title'  => text::_('title'),
+                        'astroid_icon_class'  => text::_('icon_class'),
+                        'astroid_link'  => text::_('link_url'),
+                        'astroid_mobile_number'  => text::_('mobile_number'),
+                        'astroid_skype_id'  => text::_('skype_id'),
+                        'astroid_username'  => text::_('username'),
+                        'astroid_social_link_placeholder'  => text::_('social_link_placeholder'),
+                        'astroid_social_whatsapp_placeholder'  => text::_('social_whatsapp_placeholder'),
+                        'astroid_social_telegram_placeholder'  => text::_('social_telegram_placeholder'),
+                        'astroid_social_skype_placeholder'  => text::_('social_skype_placeholder'),
                     ]
                 ],
             ],

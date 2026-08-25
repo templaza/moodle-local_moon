@@ -22,7 +22,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-use local_moon\library\Framework;
+use local_moon\library\framework;
 /**
  * Optional event hooks or callbacks for local_moon.
  * Keep this file lightweight; most logic should be in classes/.
@@ -74,17 +74,17 @@ function local_moon_pluginfile($course, $cm, $context, $filearea, $args, $forced
 }
 
 function local_moon_render_navbar_output() {
-    $theme = Framework::getTheme();
+    $theme = framework::get_theme();
     $html = '';
-    if (!$theme->isMoon()) {
+    if (!$theme->is_moon()) {
         return $html;
     }
-    $params = $theme->getParams();
+    $params = $theme->get_params();
     $color_mode_type = $params->get('astroid_color_mode_enable', 0);
     if ($color_mode_type != 1) {
         return $html;
     }
-    $color_mode = $theme->getColorMode();
+    $color_mode = $theme->get_color_mode();
     if ($color_mode) {
         $enable_color_mode_transform    =   $params->get('enable_color_mode_transform', 0);
         if (!$enable_color_mode_transform) {

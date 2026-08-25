@@ -22,9 +22,9 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Font;
-class MoonElementVideo_Button extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\font;
+class moon_element_video_button extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -36,14 +36,14 @@ class MoonElementVideo_Button extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('widget_styles',  [
+        $this->add_field('widget_styles',  [
             "type" => "group",
             "label" => "widget_styles",
         ]);
-        $this->addField('url',  [
+        $this->add_field('url',  [
             "group" => "general",
             "type" => "text",
             "label" => "link_url",
@@ -52,7 +52,7 @@ class MoonElementVideo_Button extends MoonElement {
             ],
             "dynamic" => true,
         ]);
-        $this->addField('button_size', [
+        $this->add_field('button_size', [
             "group"      => "widget_styles",
             "type"       => "range",
             "attributes" => [
@@ -65,13 +65,13 @@ class MoonElementVideo_Button extends MoonElement {
             "label"   => "button_size",
         ]);
 
-        $this->addField('ripple_color', [
+        $this->add_field('ripple_color', [
             "group" => "widget_styles",
             "type"  => "color",
             "label" => "ripple_color",
         ]);
 
-        $this->addField('width', [
+        $this->add_field('width', [
             "group"      => "widget_styles",
             "type"       => "range",
             "attributes" => [
@@ -85,7 +85,7 @@ class MoonElementVideo_Button extends MoonElement {
             "label"   => "width",
         ]);
 
-        $this->addField('height', [
+        $this->add_field('height', [
             "group"      => "widget_styles",
             "type"       => "range",
             "attributes" => [
@@ -99,7 +99,7 @@ class MoonElementVideo_Button extends MoonElement {
             "label"   => "height",
         ]);
 
-        $this->addField('color_hover_toggle', [
+        $this->add_field('color_hover_toggle', [
             "group"      => "widget_styles",
             "type"       => "radio",
             "attributes" => [
@@ -112,35 +112,35 @@ class MoonElementVideo_Button extends MoonElement {
             ],
         ]);
 
-        $this->addField('color', [
+        $this->add_field('color', [
             "group"      => "widget_styles",
             "type"       => "color",
             "label"      => "color",
             "conditions" => "[color_hover_toggle]=='color'",
         ]);
 
-        $this->addField('color_hover', [
+        $this->add_field('color_hover', [
             "group"      => "widget_styles",
             "type"       => "color",
             "label"      => "color_hover",
             "conditions" => "[color_hover_toggle]=='hover'",
         ]);
 
-        $this->addField('background_color', [
+        $this->add_field('background_color', [
             "group"      => "widget_styles",
             "type"       => "color",
             "label"      => "background_color",
             "conditions" => "[color_hover_toggle]=='color'",
         ]);
 
-        $this->addField('background_color_hover', [
+        $this->add_field('background_color_hover', [
             "group"      => "widget_styles",
             "type"       => "color",
             "label"      => "background_color_hover",
             "conditions" => "[color_hover_toggle]=='hover'",
         ]);
 
-        $this->addField('use_border', [
+        $this->add_field('use_border', [
             "group"      => "widget_styles",
             "type"       => "radio",
             "attributes" => [
@@ -150,7 +150,7 @@ class MoonElementVideo_Button extends MoonElement {
             "label"   => "use_border",
         ]);
 
-        $this->addField('border_width', [
+        $this->add_field('border_width', [
             "group"      => "widget_styles",
             "type"       => "range",
             "attributes" => [
@@ -164,7 +164,7 @@ class MoonElementVideo_Button extends MoonElement {
             "conditions" => "[use_border]==1",
         ]);
 
-        $this->addField('border_color', [
+        $this->add_field('border_color', [
             "group"      => "widget_styles",
             "type"       => "color",
             "label"      => "border_color",

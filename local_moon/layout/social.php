@@ -22,18 +22,18 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-use local_moon\library\Helper\Style;
-use local_moon\library\Framework;
-$document   = Framework::getDocument();
-$params     = Framework::getTheme()->getParams();
+use local_moon\library\helper\style;
+use local_moon\library\framework;
+$document   = framework::get_document();
+$params     = framework::get_theme()->get_params();
 
 $enable_social_profiler     = $params->get('enable_social_profiler', 1);
 $social_profiles            = $params->get('social_profiles', []);
 $style                      = $params->get('social_profiles_style', 1);
 $gutter                     = $params->get('social_profiles_gutter', '');
 $fontsize                   = $params->get('social_profiles_fontsize', '16px');
-$social_icon_color          = Style::getColor($params->get('social_icon_color', ''));
-$social_icon_color_hover    = Style::getColor($params->get('social_icon_color_hover', ''));
+$social_icon_color          = style::get_color($params->get('social_icon_color', ''));
+$social_icon_color_hover    = style::get_color($params->get('social_icon_color_hover', ''));
 
 if (!$enable_social_profiler) return false;
 
@@ -42,18 +42,18 @@ if (!empty($social_profiles)) {
 }
 $class              = $gutter ? 'gx-'.$gutter : '';
 $styles             = '';
-$social_style       =   new Style('.moon-social-icons', '', true);
-$social_style_dark  =   new Style('.moon-social-icons', 'dark', true);
+$social_style       =   new style('.moon-social-icons', '', true);
+$social_style_dark  =   new style('.moon-social-icons', 'dark', true);
 if (!empty($fontsize)) {
-    $social_style->addCss('font-size', $fontsize);
+    $social_style->add_css('font-size', $fontsize);
 }
 if (!empty($social_icon_color) && $style == 1) {
-    $social_style->link()->addCss('color', $social_icon_color['light']. '!important');
-    $social_style_dark->link()->addCss('color', $social_icon_color['dark']. '!important');
+    $social_style->link()->add_css('color', $social_icon_color['light']. '!important');
+    $social_style_dark->link()->add_css('color', $social_icon_color['dark']. '!important');
 }
 if (!empty($social_icon_color_hover) && $style == 1) {
-    $social_style->link()->hover()->addCss('color', $social_icon_color_hover['light'] . '!important');
-    $social_style_dark->link()->hover()->addCss('color', $social_icon_color_hover['dark'] . '!important');
+    $social_style->link()->hover()->add_css('color', $social_icon_color_hover['light'] . '!important');
+    $social_style_dark->link()->hover()->add_css('color', $social_icon_color_hover['dark'] . '!important');
 }
 $social_style->render();
 $social_style_dark->render();

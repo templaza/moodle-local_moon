@@ -22,8 +22,8 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-class MoonElementRow extends MoonElement {
+use local_moon\library\helper\moon_element;
+class moon_element_row extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -33,11 +33,11 @@ class MoonElementRow extends MoonElement {
         ]);
     }
 
-    public function setFields() : void
+    public function set_fields() : void
     {
-        $this->setFieldSet('design-settings');
+        $this->set_field_set('design-settings');
 
-        $this->addField('moon_element_vertical_alignment', [
+        $this->add_field('moon_element_vertical_alignment', [
             "group"       => "general",
             "type"        => "list",
             "label"       => "vertical_alignment",
@@ -51,13 +51,13 @@ class MoonElementRow extends MoonElement {
             ],
         ]);
 
-        $this->addField('device_gutter_settings', [
+        $this->add_field('device_gutter_settings', [
             "type"        => "group",
             "label"       => "device_gutter_settings",
             "description" => "device_gutter_settings_desc",
         ]);
 
-        $this->addField('gutter_xs', [
+        $this->add_field('gutter_xs', [
             "group"       => "device_gutter_settings",
             "type"        => "list",
             "label"       => "mobile_gutter",
@@ -74,7 +74,7 @@ class MoonElementRow extends MoonElement {
             ],
         ]);
 
-        $this->addField('gutter_sm', [
+        $this->add_field('gutter_sm', [
             "group"       => "device_gutter_settings",
             "type"        => "list",
             "label"       => "small_gutter",
@@ -91,7 +91,7 @@ class MoonElementRow extends MoonElement {
             ],
         ]);
 
-        $this->addField('gutter_md', [
+        $this->add_field('gutter_md', [
             "group"       => "device_gutter_settings",
             "type"        => "list",
             "label"       => "medium_gutter",
@@ -108,7 +108,7 @@ class MoonElementRow extends MoonElement {
             ],
         ]);
 
-        $this->addField('gutter_lg', [
+        $this->add_field('gutter_lg', [
             "group"       => "device_gutter_settings",
             "type"        => "list",
             "label"       => "large_gutter",
@@ -125,7 +125,7 @@ class MoonElementRow extends MoonElement {
             ],
         ]);
 
-        $this->addField('gutter_xl', [
+        $this->add_field('gutter_xl', [
             "group"       => "device_gutter_settings",
             "type"        => "list",
             "label"       => "xlarge_gutter",
@@ -142,7 +142,7 @@ class MoonElementRow extends MoonElement {
             ],
         ]);
 
-        $this->addField('gutter_xxl', [
+        $this->add_field('gutter_xxl', [
             "group"       => "device_gutter_settings",
             "type"        => "list",
             "label"       => "xxlarge_gutter",

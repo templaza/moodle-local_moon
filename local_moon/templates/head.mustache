@@ -18,11 +18,11 @@
     Page header.
 }}
 {{{ output.doctype }}}
-<html {{{ output.htmlattributes }}} data-bs-theme="{{ document.getThemeMode }}">
+<html {{{ output.htmlattributes }}} data-bs-theme="{{ document.get_theme_mode }}">
 <head>
     <title>{{{ output.page_title }}}</title>
     <link rel="shortcut icon" href="{{{ output.favicon }}}" />
     {{{ output.standard_head_html }}}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{{ document.getMoonAssets }}}
+    {{{ document.get_moon_assets }}}
 </head>

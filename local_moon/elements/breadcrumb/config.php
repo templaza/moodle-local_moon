@@ -22,9 +22,9 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Font;
-class MoonElementBreadcrumb extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\font;
+class moon_element_breadcrumb extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -37,14 +37,14 @@ class MoonElementBreadcrumb extends MoonElement {
             'multiple' => false,
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('content_options', [
+        $this->add_field('content_options', [
             'type'  => 'group',
             'label' => 'content_options',
         ]);
-        $this->addField('show_admin', [
+        $this->add_field('show_admin', [
             "group"   => "general",
             "type"    => "radio",
             "default" => "0",
@@ -54,7 +54,7 @@ class MoonElementBreadcrumb extends MoonElement {
             "label"   => "show_admin",
         ]);
 
-        $this->addField('show_heading', [
+        $this->add_field('show_heading', [
             "group"   => "general",
             "type"    => "radio",
             "default" => "1",
@@ -64,7 +64,7 @@ class MoonElementBreadcrumb extends MoonElement {
             "label"   => "show_heading",
         ]);
 
-        $this->addField('show_page_button', [
+        $this->add_field('show_page_button', [
             "group"   => "general",
             "type"    => "radio",
             "default" => "1",
@@ -74,7 +74,7 @@ class MoonElementBreadcrumb extends MoonElement {
             "label"   => "show_page_button",
         ]);
 
-        $this->addField('heading_font_style', [
+        $this->add_field('heading_font_style', [
             "group"   => "general",
             "type"    => "typography",
             "label"   => "font_style",
@@ -91,17 +91,17 @@ class MoonElementBreadcrumb extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
             "conditions" => "[show_heading]==1",
         ]);
 
-        $this->addField('content_font_style', [
+        $this->add_field('content_font_style', [
             "group"   => "content_options",
             "type"    => "typography",
             "label"   => "font_style",
@@ -118,12 +118,12 @@ class MoonElementBreadcrumb extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
     }

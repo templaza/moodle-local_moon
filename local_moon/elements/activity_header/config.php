@@ -22,8 +22,8 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-class MoonElementActivity_Header extends MoonElement {
+use local_moon\library\helper\moon_element;
+class moon_element_activity_header extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -36,9 +36,9 @@ class MoonElementActivity_Header extends MoonElement {
             'multiple' => false,
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
-        $this->addField( 'enable_heading_title',  [
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
+        $this->add_field( 'enable_heading_title',  [
             "group" => "general",
             "type" => "radio",
             "label" => "enable_heading_title",

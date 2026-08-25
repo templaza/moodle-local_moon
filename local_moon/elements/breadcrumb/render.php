@@ -22,7 +22,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\Style;
+use local_moon\library\helper\style;
 global $PAGE;
 $show_admin = (int) $this->params->get('show_admin', 1);
 if (is_siteadmin() && $show_admin==0) {
@@ -64,10 +64,10 @@ echo "<div class='pageinfo-block'>{$heading_content}{$breadcrumb_html}</div>";
 
 $heading_font_style   =   $this->params->get('heading_font_style');
 if (!empty($heading_font_style)) {
-    Style::renderTypography('#'.$this->id.' .breadcrumb-heading', $heading_font_style, null, $this->isRoot);
+    style::render_typography('#'.$this->id.' .breadcrumb-heading', $heading_font_style, null, $this->isRoot);
 }
 
 $content_font_style =   $this->params->get('content_font_style');
 if (!empty($content_font_style)) {
-    Style::renderTypography('#'.$this->id.' .breadcrumb-item > *', $content_font_style, null, $this->isRoot);
+    style::render_typography('#'.$this->id.' .breadcrumb-item > *', $content_font_style, null, $this->isRoot);
 }

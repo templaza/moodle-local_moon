@@ -22,11 +22,11 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Form;
-use local_moon\library\Helper\Constants;
-use local_moon\library\Helper\Font;
-class MoonElementGallery extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\form;
+use local_moon\library\helper\constants;
+use local_moon\library\helper\font;
+class moon_element_gallery extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -38,20 +38,20 @@ class MoonElementGallery extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('title_options', [
+        $this->add_field('title_options', [
             'type'  => 'group',
             'label' => 'title',
         ]);
 
-        $this->addField('image_options', [
+        $this->add_field('image_options', [
             'type'  => 'group',
             'label' => 'image_options',
         ]);
 
-        $this->addField('overlay_options', [
+        $this->add_field('overlay_options', [
             'type'  => 'group',
             'label' => 'overlay_options',
         ]);
@@ -73,16 +73,16 @@ class MoonElementGallery extends MoonElement {
                 ]
             ],
         ];
-        $repeater   = new Form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
-        $this->addField('galleries',  [
+        $repeater   = new form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
+        $this->add_field('galleries',  [
             "group" => "general",
             "type" => "subform",
             "label" => "Galleries",
             "attributes" => [
-                'form'    =>  $repeater->renderJson('subform')
+                'form'    =>  $repeater->render_json('subform')
             ],
         ]);
-        $this->addField('masonry', [
+        $this->add_field('masonry', [
             'group'   => 'general',
             'type'    => 'radio',
             "attributes" => [
@@ -91,7 +91,7 @@ class MoonElementGallery extends MoonElement {
             'default' => '0',
             'label'   => 'masonry',
         ]);
-        $this->addField('gallery_column', [
+        $this->add_field('gallery_column', [
             "group"      => "general",
             "type"       => "list",
             "label"      => "column",
@@ -104,17 +104,17 @@ class MoonElementGallery extends MoonElement {
                 "col-lg-2" => "6 columns",
             ],
         ]);
-        $this->addField('column_padding', [
+        $this->add_field('column_padding', [
             'group'      => 'general',
             'type'       => 'spacing',
             'label'      => 'column_padding',
         ]);
-        $this->addField('row_margin', [
+        $this->add_field('row_margin', [
             'group'      => 'general',
             'type'       => 'spacing',
             'label'      => 'row_margin',
         ]);
-        $this->addField('thumbnail_hover', [
+        $this->add_field('thumbnail_hover', [
             'group'   => 'image_options',
             'type'    => 'radio',
             "attributes" => [
@@ -123,7 +123,7 @@ class MoonElementGallery extends MoonElement {
             'default' => '0',
             'label'   => 'thumbnail_hover',
         ]);
-        $this->addField('thumbnail_hover_transition', [
+        $this->add_field('thumbnail_hover_transition', [
             "group"      => "image_options",
             "type"       => "list",
             "label"      => "hover_transition",
@@ -147,7 +147,7 @@ class MoonElementGallery extends MoonElement {
             ],
             "conditions" => "[thumbnail_hover]==1",
         ]);
-        $this->addField('image_lightbox', [
+        $this->add_field('image_lightbox', [
             'group'   => 'image_options',
             'type'    => 'radio',
             "attributes" => [
@@ -156,24 +156,24 @@ class MoonElementGallery extends MoonElement {
             'default' => '0',
             'label'   => 'enable_lightbox',
         ]);
-        $this->addField('image_radius', [
+        $this->add_field('image_radius', [
             'group' => 'image_options',
             'type'  => 'spacing',
             'name'  => 'image_radius',
             'label' => 'radius',
         ]);
-        $this->addField('overlay_padding', [
+        $this->add_field('overlay_padding', [
             'group'      => 'overlay_options',
             'type'       => 'spacing',
             'label'      => 'padding',
         ]);
-        $this->addField('overlay_bg_color', [
+        $this->add_field('overlay_bg_color', [
             "group"      => "overlay_options",
             "type"       => "color",
             "label"      => "background_color",
         ]);
 
-        $this->addField('title_font_style', [
+        $this->add_field('title_font_style', [
             'group'   => 'title_options',
             'type'    => 'typography',
             'label'   => 'font_style',
@@ -190,16 +190,16 @@ class MoonElementGallery extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
 
-        $this->addField('title_heading_margin', [
+        $this->add_field('title_heading_margin', [
             'group' => 'title_options',
             'type'  => 'spacing',
             'name'  => 'title_heading_margin',

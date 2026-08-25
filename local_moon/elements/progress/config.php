@@ -22,11 +22,11 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Form;
-use local_moon\library\Helper\Constants;
-use local_moon\library\Helper\Font;
-class MoonElementProgress extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\form;
+use local_moon\library\helper\constants;
+use local_moon\library\helper\font;
+class moon_element_progress extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -38,14 +38,14 @@ class MoonElementProgress extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('widget_styles', [
+        $this->add_field('widget_styles', [
             'type'  => 'group',
             'label' => 'widget_styles',
         ]);
-        $this->addField('title_styles', [
+        $this->add_field('title_styles', [
             'type'  => 'group',
             'label' => 'title_options',
         ]);
@@ -81,22 +81,22 @@ class MoonElementProgress extends MoonElement {
                 ]
             ],
         ];
-        $repeater   = new Form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
-        $this->addField('progress',  [
+        $repeater   = new form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
+        $this->add_field('progress',  [
             "group" => "general",
             "type" => "subform",
             "label" => "items",
             "attributes" => [
-                'form'    =>  $repeater->renderJson('subform')
+                'form'    =>  $repeater->render_json('subform')
             ],
         ]);
-        $this->addField('item_margin', [
+        $this->add_field('item_margin', [
             'group' => 'general',
             'type'  => 'spacing',
             'label' => 'item_margin',
         ]);
 
-        $this->addField('text_font_style', [
+        $this->add_field('text_font_style', [
             "group"      => "title_styles",
             "label"      => "font_style",
             "type"       => "typography",
@@ -113,15 +113,15 @@ class MoonElementProgress extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
-        $this->addField('title_margin', [
+        $this->add_field('title_margin', [
             'group' => 'title_styles',
             'type'  => 'spacing',
             'label' => 'margin',

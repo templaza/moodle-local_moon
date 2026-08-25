@@ -22,19 +22,19 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\Style;
-use local_moon\library\Helper\SubForm;
+use local_moon\library\helper\style;
+use local_moon\library\helper\sub_form;
 $params = $this->params;
 $element = $this;
 $style = $this->style;
 
 $shape          = $params->get('shape_style', '');
-$color          =   Style::getColor($params->get('shape_color', ''));
-$element->style->child('.wave_fill')->addCss('fill', $color['light']);
-$element->style_dark->child('.wave_fill')->addCss('fill', $color['dark']);
+$color          =   style::get_color($params->get('shape_color', ''));
+$element->style->child('.wave_fill')->add_css('fill', $color['light']);
+$element->style_dark->child('.wave_fill')->add_css('fill', $color['dark']);
 
-$element->style->child('.wave_stroke')->addCss('stroke', $color['light']);
-$element->style_dark->child('.wave_stroke')->addCss('stroke', $color['dark']);
+$element->style->child('.wave_stroke')->add_css('stroke', $color['light']);
+$element->style_dark->child('.wave_stroke')->add_css('stroke', $color['dark']);
 
 if($shape){
 ?>

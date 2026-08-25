@@ -22,9 +22,9 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Framework;
-use local_moon\library\Helper\Constants;
-Framework::getTheme()->addFields(
+use local_moon\library\framework;
+use local_moon\library\helper\constants;
+framework::get_theme()->add_fields(
     'basic',
     [
         'label' => 'basic',
@@ -305,7 +305,7 @@ Framework::getTheme()->addFields(
                 "group" => "preloader_options",
                 "type" => "preloaders",
                 "attributes" => [
-                    "preloader" => Constants::$preloaders,
+                    "preloader" => constants::$preloaders,
                     "style" => 'animation',
                 ],
                 "label" => "preloader_animation",
@@ -317,7 +317,7 @@ Framework::getTheme()->addFields(
                 "group" => "preloader_options",
                 "type" => "preloaders",
                 "attributes" => [
-                    "preloader" => Constants::$preloadersFont,
+                    "preloader" => constants::$preloadersFont,
                     "style" => 'fontawesome',
                 ],
                 "label" => "preloader_animation",

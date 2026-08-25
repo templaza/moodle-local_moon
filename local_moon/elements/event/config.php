@@ -22,12 +22,12 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Form;
-use local_moon\library\Helper\Constants;
-use local_moon\library\Helper\Font;
-use local_moon\library\Blocks\EventHandler;
-class MoonElementEvent extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\form;
+use local_moon\library\helper\constants;
+use local_moon\library\helper\font;
+use local_moon\library\blocks\event_handler;
+class moon_element_event extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -40,19 +40,19 @@ class MoonElementEvent extends MoonElement {
         ]);
 
     }
-    public function setFields(): void {
-        $moonEventHandler = new EventHandler();
+    public function set_fields(): void {
+        $moonEventHandler = new event_handler();
         $events = $moonEventHandler->moon_get_moodle_events_options();
 
-        $this->setFieldSet('general-settings');
+        $this->set_field_set('general-settings');
 
-        $this->addField('title_options', [
+        $this->add_field('title_options', [
             "group" => "general",
             "type"  => "group",
             "label" => "title_options",
         ]);
 
-        $this->addField('content_options', [
+        $this->add_field('content_options', [
             "group" => "general",
             "type"  => "group",
             "label" => "content_options",
@@ -79,18 +79,18 @@ class MoonElementEvent extends MoonElement {
                 ]
             ],
         ];
-        $repeater   = new Form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
+        $repeater   = new form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
 
-        $this->addField('list_events', [
+        $this->add_field('list_events', [
             "group" => "general",
             "type"  => "subform",
             "label" => "list_items",
             "attributes" => [
-                'form'    =>  $repeater->renderJson('subform')
+                'form'    =>  $repeater->render_json('subform')
             ],
         ]);
 
-        $this->addField('title_font_style', [
+        $this->add_field('title_font_style', [
             "group"      => "title_options",
             "type"       => "typography",
             "label"       => "title_font_style",
@@ -107,23 +107,23 @@ class MoonElementEvent extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
 
-        $this->addField('title_heading_margin', [
+        $this->add_field('title_heading_margin', [
             "group" => "title_options",
             "type"  => "spacing",
             "label"  => "title_heading_margin",
         ]);
 
 
-        $this->addField('content_font_style', [
+        $this->add_field('content_font_style', [
             "group"      => "content_options",
             "type"       => "typography",
             "label"       => "content_font_style",
@@ -140,22 +140,22 @@ class MoonElementEvent extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
 
-        $this->addField('item_margin', [
+        $this->add_field('item_margin', [
             "group" => "spacing_options",
             "type"  => "spacing",
             "label"  => "margin",
         ]);
 
-        $this->addField('item_padding', [
+        $this->add_field('item_padding', [
             "group" => "spacing_options",
             "type"  => "spacing",
             "label"  => "padding",

@@ -23,9 +23,9 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-use local_moon\library\Framework;
+use local_moon\library\framework;
 
-Framework::getTheme()->addFields(
+framework::get_theme()->add_fields(
     'colours',
     [
         'label' => 'colors',

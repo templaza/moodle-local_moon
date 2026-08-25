@@ -31,9 +31,9 @@ if (!$filename) {
 $context = context_system::instance();
 $PAGE->set_context($context);
 
-use local_moon\library\Framework;
-$theme = Framework::getTheme();
-$layout = $theme->getLayout($filename);
+use local_moon\library\framework;
+$theme = framework::get_theme();
+$layout = $theme->get_layout($filename);
 
 $PAGE->set_url(new moodle_url('/local/moon/page.php?id=' . $filename));
 $PAGE->set_pagelayout($filename);

@@ -22,11 +22,11 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Form;
-use local_moon\library\Helper\Constants;
-use local_moon\library\Helper\Font;
-class MoonElementIcons extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\form;
+use local_moon\library\helper\constants;
+use local_moon\library\helper\font;
+class moon_element_icons extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -38,15 +38,15 @@ class MoonElementIcons extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('widget_styles', [
+        $this->add_field('widget_styles', [
             'type'  => 'group',
             'label' => 'widget_styles',
         ]);
 
-        $this->addField('icon_options', [
+        $this->add_field('icon_options', [
             'type'  => 'group',
             'label' => 'icon_options',
         ]);
@@ -121,17 +121,17 @@ class MoonElementIcons extends MoonElement {
                 ]
             ],
         ];
-        $repeater   = new Form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
-        $this->addField('icons',  [
+        $repeater   = new form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
+        $this->add_field('icons',  [
             "group" => "general",
             "type" => "subform",
             "label" => "icons",
             "attributes" => [
-                'form'    =>  $repeater->renderJson('subform')
+                'form'    =>  $repeater->render_json('subform')
             ],
         ]);
 
-        $this->addField('icon_size', [
+        $this->add_field('icon_size', [
             'group'      => 'icon_options',
             'type'       => 'range',
             'label'      => 'icon_size',
@@ -144,12 +144,12 @@ class MoonElementIcons extends MoonElement {
             ],
             'default'    => 30,
         ]);
-        $this->addField('icons_color', [
+        $this->add_field('icons_color', [
             'group' => 'icon_options',
             'type'  => 'color',
             'label' => 'color',
         ]);
-        $this->addField('icon_width', [
+        $this->add_field('icon_width', [
             'group'      => 'icon_options',
             'type'       => 'range',
             'label'      => 'width',
@@ -162,7 +162,7 @@ class MoonElementIcons extends MoonElement {
             ],
             'default'    => 50,
         ]);
-        $this->addField('icon_height', [
+        $this->add_field('icon_height', [
             'group'      => 'icon_options',
             'type'       => 'range',
             'label'      => 'height',
@@ -175,28 +175,28 @@ class MoonElementIcons extends MoonElement {
             ],
             'default'    => 50,
         ]);
-        $this->addField('icon_radius', [
+        $this->add_field('icon_radius', [
             'group' => 'icon_options',
             'type'  => 'spacing',
             'label' => 'border_radius',
         ]);
-        $this->addField('icon_border', [
+        $this->add_field('icon_border', [
             "group"      => "icon_options",
             "type"       => "border",
             "label"      => "border",
         ]);
-        $this->addField('icon_border_hover', [
+        $this->add_field('icon_border_hover', [
             "group"      => "icon_options",
             "type"       => "border",
             "label"      => "border_hover",
         ]);
 
-        $this->addField('icon_padding', [
+        $this->add_field('icon_padding', [
             "group"      => "icon_options",
             "type"       => "spacing",
             "label"      => "padding",
         ]);
-        $this->addField('icon_margin', [
+        $this->add_field('icon_margin', [
             'group' => 'icon_options',
             'type'  => 'spacing',
             'label' => 'margin',

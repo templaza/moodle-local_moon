@@ -23,10 +23,10 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-use local_moon\library\Framework;
-use local_moon\library\Helper\Font;
+use local_moon\library\framework;
+use local_moon\library\helper\font;
 
-Framework::getTheme()->addFields(
+framework::get_theme()->add_fields(
     'header',
     [
         'label' => 'header',
@@ -338,12 +338,12 @@ Framework::getTheme()->addFields(
                         'columns' => 3,
                         'preview' => false,
                         'collapse' => true,
-                        'system_fonts' => Font::get_system_fonts(),
-                        'text_transform_options' => Font::text_transform(),
-                        'lang' => Font::font_properties(),
+                        'system_fonts' => font::get_system_fonts(),
+                        'text_transform_options' => font::text_transform(),
+                        'lang' => font::font_properties(),
                     ],
-                    'lang' => Font::font_properties(),
-                    'value' => Font::$get_default_font_value,
+                    'lang' => font::font_properties(),
+                    'value' => font::$get_default_font_value,
                 ],
             ],
 
@@ -377,12 +377,12 @@ Framework::getTheme()->addFields(
                         'columns' => 3,
                         'preview' => false,
                         'collapse' => true,
-                        'system_fonts' => Font::get_system_fonts(),
-                        'text_transform_options' => Font::text_transform(),
-                        'lang' => Font::font_properties(),
+                        'system_fonts' => font::get_system_fonts(),
+                        'text_transform_options' => font::text_transform(),
+                        'lang' => font::font_properties(),
                     ],
-                    'lang' => Font::font_properties(),
-                    'value' => Font::$get_default_font_value,
+                    'lang' => font::font_properties(),
+                    'value' => font::$get_default_font_value,
                 ],
             ],
 

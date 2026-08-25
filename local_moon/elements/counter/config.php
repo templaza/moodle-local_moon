@@ -22,11 +22,11 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Form;
-use local_moon\library\Helper\Constants;
-use local_moon\library\Helper\Font;
-class MoonElementCounter extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\form;
+use local_moon\library\helper\constants;
+use local_moon\library\helper\font;
+class moon_element_counter extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -38,20 +38,20 @@ class MoonElementCounter extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('grid_options', [
+        $this->add_field('grid_options', [
             'type'  => 'group',
             'label' => 'grid_options',
         ]);
 
-        $this->addField('card_options', [
+        $this->add_field('card_options', [
             'type'  => 'group',
             'label' => 'card_options',
         ]);
 
-        $this->addField('content_options', [
+        $this->add_field('content_options', [
             'type'  => 'group',
             'label' => 'content_options',
         ]);
@@ -122,18 +122,18 @@ class MoonElementCounter extends MoonElement {
                 ]
             ],
         ];
-        $repeater   = new Form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
+        $repeater   = new form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
 
-        $this->addField('items', [
+        $this->add_field('items', [
             "group" => "general",
             "type"  => "subform",
             "label" => "items",
             "attributes" => [
-                'form'    =>  $repeater->renderJson('subform')
+                'form'    =>  $repeater->render_json('subform')
             ],
         ]);
 
-        $this->addField('column_responsive', [
+        $this->add_field('column_responsive', [
             "group"   => "grid_options",
             "type"    => "radio",
             "attributes" => [
@@ -150,7 +150,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('xxl_column', [
+        $this->add_field('xxl_column', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "xxl_column",
@@ -167,7 +167,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('xl_column', [
+        $this->add_field('xl_column', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "xl_column",
@@ -184,7 +184,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('lg_column', [
+        $this->add_field('lg_column', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "lg_column",
@@ -201,7 +201,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('md_column', [
+        $this->add_field('md_column', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "md_column",
@@ -218,7 +218,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('sm_column', [
+        $this->add_field('sm_column', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "sm_column",
@@ -235,7 +235,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('xs_column', [
+        $this->add_field('xs_column', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "xs_column",
@@ -252,7 +252,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_xxl', [
+        $this->add_field('row_gutter_xxl', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "row_gutter_xxl",
@@ -269,7 +269,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_xl', [
+        $this->add_field('row_gutter_xl', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "row_gutter_xl",
@@ -286,7 +286,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_lg', [
+        $this->add_field('row_gutter_lg', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "row_gutter_lg",
@@ -303,7 +303,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_md', [
+        $this->add_field('row_gutter_md', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "row_gutter_md",
@@ -320,7 +320,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter_sm', [
+        $this->add_field('row_gutter_sm', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "row_gutter_sm",
@@ -337,7 +337,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('row_gutter', [
+        $this->add_field('row_gutter', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "row_gutter_xs",
@@ -353,7 +353,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_xxl', [
+        $this->add_field('column_gutter_xxl', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "column_gutter_xxl",
@@ -370,7 +370,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_xl', [
+        $this->add_field('column_gutter_xl', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "column_gutter_xl",
@@ -387,7 +387,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_lg', [
+        $this->add_field('column_gutter_lg', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "column_gutter_lg",
@@ -404,7 +404,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_md', [
+        $this->add_field('column_gutter_md', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "column_gutter_md",
@@ -421,7 +421,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter_sm', [
+        $this->add_field('column_gutter_sm', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "column_gutter_sm",
@@ -438,7 +438,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_gutter', [
+        $this->add_field('column_gutter', [
             "group"      => "grid_options",
             "type"       => "list",
             "label"      => "column_gutter_xs",
@@ -454,7 +454,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('use_masonry', [
+        $this->add_field('use_masonry', [
             "group"   => "grid_options",
             "type"    => "radio",
             "default" => "0",
@@ -464,7 +464,7 @@ class MoonElementCounter extends MoonElement {
             "label"   => "use_masonry",
         ]);
 
-        $this->addField('card_style', [
+        $this->add_field('card_style', [
             "group"   => "card_options",
             "type"    => "list",
             "label"   => "card_style",
@@ -484,28 +484,28 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('text_color', [
+        $this->add_field('text_color', [
             "group"      => "card_options",
             "type"       => "color",
             "label"      => "color",
             "conditions" => "[card_style]=='custom'",
         ]);
 
-        $this->addField('bg_color', [
+        $this->add_field('bg_color', [
             "group"      => "card_options",
             "type"       => "color",
             "label"      => "background_color",
             "conditions" => "[card_style]=='custom'",
         ]);
 
-        $this->addField('card_border', [
+        $this->add_field('card_border', [
             "group"      => "card_options",
             "type"       => "border",
             "label"      => "border",
             "conditions" => "[card_style]=='custom'",
         ]);
 
-        $this->addField('card_size', [
+        $this->add_field('card_size', [
             "group"   => "card_options",
             "type"    => "list",
             "label"   => "card_size",
@@ -519,14 +519,14 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('card_padding', [
+        $this->add_field('card_padding', [
             "group"      => "card_options",
             "type"       => "spacing",
             "label"      => "padding",
             "conditions" => "[card_size]=='custom'",
         ]);
 
-        $this->addField('card_border_radius', [
+        $this->add_field('card_border_radius', [
             "group"   => "card_options",
             "type"    => "list",
             "label"   => "border_radius",
@@ -539,7 +539,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('card_rounded_size', [
+        $this->add_field('card_rounded_size', [
             "group"      => "card_options",
             "type"       => "list",
             "label"      => "rounded_size",
@@ -554,7 +554,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('enable_grid_match', [
+        $this->add_field('enable_grid_match', [
             "group"   => "card_options",
             "type"    => "radio",
             "default" => "0",
@@ -564,15 +564,15 @@ class MoonElementCounter extends MoonElement {
             "label"   => "enable_grid_match",
         ]);
 
-        $this->addField('card_hover_transition', [
+        $this->add_field('card_hover_transition', [
             "group"   => "card_options",
             "type"    => "list",
             "label"   => "hover_transition",
             "default" => "",
-            "options" => Constants::$hover_transition,
+            "options" => constants::$hover_transition,
         ]);
 
-        $this->addField('card_box_shadow', [
+        $this->add_field('card_box_shadow', [
             "group"   => "card_options",
             "type"    => "list",
             "label"   => "box_shadow",
@@ -586,7 +586,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('card_box_shadow_hover', [
+        $this->add_field('card_box_shadow_hover', [
             "group"   => "card_options",
             "type"    => "list",
             "label"   => "box_shadow_hover",
@@ -601,7 +601,7 @@ class MoonElementCounter extends MoonElement {
             ],
         ]);
 
-        $this->addField('content_font_style', [
+        $this->add_field('content_font_style', [
             "group"   => "content_options",
             "type"    => "typography",
             "label"   => "font_style",
@@ -618,12 +618,12 @@ class MoonElementCounter extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
     }

@@ -22,33 +22,33 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Framework;
-use local_moon\library\Helper\Style;
-use local_moon\library\Helper\SubForm;
-use local_moon\library\Blocks\EventHandler;
+use local_moon\library\framework;
+use local_moon\library\helper\style;
+use local_moon\library\helper\sub_form;
+use local_moon\library\blocks\event_handler;
 
 $params = $this->params;
 $element = $this;
 $style = $element->style;
 
-$document = Framework::getDocument();
-$document->loadUIKit();
-$list_events     = new SubForm($params->get('list_events', ''));
+$document = framework::get_document();
+$document->load_ui_kit();
+$list_events     = new sub_form($params->get('list_events', ''));
 
 
-if (!count($list_events->getData())) {
+if (!count($list_events->get_data())) {
     return false;
 }
 $title_html_element =   $params->get('title_html_element', 'h3');
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
-    Style::renderTypography('#'.$element->id.' .as-list-title', $title_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .as-list-title', $title_font_style, null, $element->isRoot);
 }
 $title_heading_margin=  $params->get('title_heading_margin', '');
 
 $content_font_style =   $params->get('content_font_style');
 if (!empty($content_font_style)) {
-    Style::renderTypography('#'.$element->id.' .as-list-desc', $content_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .as-list-desc', $content_font_style, null, $element->isRoot);
 }
 
 $item_margin    =   $params->get('item_margin', '');
@@ -61,7 +61,7 @@ if($list_style=='custom'){
 }
 
 echo '<div class="' . $class . '">';
-foreach ($list_events->getData() as $list) {
+foreach ($list_events->get_data() as $list) {
 
 
 
@@ -83,32 +83,32 @@ foreach ($list_events->getData() as $list) {
 echo '</div>';
 
 if (!empty($title_heading_margin)) {
-    Style::setSpacingStyle($element->style->child('.as-list-title'), $title_heading_margin, 'margin');
+    style::set_spacing_style($element->style->child('.as-list-title'), $title_heading_margin, 'margin');
 }
 
 // Item Margin
 if (!empty($item_margin)) {
-    Style::setSpacingStyle($element->style->child('.list-item'), $item_margin, 'margin');
+    style::set_spacing_style($element->style->child('.list-item'), $item_margin, 'margin');
 }
 // Item Padding
 if (!empty($item_padding)) {
-    Style::setSpacingStyle($element->style->child('.list-item'), $item_padding);
+    style::set_spacing_style($element->style->child('.list-item'), $item_padding);
 }
-$icon_color   =   Style::getColor($params->get('icon_color', ''));
-$element->style->child('.as-list-icon i')->addCss('color', $icon_color['light']);
-$element->style_dark->child('.as-list-icon i')->addCss('color', $icon_color['dark']);
+$icon_color   =   style::get_color($params->get('icon_color', ''));
+$element->style->child('.as-list-icon i')->add_css('color', $icon_color['light']);
+$element->style_dark->child('.as-list-icon i')->add_css('color', $icon_color['dark']);
 
 $icon_margin=  $params->get('icon_padding', '');
 if (!empty($icon_margin)) {
     if($list_style === 'custom') {
-        Style::setSpacingStyle($element->style->child('.as-list-icon'), $icon_margin, 'padding');
+        style::set_spacing_style($element->style->child('.as-list-icon'), $icon_margin, 'padding');
 
     }else{
-        Style::setSpacingStyle($element->style->child('.as-list-icon i'), $icon_margin, 'padding');
+        style::set_spacing_style($element->style->child('.as-list-icon i'), $icon_margin, 'padding');
     }
 }
 $icon_listsize        =   $params->get('icon_size', '');
 $icon_size = json_decode($icon_listsize, true);
 if (json_last_error() === JSON_ERROR_NONE && is_array($icon_size)) {
-    $style->child('.as-list-icon i')->addResponsiveCSS('font-size', $icon_size, $icon_size['postfix']);
+    $style->child('.as-list-icon i')->add_responsive_css('font-size', $icon_size, $icon_size['postfix']);
 }

@@ -22,11 +22,11 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Form;
-use local_moon\library\Helper\Constants;
-use local_moon\library\Helper\Font;
-class MoonElementUk_Slider extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\form;
+use local_moon\library\helper\constants;
+use local_moon\library\helper\font;
+class moon_element_uk_slider extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -38,47 +38,47 @@ class MoonElementUk_Slider extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('slideshow_options', [
+        $this->add_field('slideshow_options', [
             'type'  => 'group',
             'label' => 'slideshow',
         ]);
-        $this->addField('navigation_options', [
+        $this->add_field('navigation_options', [
             'type'  => 'group',
             'label' => 'Navigation',
         ]);
-        $this->addField('dot_options', [
+        $this->add_field('dot_options', [
             'type'  => 'group',
             'label' => 'dot_options',
         ]);
 
-        $this->addField('overlay_options', [
+        $this->add_field('overlay_options', [
             'type'  => 'group',
             'label' => 'overlay',
         ]);
 
-        $this->addField('title_options', [
+        $this->add_field('title_options', [
             'type'  => 'group',
             'label' => 'title',
         ]);
-        $this->addField('image_options', [
+        $this->add_field('image_options', [
             'type'  => 'group',
             'label' => 'Image',
         ]);
 
-        $this->addField('meta_options', [
+        $this->add_field('meta_options', [
             'type'  => 'group',
             'label' => 'meta',
         ]);
 
-        $this->addField('content_options', [
+        $this->add_field('content_options', [
             'type'  => 'group',
             'label' => 'content',
         ]);
 
-        $this->addField('readmore_options', [
+        $this->add_field('readmore_options', [
             'type'  => 'group',
             'label' => 'readmore',
         ]);
@@ -157,18 +157,18 @@ class MoonElementUk_Slider extends MoonElement {
                 ]
             ],
         ];
-        $repeater   = new Form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
-        $this->addField('slides',  [
+        $repeater   = new form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
+        $this->add_field('slides',  [
             "group" => "general",
             "type" => "subform",
             "label" => "slides",
             "attributes" => [
-                'form'    =>  $repeater->renderJson('subform')
+                'form'    =>  $repeater->render_json('subform')
             ],
         ]);
 
 
-        $this->addField('slider_style', [
+        $this->add_field('slider_style', [
             'group'      => 'slideshow_options',
             'type'    => 'list',
             'label'      => 'Style',
@@ -179,7 +179,7 @@ class MoonElementUk_Slider extends MoonElement {
             'default'    => 'style1',
         ]);
 
-        $this->addField('slider_height', [
+        $this->add_field('slider_height', [
             'group'      => 'slideshow_options',
             'type'    => 'list',
             'label'      => 'height',
@@ -193,7 +193,7 @@ class MoonElementUk_Slider extends MoonElement {
             'default'    => '',
         ]);
 
-        $this->addField('min_height', [
+        $this->add_field('min_height', [
             'group'   => 'slideshow_options',
             'type'    => 'range',
             'label'      => 'min_height',
@@ -207,7 +207,7 @@ class MoonElementUk_Slider extends MoonElement {
             'default' => 600,
         ]);
 
-        $this->addField('max_height', [
+        $this->add_field('max_height', [
             'group'   => 'slideshow_options',
             'type'    => 'range',
             'label'      => 'max_height',
@@ -220,18 +220,18 @@ class MoonElementUk_Slider extends MoonElement {
             ],
             'default' => 800,
         ]);
-        $this->addField('slideshow_padding', [
+        $this->add_field('slideshow_padding', [
             'group'      => 'slideshow_options',
             'type'       => 'spacing',
             'label'      => 'padding',
         ]);
-        $this->addField('slideshow_radius', [
+        $this->add_field('slideshow_radius', [
             'group' => 'slideshow_options',
             'type'  => 'spacing',
             'label' => 'radius',
         ]);
 
-        $this->addField('slideshow_transition', [
+        $this->add_field('slideshow_transition', [
             'group'   => 'slideshow_options',
             'type'    => 'list',
             'name'    => 'effect_type',
@@ -246,7 +246,7 @@ class MoonElementUk_Slider extends MoonElement {
             ],
         ]);
 
-        $this->addField('autoplay', [
+        $this->add_field('autoplay', [
             'group'   => 'slideshow_options',
             'type'    => 'radio',
             "attributes" => [
@@ -255,14 +255,14 @@ class MoonElementUk_Slider extends MoonElement {
             'default' => '0',
             'label'   => 'autoplay',
         ]);
-        $this->addField('autoplay_interval',  [
+        $this->add_field('autoplay_interval',  [
             "group" => "slideshow_options",
             "type" => "text",
             "label" => "Interval",
             "description" => "interval_desc",
             "conditions" => "[autoplay]==1",
         ]);
-        $this->addField('kenburns_transition', [
+        $this->add_field('kenburns_transition', [
             'group'   => 'slideshow_options',
             'type'    => 'list',
             'label'   => 'kenburns_label',
@@ -279,7 +279,7 @@ class MoonElementUk_Slider extends MoonElement {
                 'bottom-right' => 'bottom_right',
             ),
         ]);
-        $this->addField('kenburns_duration', [
+        $this->add_field('kenburns_duration', [
             'group'      => 'slideshow_options',
             'type'       => 'range',
             'label'      => 'kenburns_duration',
@@ -295,7 +295,7 @@ class MoonElementUk_Slider extends MoonElement {
             "conditions" => "[kenburns_transition] !==''",
         ]);
 
-        $this->addField('navigation', [
+        $this->add_field('navigation', [
             'group'   => 'navigation_options',
             'type'    => 'radio',
             "attributes" => [
@@ -304,49 +304,49 @@ class MoonElementUk_Slider extends MoonElement {
             'default' => '0',
             'label'   => 'Nav Enable',
         ]);
-        $this->addField('slidenav_next_text', [
+        $this->add_field('slidenav_next_text', [
             "group"       => "navigation_options",
             "type"        => "text",
             "label"       => "next_text",
             "conditions" => "[navigation]==1",
         ]);
-        $this->addField('slidenav_preview_text', [
+        $this->add_field('slidenav_preview_text', [
             "group"       => "navigation_options",
             "type"        => "text",
             "label"       => "preview_text",
             "conditions" => "[navigation]==1",
         ]);
-        $this->addField('navigation_color', [
+        $this->add_field('navigation_color', [
             "group"      => "navigation_options",
             "type"       => "color",
             "label"      => "color",
             "conditions" => "[navigation]==1",
         ]);
-        $this->addField('navigation_bg_color', [
+        $this->add_field('navigation_bg_color', [
             "group"      => "navigation_options",
             "type"       => "color",
             "label"      => "background_color",
             "conditions" => "[navigation]==1",
         ]);
-        $this->addField('navigation_color_hover', [
+        $this->add_field('navigation_color_hover', [
             "group"      => "navigation_options",
             "type"       => "color",
             "label"      => "color_hover",
             "conditions" => "[navigation]==1",
         ]);
-        $this->addField('navigation_bg_color_hover', [
+        $this->add_field('navigation_bg_color_hover', [
             "group"      => "navigation_options",
             "type"       => "color",
             "label"      => "background_hover_color",
             "conditions" => "[navigation]==1",
         ]);
-        $this->addField('navigation_padding', [
+        $this->add_field('navigation_padding', [
             'group'      => 'navigation_options',
             'type'       => 'spacing',
             'label'      => 'padding',
             'conditions' => "[navigation]==1",
         ]);
-        $this->addField('dot_style', [
+        $this->add_field('dot_style', [
             'group'   => 'dot_options',
             'type'    => 'list',
             'label'   => 'dot_option',
@@ -357,7 +357,7 @@ class MoonElementUk_Slider extends MoonElement {
                 'title' => 'Title'
             ),
         ]);
-        $this->addField('dot_position', [
+        $this->add_field('dot_position', [
             'group'   => 'dot_options',
             'type'    => 'list',
             'label'   => 'position',
@@ -374,28 +374,28 @@ class MoonElementUk_Slider extends MoonElement {
                 'uk-position-bottom-right' => 'bottom_right',
             ),
         ]);
-        $this->addField('dot_margin', [
+        $this->add_field('dot_margin', [
             'group' => 'dot_options',
             'type'  => 'spacing',
             'name'  => 'dot_margin',
             'label' => 'margin',
         ]);
-        $this->addField('dot_border_color', [
+        $this->add_field('dot_border_color', [
             'group'      => 'dot_options',
             'type'       => 'color',
             'label'      => 'border_color',
         ]);
-        $this->addField('dot_color', [
+        $this->add_field('dot_color', [
             'group'      => 'dot_options',
             'type'       => 'color',
             'label'      => 'color',
         ]);
-        $this->addField('dot_hover_color', [
+        $this->add_field('dot_hover_color', [
             'group'      => 'dot_options',
             'type'       => 'color',
             'label'      => 'color_hover',
         ]);
-        $this->addField('dot_below', [
+        $this->add_field('dot_below', [
             'group'   => 'dot_options',
             'type'    => 'radio',
             "attributes" => [
@@ -405,7 +405,7 @@ class MoonElementUk_Slider extends MoonElement {
             'label'   => 'dot_below',
             'conditions' => "[dot_positions]=='dotnav' OR [dot_positions]=='thumbnav'",
         ]);
-        $this->addField('dot_vertical', [
+        $this->add_field('dot_vertical', [
             'group'   => 'dot_options',
             'type'    => 'radio',
             "attributes" => [
@@ -415,7 +415,7 @@ class MoonElementUk_Slider extends MoonElement {
             'label'   => 'dot_vertical',
             'conditions' => "[dot_positions]=='dotnav' OR [dot_positions]=='thumbnav' AND [dot_below]=='0'",
         ]);
-        $this->addField('overlay_max_width', [
+        $this->add_field('overlay_max_width', [
             'group'       => 'overlay_options',
             'type'        => 'list',
             'name'        => 'overlay_max_width',
@@ -434,13 +434,13 @@ class MoonElementUk_Slider extends MoonElement {
             ],
         ]);
 
-        $this->addField('overlay_padding', [
+        $this->add_field('overlay_padding', [
             'group' => 'overlay_options',
             'type'  => 'spacing',
             'name'  => 'overlay_padding',
             'label' => 'padding',
         ]);
-        $this->addField('overlay_align', [
+        $this->add_field('overlay_align', [
             'group'   => 'overlay_options',
             'type'    => 'list',
             'label'   => 'text_alignment',
@@ -451,7 +451,7 @@ class MoonElementUk_Slider extends MoonElement {
                 'uk-text-justify' => 'Justifies',
             ),
         ]);
-        $this->addField('overlay_positions', [
+        $this->add_field('overlay_positions', [
             'group'   => 'overlay_options',
             'type'    => 'list',
             'label'   => 'overlay_position',
@@ -468,13 +468,13 @@ class MoonElementUk_Slider extends MoonElement {
                 'bottom-right' => 'bottom_right',
             ),
         ]);
-        $this->addField('overlay_bg_color', [
+        $this->add_field('overlay_bg_color', [
             'group'      => 'overlay_options',
             'type'       => 'color',
             'label'      => 'overlay_bg_color',
         ]);
 
-        $this->addField('title_html_element', [
+        $this->add_field('title_html_element', [
             'group'   => 'title_options',
             'type'    => 'list',
             'label'   => 'html_element',
@@ -490,7 +490,7 @@ class MoonElementUk_Slider extends MoonElement {
             ],
         ]);
 
-        $this->addField('title_font_style', [
+        $this->add_field('title_font_style', [
             'group'   => 'title_options',
             'type'    => 'typography',
             'label'   => 'font_style',
@@ -507,23 +507,23 @@ class MoonElementUk_Slider extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
 
-        $this->addField('title_heading_margin', [
+        $this->add_field('title_heading_margin', [
             'group' => 'title_options',
             'type'  => 'spacing',
             'name'  => 'title_heading_margin',
             'label' => 'margin',
         ]);
 
-        $this->addField('meta_font_style', [
+        $this->add_field('meta_font_style', [
             'group'   => 'meta_options',
             'type'    => 'typography',
             'name'    => 'meta_font_style',
@@ -541,33 +541,33 @@ class MoonElementUk_Slider extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
-        $this->addField('meta_bg_color', [
+        $this->add_field('meta_bg_color', [
             "group"      => "meta_options",
             "type"       => "color",
             "label"      => "background_color",
         ]);
 
-        $this->addField('meta_heading_margin', [
+        $this->add_field('meta_heading_margin', [
             'group' => 'meta_options',
             'type'  => 'spacing',
             'name'  => 'meta_heading_margin',
             'label' => 'margin',
         ]);
-        $this->addField('meta_heading_padding', [
+        $this->add_field('meta_heading_padding', [
             'group'      => 'meta_options',
             'type'       => 'spacing',
             'label'      => 'padding',
         ]);
 
-        $this->addField('meta_position', [
+        $this->add_field('meta_position', [
             'group'   => 'meta_options',
             'type'    => 'list',
             'name'    => 'meta_position',
@@ -578,13 +578,13 @@ class MoonElementUk_Slider extends MoonElement {
                 'after'  => 'after_title',
             ],
         ]);
-        $this->addField('meta_radius', [
+        $this->add_field('meta_radius', [
             'group' => 'meta_options',
             'type'  => 'spacing',
             'label' => 'radius',
         ]);
 
-        $this->addField('content_font_style', [
+        $this->add_field('content_font_style', [
             'group'   => 'content_options',
             'type'    => 'typography',
             'name'    => 'content_font_style',
@@ -602,21 +602,21 @@ class MoonElementUk_Slider extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
-        $this->addField('content_padding', [
+        $this->add_field('content_padding', [
             'group'      => 'content_options',
             'type'       => 'spacing',
             'label'      => 'padding',
         ]);
 
-        $this->addField('button_font_style', [
+        $this->add_field('button_font_style', [
             'group'   => 'readmore_options',
             'type'    => 'typography',
             'name'    => 'button_font_style',
@@ -634,16 +634,16 @@ class MoonElementUk_Slider extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
 
-        $this->addField('button_style', [
+        $this->add_field('button_style', [
             'group'   => 'readmore_options',
             'type'    => 'list',
             'name'    => 'button_style',
@@ -662,43 +662,43 @@ class MoonElementUk_Slider extends MoonElement {
                 'custom'      => 'custom',
             ],
         ]);
-        $this->addField('button_margin', [
+        $this->add_field('button_margin', [
             'group' => 'readmore_options',
             'type'  => 'spacing',
             'label' => 'margin',
         ]);
-        $this->addField('button_padding', [
+        $this->add_field('button_padding', [
             'group' => 'readmore_options',
             'type'  => 'spacing',
             'label' => 'padding',
             'conditions' => "[button_style]=='custom'",
         ]);
-        $this->addField('button_border', [
+        $this->add_field('button_border', [
             "group"      => "readmore_options",
             "type"       => "border",
             "label"      => "border",
             'conditions' => "[button_style]=='custom'",
         ]);
-        $this->addField('button_bg_color', [
+        $this->add_field('button_bg_color', [
             'group' => 'readmore_options',
             'type'  => 'color',
             'label' => 'background_color',
             'conditions' => "[button_style]=='custom'",
         ]);
-        $this->addField('button_color_hover', [
+        $this->add_field('button_color_hover', [
             'group' => 'readmore_options',
             'type'  => 'color',
             'label' => 'color_hover',
             'conditions' => "[button_style]=='custom'",
         ]);
-        $this->addField('button_bg_color_hover', [
+        $this->add_field('button_bg_color_hover', [
             'group' => 'readmore_options',
             'type'  => 'color',
             'label' => 'background_color_hover',
             'conditions' => "[button_style]=='custom'",
         ]);
 
-        $this->addField('button_outline', [
+        $this->add_field('button_outline', [
             'group'   => 'readmore_options',
             'type'    => 'radio',
             'name'    => 'button_outline',
@@ -709,7 +709,7 @@ class MoonElementUk_Slider extends MoonElement {
             'label'   => 'button_outline',
         ]);
 
-        $this->addField('button_size', [
+        $this->add_field('button_size', [
             'group'   => 'readmore_options',
             'type'    => 'list',
             'name'    => 'button_size',
@@ -722,7 +722,7 @@ class MoonElementUk_Slider extends MoonElement {
             ],
         ]);
 
-        $this->addField('btn_border_radius', [
+        $this->add_field('btn_border_radius', [
             'group'   => 'readmore_options',
             'type'    => 'list',
             'name'    => 'btn_border_radius',
@@ -735,13 +735,13 @@ class MoonElementUk_Slider extends MoonElement {
                 'custom' => 'custom',
             ],
         ]);
-        $this->addField('button_radius', [
+        $this->add_field('button_radius', [
             'group'   => 'readmore_options',
             'type'  => 'spacing',
             'label' => 'radius',
             'conditions' => "[btn_border_radius]=='custom'",
         ]);
-        $this->addField('image_width', [
+        $this->add_field('image_width', [
             'group'   => 'image_options',
             'type'    => 'range',
             'label'      => 'image_width',
@@ -754,7 +754,7 @@ class MoonElementUk_Slider extends MoonElement {
             ],
             'default' => 550,
         ]);
-        $this->addField('image_height', [
+        $this->add_field('image_height', [
             'group'   => 'image_options',
             'type'    => 'range',
             'label'      => 'image_height',
@@ -767,13 +767,13 @@ class MoonElementUk_Slider extends MoonElement {
             ],
             'default' => 700,
         ]);
-        $this->addField('image_radius', [
+        $this->add_field('image_radius', [
             'group' => 'image_options',
             'type'  => 'spacing',
             'name'  => 'image_radius',
             'label' => 'radius',
         ]);
-        $this->addField('image_border', [
+        $this->add_field('image_border', [
             "group"      => "image_options",
             "type"       => "border",
             "label"      => "border",

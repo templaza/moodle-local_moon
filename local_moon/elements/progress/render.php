@@ -22,12 +22,12 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\Style;
-use local_moon\library\Helper\SubForm;
+use local_moon\library\helper\style;
+use local_moon\library\helper\sub_form;
 $params = $this->params;
 $element = $this;
 $style = $this->style;
-$progresss     = new SubForm($params->get('progress', ''));
+$progresss     = new sub_form($params->get('progress', ''));
 if (!count($progresss->data)) {
     return false;
 }
@@ -44,10 +44,10 @@ foreach ($progresss->data as $key => $item) {
     <div class="progress-bar" style="width: '.$percent.'%">'.$percent.'%</div>
     </div>
     </div>';
-    $color    =   Style::getColor($item->params->get('color', ''));
+    $color    =   style::get_color($item->params->get('color', ''));
     if($color){
-        $element->style->child('#progress-'.$item->id.' .progress-bar')->addCss('background-color', $color['light']);
-        $element->style_dark->child('#progress-'.$item->id.' .progress-bar')->addCss('background-color', $color['dark']);
+        $element->style->child('#progress-'.$item->id.' .progress-bar')->add_css('background-color', $color['light']);
+        $element->style_dark->child('#progress-'.$item->id.' .progress-bar')->add_css('background-color', $color['dark']);
     }
 }
 $text .='</div>';
@@ -55,14 +55,14 @@ $text .='</div>';
 echo $text;
 $text_font_style =   $params->get('text_font_style');
 if (!empty($text_font_style)) {
-    Style::renderTypography('#'.$element->id.' .text-inner', $text_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .text-inner', $text_font_style, null, $element->isRoot);
 }
 
 $title_margin   =   $params->get('title_margin', '');
 if (!empty($title_margin)) {
-    Style::setSpacingStyle($element->style->child('h4'), $title_margin, 'margin');
+    style::set_spacing_style($element->style->child('h4'), $title_margin, 'margin');
 }
 $item_margin   =   $params->get('item_margin', '');
 if (!empty($item_margin)) {
-    Style::setSpacingStyle($element->style->child('.progress'), $item_margin, 'margin');
+    style::set_spacing_style($element->style->child('.progress'), $item_margin, 'margin');
 }

@@ -22,11 +22,11 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Form;
-use local_moon\library\Helper\Constants;
-use local_moon\library\Helper\Font;
-class MoonElementButton extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\form;
+use local_moon\library\helper\constants;
+use local_moon\library\helper\font;
+class moon_element_button extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -38,10 +38,10 @@ class MoonElementButton extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('widget_styles', [
+        $this->add_field('widget_styles', [
             'type'  => 'group',
             'label' => 'widget_styles',
         ]);
@@ -185,27 +185,27 @@ class MoonElementButton extends MoonElement {
                                 'columns' => 1,
                                 'preview' => false,
                                 'collapse' => true,
-                                'system_fonts' => Font::get_system_fonts(),
-                                'text_transform_options' => Font::text_transform(),
-                                'lang' => Font::font_properties(),
+                                'system_fonts' => font::get_system_fonts(),
+                                'text_transform_options' => font::text_transform(),
+                                'lang' => font::font_properties(),
                             ],
-                            'lang' => Font::font_properties(),
-                            'value' => Font::$get_default_font_value,
+                            'lang' => font::font_properties(),
+                            'value' => font::$get_default_font_value,
                         ],
                     ],
                 ]
             ],
         ];
-        $repeater   = new Form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
-        $this->addField('buttons',  [
+        $repeater   = new form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
+        $this->add_field('buttons',  [
             "group" => "general",
             "type" => "subform",
             "label" => "buttons",
             "attributes" => [
-                'form'    =>  $repeater->renderJson('subform')
+                'form'    =>  $repeater->render_json('subform')
             ],
         ]);
-        $this->addField('button_group', [
+        $this->add_field('button_group', [
             "group"          => "widget_styles",
             "type"           => "radio",
             "attributes" => [
@@ -215,7 +215,7 @@ class MoonElementButton extends MoonElement {
             "label"          => "button_group",
         ]);
 
-        $this->addField('button_size', [
+        $this->add_field('button_size', [
             "group"   => "widget_styles",
             "type"    => "list",
             "label"   => "button_size",
@@ -228,7 +228,7 @@ class MoonElementButton extends MoonElement {
             ],
         ]);
 
-        $this->addField('button_font_style', [
+        $this->add_field('button_font_style', [
             "group"      => "widget_styles",
             "conditions" => "[button_size]=='custom'",
             "label"      => "font_style",
@@ -246,23 +246,23 @@ class MoonElementButton extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
 
-        $this->addField('btn_padding', [
+        $this->add_field('btn_padding', [
             "group"      => "widget_styles",
             "conditions" => "[button_size]=='custom'",
             "type"       => "spacing",
             "label"      => "padding",
         ]);
 
-        $this->addField('btn_border_radius', [
+        $this->add_field('btn_border_radius', [
             "group"   => "widget_styles",
             "type"    => "list",
             "label"   => "border_radius",
@@ -274,7 +274,7 @@ class MoonElementButton extends MoonElement {
             ],
         ]);
 
-        $this->addField('gutter', [
+        $this->add_field('gutter', [
             "conditions" => "[button_group]==0",
             "group"      => "widget_styles",
             "type"       => "list",

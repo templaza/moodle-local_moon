@@ -22,9 +22,9 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Font;
-class MoonElementCourse_Popular extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\font;
+class moon_element_course_popular extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -36,26 +36,26 @@ class MoonElementCourse_Popular extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('title_options',  [
+        $this->add_field('title_options',  [
             "type" => "group",
             "label" => "title_options",
         ]);
-        $this->addField('item_options',  [
+        $this->add_field('item_options',  [
             "type" => "group",
             "label" => "item_options",
         ]);
-        $this->addField('image_options',  [
+        $this->add_field('image_options',  [
             "type" => "group",
             "label" => "image_options",
         ]);
-        $this->addField('slider_options',  [
+        $this->add_field('slider_options',  [
             "type" => "group",
             "label" => "slider_options",
         ]);
-        $this->addField('course_style', [
+        $this->add_field('course_style', [
             "group"      => "general",
             "type"       => "list",
             "label"      => "style",
@@ -65,19 +65,19 @@ class MoonElementCourse_Popular extends MoonElement {
                 "style2" => "style2",
             ],
         ]);
-        $this->addField('course_limit', [
+        $this->add_field('course_limit', [
             "group"       => "general",
             "type"        => "text",
             "label"       => "course_limit",
             "dynamic"     => true,
         ]);
-        $this->addField('title', [
+        $this->add_field('title', [
             "group"       => "title_options",
             "type"        => "text",
             "label"       => "title",
             "dynamic"     => true,
         ]);
-        $this->addField('title_font_style', [
+        $this->add_field('title_font_style', [
             "group"      => "title_options",
             "type"       => "typography",
             "attributes" => [
@@ -93,53 +93,53 @@ class MoonElementCourse_Popular extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value
             ],
         ]);
-        $this->addField('title_margin', [
+        $this->add_field('title_margin', [
             "group" => "title_options",
             "type"  => "spacing",
             "label" => "margin",
         ]);
-        $this->addField('item_bg_color', [
+        $this->add_field('item_bg_color', [
             "group"      => "item_options",
             "type"       => "color",
             "label"      => "background_color",
         ]);
-        $this->addField('item_border', [
+        $this->add_field('item_border', [
             "group"      => "item_options",
             "type"       => "border",
             "label"      => "border",
         ]);
-        $this->addField('item_border_radius', [
+        $this->add_field('item_border_radius', [
             'group' => 'item_options',
             'type'  => 'spacing',
             'label' => 'radius',
         ]);
 
-        $this->addField('item_card_padding', [
+        $this->add_field('item_card_padding', [
             'group'      => 'item_options',
             'type'       => 'spacing',
             'label'      => 'card_padding',
         ]);
 
-        $this->addField('content_padding', [
+        $this->add_field('content_padding', [
             'group'      => 'item_options',
             'type'       => 'spacing',
             'label'      => 'content_padding',
         ]);
-        $this->addField('image_radius', [
+        $this->add_field('image_radius', [
             'group' => 'image_options',
             'type'  => 'spacing',
             'label' => 'radius',
         ]);
 
-        $this->addField('autoplay', [
+        $this->add_field('autoplay', [
             'group'   => 'slider_options',
             'type'    => 'radio',
             "attributes" => [
@@ -149,7 +149,7 @@ class MoonElementCourse_Popular extends MoonElement {
             'label'   => 'autoplay',
         ]);
 
-        $this->addField('slider_column', [
+        $this->add_field('slider_column', [
             "group"      => "slider_options",
             "type"       => "list",
             "label"      => "slider_column",
@@ -162,12 +162,12 @@ class MoonElementCourse_Popular extends MoonElement {
                 "col-lg-2" => "6 columns",
             ],
         ]);
-        $this->addField('item_padding', [
+        $this->add_field('item_padding', [
             'group'      => 'slider_options',
             'type'       => 'spacing',
             'label'      => 'item_padding',
         ]);
-        $this->addField('navigation', [
+        $this->add_field('navigation', [
             'group'   => 'slider_options',
             'type'    => 'radio',
             "attributes" => [
@@ -177,7 +177,7 @@ class MoonElementCourse_Popular extends MoonElement {
             'label'   => 'Navigation',
         ]);
 
-        $this->addField('dot', [
+        $this->add_field('dot', [
             'group'   => 'slider_options',
             'type'    => 'radio',
             "attributes" => [
@@ -186,7 +186,7 @@ class MoonElementCourse_Popular extends MoonElement {
             'default' => 1,
             'label'   => 'Dotnav',
         ]);
-        $this->addField('dot_margin', [
+        $this->add_field('dot_margin', [
             "group" => "slider_options",
             "type"  => "spacing",
             "label" => "margin",

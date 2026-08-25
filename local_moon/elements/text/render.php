@@ -22,14 +22,14 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\Style;
-use local_moon\library\Helper\Video;
+use local_moon\library\helper\style;
+use local_moon\library\helper\video;
 $params         = $this->params;
 $title          = $params->get('heading', '');
 $html_element   = $params->get('html_element', 'h2');
 $font_style     = $params->get('font_style');
 $heading_margin = $params->get('heading_margin', '');
-$content        = Video::getVideoFromContent($params->get('content', ''));
+$content        = video::get_video_from_content($params->get('content', ''));
 $content        = format_text($content, FORMAT_HTML, ['context' => $this->context]);
 
 $content_font_style= $params->get('content_font_style');
@@ -56,14 +56,14 @@ if (!empty($content)) {
 }
 
 if (!empty($font_style)) {
-    Style::renderTypography('#'.$this->id.' .moon-content-heading', $font_style, null, $this->isRoot);
+    style::render_typography('#'.$this->id.' .moon-content-heading', $font_style, null, $this->isRoot);
 }
 if (!empty($heading_margin)) {
     $heading_style = $this->style->child('.moon-content-heading');
-    Style::setSpacingStyle($heading_style, $heading_margin, 'margin');
+    style::set_spacing_style($heading_style, $heading_margin, 'margin');
 }
 
 if (!empty($content_font_style)) {
-    Style::renderTypography('#'.$this->id.' .moon-content-text', $content_font_style, null, $this->isRoot);
-    Style::renderTypography('#'.$this->id.' .moon-content-text *', $content_font_style, null, $this->isRoot);
+    style::render_typography('#'.$this->id.' .moon-content-text', $content_font_style, null, $this->isRoot);
+    style::render_typography('#'.$this->id.' .moon-content-text *', $content_font_style, null, $this->isRoot);
 }

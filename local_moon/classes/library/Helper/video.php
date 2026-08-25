@@ -1,0 +1,123 @@
+<?php
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle. If not, see <https://www.gnu.org/licenses/>.
+
+/**
+ * @package   Moon Framework
+ * @author    Moon Framework Team https://moonframe.work
+ * @copyright Copyright (C) 2026 MoonFrame.work.
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
+ */
+
+/**
+ * @package   Astroid Framework
+ * @author    Astroid Framework Team https://astroidframe.work
+ * @copyright Copyright (C) 2023 AstroidFrame.work.
+ * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
+ */
+
+namespace local_moon\library\helper;
+
+defined('MOODLE_INTERNAL') or die;
+
+class video
+{
+    public static function _id($type, $url)
+    {
+        $parts = parse_url($url);
+        $id = '';
+        $query = null;
+        switch ($type) {
+            case 'youtube':
+                if (isset($parts['query'])) {
+                    parse_str($parts['query'], $query);
+                    $id = (isset($query['v']) ? $query['v'] : '');
+                }
+                break;
+            case 'vimeo':
+                $id = (isset($parts['path']) ? str_replace('/', '', $parts['path']) : '');
+                break;
+        }
+        return $id;
+    }
+
+    public static function _youtube($id, $meta = false, $autoplay = 0)
+    {
+        $content = '';
+        if ($meta) {
+            $content .= '<meta itemprop="thumbnailURL" content="https://i.ytimg.com/vi/' . $id . '/maxresdefault.jpg" /><meta itemprop="embedURL" content="https://youtube.googleapis.com/v/' . $id . '" />';
+        }
+        $content = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' . $id . '?rel=0&amp;showinfo=0" style="border:0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+        return $content;
+    }
+
+    public static function _vimeo($id, $meta = false, $autoplay = 0)
+    {
+        $content = '';
+        if ($meta) {
+            $content .= '<meta itemprop="thumbnailURL" content="http://i.vimeocdn.com/video/' . $id . '.jpg" /><meta itemprop="embedURL" content="https://vimeo.com/' . $id . '" />';
+        }
+        if ($autoplay) {
+            $id .= '?autoplay=1&loop=1&muted=1&autopause=0';
+        }
+        $content = '<iframe src="https://player.vimeo.com/video/' . $id . '" width="640" height="269" style="border:0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+        return $content;
+    }
+
+    public static function get_video_by_type_url($type = '', $url = '', $meta = false, $autoplay = 0)
+    {
+        $id = self::_id($type, $url);
+        if (empty($id)) {
+            return;
+        }
+        $method = '_' . $type;
+        if (!method_exists(self::class, $method)) {
+            return;
+        }
+        return self::$method($id, $meta, $autoplay);
+    }
+
+    public static function get_video_thumbnail_by_type_url($type = '', $url = '')
+    {
+        $thumbnail = '';
+        $id = self::_id($type, $url);
+        if (empty($id)) return $thumbnail;
+
+        switch ($type) {
+            case 'youtube':
+                $thumbnail = 'https://i.ytimg.com/vi/' . $id . '/maxresdefault.jpg';
+                break;
+            case 'vimeo':
+                $thumbnail = 'https://i.vimeocdn.com/video/' . $id . '_640.webp';
+                break;
+        }
+
+        return $thumbnail;
+    }
+
+    public static function get_video_from_content($content = '') {
+        return preg_replace_callback('/<a href="(\S*?youtube\.com\/.+?|\S*?vimeo\.com\/.+?)">.+?<\/a>/i', function ($matches) {
+            $html = '';
+            if (strpos($matches[1], 'youtube')) {
+                $html = self::get_video_by_type_url('youtube', $matches[1], true);
+            } elseif (strpos($matches[1], 'vimeo')) {
+                $html = self::get_video_by_type_url('vimeo', $matches[1], true);
+            }
+            if ($html) {
+                return '<div itemprop="VideoObject" itemscope itemtype="https://schema.org/VideoObject" class="ratio ratio-16x9 article-video">'.$html.'</div>';
+            }
+        }, $content);
+    }
+}

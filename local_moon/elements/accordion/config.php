@@ -22,10 +22,10 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Form;
-use local_moon\library\Helper\Font;
-class MoonElementAccordion extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\form;
+use local_moon\library\helper\font;
+class moon_element_accordion extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -37,25 +37,25 @@ class MoonElementAccordion extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('widget_styles', [
+        $this->add_field('widget_styles', [
             'type'  => 'group',
             'label' => 'widget_styles',
         ]);
 
-        $this->addField('title_options', [
+        $this->add_field('title_options', [
             'type'  => 'group',
             'label' => 'title_options',
         ]);
 
-        $this->addField('icon_options', [
+        $this->add_field('icon_options', [
             'type'  => 'group',
             'label' => 'icon_options',
         ]);
 
-        $this->addField('content_options', [
+        $this->add_field('content_options', [
             'type'  => 'group',
             'label' => 'content_options',
         ]);
@@ -82,17 +82,17 @@ class MoonElementAccordion extends MoonElement {
                 ]
             ],
         ];
-        $repeater   = new Form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
-        $this->addField('accordions',  [
+        $repeater   = new form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
+        $this->add_field('accordions',  [
             "group" => "general",
             "type" => "subform",
             "label" => "accordion_items",
             "attributes" => [
-                'form'    =>  $repeater->renderJson('subform')
+                'form'    =>  $repeater->render_json('subform')
             ],
         ]);
 
-        $this->addField('style', [
+        $this->add_field('style', [
             'group'   => 'widget_styles',
             'type'    => 'list',
             'label'   => 'style',
@@ -103,7 +103,7 @@ class MoonElementAccordion extends MoonElement {
             ],
         ]);
 
-        $this->addField('collapse', [
+        $this->add_field('collapse', [
             'group'   => 'widget_styles',
             'type'    => 'list',
             'label'   => 'collapse',
@@ -114,25 +114,25 @@ class MoonElementAccordion extends MoonElement {
             ],
         ]);
 
-        $this->addField('always_open', [
+        $this->add_field('always_open', [
             'group'      => 'widget_styles',
             'type'       => 'radio',
             'label'      => 'always_open',
             'default'    => 0,
             'attributes' => ['role' => 'switch'],
         ]);
-        $this->addField('item_radius', [
+        $this->add_field('item_radius', [
             'group' => 'widget_styles',
             'type'  => 'spacing',
             'label' => 'radius',
         ]);
-        $this->addField('item_margin', [
+        $this->add_field('item_margin', [
             'group' => 'widget_styles',
             'type'  => 'spacing',
             'label' => 'margin',
         ]);
 
-        $this->addField('color_settings', [
+        $this->add_field('color_settings', [
             'group'   => 'widget_styles',
             'type'    => 'radio',
             'attributes' => ['width'   => 'full',],
@@ -145,48 +145,48 @@ class MoonElementAccordion extends MoonElement {
             ],
         ]);
 
-        $this->addField('color', [
+        $this->add_field('color', [
             'group'      => 'widget_styles',
             'type'       => 'color',
             'label'      => 'color',
             'conditions' => "[color_settings]=='color'",
         ]);
 
-        $this->addField('color_hover', [
+        $this->add_field('color_hover', [
             'group'      => 'widget_styles',
             'type'       => 'color',
             'label'      => 'color',
             'conditions' => "[color_settings]=='hover'",
         ]);
 
-        $this->addField('color_active', [
+        $this->add_field('color_active', [
             'group'      => 'widget_styles',
             'type'       => 'color',
             'label'      => 'color',
             'conditions' => "[color_settings]=='active'",
         ]);
 
-        $this->addField('bgcolor', [
+        $this->add_field('bgcolor', [
             'group'      => 'widget_styles',
             'type'       => 'color',
             'label'      => 'background_color',
             'conditions' => "[color_settings]=='color'",
         ]);
 
-        $this->addField('bgcolor_hover', [
+        $this->add_field('bgcolor_hover', [
             'group'      => 'widget_styles',
             'type'       => 'color',
             'label'      => 'background_color',
             'conditions' => "[color_settings]=='hover'",
         ]);
 
-        $this->addField('bgcolor_active', [
+        $this->add_field('bgcolor_active', [
             'group'      => 'widget_styles',
             'type'       => 'color',
             'label'      => 'background_color',
             'conditions' => "[color_settings]=='active'",
         ]);
-        $this->addField('box_shadow', [
+        $this->add_field('box_shadow', [
             'group'   => 'widget_styles',
             'type'    => 'list',
             'name'    => 'box_shadow',
@@ -202,7 +202,7 @@ class MoonElementAccordion extends MoonElement {
             ],
         ]);
 
-        $this->addField('box_shadow_hover', [
+        $this->add_field('box_shadow_hover', [
             'group'   => 'widget_styles',
             'type'    => 'list',
             'name'    => 'box_shadow_hover',
@@ -218,7 +218,7 @@ class MoonElementAccordion extends MoonElement {
             ],
         ]);
 
-        $this->addField('title_font_style', [
+        $this->add_field('title_font_style', [
             'group'   => 'title_options',
             'type'    => 'typography',
             'label'   => 'font_style',
@@ -235,30 +235,30 @@ class MoonElementAccordion extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
-        $this->addField('title_padding', [
+        $this->add_field('title_padding', [
             "group"      => "title_options",
             "type"       => "spacing",
             "label"      => "padding",
         ]);
-        $this->addField('title_border', [
+        $this->add_field('title_border', [
             "group"      => "title_options",
             "type"       => "border",
             "label"      => "border",
         ]);
-        $this->addField('title_radius', [
+        $this->add_field('title_radius', [
             'group' => 'title_options',
             'type'  => 'spacing',
             'label' => 'radius',
         ]);
-        $this->addField('icon_type', [
+        $this->add_field('icon_type', [
             'group'   => 'icon_options',
             'type'    => 'list',
             'label'   => 'icon_type',
@@ -268,18 +268,18 @@ class MoonElementAccordion extends MoonElement {
                 'fontawesome'  => 'fontawesome',
             ],
         ]);
-        $this->addField('fa_icon', [
+        $this->add_field('fa_icon', [
             'group'      => 'icon_options',
             'type'       => 'icons',
             'label'      => 'fa_icon',
             "conditions" => "[icon_type]=='fontawesome'",
         ]);
-        $this->addField('icon_color', [
+        $this->add_field('icon_color', [
             'group'      => 'icon_options',
             'type'       => 'color',
             'label'      => 'icon_color',
         ]);
-        $this->addField('content_font_style', [
+        $this->add_field('content_font_style', [
             'group'   => 'content_options',
             'type'    => 'typography',
             'label'   => 'font_style',
@@ -296,20 +296,20 @@ class MoonElementAccordion extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
-        $this->addField('content_padding', [
+        $this->add_field('content_padding', [
             "group"      => "content_options",
             "type"       => "spacing",
             "label"      => "padding",
         ]);
-        $this->addField('bgcolor_content', [
+        $this->add_field('bgcolor_content', [
             'group'      => 'content_options',
             'type'       => 'color',
             'label'      => 'background_color',

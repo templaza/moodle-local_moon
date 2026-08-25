@@ -23,10 +23,10 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-use local_moon\library\Framework;
-use local_moon\library\Helper\Constants;
+use local_moon\library\framework;
+use local_moon\library\helper\constants;
 
-Framework::getTheme()->addFields(
+framework::get_theme()->add_fields(
     'layout',
     [
         'label' => 'layout',
@@ -41,7 +41,7 @@ Framework::getTheme()->addFields(
             'layout' => [
                 "group" => "layout_group",
                 "type" => "mainlayouts",
-                "default" => Constants::getDefaultLayout()
+                "default" => constants::get_default_layout()
             ],
             'astroidcontentlayouts' => [
                 "group" => "layout_group",

@@ -22,9 +22,9 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\Style;
-use local_moon\library\Blocks\CourseHandler;
-use local_moon\library\Framework;
+use local_moon\library\helper\style;
+use local_moon\library\blocks\course_handler;
+use local_moon\library\framework;
 
 $params         = $this->params;
 $style = $this->style;
@@ -49,12 +49,12 @@ $attrs_slider[] = '';
 $attrs_slider[] = (  $autoplay  ) ? 'autoplay: 1' : '';
 $attrs_slider   = ' data-uk-slider="' . implode( '; ', array_filter( $attrs_slider ) ) . '"';
 
-$document = Framework::getDocument();
-$document->loadUIKit();
+$document = framework::get_document();
+$document->load_ui_kit();
 
-$moonCourseHandler = new CourseHandler();
+$moonCourseHandler = new course_handler();
 
-$courses = $moonCourseHandler->moonCoursePopular($course_limit);
+$courses = $moonCourseHandler->moon_course_popular($course_limit);
 
 if (empty($courses)) {
    echo  get_string('nocourses', 'local_moon');
@@ -66,8 +66,8 @@ $text .= '<div class="uk-slider-items row flex-nowrap">';
 $j=1;
 if($course_style=='style2'){
     foreach ($courses as $course) {
-        $moonCourse = $moonCourseHandler->moonGetCourseDetails($course->id);
-        $courseDescriptionRaw = $moonCourseHandler->moonGetCourseDescription($course->id, 5000);
+        $moonCourse = $moonCourseHandler->moon_get_course_details($course->id);
+        $courseDescriptionRaw = $moonCourseHandler->moon_get_course_description($course->id, 5000);
         $wordsArray = explode(' ', strip_tags($courseDescriptionRaw ?? ''));
         $first20Words = array_slice($wordsArray, 0, 20);
         $moonCourseDescription = implode(' ', $first20Words);
@@ -80,7 +80,7 @@ if($course_style=='style2'){
         } else {
             $rating_block = '';
         }
-        $cp = $moonCourseHandler->moonGetCourseprice($course->id);
+        $cp = $moonCourseHandler->moon_get_courseprice($course->id);
         $cp_badge = '';
         if ($cp->hascourseprice) {
             $cp_badge = '<span class="cp badge-price uk-position-bottom-left">'.$cp->courseprice->currency.' '.number_format($cp->courseprice->cost, 2, '.', '').'</span>';
@@ -107,8 +107,8 @@ if($course_style=='style2'){
                                 </h3>';
         $text .='<div class="course-description">'.$moonCourseDescription.'</div>';
 
-        $studentcount = $moonCourseHandler->moonCountstudents($course->id);
-        $sectioncount = $moonCourseHandler->moonCourseSections($course->id);
+        $studentcount = $moonCourseHandler->moon_countstudents($course->id);
+        $sectioncount = $moonCourseHandler->moon_course_sections($course->id);
         $text .= '<div class="course-middle">';
         $text .= '<div class="course-learners course-middle-left"><i class="fa-solid fa-users"></i>'.$studentcount .' '. get_string('course-learners', 'local_moon').'</div>';
         $text .= '<div class="course-lectures"><i class="fa-solid fa-file-lines"></i>'.$sectioncount .' '. get_string('course-lectures', 'local_moon').'</div>';
@@ -187,8 +187,8 @@ if($course_style=='style2'){
     }
 }else{
     foreach ($courses as $course) {
-        $moonCourse = $moonCourseHandler->moonGetCourseDetails($course->id);
-        $courseDescriptionRaw = $moonCourseHandler->moonGetCourseDescription($course->id, 5000);
+        $moonCourse = $moonCourseHandler->moon_get_course_details($course->id);
+        $courseDescriptionRaw = $moonCourseHandler->moon_get_course_description($course->id, 5000);
         $wordsArray = explode(' ', strip_tags($courseDescriptionRaw ?? ''));
         $first20Words = array_slice($wordsArray, 0, 15);
         $moonCourseDescription = implode(' ', $first20Words);
@@ -221,13 +221,13 @@ if($course_style=='style2'){
                                 </h3>';
         $text .='<div class="course-description">'.$moonCourseDescription.'</div>';
 
-        $studentcount = $moonCourseHandler->moonCountstudents($course->id);
-        $sectioncount = $moonCourseHandler->moonCourseSections($course->id);
+        $studentcount = $moonCourseHandler->moon_countstudents($course->id);
+        $sectioncount = $moonCourseHandler->moon_course_sections($course->id);
         $text .= '<div class="course-middle">';
         $text .= '<div class="course-learners course-middle-left"><i class="fa-solid fa-users"></i>'.$studentcount .' '. get_string('course-learners', 'local_moon').'</div>';
         $text .= '<div class="course-lectures"><i class="fa-solid fa-file-lines"></i>'.$sectioncount .' '. get_string('course-lectures', 'local_moon').'</div>';
         $text .= '</div>';
-        $cp = $moonCourseHandler->moonGetCourseprice($course->id);
+        $cp = $moonCourseHandler->moon_get_courseprice($course->id);
         $cp_badge = '';
         if ($cp->hascourseprice) {
             $cp_badge = '<span class="cp badge-price">'.$cp->courseprice->currency.' '.number_format($cp->courseprice->cost, 2, '.', '').'</span>';
@@ -325,40 +325,40 @@ $text .= '</div>';
 echo $text;
 
 if (!empty($title_style)) {
-    Style::renderTypography('#'.$this->id.' .coursename a', $title_style, null, $this->isRoot);
+    style::render_typography('#'.$this->id.' .coursename a', $title_style, null, $this->isRoot);
 }
 if (!empty($dot_margin)) {
-    Style::setSpacingStyle($this->style->child('.uk-dotnav'), $dot_margin, 'margin');
+    style::set_spacing_style($this->style->child('.uk-dotnav'), $dot_margin, 'margin');
 }
 if (!empty($item_padding)) {
-    Style::setSpacingStyle($this->style->child('.uk-slider-items > *'), $item_padding, );
+    style::set_spacing_style($this->style->child('.uk-slider-items > *'), $item_padding, );
 }
 $item_card_padding   =   $params->get('item_card_padding', '');
 if (!empty($item_card_padding)) {
-    Style::setSpacingStyle($this->style->child('.education-courses-card'), $item_card_padding);
+    style::set_spacing_style($this->style->child('.education-courses-card'), $item_card_padding);
 }
 $content_padding   =   $params->get('content_padding', '');
 if (!empty($content_padding)) {
-    Style::setSpacingStyle($this->style->child('.summary'), $content_padding);
+    style::set_spacing_style($this->style->child('.summary'), $content_padding);
 }
 $content_margin   =   $params->get('content_margin', '');
 if (!empty($content_margin)) {
-    Style::setSpacingStyle($this->style->child('.summary'), $content_margin,'margin');
+    style::set_spacing_style($this->style->child('.summary'), $content_margin,'margin');
 }
-$item_bg_color     = Style::getColor($params->get('item_bg_color', ''));
+$item_bg_color     = style::get_color($params->get('item_bg_color', ''));
 
-$style->child('.education-courses-card')->addCss('background-color', $item_bg_color['light']);
-$style_dark->child('.education-courses-card')->addCss('background-color', $item_bg_color['dark']);
+$style->child('.education-courses-card')->add_css('background-color', $item_bg_color['light']);
+$style_dark->child('.education-courses-card')->add_css('background-color', $item_bg_color['dark']);
 $item_border    =   json_decode($params->get('item_border', ''), true);
 if (!empty($item_border)) {
-    Style::addBorderStyle('#'. $element->id . ' .education-courses-card', $item_border, 'global', $element->isRoot);
+    style::add_border_style('#'. $element->id . ' .education-courses-card', $item_border, 'global', $element->isRoot);
 }
 $item_radius=   $params->get('item_border_radius', '');
 if (!empty($item_radius)) {
-    Style::setSpacingStyle($element->style->child('.education-courses-card'), $item_radius,'radius');
+    style::set_spacing_style($element->style->child('.education-courses-card'), $item_radius,'radius');
 }
 $image_radius=   $params->get('image_radius', '');
 if (!empty($image_radius)) {
-    Style::setSpacingStyle($element->style->child('.image_course_url'), $image_radius,'radius');
-    Style::setSpacingStyle($element->style->child('.image_course_url img'), $image_radius,'radius');
+    style::set_spacing_style($element->style->child('.image_course_url'), $image_radius,'radius');
+    style::set_spacing_style($element->style->child('.image_course_url img'), $image_radius,'radius');
 }

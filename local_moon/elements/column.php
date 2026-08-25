@@ -22,8 +22,8 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-class MoonElementColumn extends MoonElement {
+use local_moon\library\helper\moon_element;
+class moon_element_column extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -33,16 +33,16 @@ class MoonElementColumn extends MoonElement {
         ]);
     }
 
-    public function setFields() : void
+    public function set_fields() : void
     {
-        $this->setFieldSet('design-settings');
+        $this->set_field_set('design-settings');
 
-        $this->addField('device_order_settings', [
+        $this->add_field('device_order_settings', [
             "type"  => "group",
             "label" => "device_order",
         ]);
 
-        $this->addField('column_order_xl', [
+        $this->add_field('column_order_xl', [
             "group"   => "device_order_settings",
             "type"    => "list",
             "label"   => "xlarge_order",
@@ -64,7 +64,7 @@ class MoonElementColumn extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_order_lg', [
+        $this->add_field('column_order_lg', [
             "group"   => "device_order_settings",
             "type"    => "list",
             "label"   => "large_order",
@@ -86,7 +86,7 @@ class MoonElementColumn extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_order_md', [
+        $this->add_field('column_order_md', [
             "group"   => "device_order_settings",
             "type"    => "list",
             "label"   => "medium_order",
@@ -108,7 +108,7 @@ class MoonElementColumn extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_order_sm', [
+        $this->add_field('column_order_sm', [
             "group"   => "device_order_settings",
             "type"    => "list",
             "label"   => "small_order",
@@ -130,7 +130,7 @@ class MoonElementColumn extends MoonElement {
             ],
         ]);
 
-        $this->addField('column_order_xs', [
+        $this->add_field('column_order_xs', [
             "group"   => "device_order_settings",
             "type"    => "list",
             "label"   => "xsmall_order",

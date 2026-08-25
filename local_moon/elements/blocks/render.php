@@ -22,6 +22,6 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\Utilities;
+use local_moon\library\helper\utilities;
 $region = $this->params->get('region', '');
-echo Utilities::loadRegion($region);
+echo utilities::load_region($region);

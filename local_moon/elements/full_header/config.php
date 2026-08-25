@@ -22,8 +22,8 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-class MoonElementFull_Header extends MoonElement {
+use local_moon\library\helper\moon_element;
+class moon_element_full_header extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -36,14 +36,14 @@ class MoonElementFull_Header extends MoonElement {
             'multiple' => false,
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('content_options', [
+        $this->add_field('content_options', [
             'type'  => 'group',
             'label' => 'content_options',
         ]);
-        $this->addField('only_admin', [
+        $this->add_field('only_admin', [
             "group"   => "general",
             "type"    => "radio",
             "default" => "1",

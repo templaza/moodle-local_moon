@@ -22,10 +22,10 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Font;
-use local_moon\library\Blocks\CourseHandler;
-class MoonElementCourse_Category_Tab extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\font;
+use local_moon\library\blocks\course_handler;
+class moon_element_course_category_tab extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -37,25 +37,25 @@ class MoonElementCourse_Category_Tab extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $moonCourseHandler = new CourseHandler();
-        $course_categories = $moonCourseHandler->moonCourseAllCategory();
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $moonCourseHandler = new course_handler();
+        $course_categories = $moonCourseHandler->moon_course_all_category();
+        $this->set_field_set('general-settings');
 
-        $this->addField('title_options',  [
+        $this->add_field('title_options',  [
             "type" => "group",
             "label" => "title_options",
         ]);
-        $this->addField('tab_options',  [
+        $this->add_field('tab_options',  [
             "type" => "group",
             "label" => "tab_options",
         ]);
-        $this->addField('slider_options',  [
+        $this->add_field('slider_options',  [
             "type" => "group",
             "label" => "slider_options",
         ]);
 
-        $this->addField('layout', [
+        $this->add_field('layout', [
             "group"      => "general",
             "type"       => "list",
             "label"      => "layout",
@@ -66,14 +66,14 @@ class MoonElementCourse_Category_Tab extends MoonElement {
             ],
         ]);
 
-        $this->addField('course_category', [
+        $this->add_field('course_category', [
             "group"      => "general",
             "type"       => "multiselect",
             "label"      => "choose_category",
             "default"    => ['1','2'],
             "options"    => $course_categories,
         ]);
-        $this->addField('course_limit', [
+        $this->add_field('course_limit', [
             "group"       => "general",
             "type"        => "text",
             "label"       => "course_limit",
@@ -81,7 +81,7 @@ class MoonElementCourse_Category_Tab extends MoonElement {
             "dynamic"     => true,
         ]);
 
-        $this->addField('title_font_style', [
+        $this->add_field('title_font_style', [
             "group"      => "title_options",
             "type"       => "typography",
             "attributes" => [
@@ -97,26 +97,26 @@ class MoonElementCourse_Category_Tab extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value
             ],
         ]);
-        $this->addField('title_margin', [
+        $this->add_field('title_margin', [
             "group" => "title_options",
             "type"  => "spacing",
             "label" => "margin",
         ]);
-        $this->addField('tab_margin', [
+        $this->add_field('tab_margin', [
             "group" => "tab_options",
             "type"  => "spacing",
             "label" => "margin",
         ]);
 
-        $this->addField('autoplay', [
+        $this->add_field('autoplay', [
             'group'   => 'slider_options',
             'type'    => 'radio',
             "attributes" => [
@@ -126,7 +126,7 @@ class MoonElementCourse_Category_Tab extends MoonElement {
             'label'   => 'autoplay',
             "conditions" => "[layout]=='style2'",
         ]);
-        $this->addField('slider_column', [
+        $this->add_field('slider_column', [
             "group"      => "slider_options",
             "type"       => "list",
             "label"      => "slider_column",
@@ -141,7 +141,7 @@ class MoonElementCourse_Category_Tab extends MoonElement {
             "conditions" => "[layout]=='style2'",
         ]);
 
-        $this->addField('navigation', [
+        $this->add_field('navigation', [
             'group'   => 'slider_options',
             'type'    => 'radio',
             "attributes" => [
@@ -151,38 +151,38 @@ class MoonElementCourse_Category_Tab extends MoonElement {
             'label'   => 'Navigation',
             "conditions" => "[layout]=='style2'",
         ]);
-        $this->addField('navigation_color', [
+        $this->add_field('navigation_color', [
             "group"      => "slider_options",
             "type"       => "color",
             "label"      => "color",
             'conditions' => "[navigation]==1 AND [layout]=='style2'",
         ]);
-        $this->addField('navigation_bg_color', [
+        $this->add_field('navigation_bg_color', [
             "group"      => "slider_options",
             "type"       => "color",
             "label"      => "background_color",
             'conditions' => "[navigation]==1 AND [layout]=='style2'",
         ]);
-        $this->addField('navigation_color_hover', [
+        $this->add_field('navigation_color_hover', [
             "group"      => "slider_options",
             "type"       => "color",
             "label"      => "color_hover",
             'conditions' => "[navigation]==1 AND [layout]=='style2'",
         ]);
-        $this->addField('navigation_bg_color_hover', [
+        $this->add_field('navigation_bg_color_hover', [
             "group"      => "slider_options",
             "type"       => "color",
             "label"      => "background_hover_color",
             'conditions' => "[navigation]==1 AND [layout]=='style2'",
         ]);
-        $this->addField('navigation_padding', [
+        $this->add_field('navigation_padding', [
             'group'      => 'slider_options',
             'type'       => 'spacing',
             'label'      => 'padding',
             'conditions' => "[navigation]==1 AND [layout]=='style2'",
         ]);
 
-        $this->addField('dot', [
+        $this->add_field('dot', [
             'group'   => 'slider_options',
             'type'    => 'radio',
             "attributes" => [
@@ -192,7 +192,7 @@ class MoonElementCourse_Category_Tab extends MoonElement {
             'label'   => 'Dotnav',
             'conditions' => "[navigation]==1 AND [layout]=='style2'",
         ]);
-        $this->addField('dot_margin', [
+        $this->add_field('dot_margin', [
             "group" => "slider_options",
             "type"  => "spacing",
             "label" => "margin",

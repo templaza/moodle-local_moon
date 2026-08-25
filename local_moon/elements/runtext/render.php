@@ -22,12 +22,12 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\Style;
-use local_moon\library\Helper\SubForm;
+use local_moon\library\helper\style;
+use local_moon\library\helper\sub_form;
 $params = $this->params;
 $element = $this;
 $style = $this->style;
-$texts     = new SubForm($params->get('texts', ''));
+$texts     = new sub_form($params->get('texts', ''));
 if (!count($texts->data)) {
     return false;
 }
@@ -53,36 +53,36 @@ foreach ($texts->data as $key => $text) {
     echo '</div>';
     echo '</div>';
 
-    $title_color          =   Style::getColor($text->params->get('title_color', ''));
-    $icon_color          =   Style::getColor($text->params->get('icon_color', ''));
+    $title_color          =   style::get_color($text->params->get('title_color', ''));
+    $icon_color          =   style::get_color($text->params->get('icon_color', ''));
     if($title_color){
-        $element->style->child('#runtext-'.$text->id.' .text-inner')->addCss('color', $title_color['light']);
-        $element->style_dark->child('#runtext-'.$text->id.' .text-inner')->addCss('color', $title_color['dark']);
+        $element->style->child('#runtext-'.$text->id.' .text-inner')->add_css('color', $title_color['light']);
+        $element->style_dark->child('#runtext-'.$text->id.' .text-inner')->add_css('color', $title_color['dark']);
     }
     if($icon_color){
-        $element->style->child('#runtext-'.$text->id.' i')->addCss('color', $icon_color['light']);
-        $element->style_dark->child('#runtext-'.$text->id.' i')->addCss('color', $icon_color['dark']);
+        $element->style->child('#runtext-'.$text->id.' i')->add_css('color', $icon_color['light']);
+        $element->style_dark->child('#runtext-'.$text->id.' i')->add_css('color', $icon_color['dark']);
     }
 }
 echo '</div></div></div></div></div>';
 
 $text_font_style =   $params->get('text_font_style');
 if (!empty($text_font_style)) {
-    Style::renderTypography('#'.$element->id.' .text-inner', $text_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .text-inner', $text_font_style, null, $element->isRoot);
 }
 
 $title_icon_size        =   $params->get('title_icon_size', '30');
 $icon_size = json_decode($title_icon_size, true);
 if (json_last_error() === JSON_ERROR_NONE && is_array($icon_size)) {
-    $element->style->child('.text-icon i')->addResponsiveCSS('font-size', $icon_size, $icon_size['postfix']);
+    $element->style->child('.text-icon i')->add_responsive_css('font-size', $icon_size, $icon_size['postfix']);
 }
 
 $icon_margin   =   $params->get('icon_margin', '');
 if (!empty($icon_margin)) {
-    Style::setSpacingStyle($element->style->child('.text-icon'), $icon_margin, 'margin');
+    style::set_spacing_style($element->style->child('.text-icon'), $icon_margin, 'margin');
 }
 
 $item_margin   =   $params->get('item_margin', '');
 if (!empty($item_margin)) {
-    Style::setSpacingStyle($element->style->child('.holder'), $item_margin, 'margin');
+    style::set_spacing_style($element->style->child('.holder'), $item_margin, 'margin');
 }

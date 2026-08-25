@@ -22,9 +22,9 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\Style;
-use local_moon\library\Blocks\BlogHandler;
-use local_moon\library\Framework;
+use local_moon\library\helper\style;
+use local_moon\library\blocks\blog_handler;
+use local_moon\library\framework;
 
 $params         = $this->params;
 $style = $this->style;
@@ -43,10 +43,10 @@ $navigation         = $params->get('navigation', 0);
 $dot                = $params->get('dot', 1);
 $category           = $params->get('course_category', '');
 $slider_column      = $params->get('slider_column', 'col-lg-4');
-$nav_color     = Style::getColor($params->get('navigation_color', ''));
-$nav_hover_color     = Style::getColor($params->get('navigation_color_hover', ''));
-$nav_bg_color     = Style::getColor($params->get('navigation_bg_color', ''));
-$nav_bg_hover_color     = Style::getColor($params->get('navigation_bg_color_hover', ''));
+$nav_color     = style::get_color($params->get('navigation_color', ''));
+$nav_hover_color     = style::get_color($params->get('navigation_color_hover', ''));
+$nav_bg_color     = style::get_color($params->get('navigation_bg_color', ''));
+$nav_bg_hover_color     = style::get_color($params->get('navigation_bg_color_hover', ''));
 
 $dot_margin =  $params->get('dot_margin', '');
 $meta_margin =  $params->get('meta_margin', '');
@@ -114,10 +114,10 @@ if ($media_position == 'left') {
     $img_cover = 'data-uk-cover';
     $img_cover_container = ' uk-height-1-1 uk-cover-container';
 }
-$document = Framework::getDocument();
-$document->loadUIKit();
+$document = framework::get_document();
+$document->load_ui_kit();
 
-$moonBlog = new BlogHandler();
+$moonBlog = new blog_handler();
 
 $blog_since =  $params->get('blog_since', 604800);
 
@@ -392,77 +392,77 @@ foreach ($entries as $entryid => $entry):
 echo $text;
 
 if (!empty($title_style)) {
-    Style::renderTypography('#'.$this->id.' .coursename a', $title_style, null, $this->isRoot);
+    style::render_typography('#'.$this->id.' .coursename a', $title_style, null, $this->isRoot);
 }
 if (!empty($dot_margin)) {
-    Style::setSpacingStyle($this->style->child('.uk-dotnav'), $dot_margin, 'margin');
+    style::set_spacing_style($this->style->child('.uk-dotnav'), $dot_margin, 'margin');
 }
 if (!empty($meta_style)) {
-    Style::renderTypography('#'.$this->id.' .meta li span', $meta_style, null, $this->isRoot);
+    style::render_typography('#'.$this->id.' .meta li span', $meta_style, null, $this->isRoot);
 }
 if (!empty($meta_margin)) {
-    Style::setSpacingStyle($this->style->child('.meta'), $meta_margin, 'margin');
+    style::set_spacing_style($this->style->child('.meta'), $meta_margin, 'margin');
 }
-$style->child('.uk-slidenav')->addCss('color', $nav_color['light']);
-$style_dark->child('.uk-slidenav')->addCss('color', $nav_color['dark']);
-$style->child('.uk-slidenav:hover')->addCss('color', $nav_hover_color['light']);
-$style_dark->child('.uk-slidenav:hover')->addCss('color', $nav_hover_color['dark']);
+$style->child('.uk-slidenav')->add_css('color', $nav_color['light']);
+$style_dark->child('.uk-slidenav')->add_css('color', $nav_color['dark']);
+$style->child('.uk-slidenav:hover')->add_css('color', $nav_hover_color['light']);
+$style_dark->child('.uk-slidenav:hover')->add_css('color', $nav_hover_color['dark']);
 
-$style->child('.uk-slidenav')->addCss('background-color', $nav_bg_color['light']);
-$style_dark->child('.uk-slidenav')->addCss('background-color', $nav_bg_color['dark']);
-$style->child('.uk-slidenav:hover')->addCss('background-color', $nav_bg_hover_color['light']);
-$style_dark->child('.uk-slidenav:hover')->addCss('background-color', $nav_bg_hover_color['dark']);
+$style->child('.uk-slidenav')->add_css('background-color', $nav_bg_color['light']);
+$style_dark->child('.uk-slidenav')->add_css('background-color', $nav_bg_color['dark']);
+$style->child('.uk-slidenav:hover')->add_css('background-color', $nav_bg_hover_color['light']);
+$style_dark->child('.uk-slidenav:hover')->add_css('background-color', $nav_bg_hover_color['dark']);
 
 $nav_padding   =   $params->get('navigation_padding', '');
 if (!empty($nav_padding)) {
-    Style::setSpacingStyle($this->style->child('.uk-slidenav'), $nav_padding);
+    style::set_spacing_style($this->style->child('.uk-slidenav'), $nav_padding);
 }
 $item_content_padding   =   $params->get('item_content_padding', '');
 if (!empty($item_content_padding)) {
-    Style::setSpacingStyle($this->style->child('.content'), $item_content_padding);
+    style::set_spacing_style($this->style->child('.content'), $item_content_padding);
 }
 $item_padding   =   $params->get('item_padding', '');
 if (!empty($item_padding)) {
-    Style::setSpacingStyle($this->style->child('.moon-blog-card'), $item_padding);
+    style::set_spacing_style($this->style->child('.moon-blog-card'), $item_padding);
 }
 $title_margin   =   $params->get('title_margin', '');
 if (!empty($title_margin)) {
-    Style::setSpacingStyle($this->style->child('.blog-title'), $title_margin,'margin');
+    style::set_spacing_style($this->style->child('.blog-title'), $title_margin,'margin');
 }
 $image_margin   =   $params->get('image_margin', '');
 if (!empty($image_margin)) {
-    Style::setSpacingStyle($this->style->child('.image'), $image_margin,'margin');
+    style::set_spacing_style($this->style->child('.image'), $image_margin,'margin');
 }
 
-$item_bg_color     = Style::getColor($params->get('item_bg_color', ''));
+$item_bg_color     = style::get_color($params->get('item_bg_color', ''));
 
-$style->child('.moon-blog-card')->addCss('background-color', $item_bg_color['light']);
-$style_dark->child('.moon-blog-card')->addCss('background-color', $item_bg_color['dark']);
+$style->child('.moon-blog-card')->add_css('background-color', $item_bg_color['light']);
+$style_dark->child('.moon-blog-card')->add_css('background-color', $item_bg_color['dark']);
 $item_border    =   json_decode($params->get('item_border', ''), true);
 if (!empty($item_border)) {
-    Style::addBorderStyle('#'. $element->id . ' .moon-blog-card', $item_border, 'global', $element->isRoot);
+    style::add_border_style('#'. $element->id . ' .moon-blog-card', $item_border, 'global', $element->isRoot);
 }
 $item_radius=   $params->get('item_border_radius', '');
 if (!empty($item_radius)) {
-    Style::setSpacingStyle($element->style->child('.moon-blog-card'), $item_radius,'radius');
+    style::set_spacing_style($element->style->child('.moon-blog-card'), $item_radius,'radius');
 }
 $image_border_radius=   $params->get('image_border_radius', '');
 if (!empty($image_border_radius)) {
-    Style::setSpacingStyle($element->style->child('.image'), $image_border_radius,'radius');
+    style::set_spacing_style($element->style->child('.image'), $image_border_radius,'radius');
 }
 $show_content           = $params->get('show_content', 1);
 if($show_content){
     $content_margin   =   $params->get('content_margin', '');
     if (!empty($content_margin)) {
-        Style::setSpacingStyle($this->style->child('.blog-description'), $content_margin,'margin');
+        style::set_spacing_style($this->style->child('.blog-description'), $content_margin,'margin');
     }
     $content_style        = $params->get('content_font_style', null);
     if (!empty($content_style)) {
-        Style::renderTypography('#'.$this->id.' .blog-description', $content_style, null, $this->isRoot);
+        style::render_typography('#'.$this->id.' .blog-description', $content_style, null, $this->isRoot);
     }
 }
 $min_height      =   $params->get('image_min_height', 300);
 $min_height = json_decode($min_height, true);
 if (json_last_error() === JSON_ERROR_NONE && is_array($min_height)) {
-    $element->style->child('.image')->addResponsiveCSS('height', $min_height, $min_height['postfix']);
+    $element->style->child('.image')->add_responsive_css('height', $min_height, $min_height['postfix']);
 }

@@ -22,9 +22,9 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Constants;
-class MoonElementUk_Image extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\constants;
+class moon_element_uk_image extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -36,23 +36,23 @@ class MoonElementUk_Image extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('widget_styles',  [
+        $this->add_field('widget_styles',  [
             "type" => "group",
             "label" => "widget_styles",
         ]);
-        $this->addField('mask_styles',  [
+        $this->add_field('mask_styles',  [
             "type" => "group",
             "label" => "mask_styles",
         ]);
-        $this->addField('rotate_styles',  [
+        $this->add_field('rotate_styles',  [
             "type" => "group",
             "label" => "rotate_styles",
         ]);
 
-        $this->addField('image_color_mode', [
+        $this->add_field('image_color_mode', [
             "group"   => "general",
             "type"    => "radio",
             "attributes" => [
@@ -65,7 +65,7 @@ class MoonElementUk_Image extends MoonElement {
             ],
         ]);
 
-        $this->addField('image', [
+        $this->add_field('image', [
             "group"      => "general",
             "type"       => "media",
             "label"      => "TPL_ASTROID_SELECT_IMAGE_LIGHT",
@@ -73,7 +73,7 @@ class MoonElementUk_Image extends MoonElement {
             "conditions" => "[image_color_mode]=='light'",
         ]);
 
-        $this->addField('image_dark', [
+        $this->add_field('image_dark', [
             "group"      => "general",
             "type"       => "media",
             "label"      => "TPL_ASTROID_SELECT_IMAGE_DARK",
@@ -81,14 +81,14 @@ class MoonElementUk_Image extends MoonElement {
             "conditions" => "[image_color_mode]=='dark'",
         ]);
 
-        $this->addField('figure_caption', [
+        $this->add_field('figure_caption', [
             "group"   => "general",
             "type"    => "text",
             "label"   => "figure_caption",
             "dynamic" => true,
         ]);
 
-        $this->addField('use_link', [
+        $this->add_field('use_link', [
             "group"       => "general",
             "type"        => "radio",
             "label"       => "use_link",
@@ -99,7 +99,7 @@ class MoonElementUk_Image extends MoonElement {
             "default"     => "0",
         ]);
 
-        $this->addField('link', [
+        $this->add_field('link', [
             "group"      => "general",
             "type"       => "text",
             "label"      => "link_url",
@@ -109,7 +109,7 @@ class MoonElementUk_Image extends MoonElement {
             "conditions" => "[use_link]==1",
         ]);
 
-        $this->addField('target', [
+        $this->add_field('target', [
             "group"      => "general",
             "type"       => "list",
             "label"      => "link_target",
@@ -123,7 +123,7 @@ class MoonElementUk_Image extends MoonElement {
             "conditions" => "[use_link]==1",
         ]);
 
-        $this->addField('display', [
+        $this->add_field('display', [
             "group"   => "widget_styles",
             "type"    => "list",
             "label"   => "display",
@@ -136,7 +136,7 @@ class MoonElementUk_Image extends MoonElement {
                 "d-inline-flex" => "Inline Flex",
             ],
         ]);
-        $this->addField('image_width', [
+        $this->add_field('image_width', [
             'group'   => 'widget_styles',
             'type'    => 'range',
             'label'      => 'image_width',
@@ -148,7 +148,7 @@ class MoonElementUk_Image extends MoonElement {
                 'postfix' => 'px|%',
             ],
         ]);
-        $this->addField('image_height', [
+        $this->add_field('image_height', [
             'group'   => 'widget_styles',
             'type'    => 'range',
             'label'      => 'image_height',
@@ -160,13 +160,13 @@ class MoonElementUk_Image extends MoonElement {
                 'postfix' => 'px|%',
             ],
         ]);
-        $this->addField('image_border', [
+        $this->add_field('image_border', [
             "group"      => "widget_styles",
             "type"       => "border",
             "label"      => "border",
         ]);
 
-        $this->addField('img_border_radius', [
+        $this->add_field('img_border_radius', [
             "group"   => "widget_styles",
             "type"    => "list",
             "label"   => "border_radius",
@@ -179,14 +179,14 @@ class MoonElementUk_Image extends MoonElement {
                 "custom"   => "custom",
             ],
         ]);
-        $this->addField('image_radius', [
+        $this->add_field('image_radius', [
             'group' => 'widget_styles',
             'type'  => 'spacing',
             'label' => 'radius',
             "conditions" => "[img_border_radius]=='custom'",
         ]);
 
-        $this->addField('image_rounded_size', [
+        $this->add_field('image_rounded_size', [
             "group"      => "widget_styles",
             "type"       => "list",
             "label"      => "rounded_size",
@@ -201,7 +201,7 @@ class MoonElementUk_Image extends MoonElement {
             "conditions" => "[img_border_radius]=='rounded'",
         ]);
 
-        $this->addField('box_shadow', [
+        $this->add_field('box_shadow', [
             "group"   => "widget_styles",
             "type"    => "list",
             "label"   => "box_shadow",
@@ -214,7 +214,7 @@ class MoonElementUk_Image extends MoonElement {
                 "shadow-lg"   => "large",
             ],
         ]);
-        $this->addField('image_rotate', [
+        $this->add_field('image_rotate', [
             'group'      => 'widget_styles',
             'type'       => 'range',
             'label'      => 'rotate',
@@ -228,7 +228,7 @@ class MoonElementUk_Image extends MoonElement {
             'default'    => 0,
         ]);
 
-        $this->addField('hover_effect', [
+        $this->add_field('hover_effect', [
             "group"   => "widget_styles",
             "type"    => "list",
             "label"   => "hover_effect",
@@ -241,14 +241,14 @@ class MoonElementUk_Image extends MoonElement {
             ],
         ]);
 
-        $this->addField('hover_transition', [
+        $this->add_field('hover_transition', [
             "group"   => "widget_styles",
             "type"    => "list",
             "label"   => "hover_transition",
             "default" => "",
-            "options" => Constants::$hover_transition,
+            "options" => constants::$hover_transition,
         ]);
-        $this->addField('img_mask', [
+        $this->add_field('img_mask', [
             "group"   => "mask_styles",
             "type"    => "list",
             "label"   => "mask",
@@ -259,7 +259,7 @@ class MoonElementUk_Image extends MoonElement {
                 "custom"   => "custom",
             ],
         ]);
-        $this->addField('mask_scale', [
+        $this->add_field('mask_scale', [
             'group'   => 'mask_styles',
             'type'    => 'range',
             'label'      => 'mask_scale',
@@ -274,7 +274,7 @@ class MoonElementUk_Image extends MoonElement {
             "conditions" => "[img_mask]!=''",
         ]);
 
-        $this->addField('mask_position', [
+        $this->add_field('mask_position', [
             "group"   => "mask_styles",
             "type"    => "list",
             "label"   => "position",
@@ -293,7 +293,7 @@ class MoonElementUk_Image extends MoonElement {
             ],
             "conditions" => "[img_mask]!=''",
         ]);
-        $this->addField('mask_repeat', [
+        $this->add_field('mask_repeat', [
             "group"   => "mask_styles",
             "type"    => "list",
             "label"   => "repeat",
@@ -306,7 +306,7 @@ class MoonElementUk_Image extends MoonElement {
             ],
             "conditions" => "[img_mask]!=''",
         ]);
-        $this->addField('enable_rotate', [
+        $this->add_field('enable_rotate', [
             "group"       => "rotate_styles",
             "type"        => "radio",
             "label"       => "enable_rotate",
@@ -315,7 +315,7 @@ class MoonElementUk_Image extends MoonElement {
             ],
             "default"     => "0",
         ]);
-        $this->addField('img_box_size', [
+        $this->add_field('img_box_size', [
             'group'      => 'rotate_styles',
             'type'       => 'range',
             'label'      => 'box_size',
@@ -329,25 +329,25 @@ class MoonElementUk_Image extends MoonElement {
             'default'    => 600,
             "conditions" => "[enable_rotate]==1",
         ]);
-        $this->addField('box_border', [
+        $this->add_field('box_border', [
             "group"      => "rotate_styles",
             "type"       => "border",
             "label"      => "border",
             "conditions" => "[enable_rotate]==1",
         ]);
-        $this->addField('dot1_color', [
+        $this->add_field('dot1_color', [
             'group' => 'rotate_styles',
             'type'  => 'color',
             'label' => 'dot1_color',
             "conditions" => "[enable_rotate]==1",
         ]);
-        $this->addField('dot2_color', [
+        $this->add_field('dot2_color', [
             'group' => 'rotate_styles',
             'type'  => 'color',
             'label' => 'dot2_color',
             "conditions" => "[enable_rotate]==1",
         ]);
-        $this->addField('dot3_color', [
+        $this->add_field('dot3_color', [
             'group' => 'rotate_styles',
             'type'  => 'color',
             'label' => 'dot3_color',

@@ -21,10 +21,10 @@
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
  */
 
-use local_moon\library\Framework;
-use local_moon\library\Helper\Constants;
-use local_moon\library\Helper\Text;
-Framework::getTheme()->addFields(
+use local_moon\library\framework;
+use local_moon\library\helper\constants;
+use local_moon\library\helper\text;
+framework::get_theme()->add_fields(
     'theming',
     [
         'label' => 'theming',
@@ -46,8 +46,8 @@ Framework::getTheme()->addFields(
                 'group' => 'colors',
                 'type' => 'heading',
                 'attributes' => [
-                    'title' => Text::_('all_colors'),
-                    'description' => Text::_('all_colors_desc'),
+                    'title' => text::_('all_colors'),
+                    'description' => text::_('all_colors_desc'),
                 ],
             ],
 
@@ -140,8 +140,8 @@ Framework::getTheme()->addFields(
                 'group' => 'colors',
                 'type' => 'heading',
                 'attributes' => [
-                    'title' => Text::_('theme_colors'),
-                    'description' => Text::_('theme_colors_desc'),
+                    'title' => text::_('theme_colors'),
+                    'description' => text::_('theme_colors_desc'),
                 ],
             ],
 
@@ -151,7 +151,7 @@ Framework::getTheme()->addFields(
                 'class' => 'form-select',
                 'default' => '',
                 'label' => 'Primary',
-                "options" => Constants::$bootstrap_colors,
+                "options" => constants::$bootstrap_colors,
             ],
             'theme_primary_custom' => [
                 'group' => 'colors',
@@ -167,7 +167,7 @@ Framework::getTheme()->addFields(
                 'class' => 'form-select',
                 'default' => '',
                 'label' => 'Secondary',
-                "options" => Constants::$bootstrap_colors,
+                "options" => constants::$bootstrap_colors,
             ],
             'theme_secondary_custom' => [
                 'group' => 'colors',
@@ -183,7 +183,7 @@ Framework::getTheme()->addFields(
                 'class' => 'form-select',
                 'default' => '',
                 'label' => 'Success',
-                "options" => Constants::$bootstrap_colors,
+                "options" => constants::$bootstrap_colors,
             ],
             'theme_success_custom' => [
                 'group' => 'colors',
@@ -199,7 +199,7 @@ Framework::getTheme()->addFields(
                 'class' => 'form-select',
                 'default' => '',
                 'label' => 'Info',
-                "options" => Constants::$bootstrap_colors,
+                "options" => constants::$bootstrap_colors,
             ],
             'theme_info_custom' => [
                 'group' => 'colors',
@@ -215,7 +215,7 @@ Framework::getTheme()->addFields(
                 'class' => 'form-select',
                 'default' => '',
                 'label' => 'Warning',
-                "options" => Constants::$bootstrap_colors,
+                "options" => constants::$bootstrap_colors,
             ],
             'theme_warning_custom' => [
                 'group' => 'colors',
@@ -231,7 +231,7 @@ Framework::getTheme()->addFields(
                 'class' => 'form-select',
                 'default' => '',
                 'label' => 'Danger',
-                "options" => Constants::$bootstrap_colors,
+                "options" => constants::$bootstrap_colors,
             ],
             'theme_danger_custom' => [
                 'group' => 'colors',
@@ -247,7 +247,7 @@ Framework::getTheme()->addFields(
                 'class' => 'form-select',
                 'default' => '',
                 'label' => 'Light',
-                "options" => Constants::$bootstrap_colors,
+                "options" => constants::$bootstrap_colors,
             ],
             'theme_light_custom' => [
                 'group' => 'colors',
@@ -263,7 +263,7 @@ Framework::getTheme()->addFields(
                 'class' => 'form-select',
                 'default' => '',
                 'label' => 'Dark',
-                "options" => Constants::$bootstrap_colors,
+                "options" => constants::$bootstrap_colors,
             ],
             'theme_dark_custom' => [
                 'group' => 'colors',

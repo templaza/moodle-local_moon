@@ -22,8 +22,8 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-class MoonElementActivity_Navigation extends MoonElement {
+use local_moon\library\helper\moon_element;
+class moon_element_activity_navigation extends moon_element {
     public function __construct()
     {
         parent::__construct([

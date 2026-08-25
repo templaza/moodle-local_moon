@@ -22,9 +22,9 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Font;
-class MoonElementCircletext extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\font;
+class moon_element_circletext extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -36,17 +36,17 @@ class MoonElementCircletext extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('title', [
+        $this->add_field('title', [
             "group"       => "general",
             "type"        => "text",
             "label"       => "title",
             "dynamic"     => true,
         ]);
 
-        $this->addField('use_link', [
+        $this->add_field('use_link', [
             "group"       => "general",
             "type"        => "radio",
             "label"       => "use_link",
@@ -57,7 +57,7 @@ class MoonElementCircletext extends MoonElement {
             "default"     => 0,
         ]);
 
-        $this->addField('link', [
+        $this->add_field('link', [
             "group"      => "general",
             "type"       => "text",
             "label"      => "link_url",
@@ -68,7 +68,7 @@ class MoonElementCircletext extends MoonElement {
         ]);
 
 
-        $this->addField('font_style', [
+        $this->add_field('font_style', [
             "group"      => "general",
             "type"       => "typography",
             "attributes" => [
@@ -84,43 +84,43 @@ class MoonElementCircletext extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value
             ],
         ]);
 
-        $this->addField('title_bg_color', [
+        $this->add_field('title_bg_color', [
             "group"      => "general",
             "type"       => "color",
             "label"      => "background_color",
         ]);
 
-        $this->addField('title_border', [
+        $this->add_field('title_border', [
             "group"      => "general",
             "type"       => "border",
             "label"      => "border",
         ]);
-        $this->addField('title_radius', [
+        $this->add_field('title_radius', [
             'group' => 'general',
             'type'  => 'spacing',
             'label' => 'radius',
         ]);
-        $this->addField('title_padding', [
+        $this->add_field('title_padding', [
             'group' => 'general',
             'type'  => 'spacing',
             'label' => 'padding',
         ]);
-        $this->addField('title_margin', [
+        $this->add_field('title_margin', [
             'group' => 'general',
             'type'  => 'spacing',
             'label' => 'margin',
         ]);
 
-        $this->addField('title_width', [
+        $this->add_field('title_width', [
             'group'      => 'general',
             'type'       => 'range',
             'label'      => 'width',
@@ -133,12 +133,12 @@ class MoonElementCircletext extends MoonElement {
             ],
             'default'    => 150,
         ]);
-        $this->addField('title_icon', [
+        $this->add_field('title_icon', [
             "type"       => "icons",
             'group' => 'general',
             "label"      => "icon",
         ]);
-        $this->addField('title_icon_size', [
+        $this->add_field('title_icon_size', [
             'group'      => 'general',
             'type'       => 'range',
             'label'      => 'icon_size',
@@ -151,26 +151,26 @@ class MoonElementCircletext extends MoonElement {
             ],
             'default'    => 30,
         ]);
-        $this->addField('title_icon_color', [
+        $this->add_field('title_icon_color', [
             "group"      => "general",
             "type"       => "color",
             "label"      => "color",
         ]);
-        $this->addField('hover_rotate', [
+        $this->add_field('hover_rotate', [
             'group'      => 'general',
             'type'       => 'radio',
             'default'    => '0',
             'label'      => 'hover_rotate',
             'attributes' => ["role" => "switch"],
         ]);
-        $this->addField('auto_rotate', [
+        $this->add_field('auto_rotate', [
             'group'      => 'general',
             'type'       => 'radio',
             'default'    => '0',
             'label'      => 'auto_rotate',
             'attributes' => ["role" => "switch"],
         ]);
-        $this->addField('title_pos', [
+        $this->add_field('title_pos', [
             "group"      => "general",
             "type"       => "list",
             "label"      => "position",
@@ -180,7 +180,7 @@ class MoonElementCircletext extends MoonElement {
                 'uk-position-absolute'   => 'Absolute',
             ],
         ]);
-        $this->addField('box_position', [
+        $this->add_field('box_position', [
             'group'   => 'general',
             'type'    => 'list',
             'label'   => 'position',

@@ -22,8 +22,8 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-use local_moon\library\Framework;
-use local_moon\library\Helper\Utilities;
+use local_moon\library\framework;
+use local_moon\library\helper\utilities;
 
 global $OUTPUT, $PAGE;
 
@@ -31,8 +31,8 @@ $primary = new core\navigation\output\primary($PAGE);
 $renderer = $PAGE->get_renderer('core');
 $primarymenu = $primary->export_for_template($renderer);
 
-$document   = Framework::getDocument();
-$params     = Framework::getTheme()->getParams();
+$document   = framework::get_document();
+$params     = framework::get_theme()->get_params();
 
 $header = $params->get('header', TRUE);
 $header_mode = $params->get('header_mode', 'horizontal');
@@ -70,7 +70,7 @@ if ($mode == 'topbar') {
         ${'block_'.$position_count} .= '<div class="moon-sidebar-block d-none d-lg-flex col-lg justify-content-end moon-sidebar-block-'.$position_count.'">';
         ${'block_'.$position_count} .= '<div class="header-block-item d-flex align-item-center as-gutter-lg">';
         if (${'block_'.$position_count.'_type'} == 'position') {
-            $block_1 .= Utilities::loadRegion(${'block_'.$position_count.'_position'}, [], 'div');
+            $block_1 .= utilities::load_region(${'block_'.$position_count.'_position'}, [], 'div');
         }
         if (${'block_'.$position_count.'_type'} == 'custom') {
             $block_1 .= ${'block_'.$position_count.'_custom'};
@@ -84,7 +84,7 @@ if (${'block_'.$position_count.'_type'} != 'blank') {
     ${'block_'.$position_count} .= '<div class="moon-sidebar-block moon-sidebar-block-'.$position_count.'">';
     ${'block_'.$position_count} .= '<div class="header-block-item">';
     if (${'block_'.$position_count.'_type'} == 'position') {
-        $block_1 .= Utilities::loadRegion(${'block_'.$position_count.'_position'}, [], 'div');
+        $block_1 .= utilities::load_region(${'block_'.$position_count.'_position'}, [], 'div');
     }
     if (${'block_'.$position_count.'_type'} == 'custom') {
         $block_1 .= ${'block_'.$position_count.'_custom'};
@@ -97,7 +97,7 @@ if (${'block_'.$position_count.'_type'} != 'blank') {
     ${'block_'.$position_count} .= '<div class="moon-sidebar-block moon-sidebar-block-'.$position_count.'">';
     ${'block_'.$position_count} .= '<div class="header-block-item">';
     if (${'block_'.$position_count.'_type'} == 'position') {
-        $block_1 .= Utilities::loadRegion(${'block_'.$position_count.'_position'}, [], 'div');
+        $block_1 .= utilities::load_region(${'block_'.$position_count.'_position'}, [], 'div');
     }
     if (${'block_'.$position_count.'_type'} == 'custom') {
         $block_1 .= ${'block_'.$position_count.'_custom'};

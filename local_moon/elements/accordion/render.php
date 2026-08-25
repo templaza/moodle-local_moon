@@ -22,17 +22,17 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Framework;
-use local_moon\library\Helper\Style;
-use local_moon\library\Helper\SubForm;
+use local_moon\library\framework;
+use local_moon\library\helper\style;
+use local_moon\library\helper\sub_form;
 $params = $this->params;
 $element = $this;
-$accordions     = new SubForm($params->get('accordions', ''));
+$accordions     = new sub_form($params->get('accordions', ''));
 if (!count($accordions->data)) {
     return false;
 }
-$document = Framework::getDocument();
-$document->loadUIKit();
+$document = framework::get_document();
+$document->load_ui_kit();
 $box_shadow         =   $params->get('box_shadow', '');
 $box_shadow         =   $box_shadow ? ' ' . $box_shadow : '';
 $box_shadow_hover   =   $params->get('box_shadow_hover', '');
@@ -58,15 +58,15 @@ if($icon_type){
 
 echo '<div class="accordion'.$style.' '.$icon_cl.'" id="accordion-'.$element->id.'">';
 foreach ($accordions->data as $key => $accordion) {
-    $title_color  =   Style::getColor($accordion->params->get('title_color', ''));
-    $title_bg_color  =   Style::getColor($accordion->params->get('title_bg_color', ''));
+    $title_color  =   style::get_color($accordion->params->get('title_color', ''));
+    $title_bg_color  =   style::get_color($accordion->params->get('title_bg_color', ''));
     if($title_bg_color){
-        $element->style->child('#accordion-'. $accordion -> id .' .accordion-header button')->addCss('background-color', $title_bg_color['light']);
-        $element->style_dark->child('#accordion-'. $accordion -> id .' .accordion-header button')->addCss('background-color', $title_bg_color['dark']);
+        $element->style->child('#accordion-'. $accordion -> id .' .accordion-header button')->add_css('background-color', $title_bg_color['light']);
+        $element->style_dark->child('#accordion-'. $accordion -> id .' .accordion-header button')->add_css('background-color', $title_bg_color['dark']);
     }
     if($title_color){
-        $element->style->child('#accordion-'. $accordion -> id .' .accordion-header button')->addCss('color', $title_color['light']);
-        $element->style_dark->child('#accordion-'. $accordion -> id .' .accordion-header button')->addCss('color', $title_color['dark']);
+        $element->style->child('#accordion-'. $accordion -> id .' .accordion-header button')->add_css('color', $title_color['light']);
+        $element->style_dark->child('#accordion-'. $accordion -> id .' .accordion-header button')->add_css('color', $title_color['dark']);
     }
 
     echo '<div id="accordion-'. $accordion -> id .'" class="accordion-item '.$box_shadow . $box_shadow_hover.'">';
@@ -85,69 +85,69 @@ echo '</div>';
 
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
-    Style::renderTypography('#'.$element->id.' .accordion-button', $title_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .accordion-button', $title_font_style, null, $element->isRoot);
 }
 
 $content_font_style =   $params->get('content_font_style');
 if (!empty($content_font_style)) {
-    Style::renderTypography('#'.$element->id.' .accordion-body', $content_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .accordion-body', $content_font_style, null, $element->isRoot);
 }
 
-$color          = Style::getColor($params->get('color', ''));
-$color_hover    = Style::getColor($params->get('color_hover', ''));
-$color_active   = Style::getColor($params->get('color_active', ''));
-$bgcolor        = Style::getColor($params->get('bgcolor', ''));
-$bgcolor_hover  = Style::getColor($params->get('bgcolor_hover', ''));
-$bgcolor_active = Style::getColor($params->get('bgcolor_active', ''));
-$icon_color = Style::getColor($params->get('icon_color', ''));
+$color          = style::get_color($params->get('color', ''));
+$color_hover    = style::get_color($params->get('color_hover', ''));
+$color_active   = style::get_color($params->get('color_active', ''));
+$bgcolor        = style::get_color($params->get('bgcolor', ''));
+$bgcolor_hover  = style::get_color($params->get('bgcolor_hover', ''));
+$bgcolor_active = style::get_color($params->get('bgcolor_active', ''));
+$icon_color = style::get_color($params->get('icon_color', ''));
 
-$bgcolor_content        = Style::getColor($params->get('bgcolor_content', ''));
+$bgcolor_content        = style::get_color($params->get('bgcolor_content', ''));
 
 // Color style
-$element->style->child('.accordion-button')->addCss('color', $color['light']);
-$element->style_dark->child('.accordion-button')->addCss('color', $color['dark']);
-$element->style->child('.accordion-button')->hover()->addCss('color', $color_hover['light']);
-$element->style_dark->child('.accordion-button')->hover()->addCss('color', $color_hover['dark']);
-$element->style->child('.accordion-button:not(.collapsed)')->addCss('color', $color_active['light']);
-$element->style_dark->child('.accordion-button:not(.collapsed)')->addCss('color', $color_active['dark']);
+$element->style->child('.accordion-button')->add_css('color', $color['light']);
+$element->style_dark->child('.accordion-button')->add_css('color', $color['dark']);
+$element->style->child('.accordion-button')->hover()->add_css('color', $color_hover['light']);
+$element->style_dark->child('.accordion-button')->hover()->add_css('color', $color_hover['dark']);
+$element->style->child('.accordion-button:not(.collapsed)')->add_css('color', $color_active['light']);
+$element->style_dark->child('.accordion-button:not(.collapsed)')->add_css('color', $color_active['dark']);
 
-$element->style->child('.accordion-button::after')->addCss('color', $icon_color['light']);
-$element->style_dark->child('.accordion-button::after')->addCss('color', $icon_color['dark']);
+$element->style->child('.accordion-button::after')->add_css('color', $icon_color['light']);
+$element->style_dark->child('.accordion-button::after')->add_css('color', $icon_color['dark']);
 
 // Background color style
-$element->style->child('.accordion-button')->addCss('background-color', $bgcolor['light']);
-$element->style_dark->child('.accordion-button')->addCss('background-color', $bgcolor['dark']);
-$element->style->child('.accordion-button')->hover()->addCss('background-color', $bgcolor_hover['light']);
-$element->style_dark->child('.accordion-button')->hover()->addCss('background-color', $bgcolor_hover['dark']);
-$element->style->child('.accordion-button:not(.collapsed)')->addCss('background-color', $bgcolor_active['light']);
-$element->style_dark->child('.accordion-button:not(.collapsed)')->addCss('background-color', $bgcolor_active['dark']);
+$element->style->child('.accordion-button')->add_css('background-color', $bgcolor['light']);
+$element->style_dark->child('.accordion-button')->add_css('background-color', $bgcolor['dark']);
+$element->style->child('.accordion-button')->hover()->add_css('background-color', $bgcolor_hover['light']);
+$element->style_dark->child('.accordion-button')->hover()->add_css('background-color', $bgcolor_hover['dark']);
+$element->style->child('.accordion-button:not(.collapsed)')->add_css('background-color', $bgcolor_active['light']);
+$element->style_dark->child('.accordion-button:not(.collapsed)')->add_css('background-color', $bgcolor_active['dark']);
 
 //content background
 
-$element->style->child('.accordion-body')->addCss('background-color', $bgcolor_content['light']);
-$element->style_dark->child('.accordion-body')->addCss('background-color', $bgcolor_content['dark']);
+$element->style->child('.accordion-body')->add_css('background-color', $bgcolor_content['light']);
+$element->style_dark->child('.accordion-body')->add_css('background-color', $bgcolor_content['dark']);
 
 $title_padding   =   $params->get('title_padding', '');
 if (!empty($title_padding)) {
-    Style::setSpacingStyle($element->style->child('.accordion-button'), $title_padding);
+    style::set_spacing_style($element->style->child('.accordion-button'), $title_padding);
 }
 $content_padding   =   $params->get('content_padding', '');
 if (!empty($content_padding)) {
-    Style::setSpacingStyle($element->style->child('.accordion-body'), $content_padding);
+    style::set_spacing_style($element->style->child('.accordion-body'), $content_padding);
 }
 $title_border    =   json_decode($params->get('title_border', ''), true);
 if (!empty($title_border)) {
-    Style::addBorderStyle('#'. $element->id . ' .accordion-button', $title_border, 'global', $element->isRoot);
+    style::add_border_style('#'. $element->id . ' .accordion-button', $title_border, 'global', $element->isRoot);
 }
 $item_radius  =   $params->get('item_radius', '');
 if (!empty($item_radius)) {
-    Style::setSpacingStyle($element->style->child('.accordion-item'), $item_radius,'radius');
+    style::set_spacing_style($element->style->child('.accordion-item'), $item_radius,'radius');
 }
 $title_radius  =   $params->get('title_radius', '');
 if (!empty($title_radius)) {
-    Style::setSpacingStyle($element->style->child('.accordion-button'), $title_radius,'radius');
+    style::set_spacing_style($element->style->child('.accordion-button'), $title_radius,'radius');
 }
 $item_margin=  $params->get('item_margin', '');
 if (!empty($item_margin)) {
-    Style::setSpacingStyle($element->style->child('.accordion-item'), $item_margin, 'margin');
+    style::set_spacing_style($element->style->child('.accordion-item'), $item_margin, 'margin');
 }

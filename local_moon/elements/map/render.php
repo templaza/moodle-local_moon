@@ -22,9 +22,9 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\Style;
-use local_moon\library\Framework;
-$document = Framework::getDocument();
+use local_moon\library\helper\style;
+use local_moon\library\framework;
+$document = framework::get_document();
 
 $params = $this->params;
 $element = $this;
@@ -60,17 +60,17 @@ switch ($map_option) {
         if ($multi_location && !empty($multi_location_items) && count($multi_location_items)) {
             foreach ($multi_location_items as $key => $location_item)
             {
-                $item    =   Style::getSubFormParams($location_item->params);
+                $item    =   style::get_sub_form_params($location_item->params);
                 $lat_long = explode(',', $item['location_item']);
                 $location_addr[] = array('address' => $item['location_popup_text'], 'latitude' => trim($lat_long[0]), 'longitude' => trim($lat_long[1]));
             }
         }
         $gmap_data->locations = $location_addr;
-        $template = Framework::getTheme();
-        $gmap_api = $template->getParams()->get('gmap_api', '');
+        $template = framework::get_theme();
+        $gmap_api = $template->get_params()->get('gmap_api', '');
         echo '<div id="moon-widget-map-' . $element->id . '" class="moon-gmap d-none">'.json_encode($gmap_data).'</div>';
-        $document->addScript("https://maps.googleapis.com/maps/api/js", ['key' => $gmap_api, 'libraries' => 'places'], true);
-        $document->addScript('/local/moon/assets/gmap/gmap.min.js');
+        $document->add_script("https://maps.googleapis.com/maps/api/js", ['key' => $gmap_api, 'libraries' => 'places'], true);
+        $document->add_script('/local/moon/assets/gmap/gmap.min.js');
         break;
 }
-Style::addCssBySelector('#'. $element->id . ' .moon-gmap', 'height', $gmap_data->height.'px');
+style::add_css_by_selector('#'. $element->id . ' .moon-gmap', 'height', $gmap_data->height.'px');

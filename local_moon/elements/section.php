@@ -22,8 +22,8 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-class MoonElementSection extends MoonElement {
+use local_moon\library\helper\moon_element;
+class moon_element_section extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -33,10 +33,10 @@ class MoonElementSection extends MoonElement {
         ]);
     }
 
-    public function setFields() : void
+    public function set_fields() : void
     {
-        $this->setFieldSet('general-settings');
-        $this->addField('layout_type', [
+        $this->set_field_set('general-settings');
+        $this->add_field('layout_type', [
             "type" => "list",
             "label" => "layout_type",
             'default' => '',
@@ -51,8 +51,8 @@ class MoonElementSection extends MoonElement {
             ],
         ]);
 
-        $this->setFieldSet('design-settings');
-        $this->addField('moon_element_tag', [
+        $this->set_field_set('design-settings');
+        $this->add_field('moon_element_tag', [
             "group" => "general",
             "type" => "list",
             "label" => "element_tag",

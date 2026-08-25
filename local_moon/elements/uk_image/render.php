@@ -22,10 +22,10 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Framework;
-use local_moon\library\Helper\Style;
+use local_moon\library\framework;
+use local_moon\library\helper\style;
 
-$document = Framework::getDocument();
+$document = framework::get_document();
 
 $params         = $this->params;
 $element = $this;
@@ -51,9 +51,9 @@ if ($border_radius == 'rounded') {
     $image_radius=  $params->get('image_radius', '');
     if (!empty($image_radius)) {
         if($enable_rotate){
-            Style::setSpacingStyle($element->style->child('.as-image'), $image_radius, 'radius');
+            style::set_spacing_style($element->style->child('.as-image'), $image_radius, 'radius');
         }else{
-            Style::setSpacingStyle($element->style->child('.moon-image-element'), $image_radius, 'radius');
+            style::set_spacing_style($element->style->child('.moon-image-element'), $image_radius, 'radius');
         }
     }
 } else{
@@ -72,17 +72,17 @@ $image_height_data = json_decode($image_height, true);
 $image_width_data = json_decode($image_width, true);
 if($enable_rotate){
     if (json_last_error() === JSON_ERROR_NONE && is_array($image_width_data)) {
-        $style->child('.as-image')->addResponsiveCSS('width', $image_width_data, $image_width_data['postfix']);
+        $style->child('.as-image')->add_responsive_css('width', $image_width_data, $image_width_data['postfix']);
     }
     if (json_last_error() === JSON_ERROR_NONE && is_array($image_height_data)) {
-        $style->child('.as-image')->addResponsiveCSS('height', $image_height_data, $image_height_data['postfix']);
+        $style->child('.as-image')->add_responsive_css('height', $image_height_data, $image_height_data['postfix']);
     }
 }else{
     if (json_last_error() === JSON_ERROR_NONE && is_array($image_width_data)) {
-        $style->child('.moon-image-element')->addResponsiveCSS('width', $image_width_data, $image_width_data['postfix']);
+        $style->child('.moon-image-element')->add_responsive_css('width', $image_width_data, $image_width_data['postfix']);
     }
     if (json_last_error() === JSON_ERROR_NONE && is_array($image_height_data)) {
-        $style->child('.moon-image-element')->addResponsiveCSS('height', $image_height_data, $image_height_data['postfix']);
+        $style->child('.moon-image-element')->add_responsive_css('height', $image_height_data, $image_height_data['postfix']);
     }
 }
 
@@ -93,7 +93,7 @@ if($image_width_data['global'] && $image_height_data['global']){
 
 $image_border    =   json_decode($params->get('image_border', ''), true);
 if (!empty($image_border)) {
-    Style::addBorderStyle('#'. $element->id . ' .as-image', $image_border, 'global', $element->isRoot);
+    style::add_border_style('#'. $element->id . ' .as-image', $image_border, 'global', $element->isRoot);
 }
 
 $box_shadow     = $params->get('box_shadow', '');
@@ -122,8 +122,8 @@ if (!empty($image)) {
     echo '<img class="as-image '.$img_border_radius.' " src="'. $image .'" alt="'.$title.'">';
     if (!empty($image_dark)) {
         echo '<img class="as-image-dark d-none" src="'. $image_dark.'" alt="'.$title.'">';
-        $this->style_dark->child('.as-image')->addCss('display', 'none !important');
-        $this->style_dark->child('.as-image-dark')->addCss('display', 'inline-block !important');
+        $this->style_dark->child('.as-image')->add_css('display', 'none !important');
+        $this->style_dark->child('.as-image-dark')->add_css('display', 'inline-block !important');
     }
     if($enable_rotate){
         echo '</div></div>';
@@ -143,31 +143,31 @@ $mask_repeat         = $params->get('mask_repeat', '');
 $mask_position         = $params->get('mask_position', '');
 if($shape=='style1'){
     $shape_style = '/local/moon/assets/images/shapes/style1.svg';
-    $style->child('.as-image-wrapper img')->addCss('-webkit-mask-image', 'url('.$shape_style.')');
-    $style->child('.as-image-wrapper img')->addCss('-webkit-mask-repeat', $mask_repeat);
-    $style->child('.as-image-wrapper img')->addCss('-webkit-mask-position', $mask_position);
+    $style->child('.as-image-wrapper img')->add_css('-webkit-mask-image', 'url('.$shape_style.')');
+    $style->child('.as-image-wrapper img')->add_css('-webkit-mask-repeat', $mask_repeat);
+    $style->child('.as-image-wrapper img')->add_css('-webkit-mask-position', $mask_position);
 }
 $mask_scale_size = json_decode($mask_scale, true);
 if (json_last_error() === JSON_ERROR_NONE && is_array($mask_scale_size)) {
-    $element->style->child('.as-image-wrapper img')->addResponsiveCSS('-webkit-mask-size', $mask_scale_size, $mask_scale_size['postfix']);
+    $element->style->child('.as-image-wrapper img')->add_responsive_css('-webkit-mask-size', $mask_scale_size, $mask_scale_size['postfix']);
 }
 $box_size      =   $params->get('img_box_size', '');
 $box_size = json_decode($box_size, true);
 if (json_last_error() === JSON_ERROR_NONE && is_array($box_size)) {
-    $element->style->child('.img-wrapper')->addResponsiveCSS('height', $box_size, $box_size['postfix']);
-    $element->style->child('.img-wrapper')->addResponsiveCSS('width', $box_size, $box_size['postfix']);
+    $element->style->child('.img-wrapper')->add_responsive_css('height', $box_size, $box_size['postfix']);
+    $element->style->child('.img-wrapper')->add_responsive_css('width', $box_size, $box_size['postfix']);
 }
 
-$dot1_color     = Style::getColor($params->get('dot1_color', ''));
-$element->style->child('.imgbox-point .dot:first-child')->addCss('background-color', $dot1_color['light']);
+$dot1_color     = style::get_color($params->get('dot1_color', ''));
+$element->style->child('.imgbox-point .dot:first-child')->add_css('background-color', $dot1_color['light']);
 
-$dot2_color     = Style::getColor($params->get('dot2_color', ''));
-$element->style->child('.imgbox-point .dot')->addCss('background-color', $dot2_color['light']);
+$dot2_color     = style::get_color($params->get('dot2_color', ''));
+$element->style->child('.imgbox-point .dot')->add_css('background-color', $dot2_color['light']);
 
-$dot3_color     = Style::getColor($params->get('dot3_color', ''));
-$element->style->child('.imgbox-point .dot:last-child')->addCss('background-color', $dot3_color['light']);
+$dot3_color     = style::get_color($params->get('dot3_color', ''));
+$element->style->child('.imgbox-point .dot:last-child')->add_css('background-color', $dot3_color['light']);
 
 $box_border    =   json_decode($params->get('box_border', ''), true);
 if (!empty($box_border)) {
-    Style::addBorderStyle('#'. $element->id . ' .imgbox-point .point-rotator', $box_border, 'global', $element->isRoot);
+    style::add_border_style('#'. $element->id . ' .imgbox-point .point-rotator', $box_border, 'global', $element->isRoot);
 }

@@ -22,20 +22,20 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Framework;
-use local_moon\library\Helper\Style;
-use local_moon\library\Helper\SubForm;
+use local_moon\library\framework;
+use local_moon\library\helper\style;
+use local_moon\library\helper\sub_form;
 $params = $this->params;
 $element = $this;
-$grids     = new SubForm($params->get('grids', ''));
+$grids     = new sub_form($params->get('grids', ''));
 if (!count($grids->data)) {
     return false;
 }
-$document = Framework::getDocument();
+$document = framework::get_document();
 $style = $element->style;
 $style_dark = $element->style_dark;
 $row_column_cls     =   '';
-$document->loadUIKit();
+$document->load_ui_kit();
 $responsive_key     =   ['xxl', 'xl', 'lg', 'md', 'sm', 'xs'];
 foreach ($responsive_key as $key) {
     $default        =   match ($key) {
@@ -100,21 +100,21 @@ foreach ($responsive_key as $device) {
 
 $icon_size          =   $params->get('icon_size', 60);
 
-$icon_color         =   Style::getColor($params->get('icon_color', ''));
-$style->child('.moon-icon')->addCss('color', $icon_color['light']);
-$style_dark->child('.moon-icon')->addCss('color', $icon_color['dark']);
+$icon_color         =   style::get_color($params->get('icon_color', ''));
+$style->child('.moon-icon')->add_css('color', $icon_color['light']);
+$style_dark->child('.moon-icon')->add_css('color', $icon_color['dark']);
 
-$icon_color_hover   =   Style::getColor($params->get('icon_color_hover', ''));
-$style->child('.moon-icon')->hover()->addCss('color', $icon_color_hover['light']);
-$style_dark->child('.moon-icon')->hover()->addCss('color', $icon_color_hover['dark']);
+$icon_color_hover   =   style::get_color($params->get('icon_color_hover', ''));
+$style->child('.moon-icon')->hover()->add_css('color', $icon_color_hover['light']);
+$style_dark->child('.moon-icon')->hover()->add_css('color', $icon_color_hover['dark']);
 
-$icon_bg_color         =   Style::getColor($params->get('icon_bg_color', ''));
-$style->child('.moon-icon')->addCss('background-color', $icon_bg_color['light']);
-$style_dark->child('.moon-icon')->addCss('background-color', $icon_bg_color['dark']);
+$icon_bg_color         =   style::get_color($params->get('icon_bg_color', ''));
+$style->child('.moon-icon')->add_css('background-color', $icon_bg_color['light']);
+$style_dark->child('.moon-icon')->add_css('background-color', $icon_bg_color['dark']);
 
-$icon_bgcolor_hover   =   Style::getColor($params->get('icon_bgcolor_hover', ''));
-$style->child('.moon-icon')->hover()->addCss('background-color', $icon_bgcolor_hover['light']);
-$style_dark->child('.moon-icon')->hover()->addCss('background-color', $icon_bgcolor_hover['dark']);
+$icon_bgcolor_hover   =   style::get_color($params->get('icon_bgcolor_hover', ''));
+$style->child('.moon-icon')->hover()->add_css('background-color', $icon_bgcolor_hover['light']);
+$style_dark->child('.moon-icon')->hover()->add_css('background-color', $icon_bgcolor_hover['dark']);
 
 $layout             =   $params->get('layout', 'classic');
 $enable_image_cover =   $params->get('enable_image_cover', 0);
@@ -137,13 +137,13 @@ $content_hover_transition     = $params->get('media_hover_transition', '');
 $title_html_element =   $params->get('title_html_element', 'h3');
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
-    Style::renderTypography('#'.$element->id.' .moon-heading', $title_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .moon-heading', $title_font_style, null, $element->isRoot);
 }
 $title_heading_margin=  $params->get('title_heading_margin', '');
 
 $meta_font_style    =   $params->get('meta_font_style');
 if (!empty($meta_font_style)) {
-    Style::renderTypography('#'.$element->id.' .moon-meta', $meta_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .moon-meta', $meta_font_style, null, $element->isRoot);
 }
 
 $meta_heading_margin=   $params->get('meta_heading_margin', '');
@@ -152,7 +152,7 @@ $meta_heading_radius=   $params->get('meta_heading_radius', '');
 $meta_position      =   $params->get('meta_position', 'before');
 $content_font_style =   $params->get('content_font_style');
 if (!empty($content_font_style)) {
-    Style::renderTypography('#'.$element->id.' .moon-text', $content_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .moon-text', $content_font_style, null, $element->isRoot);
 }
 
 $button_style       =   $params->get('button_style', 'primary');
@@ -205,20 +205,20 @@ if($enable_slider){
 echo '<div class="row'.($use_masonry ? ' as-masonry as-loading' : '').$row_column_cls.$slider_wrap.'">';
 foreach ($grids->data as $key => $grid) {
     $link_target    =   !empty($grid->params->get('link_target', '')) ? ' target="'.$grid->params->get('link_target', '').'"' : '';
-    $item_bg_color  =   Style::getColor($grid->params->get('item_background_color', ''));
+    $item_bg_color  =   style::get_color($grid->params->get('item_background_color', ''));
     if($item_bg_color){
-        $element->style->child('#grid-'. $grid -> id .' .card')->addCss('background-color', $item_bg_color['light']);
-        $element->style_dark->child('#grid-'. $grid -> id .' .card')->addCss('background-color', $item_bg_color['dark']);
+        $element->style->child('#grid-'. $grid -> id .' .card')->add_css('background-color', $item_bg_color['light']);
+        $element->style_dark->child('#grid-'. $grid -> id .' .card')->add_css('background-color', $item_bg_color['dark']);
     }
-    $item_background_overlay  =   Style::getColor($grid->params->get('item_background_overlay', ''));
+    $item_background_overlay  =   style::get_color($grid->params->get('item_background_overlay', ''));
     if($item_background_overlay){
-        $element->style->child('#grid-'. $grid -> id .' .card:before')->addCss('background-color', $item_background_overlay['light']);
-        $element->style_dark->child('#grid-'. $grid -> id .' .card:before')->addCss('background-color', $item_background_overlay['dark']);
+        $element->style->child('#grid-'. $grid -> id .' .card:before')->add_css('background-color', $item_background_overlay['light']);
+        $element->style_dark->child('#grid-'. $grid -> id .' .card:before')->add_css('background-color', $item_background_overlay['dark']);
     }
-    $item_background_overlay_hover  =   Style::getColor($grid->params->get('item_background_overlay_hover', ''));
+    $item_background_overlay_hover  =   style::get_color($grid->params->get('item_background_overlay_hover', ''));
     if($item_background_overlay_hover){
-        $element->style->child('#grid-'. $grid -> id .':hover .card:before')->addCss('background-color', $item_background_overlay_hover['light']);
-        $element->style_dark->child('#grid-'. $grid -> id .':hover .card:before')->addCss('background-color', $item_background_overlay_hover['dark']);
+        $element->style->child('#grid-'. $grid -> id .':hover .card:before')->add_css('background-color', $item_background_overlay_hover['light']);
+        $element->style_dark->child('#grid-'. $grid -> id .':hover .card:before')->add_css('background-color', $item_background_overlay_hover['dark']);
     }
     $media          =   '';
     if ($grid->params->get('type', '') == 'image' && $grid->params->get('image', '')) {
@@ -247,7 +247,7 @@ foreach ($grids->data as $key => $grid) {
                 break;
             case 'astroid':
                 $media  .=   '<i class="moon-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid->params->get('as_icon', '').'"></i>';
-                $document->loadASIcon();
+                $document->load_as_icon();
                 break;
             default:
                 $media  .=   '<i class="moon-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid->params->get('custom_icon', '').'"></i>';
@@ -324,11 +324,11 @@ foreach ($grids->data as $key => $grid) {
     if ($grid->params->get('enable_background_image', 0)) {
         $image = $grid->params->get('background_image', '');
         if (!empty($image)) {
-            $element->style->child('#grid-' . $grid->id)->child('.card')->addCss('background-image', 'url(' . $image . ')');
-            $element->style->child('#grid-' . $grid->id)->child('.card')->addCss('background-repeat', $grid->params->get('background_repeat', ''));
-            $element->style->child('#grid-' . $grid->id)->child('.card')->addCss('background-size', $grid->params->get('background_size', ''));
-            $element->style->child('#grid-' . $grid->id)->child('.card')->addCss('background-attachment', $grid->params->get('background_attachment', ''));
-            $element->style->child('#grid-' . $grid->id)->child('.card')->addCss('background-position', $grid->params->get('background_position', ''));
+            $element->style->child('#grid-' . $grid->id)->child('.card')->add_css('background-image', 'url(' . $image . ')');
+            $element->style->child('#grid-' . $grid->id)->child('.card')->add_css('background-repeat', $grid->params->get('background_repeat', ''));
+            $element->style->child('#grid-' . $grid->id)->child('.card')->add_css('background-size', $grid->params->get('background_size', ''));
+            $element->style->child('#grid-' . $grid->id)->child('.card')->add_css('background-attachment', $grid->params->get('background_attachment', ''));
+            $element->style->child('#grid-' . $grid->id)->child('.card')->add_css('background-position', $grid->params->get('background_position', ''));
         }
     }
 }
@@ -345,120 +345,120 @@ if($enable_slider){
 }
 
 if ($use_masonry) {
-    $document->loadMasonry('#'. $element->id .' .as-masonry');
+    $document->load_masonry('#'. $element->id .' .as-masonry');
 }
-$style->child('.moon-icon')->addCss('font-size', $icon_size.'px');
+$style->child('.moon-icon')->add_css('font-size', $icon_size.'px');
 if ($params->get('card_size', '') == 'custom') {
     $card_padding   =   $params->get('card_padding', '');
     if (!empty($card_padding)) {
-        Style::setSpacingStyle($element->style->child('.card-size-custom'), $card_padding);
+        style::set_spacing_style($element->style->child('.card-size-custom'), $card_padding);
     }
 }
 if (!empty($title_heading_margin)) {
-    Style::setSpacingStyle($element->style->child('.moon-heading'), $title_heading_margin, 'margin');
+    style::set_spacing_style($element->style->child('.moon-heading'), $title_heading_margin, 'margin');
 }
 if (!empty($meta_heading_margin)) {
-    Style::setSpacingStyle($element->style->child('.moon-meta'), $meta_heading_margin, 'margin');
+    style::set_spacing_style($element->style->child('.moon-meta'), $meta_heading_margin, 'margin');
 }
 if (!empty($meta_heading_padding)) {
-    Style::setSpacingStyle($element->style->child('.moon-meta'), $meta_heading_padding);
+    style::set_spacing_style($element->style->child('.moon-meta'), $meta_heading_padding);
 }
 if (!empty($meta_heading_radius)) {
-    Style::setSpacingStyle($element->style->child('.moon-meta'), $meta_heading_radius,'radius');
+    style::set_spacing_style($element->style->child('.moon-meta'), $meta_heading_radius,'radius');
 }
 
-$meta_bg       =   Style::getColor($params->get('meta_heading_bg', ''));
-$style->child('.moon-meta')->addCss('background-color', $meta_bg['light']);
-$style_dark->child('.moon-meta')->addCss('background-color', $meta_bg['dark']);
+$meta_bg       =   style::get_color($params->get('meta_heading_bg', ''));
+$style->child('.moon-meta')->add_css('background-color', $meta_bg['light']);
+$style_dark->child('.moon-meta')->add_css('background-color', $meta_bg['dark']);
 
 if ($enable_image_cover) {
-    $style->child('.as-image-cover')->addCss('height', $min_height . 'px');
+    $style->child('.as-image-cover')->add_css('height', $min_height . 'px');
 }
 if ($params->get('card_style', '') == 'custom') {
-    $text_color     =   Style::getColor($params->get('text_color', ''));
-    $style->child('.moon-grid > .card')->addCss('color', $text_color['light']);
-    $style_dark->child('.moon-grid > .card')->addCss('color', $text_color['dark']);
+    $text_color     =   style::get_color($params->get('text_color', ''));
+    $style->child('.moon-grid > .card')->add_css('color', $text_color['light']);
+    $style_dark->child('.moon-grid > .card')->add_css('color', $text_color['dark']);
 
-    $bg_color       =   Style::getColor($params->get('bg_color', ''));
-    $style->child('.moon-grid > .card')->addCss('background-color', $bg_color['light']);
-    $style_dark->child('.moon-grid > .card')->addCss('background-color', $bg_color['dark']);
+    $bg_color       =   style::get_color($params->get('bg_color', ''));
+    $style->child('.moon-grid > .card')->add_css('background-color', $bg_color['light']);
+    $style_dark->child('.moon-grid > .card')->add_css('background-color', $bg_color['dark']);
 
     $card_border    =   json_decode($params->get('card_border', ''), true);
     if (!empty($card_border)) {
-        Style::addBorderStyle('#'. $element->id . ' .moon-grid > .card', $card_border, 'global', $element->isRoot);
+        style::add_border_style('#'. $element->id . ' .moon-grid > .card', $card_border, 'global', $element->isRoot);
     }
 }
 switch ($overlay_type) {
     case 'color':
-        $overlay_color      =   Style::getColor($params->get('overlay_color', ''));
-        $style->child('.card-img-overlay')->addCss('background-color', $overlay_color['light']);
-        $style_dark->child('.card-img-overlay')->addCss('background-color', $overlay_color['dark']);
+        $overlay_color      =   style::get_color($params->get('overlay_color', ''));
+        $style->child('.card-img-overlay')->add_css('background-color', $overlay_color['light']);
+        $style_dark->child('.card-img-overlay')->add_css('background-color', $overlay_color['dark']);
         break;
     case 'background-color':
         $overlay_gradient   =   $params->get('overlay_gradient', '');
         if (!empty($overlay_gradient)) {
-            $style->child('.card-img-overlay')->addCss('background-image', Style::getGradientValue($overlay_gradient));
+            $style->child('.card-img-overlay')->add_css('background-image', style::get_gradient_value($overlay_gradient));
         }
         break;
 }
 $media_margin =   $params->get('media_margin', '');
 
 if (!empty($media_margin)) {
-    Style::setSpacingStyle($element->style->child('.grid-media'), $media_margin,'margin');
+    style::set_spacing_style($element->style->child('.grid-media'), $media_margin,'margin');
 }
 if (!empty($image_radius) && $image_border_radius==' rounded-custom') {
-    Style::setSpacingStyle($element->style->child('.grid-media, .tz-img-grid'), $image_radius,'radius');
+    style::set_spacing_style($element->style->child('.grid-media, .tz-img-grid'), $image_radius,'radius');
 }
 if (!empty($card_custom_radius) && $border_radius=='custom') {
-    Style::setSpacingStyle($element->style->child('.card'), $card_custom_radius,'radius');
+    style::set_spacing_style($element->style->child('.card'), $card_custom_radius,'radius');
 }
 
-$title_color_hover     = Style::getColor($params->get('title_color_hover', ''));
-$style->child('.card:hover .moon-heading')->addCss('color', $title_color_hover['light']);
-$style_dark->child('.card:hover .moon-heading')->addCss('color', $title_color_hover['dark']);
+$title_color_hover     = style::get_color($params->get('title_color_hover', ''));
+$style->child('.card:hover .moon-heading')->add_css('color', $title_color_hover['light']);
+$style_dark->child('.card:hover .moon-heading')->add_css('color', $title_color_hover['dark']);
 
-$content_color_hover     = Style::getColor($params->get('content_color_hover', ''));
-$style->child('.card:hover .moon-text')->addCss('color', $content_color_hover['light']);
-$style_dark->child('.card:hover .moon-text')->addCss('color', $content_color_hover['dark']);
+$content_color_hover     = style::get_color($params->get('content_color_hover', ''));
+$style->child('.card:hover .moon-text')->add_css('color', $content_color_hover['light']);
+$style_dark->child('.card:hover .moon-text')->add_css('color', $content_color_hover['dark']);
 
-$card_button_color_hover     = Style::getColor($params->get('card_button_color_hover', ''));
-$style->child('.card:hover .btn')->addCss('color', $card_button_color_hover['light']);
-$style_dark->child('.card:hover .btn')->addCss('color', $card_button_color_hover['dark']);
+$card_button_color_hover     = style::get_color($params->get('card_button_color_hover', ''));
+$style->child('.card:hover .btn')->add_css('color', $card_button_color_hover['light']);
+$style_dark->child('.card:hover .btn')->add_css('color', $card_button_color_hover['dark']);
 
 
 $button_font_style   =   $params->get('button_font_style');
 if (!empty($button_font_style)) {
-    Style::renderTypography('#'.$element->id.' .btn, #'.$element->id.' .as-btn-text', $button_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .btn, #'.$element->id.' .as-btn-text', $button_font_style, null, $element->isRoot);
 }
 
-$button_color     = Style::getColor($params->get('button_color', ''));
-$button_color_hover     = Style::getColor($params->get('button_color_hover', ''));
-$button_bg_color     = Style::getColor($params->get('button_bg_color', ''));
-$button_bg_color_hover     = Style::getColor($params->get('button_bg_color_hover', ''));
-$style->child('.btn')->addCss('color', $button_color['light']);
-$style_dark->child('.btn')->addCss('color', $button_color['dark']);
-$style->child('.btn:hover')->addCss('color', $button_color_hover['light']);
-$style_dark->child('.btn:hover')->addCss('color', $button_color_hover['dark']);
-$style->child('.btn')->addCss('background-color', $button_bg_color['light']);
-$style_dark->child('.btn')->addCss('background-color', $button_bg_color['dark']);
-$style->child('.btn:hover')->addCss('background-color', $button_bg_color_hover['light']);
-$style_dark->child('.btn:hover')->addCss('background-color', $button_bg_color_hover['dark']);
+$button_color     = style::get_color($params->get('button_color', ''));
+$button_color_hover     = style::get_color($params->get('button_color_hover', ''));
+$button_bg_color     = style::get_color($params->get('button_bg_color', ''));
+$button_bg_color_hover     = style::get_color($params->get('button_bg_color_hover', ''));
+$style->child('.btn')->add_css('color', $button_color['light']);
+$style_dark->child('.btn')->add_css('color', $button_color['dark']);
+$style->child('.btn:hover')->add_css('color', $button_color_hover['light']);
+$style_dark->child('.btn:hover')->add_css('color', $button_color_hover['dark']);
+$style->child('.btn')->add_css('background-color', $button_bg_color['light']);
+$style_dark->child('.btn')->add_css('background-color', $button_bg_color['dark']);
+$style->child('.btn:hover')->add_css('background-color', $button_bg_color_hover['light']);
+$style_dark->child('.btn:hover')->add_css('background-color', $button_bg_color_hover['dark']);
 
 $button_padding =   $params->get('button_padding', '');
 
 if (!empty($button_padding)) {
-    Style::setSpacingStyle($element->style->child('.btn'), $button_padding);
-    Style::setSpacingStyle($element->style->child('.as-btn-text'), $button_padding);
+    style::set_spacing_style($element->style->child('.btn'), $button_padding);
+    style::set_spacing_style($element->style->child('.as-btn-text'), $button_padding);
 }
 $button_custom_radius      =   $params->get('button_custom_radius', '');
 if (!empty($button_custom_radius) && $button_radius=='custom') {
-    Style::setSpacingStyle($element->style->child('.btn'), $button_custom_radius,'radius');
+    style::set_spacing_style($element->style->child('.btn'), $button_custom_radius,'radius');
 }
 $button_custom_margin =   $params->get('button_custom_margin', '');
 
 if (!empty($button_custom_margin)) {
-    Style::setSpacingStyle($element->style->child('.btn'), $button_custom_margin,'margin');
-    Style::setSpacingStyle($element->style->child('.as-btn-text'), $button_custom_margin,'margin');
+    style::set_spacing_style($element->style->child('.btn'), $button_custom_margin,'margin');
+    style::set_spacing_style($element->style->child('.as-btn-text'), $button_custom_margin,'margin');
 }
 $image_height      =   $params->get('image_height', '');
 $image_width      =   $params->get('image_width', '');
@@ -466,13 +466,13 @@ $image_width      =   $params->get('image_width', '');
 $image_height_data = json_decode($image_height, true);
 $image_width_data = json_decode($image_width, true);
 if (json_last_error() === JSON_ERROR_NONE && is_array($image_width_data)) {
-    $style->child('.grid-media')->addResponsiveCSS('width', $image_width_data, $image_width_data['postfix']);
+    $style->child('.grid-media')->add_responsive_css('width', $image_width_data, $image_width_data['postfix']);
 }
 if (json_last_error() === JSON_ERROR_NONE && is_array($image_height_data)) {
-    $style->child('.grid-media')->addResponsiveCSS('height', $image_height_data, $image_height_data['postfix']);
+    $style->child('.grid-media')->add_responsive_css('height', $image_height_data, $image_height_data['postfix']);
 }
 if (!empty($dot_margin)) {
-    Style::setSpacingStyle($this->style->child('.uk-dotnav'), $dot_margin, 'margin');
+    style::set_spacing_style($this->style->child('.uk-dotnav'), $dot_margin, 'margin');
 }
 
 
@@ -482,15 +482,15 @@ $icon_box_height      =   $params->get('icon_box_height', '');
 $icon_box_height_data = json_decode($icon_box_height, true);
 $icon_box_width_data = json_decode($icon_box_width, true);
 if (json_last_error() === JSON_ERROR_NONE && is_array($icon_box_width_data)) {
-    $style->child('.moon-icon')->addResponsiveCSS('width', $icon_box_width_data, $icon_box_width_data['postfix']);
-    $style->child('.moon-icon')->addCss('display', 'inline-flex');
-    $style->child('.moon-icon')->addCss('align-items', 'center');
-    $style->child('.moon-icon')->addCss('justify-content', 'center');
+    $style->child('.moon-icon')->add_responsive_css('width', $icon_box_width_data, $icon_box_width_data['postfix']);
+    $style->child('.moon-icon')->add_css('display', 'inline-flex');
+    $style->child('.moon-icon')->add_css('align-items', 'center');
+    $style->child('.moon-icon')->add_css('justify-content', 'center');
 }
 if (json_last_error() === JSON_ERROR_NONE && is_array($icon_box_height_data)) {
-    $style->child('.moon-icon')->addResponsiveCSS('height', $icon_box_height_data, $icon_box_height_data['postfix']);
+    $style->child('.moon-icon')->add_responsive_css('height', $icon_box_height_data, $icon_box_height_data['postfix']);
 }
 $icon_box_radius      =   $params->get('icon_box_radius', '');
 if (!empty($icon_box_radius)) {
-    Style::setSpacingStyle($element->style->child('.moon-icon'), $icon_box_radius,'radius');
+    style::set_spacing_style($element->style->child('.moon-icon'), $icon_box_radius,'radius');
 }

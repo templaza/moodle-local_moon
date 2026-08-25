@@ -22,11 +22,11 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\MoonElement;
-use local_moon\library\Helper\Form;
-use local_moon\library\Helper\Constants;
-use local_moon\library\Helper\Font;
-class MoonElementRuntext extends MoonElement {
+use local_moon\library\helper\moon_element;
+use local_moon\library\helper\form;
+use local_moon\library\helper\constants;
+use local_moon\library\helper\font;
+class moon_element_runtext extends moon_element {
     public function __construct()
     {
         parent::__construct([
@@ -38,18 +38,18 @@ class MoonElementRuntext extends MoonElement {
             'element_type' => 'widget'
         ]);
     }
-    public function setFields(): void {
-        $this->setFieldSet('general-settings');
+    public function set_fields(): void {
+        $this->set_field_set('general-settings');
 
-        $this->addField('widget_styles', [
+        $this->add_field('widget_styles', [
             'type'  => 'group',
             'label' => 'widget_styles',
         ]);
-        $this->addField('title_styles', [
+        $this->add_field('title_styles', [
             'type'  => 'group',
             'label' => 'title_options',
         ]);
-        $this->addField('icon_styles', [
+        $this->add_field('icon_styles', [
             'type'  => 'group',
             'label' => 'icon_options',
         ]);
@@ -85,22 +85,22 @@ class MoonElementRuntext extends MoonElement {
                 ]
             ],
         ];
-        $repeater   = new Form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
-        $this->addField('texts',  [
+        $repeater   = new form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
+        $this->add_field('texts',  [
             "group" => "general",
             "type" => "subform",
             "label" => "buttons",
             "attributes" => [
-                'form'    =>  $repeater->renderJson('subform')
+                'form'    =>  $repeater->render_json('subform')
             ],
         ]);
-        $this->addField('item_margin', [
+        $this->add_field('item_margin', [
             'group' => 'general',
             'type'  => 'spacing',
             'label' => 'item_margin',
         ]);
 
-        $this->addField('text_font_style', [
+        $this->add_field('text_font_style', [
             "group"      => "title_styles",
             "label"      => "font_style",
             "type"       => "typography",
@@ -117,15 +117,15 @@ class MoonElementRuntext extends MoonElement {
                     'columns' => 1,
                     'preview' => false,
                     'collapse' => true,
-                    'system_fonts' => Font::get_system_fonts(),
-                    'text_transform_options' => Font::text_transform(),
-                    'lang' => Font::font_properties(),
+                    'system_fonts' => font::get_system_fonts(),
+                    'text_transform_options' => font::text_transform(),
+                    'lang' => font::font_properties(),
                 ],
-                'lang' => Font::font_properties(),
-                'value' => Font::$get_default_font_value,
+                'lang' => font::font_properties(),
+                'value' => font::$get_default_font_value,
             ],
         ]);
-        $this->addField('text_stroke', [
+        $this->add_field('text_stroke', [
             'group'   => 'title_styles',
             'type'    => 'radio',
             "attributes" => [
@@ -134,13 +134,13 @@ class MoonElementRuntext extends MoonElement {
             'default' => '0',
             'label'   => 'Text stroke',
         ]);
-        $this->addField('text_stroke_color', [
+        $this->add_field('text_stroke_color', [
             "group"      => "title_styles",
             "type"       => "color",
             "label"      => "color",
             "conditions" => "[text_stroke]==1",
         ]);
-        $this->addField('text_stroke_width', [
+        $this->add_field('text_stroke_width', [
             'group'   => 'title_styles',
             'type'    => 'range',
             'label'      => 'stroke width',
@@ -155,7 +155,7 @@ class MoonElementRuntext extends MoonElement {
             "conditions" => "[text_stroke]==1",
         ]);
 
-        $this->addField('title_icon_size', [
+        $this->add_field('title_icon_size', [
             'group'      => 'icon_styles',
             'type'       => 'range',
             'label'      => 'icon_size',
@@ -168,7 +168,7 @@ class MoonElementRuntext extends MoonElement {
             ],
             'default'    => 30,
         ]);
-        $this->addField('icon_margin', [
+        $this->add_field('icon_margin', [
             'group' => 'icon_styles',
             'type'  => 'spacing',
             'label' => 'margin',

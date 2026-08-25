@@ -22,11 +22,11 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use local_moon\library\Helper\Style;
-use local_moon\library\Helper\SubForm;
+use local_moon\library\helper\style;
+use local_moon\library\helper\sub_form;
 $params = $this->params;
 $element = $this;
-$buttons     = new SubForm($params->get('buttons', ''));
+$buttons     = new sub_form($params->get('buttons', ''));
 if (!count($buttons->data)) {
     return false;
 }
@@ -59,7 +59,7 @@ foreach ($buttons->data as $key => $button) {
         if (trim($button->params->get('button_size', '')) == 'custom') {
             $item_padding   =   $button->params->get('btn_padding', '');
             if (!empty($item_padding)) {
-                Style::setSpacingStyle($element->style->child('#btn-'.$button->id), $item_padding);
+                style::set_spacing_style($element->style->child('#btn-'.$button->id), $item_padding);
             }
         }
     }
@@ -67,29 +67,29 @@ foreach ($buttons->data as $key => $button) {
     // Button Custom Style
     $button_style   =   $button->params->get('button_style', '');
     if ($button_style === 'custom') {
-        $color          =   Style::getColor($button->params->get('color', ''));
-        $color_hover    =   Style::getColor($button->params->get('color_hover', ''));
-        $bgcolor        =   Style::getColor($button->params->get('bgcolor', ''));
-        $bgcolor_hover  =   Style::getColor($button->params->get('bgcolor_hover', ''));
+        $color          =   style::get_color($button->params->get('color', ''));
+        $color_hover    =   style::get_color($button->params->get('color_hover', ''));
+        $bgcolor        =   style::get_color($button->params->get('bgcolor', ''));
+        $bgcolor_hover  =   style::get_color($button->params->get('bgcolor_hover', ''));
 
         // Color style
-        $element->style->child('#btn-'.$button->id)->addCss('color', $color['light']);
-        $element->style_dark->child('#btn-'.$button->id)->addCss('color', $color['dark']);
-        $element->style->child('#btn-'.$button->id)->hover()->addCss('color', $color_hover['light']);
-        $element->style_dark->child('#btn-'.$button->id)->hover()->addCss('color', $color_hover['dark']);
+        $element->style->child('#btn-'.$button->id)->add_css('color', $color['light']);
+        $element->style_dark->child('#btn-'.$button->id)->add_css('color', $color['dark']);
+        $element->style->child('#btn-'.$button->id)->hover()->add_css('color', $color_hover['light']);
+        $element->style_dark->child('#btn-'.$button->id)->hover()->add_css('color', $color_hover['dark']);
 
         if (intval($button->params->get('button_outline', ''))) {
             // Background color style
-            $element->style->child('#btn-'.$button->id)->addCss('border-color', $bgcolor['light']);
-            $element->style_dark->child('#btn-'.$button->id)->addCss('border-color', $bgcolor['dark']);
-            $element->style->child('#btn-'.$button->id)->hover()->addCss('border-color', $bgcolor_hover['light']);
-            $element->style_dark->child('#btn-'.$button->id)->hover()->addCss('border-color', $bgcolor_hover['dark']);
+            $element->style->child('#btn-'.$button->id)->add_css('border-color', $bgcolor['light']);
+            $element->style_dark->child('#btn-'.$button->id)->add_css('border-color', $bgcolor['dark']);
+            $element->style->child('#btn-'.$button->id)->hover()->add_css('border-color', $bgcolor_hover['light']);
+            $element->style_dark->child('#btn-'.$button->id)->hover()->add_css('border-color', $bgcolor_hover['dark']);
         } else {
             // Background color style
-            $element->style->child('#btn-'.$button->id)->addCss('background-color', $bgcolor['light']);
-            $element->style_dark->child('#btn-'.$button->id)->addCss('background-color', $bgcolor['dark']);
-            $element->style->child('#btn-'.$button->id)->hover()->addCss('background-color', $bgcolor_hover['light']);
-            $element->style_dark->child('#btn-'.$button->id)->hover()->addCss('background-color', $bgcolor_hover['dark']);
+            $element->style->child('#btn-'.$button->id)->add_css('background-color', $bgcolor['light']);
+            $element->style_dark->child('#btn-'.$button->id)->add_css('background-color', $bgcolor['dark']);
+            $element->style->child('#btn-'.$button->id)->hover()->add_css('background-color', $bgcolor_hover['light']);
+            $element->style_dark->child('#btn-'.$button->id)->hover()->add_css('background-color', $bgcolor_hover['dark']);
         }
     }
 
@@ -99,7 +99,7 @@ foreach ($buttons->data as $key => $button) {
     echo '<a id="btn-'.$button->id.'" href="' .$button->params->get('link', ''). '" class="' .$button_class . '"'.$link_target.'>'.$btn_title.'</a>';
     $btn_font_style =   $button->params->get('btn_font_style');
     if (!empty($btn_font_style)) {
-        Style::renderTypography('#'.$element->id.' #btn-' . $button->id , $btn_font_style, null, $element->isRoot);
+        style::render_typography('#'.$element->id.' #btn-' . $button->id , $btn_font_style, null, $element->isRoot);
     }
 }
 echo '</div>';
@@ -108,10 +108,10 @@ echo '</div>';
 if (trim($button_size) == 'custom') {
     $item_padding   =   $params->get('btn_padding', '');
     if (!empty($item_padding)) {
-        Style::setSpacingStyle($element->style->child('.btn'), $item_padding);
+        style::set_spacing_style($element->style->child('.btn'), $item_padding);
     }
     $button_font_style =   $params->get('button_font_style');
     if (!empty($button_font_style)) {
-        Style::renderTypography('#'.$element->id.' .btn', $button_font_style, null, $element->isRoot);
+        style::render_typography('#'.$element->id.' .btn', $button_font_style, null, $element->isRoot);
     }
 }
