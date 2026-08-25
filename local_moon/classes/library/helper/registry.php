@@ -89,7 +89,7 @@ class registry implements \JsonSerializable, \ArrayAccess, \IteratorAggregate, \
      */
     public function __clone()
     {
-        $this->data = \unserialize(\serialize($this->data));
+        $this->data = \json_decode(\json_encode($this->data));
     }
 
     /**
