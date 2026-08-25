@@ -23,7 +23,7 @@ class Theme {
     public function __construct($theme = null) {
         global $PAGE, $CFG;
         if (!defined('CLI_SCRIPT')) {
-            // Nếu $PAGE tồn tại nhưng chưa có context, đặt fallback là system context
+            // If $PAGE exists but has no context yet, set system context as fallback.
             if (isset($PAGE) && empty($PAGE->context)) {
                 $PAGE->set_context(\context_system::instance());
             }
@@ -109,18 +109,18 @@ class Theme {
             return;
         }
 
-        // Chuẩn hóa thông tin
+        // Normalize layout information.
         $layout = [
             'file' => $data['file'],
             'regions' => $data['regions'] ?? ['side-pre', 'side-post'],
             'defaultregion' => $data['defaultregion'] ?? 'side-pre',
         ];
 
-        // Gộp thêm options phụ
+        // Merge additional options.
         if (!empty($data['options'])) {
             $layout = array_merge($layout, $data['options']);
         }
-        // Ghi vào theme layouts
+        // Write into theme layouts.
         $this->theme->layouts[$name] = $layout;
     }
 

@@ -8,7 +8,6 @@
 namespace local_moon\library\Helper;
 defined('MOODLE_INTERNAL') || die;
 
-use core_reportbuilder\local\filters\select;
 use local_moon\library\Framework;
 use moodle_url;
 use context_system;
@@ -49,13 +48,13 @@ class Media {
     }
 
     /**
-     * Tạo một file mới trong filearea từ nội dung string.
+     * Create a new file from a string
      *
-     * @param string $content   Nội dung của file
-     * @param string $filename  Tên file (vd: "config.json")
-     * @param string $filepath  Đường dẫn trong filearea (vd: "/settings/")
-     * @param string $filearea  Vùng file (vd: "media")
-     * @param int    $itemid    ID của item (mặc định 0)
+     * @param string $content   File content
+     * @param string $filename  File name (e.g., "config.json")
+     * @param string $filepath  Path within the file area (e.g., "/settings/")
+     * @param string $filearea  File area (e.g., "media")
+     * @param int    $itemid    Item ID (default 0)
      * @return stored_file|null
      */
     public static function create_from_string(
@@ -71,12 +70,12 @@ class Media {
         $context = \context_system::instance();
         $component = Framework::getTheme()->getName();
 
-        // Chuẩn hóa tên và đường dẫn
+        // Normalize file name and path.
         $filename = clean_param($filename, PARAM_FILE);
         $filepath = trim($filepath, '/');
         $filepath = empty($filepath) ? '/' : '/' . $filepath . '/';
 
-        // Nếu file đã tồn tại thì xóa trước khi ghi mới
+        // If the file already exists, delete it before writing a new one.
         if ($fs->file_exists($context->id, $component, $filearea, $itemid, $filepath, $filename)) {
             $oldfile = $fs->get_file($context->id, $component, $filearea, $itemid, $filepath, $filename);
             if ($oldfile) {
@@ -84,7 +83,7 @@ class Media {
             }
         }
 
-        // Dữ liệu record file
+        // File record data.
         $filerecord = [
             'contextid' => $context->id,
             'component' => $component,
@@ -95,13 +94,13 @@ class Media {
             'userid'    => $USER->id ?? 0,
         ];
 
-        // Tạo file từ nội dung string
+        // Create file from string content.
         $file = $fs->create_file_from_string($filerecord, $content);
         return $file ?: null;
     }
 
     /**
-     * Upload một file media (ảnh/video) lên filearea của plugin.
+     * Upload a media file (image/video) to the plugin file area.
      */
     public static function upload(array $file, string $filepath = '/', string $filearea = 'media', int $itemid = 0): ?stored_file {
         global $USER;
@@ -131,13 +130,13 @@ class Media {
         $context = \context_system::instance();
         $fs = get_file_storage();
 
-        // Chuẩn hóa đường dẫn
+        // Normalize path.
         $folderpath = trim($folderpath, '/');
         $filepath = empty($folderpath) ? '/' : '/' . $folderpath . '/';
 
-        // Kiểm tra đã tồn tại chưa
+        // Check whether it already exists.
         if ($fs->file_exists($context->id, Framework::getTheme()->getName(), $filearea, $itemid, $filepath, '.')) {
-            return false; // đã tồn tại
+            return false; // already exists
         }
 
         $fs->create_directory($context->id, Framework::getTheme()->getName(), $filearea, $itemid, $filepath, $USER->id ?? 0);
@@ -145,9 +144,9 @@ class Media {
     }
 
     /**
-     * Xóa folder và toàn bộ file con trong filearea của plugin.
+     * Delete a folder and all child files in the plugin file area.
      *
-     * @param string $folderpath Đường dẫn folder (vd: gallery/sub)
+     * @param string $folderpath Folder path (e.g., gallery/sub)
      * @param string $filearea
      * @param int $itemid
      * @return array
@@ -156,11 +155,11 @@ class Media {
         $context = \context_system::instance();
         $fs = get_file_storage();
 
-        // Chuẩn hóa đường dẫn folder
+        // Normalize folder path.
         $folderpath = trim($folderpath, '/');
         $filepath = empty($folderpath) ? '/' : '/' . $folderpath . '/';
 
-        // Lấy tất cả file trong folder này (bao gồm subfolder)
+        // Get all files in this folder (including subfolders).
         $files = $fs->get_area_files($context->id, Framework::getTheme()->getName(), $filearea, $itemid, '', false);
         $deleted = 0;
 
@@ -171,7 +170,7 @@ class Media {
             }
         }
 
-        // Xóa luôn record của chính folder đó (filename='.')
+        // Also delete the folder record itself (filename='.')
         $folder = $fs->get_file($context->id, Framework::getTheme()->getName(), $filearea, $itemid, $filepath, '.');
         if ($folder) {
             $folder->delete();
@@ -186,9 +185,9 @@ class Media {
     }
 
     /**
-     * Xóa toàn bộ file trong folder nhưng không xóa chính folder đó.
+     * Delete all files in a folder without deleting the folder itself.
      *
-     * @param string $folderpath Đường dẫn folder (vd: gallery/sub)
+     * @param string $folderpath Folder path (e.g., gallery/sub)
      * @param string $filearea
      * @param int $itemid
      * @return array
@@ -198,11 +197,11 @@ class Media {
         $fs = get_file_storage();
         $component = Framework::getTheme()->getName();
 
-        // Chuẩn hóa đường dẫn
+        // Normalize path.
         $folderpath = trim($folderpath, '/');
         $filepath = empty($folderpath) ? '/' : '/' . $folderpath . '/';
 
-        // Kiểm tra folder tồn tại
+        // Check whether the folder exists.
         if (!$fs->file_exists($context->id, $component, $filearea, $itemid, $filepath, '.')) {
             return [
                 'success' => false,
@@ -213,7 +212,7 @@ class Media {
         $deleted = 0;
 
         foreach ($files as $file) {
-            // Bỏ qua record folder (.)
+            // Skip folder record (.).
             if ($file->get_filename() === '.') {
                 continue;
             }
@@ -233,7 +232,7 @@ class Media {
     }
 
     /**
-     * Lấy URL truy cập (pluginfile.php) cho 1 file.
+     * Get the access URL (pluginfile.php) for a file.
      */
     public static function url(stored_file $file): string {
         return moodle_url::make_pluginfile_url(
@@ -247,7 +246,7 @@ class Media {
     }
 
     /**
-     * Lấy danh sách file trong filearea (ví dụ: gallery, videos).
+     * Get the list of files in a file area (e.g., gallery, videos).
      */
     public static function list(string $filearea = 'media', int $itemid = 0, string $filepath = '/', string $filter = ''): array {
         $context = context_system::instance();
@@ -300,13 +299,13 @@ class Media {
     }
 
     /**
-     * Đổi tên file trong filearea.
+     * Rename a file in the file area.
      *
-     * @param string $oldname  Tên file cũ (vd: banner.jpg)
-     * @param string $newname  Tên file mới (vd: hero.jpg)
-     * @param string $filearea Vùng file
-     * @param int    $itemid   Item ID (mặc định 0)
-     * @param string $folderpath Đường dẫn thư mục (vd: gallery/)
+     * @param string $oldname  Old file name (e.g., banner.jpg)
+     * @param string $newname  New file name (e.g., hero.jpg)
+     * @param string $filearea File area
+     * @param int    $itemid   Item ID (default 0)
+     * @param string $folderpath Folder path (e.g., gallery/)
      * @return array
      */
     public static function rename_file(
@@ -329,12 +328,12 @@ class Media {
             throw new \moodle_exception("File '{$oldname}' not found in '{$filepath}'");
         }
 
-        // Kiểm tra nếu tên mới đã tồn tại
+        // Check whether the new name already exists.
         if ($fs->file_exists($context->id, Framework::getTheme()->getName(), $filearea, $itemid, $filepath, $newname)) {
             throw new \moodle_exception("A file named '{$newname}' already exists.");
         }
 
-        // Tạo file mới từ file cũ
+        // Create new file from old file.
         $newfile = $fs->create_file_from_storedfile([
             'contextid' => $context->id,
             'component' => Framework::getTheme()->getName(),
@@ -344,7 +343,7 @@ class Media {
             'filename'  => $newname,
         ], $file);
 
-        // Xóa file cũ
+        // Delete old file.
         $file->delete();
 
         return [
@@ -357,10 +356,10 @@ class Media {
     }
 
     /**
-     * Đổi tên thư mục trong filearea.
+     * Rename a folder in the file area.
      *
-     * @param string $oldfolder Đường dẫn cũ (vd: gallery/old)
-     * @param string $newfolder Đường dẫn mới (vd: gallery/new)
+     * @param string $oldfolder Old path (e.g., gallery/old)
+     * @param string $newfolder New path (e.g., gallery/new)
      * @param string $filearea
      * @param int    $itemid
      * @return array
@@ -373,20 +372,20 @@ class Media {
         $newpath = '/' . trim($newfolder, '/') . '/';
         $component = Framework::getTheme()->getName();
 
-        // Kiểm tra folder cũ có tồn tại không
+        // Check whether the old folder exists.
         if (!$fs->file_exists($context->id, $component, $filearea, $itemid, $oldpath, '.')) {
             throw new \moodle_exception("Folder '{$oldfolder}' not found");
         }
 
-        // Nếu folder mới đã tồn tại → báo lỗi
+        // If the new folder already exists, throw an error.
         if ($fs->file_exists($context->id, $component, $filearea, $itemid, $newpath, '.')) {
             throw new \moodle_exception("Folder '{$newfolder}' already exists");
         }
 
-        // Tạo folder mới
+        // Create new folder.
         $fs->create_directory($context->id, $component, $filearea, $itemid, $newpath);
 
-        // Duyệt tất cả file trong filearea
+        // Iterate through all files in the file area.
         $files = $fs->get_area_files($context->id, $component, $filearea, $itemid, '', false);
         $moved = 0;
 
@@ -394,10 +393,10 @@ class Media {
             $fp = $file->get_filepath();
 
             if (strpos($fp, $oldpath) === 0) {
-                // Tính đường dẫn mới bằng cách thay thế oldpath -> newpath
+                // Compute new path by replacing oldpath -> newpath.
                 $newfilepath = str_replace($oldpath, $newpath, $fp);
 
-                // Tạo file mới
+                // Create new file.
                 $newrecord = [
                     'contextid' => $context->id,
                     'component' => $component,
@@ -412,7 +411,7 @@ class Media {
             }
         }
 
-        // Xóa folder cũ (record filename='.')
+        // Delete old folder (record filename='.')
         $oldfolderfile = $fs->get_file($context->id, $component, $filearea, $itemid, $oldpath, '.');
         if ($oldfolderfile) {
             $oldfolderfile->delete();
@@ -428,7 +427,7 @@ class Media {
     }
 
     /**
-     * Xóa file trong filearea theo tên.
+     * Delete a file in the file area by name.
      */
     public static function delete(string $filename, string $filepath = '/', string $filearea = 'media', int $itemid = 0): array {
         $context = context_system::instance();
@@ -459,7 +458,7 @@ class Media {
     }
 
     /**
-     * Kiểm tra file tồn tại trong filearea.
+     * Check whether a file exists in the file area.
      */
     public static function exists(string $filename, string $filepath = '/', string $filearea = 'media', int $itemid = 0): bool {
         $context = context_system::instance();
@@ -468,7 +467,7 @@ class Media {
     }
 
     /**
-     * Lấy thumbnail (nếu là ảnh).
+     * Get thumbnail (if it is an image).
      */
     public static function thumbnail(string $filename, string $filepath = '/', string $filearea = 'media', int $itemid = 0): ?string {
         $context = context_system::instance();
@@ -479,7 +478,7 @@ class Media {
             return null;
         }
 
-        // Trả về URL ảnh thu nhỏ (có thể xử lý resize sau)
+        // Return thumbnail URL (resize can be handled later).
         return self::url($file);
     }
 

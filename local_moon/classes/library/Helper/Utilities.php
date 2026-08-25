@@ -112,11 +112,11 @@ class Utilities
         return $return;
     }
     /**
-     * Lưu cấu hình (key => value) vào database Moodle.
+     * Save configuration (key => value) to the Moodle database.
      *
-     * @param string $name  Tên config
-     * @param mixed  $value Giá trị cần lưu
-     * @param string $plugin Tên plugin (vd: local_moon hoặc theme_moon)
+     * @param string $name  Config name
+     * @param mixed  $value Value to save
+     * @param string $plugin Plugin name (e.g., local_moon or theme_moon)
      * @return bool
      */
     public static function saveConfig(string $name, $value, string $plugin = 'local_moon'): bool {
@@ -128,7 +128,7 @@ class Utilities
     }
 
     /**
-     * Lấy giá trị config.
+     * Get config value.
      */
     public static function getConfig(string $name, string $plugin = 'local_moon', $default = null): mixed {
         $value = get_config($plugin, $name);

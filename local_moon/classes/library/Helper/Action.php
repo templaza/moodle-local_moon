@@ -108,14 +108,14 @@ class Action extends Client {
             'userid'    => $USER->id ?? 0,
         ], $file);
 
-        // Xóa file cũ
+        // Delete old file.
         $file->delete();
 
         if (!$storedfile) {
             return $this->responseData(['status' => 'error', 'message' => 'Failed to store file']);
         }
 
-        // Lấy URL truy cập
+        // Get access URL.
         $url = Media::url($storedfile);
 
         return $this->responseData(['data' => \json_encode([

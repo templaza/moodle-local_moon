@@ -10,11 +10,10 @@ if (file_exists($autoload)) {
     require_once($autoload);
 }
 function local_moon_extend_navigation(global_navigation $nav) {
-    // Tìm node Home (trong Moodle 5.0 id vẫn là 'home')
+    // Find Home node (in Moodle 5.0 the id is still 'home').
     $homenode = $nav->find('home', navigation_node::TYPE_ROOTNODE);
-//var_dump($homenode); die();
     if ($homenode) {
-        // Thêm Submenu 1
+        // Add Submenu 1.
         $homenode->add(
             'submenu1',
             new moodle_url('/local/home_moon/page1.php'),
@@ -23,7 +22,7 @@ function local_moon_extend_navigation(global_navigation $nav) {
             'subpage1'
         );
 
-        // Thêm Submenu 2
+        // Add Submenu 2.
         $homenode->add(
             'submenu2',
             new moodle_url('/local/home_moon/page2.php'),
