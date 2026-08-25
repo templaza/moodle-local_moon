@@ -1145,3 +1145,6 @@ $string['image_position'] = 'Image Position';
 $string['ripple_color'] = 'Ripple Color';
 $string['use_border'] = 'Use Border';
 $string['border_width'] = 'Border Width';
+
+// Privacy
+$string['privacy:metadata'] = 'The Moon Framework only displays existing Moodle data.';
