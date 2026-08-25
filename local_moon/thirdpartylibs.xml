@@ -8,13 +8,13 @@
         <licenseversion>2.1</licenseversion>
     </library>
     <library>
-        <location>assets/bootstrap/bootstrap.bundle.min.js</location>
+        <location>assets/bootstrap/js/bootstrap.bundle.min.js</location>
         <name>Bootstrap</name>
         <version>5.3.5</version>
         <license>MIT</license>
     </library>
     <library>
-        <location>assets/fontawesome/all.min.css</location>
+        <location>assets/fontawesome/css/all.min.css</location>
         <name>FontAwesome</name>
         <version>7.3.1</version>
         <license>CC</license>
@@ -33,7 +33,7 @@
         <license>GSAP Standard License</license>
     </library>
     <library>
-        <location>assets/uikit/uikit.min.js</location>
+        <location>assets/uikit/</location>
         <name>UIkit</name>
         <version>3.15.0</version>
         <license>MIT</license>
