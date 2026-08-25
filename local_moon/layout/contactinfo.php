@@ -23,6 +23,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 use local_moon\library\framework;
+use local_moon\library\helper\text;
 global $OUTPUT;
 $params = framework::get_theme()->get_params();
 $contact_details = $params->get('contact_details', 1);
@@ -39,14 +40,14 @@ $output = '';
 if (!empty($address)) {
     $output .= '<span class="moon-contact-address">';
     if ($contact_display === 'icons') $output .= '<i class="fas fa-map-marker-alt me-2"></i>';
-    if ($contact_display === 'text') $output .= Text::_('TPL_ASTROID_ADDRESS_LABEL') . ':';
+    if ($contact_display === 'text') $output .= text::_('TPL_ASTROID_ADDRESS_LABEL') . ':';
     $output .= htmlspecialchars($address, ENT_QUOTES, 'UTF-8');
     $output .= '</span>';
 }
 if (!empty($phone)) {
     $output .= '<span class="moon-contact-phone">';
     if ($contact_display === 'icons') $output .= '<i class="fas fa-phone-alt me-2"></i>';
-    if ($contact_display === 'text') $output .= Text::_('TPL_ASTROID_PHONE_LABEL') . ':';
+    if ($contact_display === 'text') $output .= text::_('TPL_ASTROID_PHONE_LABEL') . ':';
     $telHref = 'tel:' . preg_replace('/\s+/', '', $phone);
     $output .= '<a href="' . htmlspecialchars($telHref, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($phone, ENT_QUOTES, 'UTF-8') . '</a>';
     $output .= '</span>';
@@ -54,7 +55,7 @@ if (!empty($phone)) {
 if (!empty($mobile)) {
     $output .= '<span class="moon-contact-mobile">';
     if ($contact_display === 'icons') $output .= '<i class="fas fa-mobile-alt me-2"></i>';
-    if ($contact_display === 'text') $output .= Text::_('TPL_ASTROID_MOBILE_LABEL') . ':';
+    if ($contact_display === 'text') $output .= text::_('TPL_ASTROID_MOBILE_LABEL') . ':';
     $mobileHref = 'tel:' . preg_replace('/\s+/', '', $mobile);
     $output .= '<a href="' . htmlspecialchars($mobileHref, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($mobile, ENT_QUOTES, 'UTF-8') . '</a>';
     $output .= '</span>';
@@ -62,14 +63,14 @@ if (!empty($mobile)) {
 if (!empty($email)) {
     $output .= '<span class="moon-contact-email">';
     if ($contact_display === 'icons') $output .= '<i class="far fa-envelope me-2"></i>';
-    if ($contact_display === 'text') $output .= Text::_('JGLOBAL_EMAIL') . ':';
+    if ($contact_display === 'text') $output .= text::_('JGLOBAL_EMAIL') . ':';
     $output .= '<a href="mailto:' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '</a>';
     $output .= '</span>';
 }
 if (!empty($openhours)) {
     $output .= '<span class="moon-contact-openhours">';
     if ($contact_display === 'icons') $output .= '<i class="far fa-clock me-2"></i>';
-    if ($contact_display === 'text') $output .= Text::_('TPL_ASTROID_OPENHOURS_LABEL');
+    if ($contact_display === 'text') $output .= text::_('TPL_ASTROID_OPENHOURS_LABEL');
     $output .= htmlspecialchars($openhours, ENT_QUOTES, 'UTF-8');
     $output .= '</span>';
 }

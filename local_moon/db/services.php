@@ -30,7 +30,7 @@ $functions = [
         'description' => 'Presets for AJAX',
         'type'        => 'read',
         'ajax'        => true,
-        'capabilities'=> 'local/moon:view',
+        'capabilities'=> 'local/moon:manage',
     ],
     'local_moon_import_preset' => [
         'classname'   => 'local_moon\external\import_preset_api',
@@ -38,7 +38,7 @@ $functions = [
         'description' => 'Import Preset for AJAX',
         'type'        => 'read',
         'ajax'        => true,
-        'capabilities'=> 'local/moon:view',
+        'capabilities'=> 'local/moon:manage',
     ],
     'local_moon_action' => [
         'classname'   => 'local_moon\external\action_api',
@@ -46,7 +46,7 @@ $functions = [
         'description' => 'Perform an action for AJAX',
         'type'        => 'read',
         'ajax'        => true,
-        'capabilities'=> 'local/moon:view',
+        'capabilities'=> 'local/moon:manage',
     ],
     'local_moon_save' => [
         'classname'   => 'local_moon\external\save_api',
@@ -54,7 +54,7 @@ $functions = [
         'description' => 'Perform a save action for AJAX',
         'type'        => 'read',
         'ajax'        => true,
-        'capabilities'=> 'local/moon:view',
+        'capabilities'=> 'local/moon:manage',
     ],
     'local_moon_layout' => [
         'classname'   => 'local_moon\external\layout_api',
@@ -62,7 +62,7 @@ $functions = [
         'description' => 'Perform a layout action for AJAX',
         'type'        => 'read',
         'ajax'        => true,
-        'capabilities'=> 'local/moon:view',
+        'capabilities'=> 'local/moon:manage',
     ],
     'local_moon_save_layout' => [
         'classname'   => 'local_moon\external\save_layout_api',
@@ -70,7 +70,7 @@ $functions = [
         'description' => 'Perform a save layout action for AJAX',
         'type'        => 'read',
         'ajax'        => true,
-        'capabilities'=> 'local/moon:view',
+        'capabilities'=> 'local/moon:manage',
     ],
     'local_moon_delete_layout' => [
         'classname'   => 'local_moon\external\delete_layout_api',
@@ -78,7 +78,7 @@ $functions = [
         'description' => 'Perform a delete layout action for AJAX',
         'type'        => 'read',
         'ajax'        => true,
-        'capabilities'=> 'local/moon:view',
+        'capabilities'=> 'local/moon:manage',
     ],
     'local_moon_media' => [
         'classname'   => 'local_moon\external\media_api',
@@ -86,7 +86,7 @@ $functions = [
         'description' => 'Perform a media action for AJAX',
         'type'        => 'read',
         'ajax'        => true,
-        'capabilities'=> 'local/moon:view',
+        'capabilities'=> 'local/moon:manage',
     ],
     'local_moon_upload_media' => [
         'classname'   => 'local_moon\external\upload_media_api',
@@ -94,7 +94,7 @@ $functions = [
         'description' => 'Perform a media action for AJAX',
         'type'        => 'read',
         'ajax'        => true,
-        'capabilities'=> 'local/moon:view',
+        'capabilities'=> 'local/moon:manage',
     ],
     'local_moon_icon' => [
         'classname'   => 'local_moon\external\icon_api',
@@ -102,7 +102,7 @@ $functions = [
         'description' => 'Perform a icon action for AJAX',
         'type'        => 'read',
         'ajax'        => true,
-        'capabilities'=> 'local/moon:view',
+        'capabilities'=> 'local/moon:manage',
     ],
 ];
 

@@ -317,7 +317,7 @@ framework::get_theme()->add_fields(
                 "group" => "preloader_options",
                 "type" => "preloaders",
                 "attributes" => [
-                    "preloader" => constants::$preloadersFont,
+                    "preloader" => constants::$preloaders_font,
                     "style" => 'fontawesome',
                 ],
                 "label" => "preloader_animation",

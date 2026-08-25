@@ -76,13 +76,13 @@ class header {
         }
 
         $class = ['moon-header', 'moon-horizontal-header', 'moon-horizontal-' . $mode . '-header'];
-        $navClass = ['nav', 'moon-nav', 'd-none', 'd-'.$header_breakpoint.'-flex'];
+        $nav_class = ['nav', 'moon-nav', 'd-none', 'd-'.$header_breakpoint.'-flex'];
         $navWrapperClass = ['align-self-center', 'd-none', 'd-'.$header_breakpoint.'-block'];
         $headAttrs = ' data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="'.($params->get('dropdown_arrow', 0) ? 'true' : 'false').'" data-header-offset="true" data-transition-speed="'.$params->get('dropdown_animation_speed', 300).'" data-megamenu-animation="'.$params->get('dropdown_animation_type', 'fade').'" data-easing="'.$params->get('dropdown_animation_ease', 'linear').'" data-moon-trigger="'.$params->get('dropdown_trigger', 'hover').'" data-megamenu-submenu-class=".nav-submenu,.nav-submenu-static"';
         $burgerClass = ['d-flex d-'.$header_breakpoint.'-none justify-content-start'];
         return [
             'class' => implode(' ', $class),
-            'navClass' => implode(' ', $navClass),
+            'nav_class' => implode(' ', $nav_class),
             'navWrapperClass' => implode(' ', $navWrapperClass),
             'headAttrs' => $headAttrs,
             'burgerClass' => implode(' ', $burgerClass),
@@ -114,9 +114,9 @@ class header {
         $odd_menu_items = $params->get('odd_menu_items', 'left');
         $divided_logo_width = $params->get('divided_logo_width', 200);
         $class = ['moon-header', 'moon-stacked-header', 'moon-stacked-' . $mode . '-header'];
-        $navClass = ['nav', 'moon-nav', 'justify-content-center', 'd-flex', 'align-items-center'];
-        $navClassLeft = ['nav', 'moon-nav', 'justify-content-left', 'd-flex', 'align-items-left'];
-        $navClassDivided = ['nav', 'moon-nav'];
+        $nav_class = ['nav', 'moon-nav', 'justify-content-center', 'd-flex', 'align-items-center'];
+        $nav_class_left = ['nav', 'moon-nav', 'justify-content-left', 'd-flex', 'align-items-left'];
+        $nav_class_divided = ['nav', 'moon-nav'];
         $headAttrs = ' data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="'.($params->get('dropdown_arrow', 0) ? 'true' : 'false').'" data-header-offset="true" data-transition-speed="'.$params->get('dropdown_animation_speed', 300).'" data-megamenu-animation="'.$params->get('dropdown_animation_type', 'fade').'" data-easing="'.$params->get('dropdown_animation_ease', 'linear').'" data-moon-trigger="'.$params->get('dropdown_trigger', 'hover').'" data-megamenu-submenu-class=".nav-submenu,.nav-submenu-static"';
 
         $burgerClass = match($mode) {
@@ -186,14 +186,14 @@ class header {
         }
         return [
             'class' => implode(' ', $class),
-            'navClass' => implode(' ', $navClass),
+            'nav_class' => implode(' ', $nav_class),
             'navWrapperClass' => implode(' ', $navWrapperClass),
             'headAttrs' => $headAttrs,
             'burgerClass' => implode(' ', $burgerClass),
             'header_breakpoint' => $header_breakpoint,
             'odd_menu_items' => $odd_menu_items,
-            'navClassLeft' => $navClassLeft,
-            'navClassDivided' => $navClassDivided,
+            'nav_class_left' => $nav_class_left,
+            'nav_class_divided' => $nav_class_divided,
             'is_center_balance' => $mode == 'center-balance',
             'is_seperated' => $mode == 'seperated',
             'is_center' => $mode == 'center',

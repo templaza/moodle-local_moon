@@ -1552,7 +1552,7 @@ class constants
         ]
     ];
 
-    public static $preloadersFont = [
+    public static $preloaders_font = [
         'spinner' => [
             'name'      => 'fas fa-spinner fa-spin',
             'code'      => 'fas fa-spinner',

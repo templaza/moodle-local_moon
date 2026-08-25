@@ -101,7 +101,18 @@ class api extends external_api {
         \require_login();
         $context = \context_system::instance();
         self::validate_context($context);
-        \require_capability('local/moon:view', $context);
+        $task = $params['task'] ?? '';
+        $readonlytasks = [
+            'list',
+            'get_layouts',
+            'get_layout',
+            'get_fonts',
+            'get_icons',
+            'get_presets',
+            'load_preset',
+        ];
+        $requiredcapability = in_array($task, $readonlytasks, true) ? 'local/moon:view' : 'local/moon:manage';
+        \require_capability($requiredcapability, $context);
         framework::init($params['theme'] ?? null);
         return new action($params);
     }

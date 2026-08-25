@@ -69,7 +69,7 @@ class save_api extends api {
         require_login();
         $context = \context_system::instance();
         self::validate_context($context);
-        require_capability('local/moon:view', $context);
+        require_capability('local/moon:manage', $context);
         try {
             $data = \json_decode($value['params'], true);
             if (!is_array($data)) {

@@ -24,6 +24,9 @@
 $string['pluginname'] = 'Moon Framework';
 $string['settings_desc'] = 'Global configuration for Moon Framework';
 $string['moon:view'] = 'View Moon';
+$string['moon:manage'] = 'Manage Moon';
+$string['local/moon:view'] = 'View Moon';
+$string['local/moon:manage'] = 'Manage Moon';
 $string['moon_framework_settings'] = 'Moon Framework Settings';
 
 // General

@@ -115,7 +115,7 @@ $class = ['moon-header', 'moon-sidebar-header', 'col-12', 'col-xl-auto', 'moon-s
 if ($sidebar_position == 'right') {
     $class[] = 'order-xl-1';
 }
-$navClass = ['nav', 'moon-nav', 'd-none', 'd-lg-flex'];
+$nav_class = ['nav', 'moon-nav', 'd-none', 'd-lg-flex'];
 $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-lg-block'];
 
 $templatecontext = [
@@ -125,7 +125,7 @@ $templatecontext = [
     'usermenu' => $primarymenu['user'],
     'langmenu' => $primarymenu['lang'],
     'class' => implode(' ', $class),
-    'navClass' => implode(' ', $navClass),
+    'nav_class' => implode(' ', $nav_class),
     'navWrapperClass' => implode(' ', $navWrapperClass),
     'is_topbar' => $is_topbar,
     'block_1' => $block_1,
