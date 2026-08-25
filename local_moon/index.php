@@ -39,8 +39,8 @@ if (!is_siteadmin()) {
 $context = context_system::instance();
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/local/moon/index.php'));
-$PAGE->set_title('Moon Framework Settings');
-$PAGE->set_heading('Moon Framework Settings');
+$PAGE->set_title(get_string('moon_framework_settings', 'local_moon'));
+$PAGE->set_heading(get_string('moon_framework_settings', 'local_moon'));
 $theme_name = optional_param('theme', $PAGE->theme->name, PARAM_ALPHANUMEXT);
 Framework::init($theme_name);
 $theme = Framework::getTheme();
