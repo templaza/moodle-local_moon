@@ -23,61 +23,77 @@
 
 defined('MOODLE_INTERNAL') || die;
 use local_moon\library\Helper\MoonElement;
+use local_moon\library\Helper\Form;
+use local_moon\library\Helper\Constants;
 use local_moon\library\Helper\Font;
-class MoonElementBreadcrumb extends MoonElement {
+use local_moon\library\Blocks\EventHandler;
+class MoonElementEvent extends MoonElement {
     public function __construct()
     {
         parent::__construct([
-            'name' => 'breadcrumb',
-            'title' => 'Breadcrumb',
-            'description' => 'Breadcrumb of Moodle',
-            'icon' => 'fa-solid fa-forward-fast',
-            'category' => 'system',
-            'element_type' => 'system',
-            'multiple' => false,
+            'name' => 'event',
+            'title' => 'Event',
+            'description' => 'List Event of Moodle',
+            'icon' => 'as-icon as-icon-list2',
+            'category' => 'utility',
+            'element_type' => 'widget'
         ]);
+
     }
     public function setFields(): void {
+        $moonEventHandler = new EventHandler();
+        $events = $moonEventHandler->moon_get_moodle_events_options();
+
         $this->setFieldSet('general-settings');
 
+        $this->addField('title_options', [
+            "group" => "general",
+            "type"  => "group",
+            "label" => "title_options",
+        ]);
+
         $this->addField('content_options', [
-            'type'  => 'group',
-            'label' => 'content_options',
-        ]);
-        $this->addField('show_admin', [
-            "group"   => "general",
-            "type"    => "radio",
-            "default" => "0",
-            "attributes" => [
-                "role" => "switch"
-            ],
-            "label"   => "show_admin",
+            "group" => "general",
+            "type"  => "group",
+            "label" => "content_options",
         ]);
 
-        $this->addField('show_heading', [
-            "group"   => "general",
-            "type"    => "radio",
-            "default" => "1",
-            "attributes" => [
-                "role" => "switch"
+        $repeater_options = [
+            'general-settings' => [
+                'label' => 'general',
+                'fields' => [
+                    'title' => [
+                        "type"    => "text",
+                        "label"   => "title",
+                        "class"   => "form-control",
+                        "dynamic" => true,
+                    ],
+
+                    'event' => [
+                        "type"    => "list",
+                        "label"   => "event",
+                        "default" => "",
+                        "options" => $events,
+                    ],
+
+                ]
             ],
-            "label"   => "show_heading",
+        ];
+        $repeater   = new Form('subform', ['formsource' => $repeater_options, 'formtype' => 'string']);
+
+        $this->addField('list_events', [
+            "group" => "general",
+            "type"  => "subform",
+            "label" => "list_items",
+            "attributes" => [
+                'form'    =>  $repeater->renderJson('subform')
+            ],
         ]);
 
-        $this->addField('show_page_button', [
-            "group"   => "general",
-            "type"    => "radio",
-            "default" => "1",
-            "attributes" => [
-                "role" => "switch"
-            ],
-            "label"   => "show_page_button",
-        ]);
-
-        $this->addField('heading_font_style', [
-            "group"   => "general",
-            "type"    => "typography",
-            "label"   => "font_style",
+        $this->addField('title_font_style', [
+            "group"      => "title_options",
+            "type"       => "typography",
+            "label"       => "title_font_style",
             "attributes" => [
                 'options' => [
                     "colorpicker" => true,
@@ -98,13 +114,19 @@ class MoonElementBreadcrumb extends MoonElement {
                 'lang' => Font::font_properties(),
                 'value' => Font::$get_default_font_value,
             ],
-            "conditions" => "[show_heading]==1",
         ]);
+
+        $this->addField('title_heading_margin', [
+            "group" => "title_options",
+            "type"  => "spacing",
+            "label"  => "title_heading_margin",
+        ]);
+
 
         $this->addField('content_font_style', [
-            "group"   => "content_options",
-            "type"    => "typography",
-            "label"   => "font_style",
+            "group"      => "content_options",
+            "type"       => "typography",
+            "label"       => "content_font_style",
             "attributes" => [
                 'options' => [
                     "colorpicker" => true,
@@ -125,6 +147,18 @@ class MoonElementBreadcrumb extends MoonElement {
                 'lang' => Font::font_properties(),
                 'value' => Font::$get_default_font_value,
             ],
+        ]);
+
+        $this->addField('item_margin', [
+            "group" => "spacing_options",
+            "type"  => "spacing",
+            "label"  => "margin",
+        ]);
+
+        $this->addField('item_padding', [
+            "group" => "spacing_options",
+            "type"  => "spacing",
+            "label"  => "padding",
         ]);
     }
 }
