@@ -55,8 +55,10 @@ class constants
         $theme = framework::get_theme();
         $enable_widget  =   1;
         $tinyMceLicense =   '';
-        if (empty($_SESSION['local_moon_upload_token'])) {
+        $cache = \cache::make('local_moon', 'upload_token');
+        $upload_token = $cache->get('local_moon_upload_token');
 
+        if (empty($upload_token)) {
             $service = $DB->get_record(
                 'external_services',
                 ['shortname' => 'local_moon'],
@@ -66,16 +68,15 @@ class constants
 
             $validuntil = time() + $CFG->sessiontimeout;
 
-            $_SESSION['local_moon_upload_token'] = \external_generate_token(
+            $upload_token = \external_generate_token(
                 EXTERNAL_TOKEN_PERMANENT,
                 $service,
                 $USER->id,
                 \context_system::instance(),
                 $validuntil
             );
+            $cache->set('local_moon_upload_token', $upload_token);
         }
-
-        $upload_token = $_SESSION['local_moon_upload_token'];
         return [
             'site_url'              =>  $CFG->wwwroot . '/',
             'base_url'              =>  $CFG->wwwroot,
