@@ -24,6 +24,8 @@
 defined('MOODLE_INTERNAL') || die;
 use local_moon\library\helper\style;
 use local_moon\library\framework;
+global $OUTPUT;
+$template_context = [];
 $params         = $this->params;
 $title                  = $params->get('title', '');
 $url                    = $params->get('url', '');
@@ -38,9 +40,11 @@ $color_hover            = style::get_color($params->get('color_hover', ''));
 $background_color       = style::get_color($params->get('background_color', ''));
 $background_color_hover = style::get_color($params->get('background_color_hover', ''));
 $border_color           = style::get_color($params->get('border_color', ''));
-
+$template_context['has_video'] = !empty($url);
+$template_context['video_url'] = $url;
+$template_context['title'] = $title;
+$template_context['data_fancybox'] = 'moon-'.$this->id;
 if (!empty($url)) {
-    echo '<a class="video-button button-ripple d-inline-flex align-items-center justify-content-center rounded-pill" href="'.$url.'" title="'.$title.'" data-fancybox="moon-'.$this->id.'"><span class="d-inline-flex justify-content-center align-items-center"><i class="fas fa-play"></i></span></a>';
     $document = framework::get_document();
     $document->load_fancy_box();
     $document->add_script_declaration("Fancybox.bind('[data-fancybox=\"moon-{$this->id}\"]');");
@@ -91,9 +95,6 @@ if (!empty($url)) {
         }
     }
 
-
-
-
     if ($use_border) {
         $style->child('.video-button')->add_css('border-style', 'solid');
         $style->child('.video-button')->add_css('border-color', $border_color['light']);
@@ -101,3 +102,4 @@ if (!empty($url)) {
         $style->child('.video-button')->add_css('border-width', $border_width . 'px');
     }
 }
+echo $OUTPUT->render_from_template('local_moon/elements/video_button/default', $template_context);
