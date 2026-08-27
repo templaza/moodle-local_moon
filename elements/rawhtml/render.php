@@ -22,10 +22,13 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
+global $OUTPUT;
+$template_context = [];
 $params         = $this->params;
 $content        = $params->get('content', '');
 $content        = format_text($content, FORMAT_HTML, ['context' => $this->context]);
 
-if (!empty($content)) {
-    echo $content;
-}
+$template_context['has_content'] = !empty($content);
+$template_context['content'] = $content;
+
+echo $OUTPUT->render_from_template('local_moon/elements/rawhtml/default', $template_context);
