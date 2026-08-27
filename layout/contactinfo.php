@@ -37,46 +37,50 @@ $openhours = $params->get('contact_open_hours', '');
 $address = $params->get('contact_address', '');
 $contact_display = $params->get('contact_display', 'icons');
 $output = '';
-if (!empty($address)) {
-    $output .= '<span class="moon-contact-address">';
-    if ($contact_display === 'icons') $output .= '<i class="fas fa-map-marker-alt me-2"></i>';
-    if ($contact_display === 'text') $output .= text::_('TPL_ASTROID_ADDRESS_LABEL') . ':';
-    $output .= htmlspecialchars($address, ENT_QUOTES, 'UTF-8');
-    $output .= '</span>';
+$templatecontext = [];
+$templatecontext['has_content'] = false;
+$templatecontext['is_icon'] = $contact_display == 'icons';
+$templatecontext['has_address'] = !empty($address);
+if ($templatecontext['has_address']) {
+    $templatecontext['has_content'] = true;
+    $item = new \stdClass();
+    $item->prefix = $contact_display === 'icons' ? 'fas fa-map-marker-alt me-2' : text::_('TPL_ASTROID_ADDRESS_LABEL') . ':';
+    $item->value = htmlspecialchars($address, ENT_QUOTES, 'UTF-8');
+    $templatecontext['address'] = $item;
 }
-if (!empty($phone)) {
-    $output .= '<span class="moon-contact-phone">';
-    if ($contact_display === 'icons') $output .= '<i class="fas fa-phone-alt me-2"></i>';
-    if ($contact_display === 'text') $output .= text::_('TPL_ASTROID_PHONE_LABEL') . ':';
-    $telHref = 'tel:' . preg_replace('/\s+/', '', $phone);
-    $output .= '<a href="' . htmlspecialchars($telHref, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($phone, ENT_QUOTES, 'UTF-8') . '</a>';
-    $output .= '</span>';
+$templatecontext['has_phone'] = !empty($phone);
+if ($templatecontext['has_phone']) {
+    $templatecontext['has_content'] = true;
+    $item = new \stdClass();
+    $item->prefix = $contact_display === 'icons' ? 'fas fa-phone-alt me-2' : text::_('TPL_ASTROID_PHONE_LABEL') . ':';
+    $item->link = htmlspecialchars('tel:' . preg_replace('/\s+/', '', $phone), ENT_QUOTES, 'UTF-8') ;
+    $item->value = htmlspecialchars($phone, ENT_QUOTES, 'UTF-8');
+    $templatecontext['phone'] = $item;
 }
-if (!empty($mobile)) {
-    $output .= '<span class="moon-contact-mobile">';
-    if ($contact_display === 'icons') $output .= '<i class="fas fa-mobile-alt me-2"></i>';
-    if ($contact_display === 'text') $output .= text::_('TPL_ASTROID_MOBILE_LABEL') . ':';
-    $mobileHref = 'tel:' . preg_replace('/\s+/', '', $mobile);
-    $output .= '<a href="' . htmlspecialchars($mobileHref, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($mobile, ENT_QUOTES, 'UTF-8') . '</a>';
-    $output .= '</span>';
+$templatecontext['has_mobile'] = !empty($mobile);
+if ($templatecontext['has_mobile']) {
+    $templatecontext['has_content'] = true;
+    $item = new \stdClass();
+    $item->prefix = $contact_display === 'icons' ? 'fas fa-mobile-alt me-2' : text::_('TPL_ASTROID_MOBILE_LABEL') . ':';
+    $item->link = htmlspecialchars('tel:' . preg_replace('/\s+/', '', $mobile), ENT_QUOTES, 'UTF-8') ;
+    $item->value = htmlspecialchars($mobile, ENT_QUOTES, 'UTF-8');
+    $templatecontext['mobile'] = $item;
 }
-if (!empty($email)) {
-    $output .= '<span class="moon-contact-email">';
-    if ($contact_display === 'icons') $output .= '<i class="far fa-envelope me-2"></i>';
-    if ($contact_display === 'text') $output .= text::_('JGLOBAL_EMAIL') . ':';
-    $output .= '<a href="mailto:' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '</a>';
-    $output .= '</span>';
+$templatecontext['has_email'] = !empty($email);
+if ($templatecontext['has_email']) {
+    $templatecontext['has_content'] = true;
+    $item = new \stdClass();
+    $item->prefix = $contact_display === 'icons' ? 'far fa-envelope me-2' : text::_('JGLOBAL_EMAIL') . ':';
+    $item->link = htmlspecialchars('mailto:' . $email, ENT_QUOTES, 'UTF-8');
+    $item->value = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
+    $templatecontext['email'] = $item;
 }
-if (!empty($openhours)) {
-    $output .= '<span class="moon-contact-openhours">';
-    if ($contact_display === 'icons') $output .= '<i class="far fa-clock me-2"></i>';
-    if ($contact_display === 'text') $output .= text::_('TPL_ASTROID_OPENHOURS_LABEL');
-    $output .= htmlspecialchars($openhours, ENT_QUOTES, 'UTF-8');
-    $output .= '</span>';
+$templatecontext['has_openhours'] = !empty($openhours);
+if ($templatecontext['has_openhours']) {
+    $templatecontext['has_content'] = true;
+    $item = new \stdClass();
+    $item->prefix = $contact_display === 'icons' ? 'far fa-clock me-2' : text::_('TPL_ASTROID_OPENHOURS_LABEL') . ':';
+    $item->value = htmlspecialchars($openhours, ENT_QUOTES, 'UTF-8');
+    $templatecontext['openhours'] = $item;
 }
-$templatecontext = [
-    'content' => $output,
-    'has_content' => !empty($output),
-];
-
-echo $OUTPUT->render_from_template('local_moon/includes/contactinfo', $templatecontext);
+echo $OUTPUT->render_from_template('local_moon/layout/contactinfo', $templatecontext);

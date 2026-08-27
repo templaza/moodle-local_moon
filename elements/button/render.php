@@ -24,6 +24,8 @@
 defined('MOODLE_INTERNAL') || die;
 use local_moon\library\helper\style;
 use local_moon\library\helper\sub_form;
+global $OUTPUT;
+$template_context = [];
 $params = $this->params;
 $element = $this;
 $buttons     = new sub_form($params->get('buttons', ''));
@@ -37,8 +39,10 @@ $bd_radius      =   $border_radius ? ' ' . $border_radius : '';
 $button_size    =   $params->get('button_size', '');
 
 $button_size    =   $button_size ? ' '. $button_size : '';
-echo '<div class="'.($button_group ? 'btn-group' : 'as-gutter-' . $gutter).'" role="group">';
+$template_context['button_class'] = $button_group ? 'btn-group' : 'as-gutter-' . $gutter;
+$buttons_data = [];
 foreach ($buttons->data as $key => $button) {
+    $button_data = new \stdClass();
     if ($button_group && $border_radius === 'rounded-pill') {
         if ($key === 0) {
             $bd_radius = ' rounded-start-pill';
@@ -49,9 +53,10 @@ foreach ($buttons->data as $key => $button) {
         }
     }
     $title = $button->params->get('title', '');
-    if ($button->params->get('icon', '')) {
-        $title      =   $button->params->get('icon_position', '') === 'first' ? '<i class="'.$button->params->get('icon', '').' me-2"></i>' . $title : $title . '<i class="'.$button->params->get('icon', '').' ms-2"></i>';
-    }
+    $button_data->title = $title;
+    $button_data->has_icon = !empty($button->params->get('icon', ''));
+    $button_data->icon = $button->params->get('icon', '');
+    $button_data->icon_position_first = $button->params->get('icon_position', '') === 'first';
     $btn_element_size = $button_size;
     if ($button->params->get('button_size', '')) {
         $btn_element_size = ' ' . $button->params->get('button_size', '');
@@ -93,17 +98,23 @@ foreach ($buttons->data as $key => $button) {
         }
     }
 
+
     $link_target    =   !empty($button->params->get('link_target', '')) ? ' target="'.$button->params->get('link_target', '').'"' : '';
     $button_class   =   $button_style !== 'text' ? 'btn btn-' . (intval($button->params->get('button_outline', '')) ? 'outline-' : '') . $button_style . $btn_element_size. $bd_radius : 'as-btn-text text-uppercase text-reset';
-    $btn_title      =   $button_style == 'text' ? '<small>'. $title . '</small>' : $title;
-    echo '<a id="btn-'.$button->id.'" href="' .$button->params->get('link', ''). '" class="' .$button_class . '"'.$link_target.'>'.$btn_title.'</a>';
+
+    $button_data->class = $button_class;
+    $button_data->is_text = $button_style == 'text';
+    $button_data->id = 'btn-'.$button->id;
+    $button_data->link = $button->params->get('link', '');
+    $button_data->link_target = $link_target;
+    $buttons_data[] = $button_data;
+
     $btn_font_style =   $button->params->get('btn_font_style');
     if (!empty($btn_font_style)) {
         style::render_typography('#'.$element->id.' #btn-' . $button->id , $btn_font_style, null, $element->isRoot);
     }
 }
-echo '</div>';
-
+$template_context['buttons'] = $buttons_data;
 // Item Padding
 if (trim($button_size) == 'custom') {
     $item_padding   =   $params->get('btn_padding', '');
@@ -115,3 +126,4 @@ if (trim($button_size) == 'custom') {
         style::render_typography('#'.$element->id.' .btn', $button_font_style, null, $element->isRoot);
     }
 }
+echo $OUTPUT->render_from_template('local_moon/elements/button/default', $template_context);

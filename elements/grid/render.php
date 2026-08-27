@@ -31,6 +31,8 @@ $grids     = new sub_form($params->get('grids', ''));
 if (!count($grids->data)) {
     return false;
 }
+global $OUTPUT;
+$template_context = [];
 $document = framework::get_document();
 $style = $element->style;
 $style_dark = $element->style_dark;
@@ -118,6 +120,7 @@ $style_dark->child('.moon-icon')->hover()->add_css('background-color', $icon_bgc
 
 $layout             =   $params->get('layout', 'classic');
 $enable_image_cover =   $params->get('enable_image_cover', 0);
+$template_context['enable_image_cover'] = $enable_image_cover;
 $image_fullwidth    =   $enable_image_cover ? 1 : $params->get('image_fullwidth', 1);
 $min_height         =   $params->get('min_height', 0);
 $overlay_type       =   $params->get('overlay_type', '');
@@ -133,8 +136,10 @@ if($enable_image_cover){
     $cover_toggle = ' uk-transition-toggle ';
 }
 $content_hover_transition     = $params->get('media_hover_transition', '');
+$template_context['content_hover_transition'] = $content_hover_transition;
 
 $title_html_element =   $params->get('title_html_element', 'h3');
+$template_context['title_html_element'] = $title_html_element;
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
     style::render_typography('#'.$element->id.' .moon-heading', $title_font_style, null, $element->isRoot);
@@ -150,6 +155,7 @@ $meta_heading_margin=   $params->get('meta_heading_margin', '');
 $meta_heading_padding=   $params->get('meta_heading_padding', '');
 $meta_heading_radius=   $params->get('meta_heading_radius', '');
 $meta_position      =   $params->get('meta_position', 'before');
+$template_context['meta_position'] = $meta_position;
 $content_font_style =   $params->get('content_font_style');
 if (!empty($content_font_style)) {
     style::render_typography('#'.$element->id.' .moon-text', $content_font_style, null, $element->isRoot);
@@ -198,11 +204,15 @@ $attrs_slider   = ' data-uk-slider="' . implode( '; ', array_filter( $attrs_slid
 
 $enable_slider        =   $params->get('enable_slider', 0);
 $slider_wrap='';
+$template_context['enable_slider'] = $enable_slider;
+$template_context['attrs_slider'] = $attrs_slider;
 if($enable_slider){
     $slider_wrap = ' uk-slider-items flex-nowrap ';
-    echo '<div class=" p-0 uk-position-relative uk-visible-toggle" tabindex="-1" '.$attrs_slider.'>';
 }
-echo '<div class="row'.($use_masonry ? ' as-masonry as-loading' : '').$row_column_cls.$slider_wrap.'">';
+$template_context['row_class'] = 'row'.($use_masonry ? ' as-masonry as-loading' : '').$row_column_cls.$slider_wrap;
+
+$template_context['is_overlay'] = $layout == 'overlay';
+$grids_data = [];
 foreach ($grids->data as $key => $grid) {
     $link_target    =   !empty($grid->params->get('link_target', '')) ? ' target="'.$grid->params->get('link_target', '').'"' : '';
     $item_bg_color  =   style::get_color($grid->params->get('item_background_color', ''));
@@ -221,105 +231,62 @@ foreach ($grids->data as $key => $grid) {
         $element->style_dark->child('#grid-'. $grid -> id .':hover .card:before')->add_css('background-color', $item_background_overlay_hover['dark']);
     }
     $media          =   '';
+    $grid_data = new \stdClass();
+    $grid_data->is_image = $grid->params->get('type', '') == 'image';
+    $grid_data->is_icon = $grid->params->get('type', '') == 'icon';
+    $grid_data->image = $grid->params->get('image', '');
+    $grid_data->title = $grid->params->get('title', '');
+    $grid_data->has_link = !empty($grid->params->get('link', ''));
+    $grid_data->link = $grid->params->get('link', '');
+    $grid_data->link_target = $link_target;
+    $grid_data->link_class = $media_position == 'bottom' ? 'order-2 ' : '';
     if ($grid->params->get('type', '') == 'image' && $grid->params->get('image', '')) {
-        $media      =   '<div class="as-image-cover grid-media position-relative overflow-hidden' . $image_border_radius . $hover_tog_class .$img_eff. $transition . ($media_position == 'bottom' ? ' order-2 ' : '') . '">';
-        $media      .=  $layout == 'overlay' ? '<div class="as-image-cover moon-image-overlay-cover">' : '';
-        $media      .=  '<img class="tz-img-grid ' .$hover_effect.$img_tog_class . ($image_fullwidth ? 'w-100' : ' uk-width-auto') . ($enable_image_cover || $media_position == 'left' || $media_position == 'right' ? ' object-fit-cover h-100' : '') . ($params->get('card_style', '') == 'none' ? '' : ' card-img-'. $media_position) .'" src="'. $grid->params->get('image', '') .'" alt="'.$grid->params->get('title', '').'">';
-        $media      .=  $layout == 'overlay' ? '</div>' : '';
-        if ($enable_image_cover) {
-            if($content_hover_transition){
-                $media .= '<div class="card-img-overlay uk-transition-fade"></div>';
-            }else{
-                $media .= '<div class="card-img-overlay"></div>';
-            }
-
-        }
-        $media      .=  '</div>';
-
-        if ( !empty($grid->params->get('link', '')) ) {
-            $media      =   '<a href="'. $grid->params->get('link', '') . '"'.$link_target.' class="'.($media_position == 'bottom' ? 'order-2 ' : '').'">'. $media .'</a>';
-        }
+        $grid_data->image_cover_class = 'as-image-cover grid-media position-relative overflow-hidden' . $image_border_radius . $hover_tog_class .$img_eff. $transition . ($media_position == 'bottom' ? ' order-2 ' : '');
+        $grid_data->image_class = 'tz-img-grid ' .$hover_effect.$img_tog_class . ($image_fullwidth ? 'w-100' : ' uk-width-auto') . ($enable_image_cover || $media_position == 'left' || $media_position == 'right' ? ' object-fit-cover h-100' : '') . ($params->get('card_style', '') == 'none' ? '' : ' card-img-'. $media_position);
     } elseif ($grid->params->get('type', '') == 'icon') {
-        $media = '<div class="moon-icon-wrapper">';
         switch ($grid->params->get('icon_type', '')) {
             case 'fontawesome':
-                $media  .=   '<i class="moon-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid->params->get('fa_icon', '').'"></i>';
+                $grid_data->icon_class = 'moon-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid->params->get('fa_icon', '');
                 break;
             case 'astroid':
-                $media  .=   '<i class="moon-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid->params->get('as_icon', '').'"></i>';
+                $grid_data->icon_class = 'moon-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid->params->get('as_icon', '');
                 $document->load_as_icon();
                 break;
             default:
-                $media  .=   '<i class="moon-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid->params->get('custom_icon', '').'"></i>';
+                $grid_data->icon_class = 'moon-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid->params->get('custom_icon', '');
                 break;
         }
-        $media .= '</div>';
-        if ( !empty($grid->params->get('link', '')) && !empty($params->get('enable_icon_link', 0)) ) {
-            $media      =   '<a href="'. $grid->params->get('link', '') . '"'.$link_target.' class="'.($media_position == 'bottom' ? 'order-2 ' : '').'">'. $media .'</a>';
-        }
     }
 
-    echo '<div id="grid-'. $grid -> id .'" class="moon-grid"><div class="card overflow-hidden ' . $cover_toggle. $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
-    if ($media_position == 'left' || $media_position == 'right') {
-        echo '<div class="row g-0'.($vertical_middle ? ' align-items-center' : '').'">';
-        echo '<div class="'.$media_width_cls.'">';
-    }
-    if (($media_position != 'inside' || $media_position == 'cover') && $media_position != 'left_title') {
-        echo $media;
-    }
-    if ($media_position == 'left' || $media_position == 'right') {
-        echo '</div>';
-        echo '<div class="col order-1">';
-    }
+    $grid_data->grid_id = 'grid-'. $grid -> id;
+    $grid_data->grid_class = 'card overflow-hidden ' . $cover_toggle. $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '');
+    $grid_data->is_left_right = $media_position == 'left' || $media_position == 'right';
+    $grid_data->left_right_wrap_class = 'row g-0'.($vertical_middle ? ' align-items-center' : '');
+    $grid_data->media_width_class = $media_width_cls;
+    $grid_data->media_on_cover = ($media_position != 'inside' || $media_position == 'cover') && $media_position != 'left_title';
 
-    if($media_position == 'cover' && $content_position){
-        echo '<div class="'.$content_position.' '.$content_hover_transition.'">';
-    }
+    $grid_data->is_media_position_cover = $media_position == 'cover' && $content_position;
+    $grid_data->content_position = $content_position;
+    $grid_data->content_hover_transition = $content_hover_transition;
 
-    echo '<div class="' . ($layout == 'overlay' && $enable_image_cover ? ' as-light' : 'order-1 card-body' ) . $card_size . '">'; // Start Card-Body
+    $grid_data->card_body_class = ($layout == 'overlay' && $enable_image_cover ? ' as-light' : 'order-1 card-body' ) . $card_size;
 
-    if ($media_position == 'inside') {
-        echo $media;
-    }
+    $grid_data->is_media_inside = $media_position == 'inside';
 
+    $grid_data->is_meta_before = !empty($grid->params->get('meta', '')) && $meta_position == 'before' || $meta_position !='after';
+    $grid_data->meta = $grid->params->get('meta', '');
 
-    if (!empty($grid->params->get('meta', '')) && $meta_position == 'before' || $meta_position !='after') {
-        echo '<div class="moon-meta '.$meta_position.'">' . $grid->params->get('meta', '') . '</div>';
-    }
-    if (!empty($grid->params->get('title', ''))) {
-        if ($media_position == 'left_title') {
-            echo '<div class="d-flex justify-content-start">';
-            echo $media;
-            echo '<'.$title_html_element.' class="moon-heading">'. $grid->params->get('title', '') . '</'.$title_html_element.'>';
-            echo '</div>';
-        }else{
-            echo '<'.$title_html_element.' class="moon-heading">'. $grid->params->get('title', '') . '</'.$title_html_element.'>';
-        }
-    }
-    if (!empty($grid->params->get('meta', '')) && $meta_position == 'after') {
-        echo '<div class="moon-meta '.$meta_position.'">' . $grid->params->get('meta', '') . '</div>';
-    }
-    if (!empty($grid->params->get('description', ''))) {
-        $content        = format_text($grid->params->get('description', ''), FORMAT_HTML, ['context' => $this->context]);
-        echo '<div class="moon-text">' . $content . '</div>';
-    }
-    if (!empty($grid->params->get('link', '')) && !empty($grid->params->get('link_title', ''))) {
-        $button_class   =   $button_style !== 'text' ? 'btn btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius : 'as-btn-text d-inline-block';
-        $btn_title      =   $button_style == 'text' ? ''. $grid->params->get('link_title', '') . '' : $grid->params->get('link_title', '');
-        echo '<a class="'. $button_class . '" href="'.$grid->params->get('link', '').'" role="button"'.$link_target.'>' . $btn_title . '</a>';
-    }
+    $grid_data->has_title = !empty($grid->params->get('title', ''));
+    $grid_data->is_left_title = $media_position == 'left_title';
+    $grid_data->title = $grid->params->get('title', '');
 
-    echo '</div>'; // End Card-Body
-    if($media_position == 'cover' && $content_position){
-        echo '</div>';
-    }
+    $grid_data->is_meta_after = !empty($grid->params->get('meta', '')) && $meta_position == 'after';
 
-    if ($media_position == 'left' || $media_position == 'right') {
-        echo '</div>';
-        echo '</div>';
-    }
-
-    echo '</div></div>';
+    $grid_data->has_description = !empty($grid->params->get('description', ''));
+    $grid_data->description = format_text($grid->params->get('description', ''), FORMAT_HTML, ['context' => $this->context]);
+    $grid_data->has_button = !empty(!empty($grid->params->get('link', '')) && !empty($grid->params->get('link_title', '')));
+    $grid_data->button_class = $button_style !== 'text' ? 'btn btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius : 'as-btn-text d-inline-block';
+    $grid_data->button_title = $button_style == 'text' ? ''. $grid->params->get('link_title', '') . '' : $grid->params->get('link_title', '');
 
     if ($grid->params->get('enable_background_image', 0)) {
         $image = $grid->params->get('background_image', '');
@@ -331,17 +298,14 @@ foreach ($grids->data as $key => $grid) {
             $element->style->child('#grid-' . $grid->id)->child('.card')->add_css('background-position', $grid->params->get('background_position', ''));
         }
     }
+    $grids_data[] = $grid_data;
 }
-echo '</div>';
-if($navigation){
-    echo '<a class="uk-position-center-left uk_slider_preview uk-position-small uk-hidden-hover" href data-uk-slidenav-previous data-uk-slider-item="previous"></a>
-        <a class="uk-position-center-right uk_slider_next  uk-position-small uk-hidden-hover" href data-uk-slidenav-next data-uk-slider-item="next"></a>';
-}
-if($dot){
-    echo '<ul class="uk-slider-nav uk-dotnav uk-flex-center"></ul>';
-}
+$template_context['grids_data'] = $grids_data;
+//echo '</div>';
+
 if($enable_slider){
-    echo '</div>';
+    $template_context['navigation'] = $navigation;
+    $template_context['dot'] = $dot;
 }
 
 if ($use_masonry) {
@@ -475,7 +439,6 @@ if (!empty($dot_margin)) {
     style::set_spacing_style($this->style->child('.uk-dotnav'), $dot_margin, 'margin');
 }
 
-
 $icon_box_width      =   $params->get('icon_box_width', '');
 $icon_box_height      =   $params->get('icon_box_height', '');
 
@@ -494,3 +457,5 @@ $icon_box_radius      =   $params->get('icon_box_radius', '');
 if (!empty($icon_box_radius)) {
     style::set_spacing_style($element->style->child('.moon-icon'), $icon_box_radius,'radius');
 }
+
+echo $OUTPUT->render_from_template('local_moon/elements/grid/default', $template_context);

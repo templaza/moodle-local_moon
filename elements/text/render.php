@@ -24,6 +24,8 @@
 defined('MOODLE_INTERNAL') || die;
 use local_moon\library\helper\style;
 use local_moon\library\helper\video;
+global $OUTPUT;
+$template_context = [];
 $params         = $this->params;
 $title          = $params->get('heading', '');
 $html_element   = $params->get('html_element', 'h2');
@@ -48,12 +50,12 @@ $text_column_cls        .=  $sm_column ? ' as-column-sm-' . $sm_column : '';
 $xs_column              =   $params->get('text_column_xs', '');
 $text_column_cls        .=  $xs_column ? ' as-column-' . $xs_column : '';
 
-if (!empty($title)) {
-    echo '<'.$html_element.' class="moon-content-heading">'. $title . '</'.$html_element.'>';
-}
-if (!empty($content)) {
-    echo '<div class="moon-content-text'.$text_column_cls.'">'. $content . '</div>';
-}
+$template_context['has_title'] = !empty($title);
+$template_context['has_content'] = !empty($content);
+$template_context['text_column_cls'] = $text_column_cls;
+$template_context['html_element'] = $html_element;
+$template_context['title'] = $title;
+$template_context['content'] = $content;
 
 if (!empty($font_style)) {
     style::render_typography('#'.$this->id.' .moon-content-heading', $font_style, null, $this->isRoot);
@@ -67,3 +69,5 @@ if (!empty($content_font_style)) {
     style::render_typography('#'.$this->id.' .moon-content-text', $content_font_style, null, $this->isRoot);
     style::render_typography('#'.$this->id.' .moon-content-text *', $content_font_style, null, $this->isRoot);
 }
+
+echo $OUTPUT->render_from_template('local_moon/elements/text/default', $template_context);

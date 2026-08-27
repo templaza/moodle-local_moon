@@ -17,24 +17,8 @@
     @copyright 2026 Moon Framework
 }}
 {{!
-    @template local_moon/manage
-    This template renders the manage page.
+    @template local_moon/elements/text/default
+    This template renders the text widget.
 }}
-<!DOCTYPE html>
-<html id="astroid-html" data-bs-theme="{{color_mode_theme}}">
-<head>
-    <meta charset="utf-8" />
-    <meta name="generator" content="Moon Framework | Theme Manager" />
-    <title>{{title}}</title>
-    <link rel="shortcut icon" href="{{favicon}}">
-    <link href="{{favicon}}" rel="shortcut icon" type="image/vnd.microsoft.icon" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    {{{stylesheets}}}
-    <script type="application/json" id="astroid-script-options">{{{script_options}}}</script>
-    {{{head_scripts}}}
-</head>
-<body>
-<div id="astroid-app"></div>
-{{{body_scripts}}}
-</body>
-</html>
+{{#has_title}}<{{html_element}} class="moon-content-heading">{{title}}</{{html_element}}>{{/has_title}}
+{{#has_content}}<div class="moon-content-text{{text_column_cls}}">{{{content}}}</div>{{/has_content}}

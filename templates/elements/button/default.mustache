@@ -17,24 +17,18 @@
     @copyright 2026 Moon Framework
 }}
 {{!
-    @template local_moon/manage
-    This template renders the manage page.
+    @template local_moon/elements/button/default
+    This template renders the button widget.
 }}
-<!DOCTYPE html>
-<html id="astroid-html" data-bs-theme="{{color_mode_theme}}">
-<head>
-    <meta charset="utf-8" />
-    <meta name="generator" content="Moon Framework | Theme Manager" />
-    <title>{{title}}</title>
-    <link rel="shortcut icon" href="{{favicon}}">
-    <link href="{{favicon}}" rel="shortcut icon" type="image/vnd.microsoft.icon" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    {{{stylesheets}}}
-    <script type="application/json" id="astroid-script-options">{{{script_options}}}</script>
-    {{{head_scripts}}}
-</head>
-<body>
-<div id="astroid-app"></div>
-{{{body_scripts}}}
-</body>
-</html>
+<div class="{{button_class}}" role="group">
+{{#buttons}}
+    <a id="{{id}}" href="{{link}}" class="{{class}}"{{link_target}}>
+        {{#is_text}}<small>{{/is_text}}
+        {{#has_icon}}
+            {{#icon_position_first}}<i class="{{icon}} me-2"></i>{{/icon_position_first}}{{title}}{{^icon_position_first}}<i class="{{icon}} ms-2"></i>{{/icon_position_first}}
+        {{/has_icon}}
+        {{^has_icon}}{{title}}{{/has_icon}}
+        {{#is_text}}</small>{{/is_text}}
+    </a>
+{{/buttons}}
+</div>

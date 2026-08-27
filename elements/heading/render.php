@@ -23,6 +23,8 @@
 
 defined('MOODLE_INTERNAL') || die;
 use local_moon\library\helper\style;
+global $OUTPUT;
+$template_context = [];
 $params         = $this->params;
 $element = $this;
 
@@ -61,6 +63,7 @@ if (!empty($meta_radius)) {
 }
 $meta_cls = '';
 $meta_line       = $params->get('meta_line', 0);
+$template_context['has_meta'] = !empty($meta) || $meta_line === 1;
 if($meta_line==1){
     $meta_cls = ' meta-line';
     $line_height      =   $params->get('line_height', '');
@@ -78,24 +81,20 @@ if($meta_line==1){
     $style_dark->child('.meta-line:before')->add_css('background-color', $line_color['dark']);
 }
 
-if (!empty($title)) {
-    if (($meta !== '' || $meta_line === 1) && $meta_position === 'before') {
-        echo '<div class="heading-meta '.$meta_cls.'">'.$meta.'</div>';
-    }
-    if ($use_link) {
-        echo '<a href="'.$link.'" title="'.$title.'">';
-    }
-    echo '<'.$html_element.' class="heading">'. ($add_icon && $icon ? '<i class="'.$icon.' moon-icon me-2"></i>' : '') . $title . '</'.$html_element.'>';
-    if ($use_link) {
-        echo '</a>';
-    }
-    if($title_clone){
-        echo '<div class="heading-clone position-absolute">'.$title_clone_txt.'</div>';
-    }
-    if (($meta !== '' || $meta_line === 1) && $meta_position === 'after') {
-        echo '<div class="heading-meta '.$meta_cls.'">'.$meta.'</div>';
-    }
-}
+$template_context['has_title'] = !empty($title);
+$template_context['is_meta_before'] = ($meta !== '' || $meta_line === 1) && $meta_position === 'before';
+$template_context['is_meta_after'] = ($meta !== '' || $meta_line === 1) && $meta_position === 'after';
+$template_context['title'] = $title;
+$template_context['html_element'] = $html_element;
+$template_context['meta'] = $meta;
+$template_context['meta_class'] = $meta_cls;
+$template_context['has_link'] = $use_link && !empty($link);
+$template_context['link'] = $link;
+$template_context['has_icon'] = $add_icon && $icon;
+$template_context['icon'] = $icon;
+$template_context['has_title_clone'] = !empty($title_clone);
+$template_context['title_clone_txt'] = $title_clone_txt;
+
 if (!empty($font_style)) {
     style::render_typography('#'.$this->id.' .heading', $font_style, null, $this->isRoot);
 }
@@ -118,6 +117,8 @@ if (!empty($title_clone_margin)) {
 }
 
 $clone_font_style     = $params->get('title_clone_font_style', null);
-if (!empty($font_style)) {
+if (!empty($clone_font_style)) {
     style::render_typography('#'.$this->id.' .heading-clone', $clone_font_style, null, $this->isRoot);
 }
+
+echo $OUTPUT->render_from_template('local_moon/elements/heading/default', $template_context);

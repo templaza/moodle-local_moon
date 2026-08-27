@@ -25,6 +25,8 @@ defined('MOODLE_INTERNAL') || die;
 use local_moon\library\framework;
 use local_moon\library\helper\style;
 use local_moon\library\helper\sub_form;
+global $OUTPUT;
+$template_context = [];
 $params = $this->params;
 $element = $this;
 $style = $element->style;
@@ -36,6 +38,7 @@ if (!count($list_items->get_data())) {
     return false;
 }
 $title_html_element =   $params->get('title_html_element', 'h3');
+$template_context['title_html_element'] = $title_html_element;
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
     style::render_typography('#'.$element->id.' .as-list-title', $title_font_style, null, $element->isRoot);
@@ -49,8 +52,10 @@ if (!empty($content_font_style)) {
 
 $item_margin    =   $params->get('item_margin', '');
 $item_padding   =   $params->get('item_padding', '');
-$vertical_align     =   $params->get('vertical_align', 'ul');
+$vertical_align     =   $params->get('vertical_align', 'uk-flex-top');
+$template_context['vertical_align'] = $vertical_align;
 $list_style     =   $params->get('list_style', 'ul');
+$template_context['list_style'] = $list_style;
 $title_width    =   intval($params->get('title_width', 3));
 $heading    =   $params->get('title_heading', '');
 
@@ -80,11 +85,22 @@ $class_item_inner = match ($list_style) {
 if($list_style=='custom'){
     $class = 'list-unstyled';
 }
-if($heading){
-    echo '<h4 class="list-heading">'.$heading.'</h4>';
-}
-echo '<'.$tag.' class="' . $class . ' style-'.$list_style.'">';
+$template_context['has_heading'] = !empty($heading);
+$template_context['heading'] = $heading;
+
+$template_context['tag'] = $tag;
+$template_context['class'] = $class . ' style-'.$list_style;
+$template_context['is_list_description'] = $list_style == 'list-description';
+$template_context['is_list_custom'] = $list_style == 'custom';
+$template_context['is_list_inline'] = $list_style == 'list-inline';
+$template_context['is_list_others'] = !$template_context['is_list_inline'] && !$template_context['is_list_custom'] && !$template_context['is_list_description'];
+$template_context['title_width'] = $title_width;
+$template_context['description_width'] = $title_width < 12 ? 12-$title_width : 12;
+$template_context['class_item'] = $class_item;
+$template_context['class_item_inner'] = $class_item_inner;
+$lists_data = [];
 foreach ($list_items->get_data() as $list) {
+    $list_item = new \stdClass();
     $icon_type      =   $list->params->get('icon_type', 'fontawesome');
     $icon_color          =   style::get_color($list->params->get('icon_color_item', ''));
     $icon_bg_color          =   style::get_color($list->params->get('icon_bg_item', ''));
@@ -102,41 +118,18 @@ foreach ($list_items->get_data() as $list) {
     } else {
         $icon       =   $list->params->get('custom_icon', '');
     }
-    $title_only = $list->params->get('title', '');
-    $title          =   ($icon ? '<i class="'.$icon.' me-2"></i>' : '').$list->params->get('title', '');
 
-    $description    =   $list->params->get('description', '');
-    if ($list_style === 'list-description') {
-        echo '<dt class="as-list-title as-list-icon col-'.$title_width.'">'.$title.'</dt>';
-        echo '<dd class="as-list-desc col-'.($title_width < 12 ? 12-$title_width : 12).'">'.$description.'</dd>';
-    } elseif($list_style === 'custom') {
-        echo '<li id="tzlist-'.$list->id.'" class="'.$class_item.'">';
-        echo '<div class="list-item-inner uk-flex'.$class_item_inner.' '.$vertical_align.'">';
-        echo $icon ? '<div  class="as-list-icon"><i class="'.$icon.'"></i></div>' : '';
-        echo '<div class="list-item-info">';
-        echo $title_only ? '<'.$title_html_element.' class="as-list-title">'. $title_only . '</'.$title_html_element.'>' : '';
-        echo $description ? '<div class="as-list-desc">'. $description . '</div>' : '';
-        echo '</div>';
-        echo '</div>';
-        echo '</li>';
-    } elseif($list_style === 'list-inline') {
-        echo '<li id="tzlist-'.$list->id.'" class="'.$class_item.'">';
-        echo '<div class="list-item-inner uk-flex'.$class_item_inner.' uk-child-1-3@m uk-grid-collapse" data-uk-grid>';
-        echo $icon ? '<div  class="as-list-icon uk-width-auto"><i class="'.$icon.' me-2"></i></div>' : '';
-        echo $title_only ? '<'.$title_html_element.' class="uk-width-auto as-list-title">'. $title_only . '</'.$title_html_element.'>' : '';
-        echo $description ? '<div class="as-list-desc uk-width-expand@m">'. $description . '</div>' : '';
-        echo '</div>';
-        echo '</li>';
-    } else {
-        echo '<li class="'.$class_item.'">';
-        echo '<div class="list-item-inner'.$class_item_inner.'">';
-        echo $title ? '<'.$title_html_element.' class="as-list-title as-list-icon">'. $title . '</'.$title_html_element.'>' : '';
-        echo $description ? '<div class="as-list-desc">'. $description . '</div>' : '';
-        echo '</div>';
-        echo '</li>';
-    }
+    $list_item->id = $list->id;
+    $list_item->has_icon = !empty($icon);
+    $list_item->icon = $icon;
+    $list_item->title = $list->params->get('title', '');
+    $list_item->has_title = !empty($list->params->get('title', ''));
+    $list_item->has_description = !empty($list->params->get('description', ''));
+
+    $list_item->description = $list->params->get('description', '');
+    $lists_data[] = $list_item;
 }
-echo '</'.$tag.'>';
+$template_context['lists'] = $lists_data;
 
 if (!empty($title_heading_margin)) {
     style::set_spacing_style($element->style->child('.as-list-title'), $title_heading_margin, 'margin');
@@ -200,3 +193,4 @@ $heading_margin=  $params->get('heading_margin', '');
 if (!empty($heading_margin)) {
     style::set_spacing_style($element->style->child('.list-heading'), $heading_margin, 'margin');
 }
+echo $OUTPUT->render_from_template('local_moon/elements/list/default', $template_context);

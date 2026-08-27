@@ -24,6 +24,8 @@
 defined('MOODLE_INTERNAL') || die;
 use local_moon\library\helper\style;
 use local_moon\library\helper\sub_form;
+global $OUTPUT;
+$template_context = [];
 $params = $this->params;
 $element = $this;
 $icons     = new sub_form($params->get('icons', ''));
@@ -36,13 +38,13 @@ $bd_radius      =   $border_radius ? ' ' . $border_radius : '';
 $button_size    =   $params->get('button_size', '');
 
 $button_size    =   $button_size ? ' '. $button_size : '';
-echo '<div class="icons-group d-flex" role="group">';
+$icons_data = [];
 foreach ($icons->data as $key => $icon) {
+    $icon_data = new \stdClass();
+    $icon_data->title = $icon->params->get('title', '');
+    $icon_data->has_icon = $icon->params->get('icon', '') !== '';
+    $icon_data->icon = $icon->params->get('icon', '');
 
-    $title = $icon->params->get('title', '');
-    if ($icon->params->get('icon', '')) {
-        $title      = '<i class="'.$icon->params->get('icon', '').'"></i>' . $title . '';
-    }
     $btn_element_size = $button_size;
 
     // Button Custom Style
@@ -64,20 +66,18 @@ foreach ($icons->data as $key => $icon) {
     $element->style->child('#icon-'.$icon->id)->hover()->add_css('background-color', $bgcolor_hover['light']);
     $element->style_dark->child('#icon-'.$icon->id)->hover()->add_css('background-color', $bgcolor_hover['dark']);
 
-    if ($icon->params->get('link', '')) {
-        $link_target    =   !empty($icon->params->get('link_target', '')) ? ' target="'.$icon->params->get('link_target', '').'"' : '';
-        echo '<a id="icon-'.$icon->id.'" href="' .$icon->params->get('link', ''). '" class="moon-icon d-flex align-items-center justify-content-center" '.$link_target.'>'.$title.'</a>';
-    } else {
-        echo '<div id="icon-'.$icon->id.'" class="moon-icon d-flex align-items-center justify-content-center">'.$title.'</div>';
-    }
+    $icon_data->has_link = $icon->params->get('link', '') !== '';
+    $icon_data->link = $icon->params->get('link', '');
+    $icon_data->link_target = !empty($icon->params->get('link_target', '')) ? ' target="'.$icon->params->get('link_target', '').'"' : '';
+    $icon_data->id = 'icon-'.$icon->id;
 
     $title_font_style =   $icon->params->get('title_font_style');
     if (!empty($title_font_style)) {
         style::render_typography('#'.$element->id.' #icon-' . $icon->id , $title_font_style, null, $element->isRoot);
     }
+    $icons_data[] = $icon_data;
 }
-echo '</div>';
-
+$template_context['icons'] = $icons_data;
 // Item Padding
 if (trim($button_size) == 'custom') {
     $item_padding   =   $params->get('btn_padding', '');
@@ -127,3 +127,5 @@ if (!empty($icon_border_hover)) {
 $icons_color     = style::get_color($params->get('icons_color', ''));
 $element->style->child('.moon-icon')->add_css('color', $icons_color['light']);
 $element->style_dark->child('.moon-icon')->add_css('color', $icons_color['dark']);
+
+echo $OUTPUT->render_from_template('local_moon/elements/icons/default', $template_context);
