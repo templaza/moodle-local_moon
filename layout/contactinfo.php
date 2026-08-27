@@ -36,7 +36,6 @@ $email = $params->get('contact_email_address', '');
 $openhours = $params->get('contact_open_hours', '');
 $address = $params->get('contact_address', '');
 $contact_display = $params->get('contact_display', 'icons');
-$output = '';
 $templatecontext = [];
 $templatecontext['has_content'] = false;
 $templatecontext['is_icon'] = $contact_display == 'icons';

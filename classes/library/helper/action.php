@@ -198,18 +198,18 @@ class action extends client {
     public function save_layout(): array
     {
         $filename = $this->params['name'];
-        $layoutType = $this->params['layout'];
-        $layoutData = $this->params['data'];
-        if (!utilities::is_json_string($layoutData)) {
+        $layout_type = $this->params['layout'];
+        $layout_data = $this->params['data'];
+        if (!utilities::is_json_string($layout_data)) {
             throw new \moodle_exception('error_data_json_invalid', 'local_moon');
         }
 
         $layout = [
             'title'     => $this->params['title'],
             'desc'      => $this->params['desc'],
-            'layout'    => $layoutType,
+            'layout'    => $layout_type,
             'thumbnail' => $this->params['thumbnail_old'],
-            'data'      => json_decode($layoutData, true),
+            'data'      => json_decode($layout_data, true),
         ];
 
         // Validate layout data
@@ -217,8 +217,8 @@ class action extends client {
             throw new \moodle_exception('error_layout_is_empty', 'local_moon');
         }
 
-        if (!empty($layoutType) && $layoutType !== 'custom') {
-            $layout_name = $layoutType;
+        if (!empty($layout_type) && $layout_type !== 'custom') {
+            $layout_name = $layout_type;
         } elseif (!$filename) {
             $base = clean_param($layout['title'] ?? '', PARAM_ALPHANUMEXT);
             if ($base === '') {
@@ -261,19 +261,19 @@ class action extends client {
 //            }
 //        }
         $layout['name'] = $layout_name;
-        $bakFile = null;
-        $fileIsExist = media::exists($layout_name . '.json', '/', $this->filearea, $this->itemid);
-        if ($fileIsExist) {
+        $bak_file = null;
+        $file_is_exist = media::exists($layout_name . '.json', '/', $this->filearea, $this->itemid);
+        if ($file_is_exist) {
             $oldlayout = media::data($layout_name . '.json', '/', $this->filearea, $this->itemid);
             if ($oldlayout) {
-                $bakFile = media::create_from_string($oldlayout, $layout_name . '.bak.json', '/draft/', $this->filearea, $this->itemid);
+                $bak_file = media::create_from_string($oldlayout, $layout_name . '.bak.json', '/draft/', $this->filearea, $this->itemid);
             }
         }
         $json = \json_encode($layout);
-        $shouldCreate = !$fileIsExist || !empty($bakFile);
-        if ($shouldCreate && media::create_from_string($json, $layout_name . '.json', '/', $this->filearea, $this->itemid)) {
-            if ($fileIsExist && !empty($bakFile)) {
-                $bakFile->delete();
+        $should_create = !$file_is_exist || !empty($bak_file);
+        if ($should_create && media::create_from_string($json, $layout_name . '.json', '/', $this->filearea, $this->itemid)) {
+            if ($file_is_exist && !empty($bak_file)) {
+                $bak_file->delete();
             }
         }
         return $this->response_data(['data' => \json_encode($layout)]);
@@ -333,14 +333,14 @@ class action extends client {
             $item       =   array();
             $item['title']  =   $preset['title'];
             $item['desc']   =   $preset['desc'];
-            $arrName        =   explode(' ',$preset['title']);
-            $avaName        =   '';
-            for ($j=0; $j<count($arrName) && $j<3; $j++){
-                if ($word = trim($arrName[$j])) {
-                    $avaName.=$word[0];
+            $arr_name        =   explode(' ',$preset['title']);
+            $ava_name        =   '';
+            for ($j=0; $j<count($arr_name) && $j<3; $j++){
+                if ($word = trim($arr_name[$j])) {
+                    $ava_name.=$word[0];
                 }
             }
-            $item['keyword']    = $avaName;
+            $item['keyword']    = $ava_name;
             $item['thumbnail']  = $preset['thumbnail'];
             $item['demo']       = !empty($preset['demo']) ? $preset['demo'] : '';
             $item['name']       = $preset['name'];
@@ -397,9 +397,9 @@ class action extends client {
             $file = $fs->get_file($this->params['fileInfo']['contextid'], $this->params['fileInfo']['component'], $this->params['fileInfo']['filearea'], $this->params['fileInfo']['itemid'], $this->params['fileInfo']['filepath'], $this->params['fileInfo']['filename']);
 
             $pathinfo = pathinfo($this->params['fileInfo']['filename']);
-            $uploadedFileExtension = $pathinfo['extension'];
-            $uploadedFileExtension = strtolower($uploadedFileExtension);
-            if ($uploadedFileExtension != 'json') {
+            $uploaded_file_extension = $pathinfo['extension'];
+            $uploaded_file_extension = strtolower($uploaded_file_extension);
+            if ($uploaded_file_extension != 'json') {
                 throw new \Exception(text::_('error_invalid_extension'));
             }
 
@@ -415,14 +415,14 @@ class action extends client {
                 throw new \Exception(text::_('error_data_json_invalid'));
             }
 
-            $uploadPath = $presets_path . $preset_name . '.json';
+            $upload_path = $presets_path . $preset_name . '.json';
             if (!is_dir($presets_path)) {
                 if (!mkdir($presets_path, 0755, true) && !is_dir($presets_path)) {
                     throw new \Exception('Failed to create presets directory: ' . $presets_path);
                 }
             }
-            if (file_put_contents($uploadPath, \json_encode($preset)) === false) {
-                throw new \Exception('Failed to write preset file: ' . $uploadPath);
+            if (file_put_contents($upload_path, \json_encode($preset)) === false) {
+                throw new \Exception('Failed to write preset file: ' . $upload_path);
             }
             $file->delete();
             return $preset_name;

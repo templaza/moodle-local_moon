@@ -54,7 +54,7 @@ class constants
         require_once($CFG->libdir . '/externallib.php');
         $theme = framework::get_theme();
         $enable_widget  =   1;
-        $tinyMceLicense =   '';
+        $tiny_mce_license =   '';
         $cache = \cache::make('local_moon', 'upload_token');
         $upload_token = $cache->get('local_moon_upload_token');
 
@@ -98,7 +98,7 @@ class constants
             'upload_token'          => $upload_token,
             'astroid_action'        => $CFG->wwwroot . '/lib/ajax/service.php',
             'form_template'         => utilities::get_form_template($mode),
-            'tiny_mce_license'      => empty($tinyMceLicense) ? 'gpl' : $tinyMceLicense,
+            'tiny_mce_license'      => empty($tiny_mce_license) ? 'gpl' : $tiny_mce_license,
             'is_pro'                => false,
             'dynamic_source'        => self::$dynamic_sources,
             'dynamic_source_fields' => self::dynamic_source_fields(),

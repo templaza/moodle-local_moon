@@ -145,18 +145,18 @@ class form
             }
         }
 
-        $formData = [];
+        $form_data = [];
         $fieldsets = $this->form;
         foreach ($fieldsets as $key => $fieldset) {
             $fields = $fieldset['fields'];
             foreach ($fields as $fkey => $field) {
                 if ($field['type'] !== 'group') {
-                    $formData[] = ['name' => $fkey, 'value' => ($field['default'] ?? '')];
+                    $form_data[] = ['name' => $fkey, 'value' => ($field['default'] ?? '')];
                 }
             }
         }
 
-        $this->params = $formData;
+        $this->params = $form_data;
     }
 
     public function get_info(): array
@@ -262,10 +262,10 @@ class form
 
     protected function get_params()
     {
-        $formData = [];
+        $form_data = [];
         foreach ($this->data as $data) {
             $data = (array) $data;
-            $formData[$data['name']] = $data['value'];
+            $form_data[$data['name']] = $data['value'];
         }
         /* $params = [];
         foreach ($this->params as $param) {
@@ -277,6 +277,6 @@ class form
            }
         } */
 
-        return new params($formData);
+        return new params($form_data);
     }
 }

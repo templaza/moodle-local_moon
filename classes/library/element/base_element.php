@@ -37,11 +37,11 @@ class base_element
     protected $_data, $_tag = 'div', $_classes = [], $_attributes = [];
     public $id, $unqid, $params, $type, $style, $style_dark, $content = '';
     public int $state = 1;
-    public bool $isAssigned = true;
+    public bool $is_assigned = true;
     public array $devices = [];
     public array $options = [];
     public string $role = '';
-    public bool $isRoot = false;
+    public bool $is_root = false;
     public bool $has_maxwidth = false;
     public mixed $context = '';
     public bool $transform_loaded = false;
@@ -422,9 +422,9 @@ class base_element
         $link_color         =   style::get_color($this->params->get('link_color', ''));
         $link_hover_color   =   style::get_color($this->params->get('link_hover_color', ''));
         $link = $this->style->add_child('a');
-        $linkHover = $this->style->add_child('a:hover');
+        $link_hover = $this->style->add_child('a:hover');
         $link->add_css('color', $link_color['light']);
-        $linkHover->add_css('color', $link_hover_color['light']);
+        $link_hover->add_css('color', $link_hover_color['light']);
 
         $link_dark      = $this->style_dark->add_child('a');
         $linkHover_dark = $this->style_dark->add_child('a:hover');

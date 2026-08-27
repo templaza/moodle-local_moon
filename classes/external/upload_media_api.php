@@ -74,8 +74,8 @@ class upload_media_api extends api {
         ]);
     }
 
-    public static function execute($theme, $task, $filearea = '', $itemid = 0, $folder = '', $fileInfo = null) {
-        $params = self::validate_parameters(self::execute_parameters(), ['theme' => $theme, 'task' => $task, 'filearea' => $filearea, 'itemid' => $itemid, 'folder' => $folder, 'fileInfo' => $fileInfo]);
+    public static function execute($theme, $task, $filearea = '', $itemid = 0, $folder = '', $file_info = null) {
+        $params = self::validate_parameters(self::execute_parameters(), ['theme' => $theme, 'task' => $task, 'filearea' => $filearea, 'itemid' => $itemid, 'folder' => $folder, 'fileInfo' => $file_info]);
         $exec = self::action($params);
         try {
             if (!method_exists($exec, $params['task'])) {

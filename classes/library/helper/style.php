@@ -35,20 +35,20 @@ class style
     protected $_hover = null, $_focus = null, $_active = null, $_link = null;
     public bool $_onFile = false;
     public string $_mode = '';
-    public function __construct($selectors, $mode = '', $onFile = false, $parentElement = '')
+    public function __construct($selectors, $mode = '', $on_file = false, $parent_element = '')
     {
         if (is_array($selectors)) {
             for ($key = 0; $key < count($selectors); $key ++) {
-                $selector = !empty($parentElement) ? $parentElement .' '. $selectors[$key] : $selectors[$key];
+                $selector = !empty($parent_element) ? $parent_element .' '. $selectors[$key] : $selectors[$key];
                 $selectors[$key]    =   $mode ? '[data-bs-theme='.$mode.'] '. $selector : $selector;
             }
             $this->_selector    =   implode(', ', $selectors);
         } else {
-            $selector = !empty($parentElement) ? $parentElement .' '. $selectors : $selectors;
+            $selector = !empty($parent_element) ? $parent_element .' '. $selectors : $selectors;
             $this->_selector    =   $mode ? '[data-bs-theme='.$mode.'] '. $selector : $selector;
         }
         $this->_mode = $mode;
-        $this->_onFile = $onFile;
+        $this->_onFile = $on_file;
     }
 
     protected function _selectorize($postfix = null, $prefix = null): string
@@ -178,9 +178,9 @@ class style
         return $this;
     }
 
-    public function add_border($value, $device = 'global', $onFile = false): void
+    public function add_border($value, $device = 'global', $on_file = false): void
     {
-        self::add_border_style($this->_selector, $value, $device, $onFile);
+        self::add_border_style($this->_selector, $value, $device, $on_file);
     }
 
     public function add_style($css, $device = 'global'): void
@@ -221,9 +221,9 @@ class style
             }
         }
 
-        foreach ($this->_styles as $device => $cssScript) {
-            if (!empty($cssScript)) {
-                $css[$device] .= implode(';', $cssScript);
+        foreach ($this->_styles as $device => $css_script) {
+            if (!empty($css_script)) {
+                $css[$device] .= implode(';', $css_script);
             }
         }
 
@@ -273,10 +273,10 @@ class style
         };
     }
 
-    public static function add_border_style($selector, $border, $device = 'global', $onFile = false): void
+    public static function add_border_style($selector, $border, $device = 'global', $on_file = false): void
     {
-        $style      = new style($selector, '', $onFile);
-        $style_dark = new style($selector, 'dark', $onFile);
+        $style      = new style($selector, '', $on_file);
+        $style_dark = new style($selector, 'dark', $on_file);
         if (isset($border['border_width'])) {
             if (utilities::is_json_string($border['border_width'])) {
                 self::set_spacing_style($style, $border['border_width'], 'border');
@@ -299,15 +299,15 @@ class style
         $style_dark->render();
     }
 
-    public static function add_css_by_selector($selector, $property, $value, $device = 'global', $mode = '', $onFile = false): style
+    public static function add_css_by_selector($selector, $property, $value, $device = 'global', $mode = '', $on_file = false): style
     {
-        $style = new style($selector, $mode, $onFile);
+        $style = new style($selector, $mode, $on_file);
         $style->add_css($property, $value, $device);
         $style->render();
         return $style;
     }
 
-    public static function render_typography($selector, $object, $defaultObject = null, $onFile = false, $parentClass = ''): void
+    public static function render_typography($selector, $object, $default_object = null, $on_file = false, $parent_class = ''): void
     {
         if (is_string($object) && utilities::is_json_string($object)) {
             $object = json_decode($object);
@@ -315,8 +315,8 @@ class style
         $typography = new registry();
         $typography->load_object($object);
 
-        $style = new style($selector, '', $onFile, $parentClass);
-        $style_dark = new style($selector, 'dark', $onFile, $parentClass);
+        $style = new style($selector, '', $on_file, $parent_class);
+        $style_dark = new style($selector, 'dark', $on_file, $parent_class);
 
         // font color, weight and transfrom
         $font_color = style::get_color($typography->get('font_color', ''));
@@ -399,23 +399,23 @@ class style
         $font_face = $typography->get('font_face', '');
         $alt_font_face = $typography->get('alt_font_face', '');
 
-        if ($defaultObject !== null) {
-            $defaultTypography = new registry();
-            $defaultTypography->load_object($defaultObject);
-            $font_face = ($font_face == '__default' ? $defaultTypography->get('font_face', '') : $font_face);
-            $alt_font_face = ($alt_font_face == '__default' ? $defaultTypography->get('alt_font_face', '') : $alt_font_face);
+        if ($default_object !== null) {
+            $default_typography = new registry();
+            $default_typography->load_object($default_object);
+            $font_face = ($font_face == '__default' ? $default_typography->get('font_face', '') : $font_face);
+            $alt_font_face = ($alt_font_face == '__default' ? $default_typography->get('alt_font_face', '') : $alt_font_face);
         }
         $style->add_css('font-family', self::get_font_family_value($font_face, $alt_font_face));
         $style->render();
         $style_dark->render();
     }
 
-    public static function add_background_css ($obj, $obj_params, $prefix = '', $onFile = false): void
+    public static function add_background_css ($obj, $obj_params, $prefix = '', $on_file = false): void
     {
         $background = $obj_params->get($prefix . 'background_setting', '');
         if (!empty($background)) {
-            $style = new style($obj, '', $onFile);
-            $style_dark = new style($obj, 'dark', $onFile);
+            $style = new style($obj, '', $on_file);
+            $style_dark = new style($obj, 'dark', $on_file);
             switch ($background) {
                 case 'color': // if color background
                     $background_color   =   style::get_color($obj_params->get($prefix . 'background_color', ''));
@@ -451,7 +451,7 @@ class style
         }
     }
 
-    public static function add_overlay_color($obj, $obj_params, $prefix = '', $onFile = false): void
+    public static function add_overlay_color($obj, $obj_params, $prefix = '', $on_file = false): void
     {
         $overlay_type   =   $obj_params->get($prefix . 'background_image_overlay', '');
         if (!empty($overlay_type)) {
@@ -465,11 +465,11 @@ class style
                 case 'color':
                     $background_image_overlay_color     =   style::get_color($obj_params->get($prefix . 'background_image_overlay_color', ''));
                     if (!empty($background_image_overlay_color)) {
-                        $overlay_style   =   new style($obj . $overlay_style_cls . ':before', '', $onFile);
+                        $overlay_style   =   new style($obj . $overlay_style_cls . ':before', '', $on_file);
                         $overlay_style->add_css('background-color', $background_image_overlay_color['light']);
                         $overlay_style->render();
 
-                        $overlay_style   =   new style($obj . $overlay_style_cls . ':before', 'dark', $onFile);
+                        $overlay_style   =   new style($obj . $overlay_style_cls . ':before', 'dark', $on_file);
                         $overlay_style->add_css('background-color', $background_image_overlay_color['dark']);
                         $overlay_style->render();
                     }
@@ -486,9 +486,9 @@ class style
                     $background_image_overlay_pattern   =   $obj_params->get($prefix . 'background_image_overlay_pattern', '');
                     $background_image_overlay_color     =   style::get_color($obj_params->get($prefix . 'background_image_overlay_color', ''));
                     if (!empty($background_image_overlay_pattern)) {
-                        $overlay_style   =   new style($obj . $overlay_style_cls . ':before', '', $onFile);
+                        $overlay_style   =   new style($obj . $overlay_style_cls . ':before', '', $on_file);
                         if ($background_image_overlay_color) {
-                            $overlay_style_dark   =   new style($obj . $overlay_style_cls . ':before', 'dark', $onFile);
+                            $overlay_style_dark   =   new style($obj . $overlay_style_cls . ':before', 'dark', $on_file);
                             $overlay_style->add_css('background-color', $background_image_overlay_color['light']);
                             $overlay_style_dark->add_css('background-color', $background_image_overlay_color['dark']);
                             $overlay_style_dark->render();

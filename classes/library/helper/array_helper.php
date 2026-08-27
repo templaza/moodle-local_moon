@@ -104,24 +104,24 @@ final class array_helper
      *
      * @since   1.0
      */
-    public static function to_string(array $array, string $innerGlue = '=', string $outerGlue = ' ', $keepOuterKey = false)
+    public static function to_string(array $array, string $inner_glue = '=', string $outer_glue = ' ', $keep_outer_key = false)
     {
         $output = [];
 
         foreach ($array as $key => $item) {
             if (\is_array($item)) {
-                if ($keepOuterKey) {
+                if ($keep_outer_key) {
                     $output[] = $key;
                 }
 
                 // This is value is an array, go and do it again!
-                $output[] = static::to_string($item, $innerGlue, $outerGlue, $keepOuterKey);
+                $output[] = static::to_string($item, $inner_glue, $outer_glue, $keep_outer_key);
             } else {
-                $output[] = $key . $innerGlue . '"' . $item . '"';
+                $output[] = $key . $inner_glue . '"' . $item . '"';
             }
         }
 
-        return implode($outerGlue, $output);
+        return implode($outer_glue, $output);
     }
 
     /**
@@ -199,32 +199,32 @@ final class array_helper
      * @since   1.5.0
      * @see     https://www.php.net/manual/en/language.types.array.php
      */
-    public static function add_column(array $array, array $column, $colName, $keyCol = null)
+    public static function add_column(array $array, array $column, $col_name, $key_col = null)
     {
         $result = [];
 
         foreach ($array as $i => $item) {
             $value = null;
 
-            if (!isset($keyCol)) {
+            if (!isset($key_col)) {
                 $value = static::get_value($column, $i);
             } else {
                 // Convert object to array
                 $subject = \is_object($item) ? static::from_object($item) : $item;
 
-                if (isset($subject[$keyCol]) && is_scalar($subject[$keyCol])) {
-                    $value = static::get_value($column, $subject[$keyCol]);
+                if (isset($subject[$key_col]) && is_scalar($subject[$key_col])) {
+                    $value = static::get_value($column, $subject[$key_col]);
                 }
             }
 
             // Add the column
             if (\is_object($item)) {
-                if (isset($colName)) {
-                    $item->$colName = $value;
+                if (isset($col_name)) {
+                    $item->$col_name = $value;
                 }
             } else {
-                if (isset($colName)) {
-                    $item[$colName] = $value;
+                if (isset($col_name)) {
+                    $item[$col_name] = $value;
                 } else {
                     $item[] = $value;
                 }
@@ -247,15 +247,15 @@ final class array_helper
      * @since   1.5.0
      * @see     https://www.php.net/manual/en/language.types.array.php
      */
-    public static function drop_column(array $array, $colName)
+    public static function drop_column(array $array, $col_name)
     {
         $result = [];
 
         foreach ($array as $i => $item) {
-            if (\is_object($item) && isset($item->$colName)) {
-                unset($item->$colName);
-            } elseif (\is_array($item) && isset($item[$colName])) {
-                unset($item[$colName]);
+            if (\is_object($item) && isset($item->$col_name)) {
+                unset($item->$col_name);
+            } elseif (\is_array($item) && isset($item[$col_name])) {
+                unset($item[$col_name]);
             }
 
             $result[$i] = $item;
@@ -279,25 +279,25 @@ final class array_helper
      * @see     https://www.php.net/manual/en/language.types.array.php
      * @see     https://www.php.net/manual/en/function.array-column.php
      */
-    public static function get_column(array $array, $valueCol, $keyCol = null)
+    public static function get_column(array $array, $value_col, $key_col = null)
     {
         return \array_reduce(
             $array,
-            function ($result, $item) use ($keyCol, $valueCol) {
+            function ($result, $item) use ($key_col, $value_col) {
                 $array = \is_object($item) ? get_object_vars($item) : $item;
 
-                if ($valueCol === null) {
+                if ($value_col === null) {
                     $value = $item;
                 } else {
-                    if (!array_key_exists($valueCol, $array)) {
+                    if (!array_key_exists($value_col, $array)) {
                         return $result;
                     }
 
-                    $value = $array[$valueCol];
+                    $value = $array[$value_col];
                 }
 
-                if ($keyCol !== null && \array_key_exists($keyCol, $array) && \is_scalar($array[$keyCol])) {
-                    $result[$array[$keyCol]] = $value;
+                if ($key_col !== null && \array_key_exists($key_col, $array) && \is_scalar($array[$key_col])) {
+                    $result[$array[$key_col]] = $value;
                 } else {
                     $result[] = $value;
                 }
@@ -486,37 +486,37 @@ final class array_helper
                     continue;
                 }
 
-                $resultKey   = $value[$key];
-                $resultValue = $source[$index];
+                $result_key   = $value[$key];
+                $result_value = $source[$index];
             } elseif (\is_object($value)) {
                 // If the key does not exist, ignore it.
                 if (!isset($value->$key)) {
                     continue;
                 }
 
-                $resultKey   = $value->$key;
-                $resultValue = $source[$index];
+                $result_key   = $value->$key;
+                $result_value = $source[$index];
             } else {
                 // Just a scalar value.
-                $resultKey   = $value;
-                $resultValue = $index;
+                $result_key   = $value;
+                $result_value = $index;
             }
 
             // The counter tracks how many times a key has been used.
-            if (empty($counter[$resultKey])) {
+            if (empty($counter[$result_key])) {
                 // The first time around we just assign the value to the key.
-                $result[$resultKey]  = $resultValue;
-                $counter[$resultKey] = 1;
-            } elseif ($counter[$resultKey] == 1) {
+                $result[$result_key]  = $result_value;
+                $counter[$result_key] = 1;
+            } elseif ($counter[$result_key] == 1) {
                 // If there is a second time, we convert the value into an array.
-                $result[$resultKey] = [
-                    $result[$resultKey],
-                    $resultValue,
+                $result[$result_key] = [
+                    $result[$result_key],
+                    $result_value,
                 ];
-                $counter[$resultKey]++;
+                $counter[$result_key]++;
             } else {
                 // After the second time, no need to track any more. Just append to the existing array.
-                $result[$resultKey][] = $resultValue;
+                $result[$result_key][] = $result_value;
             }
         }
 
@@ -538,31 +538,31 @@ final class array_helper
      *
      * @since   1.0
      */
-    public static function sort_objects(array $a, $k, $direction = 1, $caseSensitive = true, $locale = false)
+    public static function sort_objects(array $a, $k, $direction = 1, $case_sensitive = true, $locale = false)
     {
         if (!\is_array($locale) || !\is_array($locale[0])) {
             $locale = [$locale];
         }
 
-        $sortCase      = (array) $caseSensitive;
-        $sortDirection = (array) $direction;
+        $sort_case      = (array) $case_sensitive;
+        $sort_direction = (array) $direction;
         $key           = (array) $k;
-        $sortLocale    = $locale;
+        $sort_locale    = $locale;
 
         usort(
             $a,
-            function ($a, $b) use ($sortCase, $sortDirection, $key, $sortLocale) {
+            function ($a, $b) use ($sort_case, $sort_direction, $key, $sort_locale) {
                 for ($i = 0, $count = \count($key); $i < $count; $i++) {
-                    if (isset($sortDirection[$i])) {
-                        $direction = $sortDirection[$i];
+                    if (isset($sort_direction[$i])) {
+                        $direction = $sort_direction[$i];
                     }
 
-                    if (isset($sortCase[$i])) {
-                        $caseSensitive = $sortCase[$i];
+                    if (isset($sort_case[$i])) {
+                        $case_sensitive = $sort_case[$i];
                     }
 
-                    if (isset($sortLocale[$i])) {
-                        $locale = $sortLocale[$i];
+                    if (isset($sort_locale[$i])) {
+                        $locale = $sort_locale[$i];
                     }
 
                     $va = $a->{$key[$i]};
@@ -570,7 +570,7 @@ final class array_helper
 
                     if ((\is_bool($va) || is_numeric($va)) && (\is_bool($vb) || is_numeric($vb))) {
                         $cmp = $va - $vb;
-                    } elseif ($caseSensitive) {
+                    } elseif ($case_sensitive) {
                         $cmp = string_helper::strcmp($va, $vb, $locale);
                     } else {
                         $cmp = string_helper::strcasecmp($va, $vb, $locale);
@@ -622,12 +622,12 @@ final class array_helper
      *
      * @since   1.0
      */
-    public static function array_search($needle, array $haystack, $caseSensitive = true)
+    public static function array_search($needle, array $haystack, $case_sensitive = true)
     {
         foreach ($haystack as $key => $value) {
-            $searchFunc = ($caseSensitive) ? 'strpos' : 'stripos';
+            $search_func = ($case_sensitive) ? 'strpos' : 'stripos';
 
-            if ($searchFunc($value, $needle) === 0) {
+            if ($search_func($value, $needle) === 0) {
                 return $key;
             }
         }

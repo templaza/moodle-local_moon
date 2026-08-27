@@ -142,7 +142,7 @@ class font
 
     public static function get_all_fonts(): false|string
     {
-        $googleFonts = self::google_fonts();
+        $google_fonts = self::google_fonts();
         $rt_fonts   =   array(
             'system' => array([
                 'value' => '__default',
@@ -165,10 +165,10 @@ class font
             ];
         }
 
-        $uploadedFonts = self::get_uploaded_fonts(framework::get_theme()->name);
+        $uploaded_fonts = self::get_uploaded_fonts(framework::get_theme()->name);
 
-        if (!empty($uploadedFonts)) {
-            foreach ($uploadedFonts as $uploaded_font) {
+        if (!empty($uploaded_fonts)) {
+            foreach ($uploaded_fonts as $uploaded_font) {
                 $rt_fonts['local'][]     =   [
                     'value' => $uploaded_font['id'],
                     'text'  => $uploaded_font['name']
@@ -176,10 +176,10 @@ class font
             }
         }
 
-        foreach ($googleFonts as $group => $fonts) {
-            foreach ($fonts as $fontValue => $font) {
+        foreach ($google_fonts as $group => $fonts) {
+            foreach ($fonts as $font_value => $font) {
                 $rt_fonts['google'][]     =   [
-                    'value' => $fontValue,
+                    'value' => $font_value,
                     'text'  => $font
                 ];
             }

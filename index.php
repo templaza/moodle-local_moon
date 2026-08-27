@@ -50,7 +50,7 @@ $document->add_script_options('astroid_content', settings::prepare_manager_form(
 $document->add_script_options('astroid_lang', settings::load_language());
 
 echo $OUTPUT->render_from_template('local_moon/manage', [
-    'title' => get_string('pluginname', $theme->get_name()) . ' - Moon Framework',
+    'title' => get_string('pluginname', $theme->get_name()) . get_string('pluginname_subfix', 'local_moon'),
     'favicon' => $OUTPUT->image_url('favicon', 'theme'),
     'content' => 'This demo page proves the framework assets, template and classes load correctly.',
     'color_mode_theme' => 'light',

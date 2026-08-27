@@ -39,7 +39,7 @@ abstract class string_helper
      * @var    array
      * @since  1.3.0
      */
-    protected static $incrementStyles = [
+    protected static $increment_styles = [
         'dash' => [
             '#-(\d+)$#',
             '-%d',
@@ -68,31 +68,31 @@ abstract class string_helper
      */
     public static function increment($string, $style = 'default', $n = 0)
     {
-        $styleSpec = static::$incrementStyles[$style] ?? static::$incrementStyles['default'];
+        $style_spec = static::$increment_styles[$style] ?? static::$increment_styles['default'];
 
         // Regular expression search and replace patterns.
-        if (\is_array($styleSpec[0])) {
-            $rxSearch  = $styleSpec[0][0];
-            $rxReplace = $styleSpec[0][1];
+        if (\is_array($style_spec[0])) {
+            $rx_search  = $style_spec[0][0];
+            $rx_replace = $style_spec[0][1];
         } else {
-            $rxSearch = $rxReplace = $styleSpec[0];
+            $rx_search = $rx_replace = $style_spec[0];
         }
 
         // New and old (existing) sprintf formats.
-        if (\is_array($styleSpec[1])) {
-            $newFormat = $styleSpec[1][0];
-            $oldFormat = $styleSpec[1][1];
+        if (\is_array($style_spec[1])) {
+            $new_format = $style_spec[1][0];
+            $old_format = $style_spec[1][1];
         } else {
-            $newFormat = $oldFormat = $styleSpec[1];
+            $new_format = $old_format = $style_spec[1];
         }
 
         // Check if we are incrementing an existing pattern, or appending a new one.
-        if (preg_match($rxSearch, $string, $matches)) {
+        if (preg_match($rx_search, $string, $matches)) {
             $n      = empty($n) ? ($matches[1] + 1) : $n;
-            $string = preg_replace($rxReplace, sprintf($oldFormat, $n), $string);
+            $string = preg_replace($rx_replace, sprintf($old_format, $n), $string);
         } else {
             $n = empty($n) ? 2 : $n;
-            $string .= sprintf($newFormat, $n);
+            $string .= sprintf($new_format, $n);
         }
 
         return $string;
@@ -306,9 +306,9 @@ abstract class string_helper
      * @link    https://www.php.net/str_pad
      * @since   1.4.0
      */
-    public static function str_pad($input, $length, $padStr = ' ', $type = STR_PAD_RIGHT)
+    public static function str_pad($input, $length, $pad_str = ' ', $type = STR_PAD_RIGHT)
     {
-        return utf8_str_pad($input, $length, $padStr, $type);
+        return utf8_str_pad($input, $length, $pad_str, $type);
     }
 
     /**
@@ -324,9 +324,9 @@ abstract class string_helper
      * @link    https://www.php.net/str_split
      * @since   1.3.0
      */
-    public static function str_split($str, $splitLen = 1)
+    public static function str_split($str, $split_len = 1)
     {
-        return utf8_str_split($str, $splitLen);
+        return utf8_str_split($str, $split_len);
     }
 
     /**
@@ -638,17 +638,17 @@ abstract class string_helper
      * @link    https://www.php.net/ucfirst
      * @since   1.3.0
      */
-    public static function ucfirst($str, $delimiter = null, $newDelimiter = null)
+    public static function ucfirst($str, $delimiter = null, $new_delimiter = null)
     {
         if ($delimiter === null) {
             return utf8_ucfirst($str);
         }
 
-        if ($newDelimiter === null) {
-            $newDelimiter = $delimiter;
+        if ($new_delimiter === null) {
+            $new_delimiter = $delimiter;
         }
 
-        return implode($newDelimiter, array_map('utf8_ucfirst', explode($delimiter, $str)));
+        return implode($new_delimiter, array_map('utf8_ucfirst', explode($delimiter, $str)));
     }
 
     /**
@@ -681,15 +681,15 @@ abstract class string_helper
      *
      * @since   1.3.0
      */
-    public static function transcode($source, $fromEncoding, $toEncoding)
+    public static function transcode($source, $from_encoding, $to_encoding)
     {
         switch (ICONV_IMPL) {
             case 'glibc':
-                return @iconv($fromEncoding, $toEncoding . '//TRANSLIT,IGNORE', $source);
+                return @iconv($from_encoding, $to_encoding . '//TRANSLIT,IGNORE', $source);
 
             case 'libiconv':
             default:
-                return iconv($fromEncoding, $toEncoding . '//IGNORE//TRANSLIT', $source);
+                return iconv($from_encoding, $to_encoding . '//IGNORE//TRANSLIT', $source);
         }
     }
 

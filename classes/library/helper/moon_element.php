@@ -47,21 +47,21 @@ class moon_element {
     }
     public function add_field_set($value, $key = ''): void
     {
-        $fieldSet = $key;
-        if (empty($fieldSet)) {
-            $fieldSet = $this->_fieldSet;
+        $field_set = $key;
+        if (empty($field_set)) {
+            $field_set = $this->_fieldSet;
         }
-        if (!empty($fieldSet)) {
-            $this->fields[$fieldSet] = $value;
+        if (!empty($field_set)) {
+            $this->fields[$field_set] = $value;
         }
     }
     public function add_multi_field_set($fields): void
     {
         $this->fields = $fields;
     }
-    public function add_field($field, $value, $fieldSet = ''): void
+    public function add_field($field, $value, $field_set = ''): void
     {
-        $_fieldSet = $fieldSet;
+        $_fieldSet = $field_set;
         if (empty($_fieldSet)) {
             $_fieldSet = $this->_fieldSet;
         }
@@ -74,9 +74,9 @@ class moon_element {
     {
         return $this->fields;
     }
-    public function set_field_set($fieldSet): void
+    public function set_field_set($field_set): void
     {
-        $this->_fieldSet = $fieldSet;
+        $this->_fieldSet = $field_set;
     }
     public function get_field_set(): string
     {

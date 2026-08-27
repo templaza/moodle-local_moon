@@ -42,7 +42,7 @@ class document {
     protected array $_stylesheets = [];
     protected array $_metas = [], $_links = [];
     protected static array $_layout_paths = [];
-    protected array $scriptOptions = [];
+    protected array $script_options = [];
     protected array $_is_loaded = [];
     public bool $rtl = false;
 
@@ -95,13 +95,13 @@ class document {
     {
         $css = $this->render_css();
         // page css();
-        $pageCSSHash = md5($css);
-        if (!media::exists($pageCSSHash. '.css', '/', 'css')) {
-            $cssFile = media::create_from_string($css, $pageCSSHash. '.css', '/', 'css');
+        $page_css_hash = md5($css);
+        if (!media::exists($page_css_hash. '.css', '/', 'css')) {
+            $css_file = media::create_from_string($css, $page_css_hash. '.css', '/', 'css');
         } else {
-            $cssFile = media::file($pageCSSHash. '.css', '/', 'css');
+            $css_file = media::file($page_css_hash. '.css', '/', 'css');
         }
-        $this->add_style_sheet(media::url($cssFile));
+        $this->add_style_sheet(media::url($css_file));
     }
 
     public function add_layout_path($path): void
@@ -109,7 +109,7 @@ class document {
         self::$_layout_paths[] = $path;
     }
 
-    public function add_script($url, $attrs = [], $inHead = false): void
+    public function add_script($url, $attrs = [], $in_head = false): void
     {
         if (empty($url)) {
             return;
@@ -119,7 +119,7 @@ class document {
             $url,
             $attrs
         );
-        $PAGE->requires->js($link, $inHead);
+        $PAGE->requires->js($link, $in_head);
     }
 
     public function add_script_declaration($content): void
@@ -160,14 +160,14 @@ class document {
 
     public function render_css(): string
     {
-        $cssScript = '';
+        $css_script = '';
         foreach ($this->_styles as $device => $css) {
-            $cssContent = implode('', $this->_styles[$device]);
-            if (!empty($cssContent)) {
-                $cssScript .= style::get_css($cssContent, $device);
+            $css_content = implode('', $this->_styles[$device]);
+            if (!empty($css_content)) {
+                $css_script .= style::get_css($css_content, $device);
             }
         }
-        return $cssScript;
+        return $css_script;
     }
 
     /**
@@ -175,7 +175,7 @@ class document {
      * @param true $addRoot
      * @return string
      */
-    protected function _system_url($url, true $addRoot = true): string
+    protected function _system_url($url, true $add_root = true): string
     {
         global $CFG;
         $template = framework::get_theme();
@@ -185,7 +185,7 @@ class document {
             return $url;
         }
 
-        $root = $addRoot ? rtrim($CFG->wwwroot, '/') . '/' : '';
+        $root = $add_root ? rtrim($CFG->wwwroot, '/') . '/' : '';
         $trimmed = ltrim($url, '/');
 
         $candidates = [
@@ -194,9 +194,9 @@ class document {
             $trimmed => $CFG->dirroot . '/' . $trimmed,
         ];
 
-        foreach ($candidates as $webPath => $fsPath) {
-            if (file_exists($fsPath)) {
-                return $root . $webPath;
+        foreach ($candidates as $web_path => $fs_path) {
+            if (file_exists($fs_path)) {
+                return $root . $web_path;
             }
         }
 
@@ -259,8 +259,8 @@ class document {
             if (!empty($link['rel'])) {
                 $html .= ' rel="' . $link['rel'] . '"';
             }
-            foreach ($link['attribs'] as $attribProp => $attribVal) {
-                $html .= ' ' . $attribProp . '="' . $attribVal . '"';
+            foreach ($link['attribs'] as $attrib_prop => $attrib_val) {
+                $html .= ' ' . $attrib_prop . '="' . $attrib_val . '"';
             }
             $html .= ' />';
         }
@@ -297,7 +297,7 @@ class document {
         array_splice($array, $b, 0, $out);
     }
 
-    public function include($section, $displayData = [], $return = false) : string
+    public function include($section, $display_data = [], $return = false) : string
     {
         global $CFG;
         $path = null;
@@ -411,73 +411,73 @@ class document {
         if($preloader_setting == "animation"){
             switch ($preloader_animation) {
                 case 'rotating-plane':
-                    $preloaderHTML = '<div class="sk-rotating-plane"></div>';
+                    $preloader_html = '<div class="sk-rotating-plane"></div>';
                     break;
                 case 'double-bounce':
-                    $preloaderHTML = '<div class="sk-double-bounce"><div class="sk-child sk-double-bounce1"></div><div class="sk-child sk-double-bounce2"></div></div>';
+                    $preloader_html = '<div class="sk-double-bounce"><div class="sk-child sk-double-bounce1"></div><div class="sk-child sk-double-bounce2"></div></div>';
                     break;
                 case 'wave':
-                    $preloaderHTML = '<div class="sk-wave"><div class="sk-rect sk-rect1"></div><div class="sk-rect sk-rect2"></div><div class="sk-rect sk-rect3"></div><div class="sk-rect sk-rect4"></div><div class="sk-rect sk-rect5"></div></div>';
+                    $preloader_html = '<div class="sk-wave"><div class="sk-rect sk-rect1"></div><div class="sk-rect sk-rect2"></div><div class="sk-rect sk-rect3"></div><div class="sk-rect sk-rect4"></div><div class="sk-rect sk-rect5"></div></div>';
                     break;
                 case 'wandering-cubes':
-                    $preloaderHTML = '<div class="sk-wandering-cubes"><div class="sk-cube sk-cube1"></div><div class="sk-cube sk-cube2"></div></div>';
+                    $preloader_html = '<div class="sk-wandering-cubes"><div class="sk-cube sk-cube1"></div><div class="sk-cube sk-cube2"></div></div>';
                     break;
                 case 'pulse':
-                    $preloaderHTML = '<div class="sk-spinner sk-spinner-pulse"></div>';
+                    $preloader_html = '<div class="sk-spinner sk-spinner-pulse"></div>';
                     break;
                 case 'chasing-dots':
-                    $preloaderHTML = '<div class="sk-chasing-dots"><div class="sk-child sk-dot1"></div><div class="sk-child sk-dot2"></div></div>';
+                    $preloader_html = '<div class="sk-chasing-dots"><div class="sk-child sk-dot1"></div><div class="sk-child sk-dot2"></div></div>';
                     break;
                 case 'three-bounce':
-                    $preloaderHTML = '<div class="sk-three-bounce"> <div class="sk-child sk-bounce1"></div><div class="sk-child sk-bounce2"></div><div class="sk-child sk-bounce3"></div></div>';
+                    $preloader_html = '<div class="sk-three-bounce"> <div class="sk-child sk-bounce1"></div><div class="sk-child sk-bounce2"></div><div class="sk-child sk-bounce3"></div></div>';
                     break;
                 case 'circle':
-                    $preloaderHTML = '<div class="sk-circle"> <div class="sk-circle1 sk-child"></div><div class="sk-circle2 sk-child"></div><div class="sk-circle3 sk-child"></div><div class="sk-circle4 sk-child"></div><div class="sk-circle5 sk-child"></div><div class="sk-circle6 sk-child"></div><div class="sk-circle7 sk-child"></div><div class="sk-circle8 sk-child"></div><div class="sk-circle9 sk-child"></div><div class="sk-circle10 sk-child"></div><div class="sk-circle11 sk-child"></div><div class="sk-circle12 sk-child"></div></div>';
+                    $preloader_html = '<div class="sk-circle"> <div class="sk-circle1 sk-child"></div><div class="sk-circle2 sk-child"></div><div class="sk-circle3 sk-child"></div><div class="sk-circle4 sk-child"></div><div class="sk-circle5 sk-child"></div><div class="sk-circle6 sk-child"></div><div class="sk-circle7 sk-child"></div><div class="sk-circle8 sk-child"></div><div class="sk-circle9 sk-child"></div><div class="sk-circle10 sk-child"></div><div class="sk-circle11 sk-child"></div><div class="sk-circle12 sk-child"></div></div>';
                     break;
                 case 'cube-grid':
-                    $preloaderHTML = '<div class="sk-cube-grid"> <div class="sk-cube sk-cube1"></div><div class="sk-cube sk-cube2"></div><div class="sk-cube sk-cube3"></div><div class="sk-cube sk-cube4"></div><div class="sk-cube sk-cube5"></div><div class="sk-cube sk-cube6"></div><div class="sk-cube sk-cube7"></div><div class="sk-cube sk-cube8"></div><div class="sk-cube sk-cube9"></div></div>';
+                    $preloader_html = '<div class="sk-cube-grid"> <div class="sk-cube sk-cube1"></div><div class="sk-cube sk-cube2"></div><div class="sk-cube sk-cube3"></div><div class="sk-cube sk-cube4"></div><div class="sk-cube sk-cube5"></div><div class="sk-cube sk-cube6"></div><div class="sk-cube sk-cube7"></div><div class="sk-cube sk-cube8"></div><div class="sk-cube sk-cube9"></div></div>';
                     break;
                 case 'fading-circle':
-                    $preloaderHTML = '<div class="sk-fading-circle"> <div class="sk-circle1 sk-circle"></div><div class="sk-circle2 sk-circle"></div><div class="sk-circle3 sk-circle"></div><div class="sk-circle4 sk-circle"></div><div class="sk-circle5 sk-circle"></div><div class="sk-circle6 sk-circle"></div><div class="sk-circle7 sk-circle"></div><div class="sk-circle8 sk-circle"></div><div class="sk-circle9 sk-circle"></div><div class="sk-circle10 sk-circle"></div><div class="sk-circle11 sk-circle"></div><div class="sk-circle12 sk-circle"></div></div>';
+                    $preloader_html = '<div class="sk-fading-circle"> <div class="sk-circle1 sk-circle"></div><div class="sk-circle2 sk-circle"></div><div class="sk-circle3 sk-circle"></div><div class="sk-circle4 sk-circle"></div><div class="sk-circle5 sk-circle"></div><div class="sk-circle6 sk-circle"></div><div class="sk-circle7 sk-circle"></div><div class="sk-circle8 sk-circle"></div><div class="sk-circle9 sk-circle"></div><div class="sk-circle10 sk-circle"></div><div class="sk-circle11 sk-circle"></div><div class="sk-circle12 sk-circle"></div></div>';
                     break;
                 case 'folding-cube':
-                    $preloaderHTML = '<div class="sk-folding-cube"> <div class="sk-cube1 sk-cube"></div><div class="sk-cube2 sk-cube"></div><div class="sk-cube4 sk-cube"></div><div class="sk-cube3 sk-cube"></div></div>';
+                    $preloader_html = '<div class="sk-folding-cube"> <div class="sk-cube1 sk-cube"></div><div class="sk-cube2 sk-cube"></div><div class="sk-cube4 sk-cube"></div><div class="sk-cube3 sk-cube"></div></div>';
                     break;
                 case 'bouncing-loader':
-                    $preloaderHTML = '<div class="bouncing-loader"><div></div><div></div><div></div></div>';
+                    $preloader_html = '<div class="bouncing-loader"><div></div><div></div><div></div></div>';
                     break;
                 case 'donut':
-                    $preloaderHTML = '<div class="donut"></div>';
+                    $preloader_html = '<div class="donut"></div>';
                     break;
                 case 'triple-spinner':
-                    $preloaderHTML = '<div class="triple-spinner"></div>';
+                    $preloader_html = '<div class="triple-spinner"></div>';
                     break;
                 case 'cm-spinner':
-                    $preloaderHTML = '<div class="cm-spinner"></div>';
+                    $preloader_html = '<div class="cm-spinner"></div>';
                     break;
                 case 'hm-spinner':
-                    $preloaderHTML = '<div class="hm-spinner"></div>';
+                    $preloader_html = '<div class="hm-spinner"></div>';
                     break;
                 case 'reverse-spinner':
-                    $preloaderHTML = '<div class="reverse-spinner"></div>';
+                    $preloader_html = '<div class="reverse-spinner"></div>';
                     break;
                 default:
-                    $preloaderHTML = '';
+                    $preloader_html = '';
                     break;
             }
         } elseif ($preloader_setting == "image") {
-            $preloaderHTML = '<div class="preloader-image"></div>';
+            $preloader_html = '<div class="preloader-image"></div>';
 
         } elseif ($preloader_setting == "fontawesome") {
             $preloader_fontawesome = $params->get('preloader_fontawesome', '');
-            $preloaderHTML = '<div class="preload_fontawesome '.$preloader_fontawesome.'"></div>';
+            $preloader_html = '<div class="preload_fontawesome '.$preloader_fontawesome.'"></div>';
         }
         global $PAGE;
         $PAGE->requires->js_call_amd('local_moon/preloader', 'init', [
             'duration' => '800ms',
         ]);
 
-        return '<div id="moon-preloader" class="d-flex align-items-center justify-content-center position-fixed top-0 start-0 bottom-0 end-0">' . $preloaderHTML . '</div>';
+        return '<div id="moon-preloader" class="d-flex align-items-center justify-content-center position-fixed top-0 start-0 bottom-0 end-0">' . $preloader_html . '</div>';
     }
 
     public function load_as_icon(): void

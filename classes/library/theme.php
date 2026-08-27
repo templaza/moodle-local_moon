@@ -155,21 +155,21 @@ class theme {
         return '';
     }
     public function get_color_mode() :string {
-        $colorMode = $this->params->get('astroid_color_mode_enable', 0);
-        if ($colorMode == 2) {
+        $color_mode = $this->params->get('astroid_color_mode_enable', 0);
+        if ($color_mode == 2) {
             return 'dark';
         }
 
-        $colorModeDefault = $this->params->get('astroid_color_mode_default', 'auto');
+        $color_mode_default = $this->params->get('astroid_color_mode_default', 'auto');
 
-        if ($colorMode == 1) {
+        if ($color_mode == 1) {
             if ($this->params->get('enable_color_mode_transform', 0)) {
                 return $this->params->get('colormode_transform_type', 'light_dark') === 'light_dark' ? 'light' : 'dark';
             }
-            $clientColor = optional_param('color_mode', '', PARAM_ALPHAEXT);
-            return !empty($clientColor)
-                ? $clientColor
-                : ($_COOKIE['moon-color-mode-' . md5($this->name)] ?? $colorModeDefault);
+            $client_color = optional_param('color_mode', '', PARAM_ALPHAEXT);
+            return !empty($client_color)
+                ? $client_color
+                : ($_COOKIE['moon-color-mode-' . md5($this->name)] ?? $color_mode_default);
         }
 
         return 'light';
@@ -263,8 +263,8 @@ class theme {
 
     public function get_actual_color_mode(): string
     {
-        $colorMode = $this->get_color_mode();
-        return ($colorMode == 'auto') ? 'light' : $colorMode;
+        $color_mode = $this->get_color_mode();
+        return ($color_mode == 'auto') ? 'light' : $color_mode;
     }
     public function get_presets(): array
     {

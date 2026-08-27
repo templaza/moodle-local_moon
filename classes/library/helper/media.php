@@ -278,16 +278,16 @@ class media {
                         continue;
                     }
                     $start = $pos + strlen($filepath);
-                    $dirPath = substr($file->get_filepath(), $start);
-                    if (empty($dirPath)) {
+                    $dir_path = substr($file->get_filepath(), $start);
+                    if (empty($dir_path)) {
                         continue;
                     }
-                    $dirPath = rtrim($dirPath, '/');
-                    if (strpos($dirPath, '/') !== false) {
+                    $dir_path = rtrim($dir_path, '/');
+                    if (strpos($dir_path, '/') !== false) {
                         continue;
                     }
                     $list[] = [
-                        'filename' => $dirPath,
+                        'filename' => $dir_path,
                         'isdir'    => true,
                         'url'      => self::url($file),
                         'filepath' => $file->get_filepath(),
@@ -451,11 +451,11 @@ class media {
         $file = $fs->get_file($context->id, framework::get_theme()->get_name(), $filearea, $itemid, $filepath, $filename);
         if ($file) {
             try {
-                $filenameVal = $file->get_filename();
+                $filename_val = $file->get_filename();
                 $file->delete();
                 return [
                     'success' => true,
-                    'filename' => $filenameVal,
+                    'filename' => $filename_val,
                     'message' => 'File deleted successfully'
                 ];
             } catch (\Exception $e) {

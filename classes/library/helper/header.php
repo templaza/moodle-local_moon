@@ -77,15 +77,15 @@ class header {
 
         $class = ['moon-header', 'moon-horizontal-header', 'moon-horizontal-' . $mode . '-header'];
         $nav_class = ['nav', 'moon-nav', 'd-none', 'd-'.$header_breakpoint.'-flex'];
-        $navWrapperClass = ['align-self-center', 'd-none', 'd-'.$header_breakpoint.'-block'];
-        $headAttrs = ' data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="'.($params->get('dropdown_arrow', 0) ? 'true' : 'false').'" data-header-offset="true" data-transition-speed="'.$params->get('dropdown_animation_speed', 300).'" data-megamenu-animation="'.$params->get('dropdown_animation_type', 'fade').'" data-easing="'.$params->get('dropdown_animation_ease', 'linear').'" data-moon-trigger="'.$params->get('dropdown_trigger', 'hover').'" data-megamenu-submenu-class=".nav-submenu,.nav-submenu-static"';
-        $burgerClass = ['d-flex d-'.$header_breakpoint.'-none justify-content-start'];
+        $nav_wrapper_class = ['align-self-center', 'd-none', 'd-'.$header_breakpoint.'-block'];
+        $head_attrs = ' data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="'.($params->get('dropdown_arrow', 0) ? 'true' : 'false').'" data-header-offset="true" data-transition-speed="'.$params->get('dropdown_animation_speed', 300).'" data-megamenu-animation="'.$params->get('dropdown_animation_type', 'fade').'" data-easing="'.$params->get('dropdown_animation_ease', 'linear').'" data-moon-trigger="'.$params->get('dropdown_trigger', 'hover').'" data-megamenu-submenu-class=".nav-submenu,.nav-submenu-static"';
+        $burger_class = ['d-flex d-'.$header_breakpoint.'-none justify-content-start'];
         return [
             'class' => implode(' ', $class),
             'nav_class' => implode(' ', $nav_class),
-            'navWrapperClass' => implode(' ', $navWrapperClass),
-            'headAttrs' => $headAttrs,
-            'burgerClass' => implode(' ', $burgerClass),
+            'navWrapperClass' => implode(' ', $nav_wrapper_class),
+            'headAttrs' => $head_attrs,
+            'burgerClass' => implode(' ', $burger_class),
             'header_breakpoint' => $header_breakpoint,
             'block_1' => $block_1,
             'block_2' => $block_2,
@@ -117,16 +117,16 @@ class header {
         $nav_class = ['nav', 'moon-nav', 'justify-content-center', 'd-flex', 'align-items-center'];
         $nav_class_left = ['nav', 'moon-nav', 'justify-content-left', 'd-flex', 'align-items-left'];
         $nav_class_divided = ['nav', 'moon-nav'];
-        $headAttrs = ' data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="'.($params->get('dropdown_arrow', 0) ? 'true' : 'false').'" data-header-offset="true" data-transition-speed="'.$params->get('dropdown_animation_speed', 300).'" data-megamenu-animation="'.$params->get('dropdown_animation_type', 'fade').'" data-easing="'.$params->get('dropdown_animation_ease', 'linear').'" data-moon-trigger="'.$params->get('dropdown_trigger', 'hover').'" data-megamenu-submenu-class=".nav-submenu,.nav-submenu-static"';
+        $head_attrs = ' data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="'.($params->get('dropdown_arrow', 0) ? 'true' : 'false').'" data-header-offset="true" data-transition-speed="'.$params->get('dropdown_animation_speed', 300).'" data-megamenu-animation="'.$params->get('dropdown_animation_type', 'fade').'" data-easing="'.$params->get('dropdown_animation_ease', 'linear').'" data-moon-trigger="'.$params->get('dropdown_trigger', 'hover').'" data-megamenu-submenu-class=".nav-submenu,.nav-submenu-static"';
 
-        $burgerClass = match($mode) {
+        $burger_class = match($mode) {
             'center-balance' => ['w-100 d-flex d-'.$header_breakpoint.'-none justify-content-start'],
             default => ['d-flex d-'.$header_breakpoint.'-none justify-content-center']
         };
         if ($mode == 'divided-logo-left') {
-            $navWrapperClass = ['moon-nav-wraper', 'moon-nav-' . $mode, 'align-self-center', 'd-none', 'd-'.$header_breakpoint.'-block', 'w-100'];
+            $nav_wrapper_class = ['moon-nav-wraper', 'moon-nav-' . $mode, 'align-self-center', 'd-none', 'd-'.$header_breakpoint.'-block', 'w-100'];
         } else {
-            $navWrapperClass = ['moon-nav-wraper', 'moon-nav-' . $mode, 'align-self-center', 'px-2', 'd-none', 'd-'.$header_breakpoint.'-block', 'w-100'];
+            $nav_wrapper_class = ['moon-nav-wraper', 'moon-nav-' . $mode, 'align-self-center', 'px-2', 'd-none', 'd-'.$header_breakpoint.'-block', 'w-100'];
         }
         if ($mode == 'divided-logo-left') {
             $device = match($header_breakpoint) {
@@ -187,9 +187,9 @@ class header {
         return [
             'class' => implode(' ', $class),
             'nav_class' => implode(' ', $nav_class),
-            'navWrapperClass' => implode(' ', $navWrapperClass),
-            'headAttrs' => $headAttrs,
-            'burgerClass' => implode(' ', $burgerClass),
+            'navWrapperClass' => implode(' ', $nav_wrapper_class),
+            'headAttrs' => $head_attrs,
+            'burgerClass' => implode(' ', $burger_class),
             'header_breakpoint' => $header_breakpoint,
             'odd_menu_items' => $odd_menu_items,
             'nav_class_left' => $nav_class_left,

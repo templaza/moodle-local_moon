@@ -43,7 +43,7 @@ class row extends base_element
     public function render()
     {
         $columns = $this->_data['cols'];
-        $bufferSize = [
+        $buffer_size = [
             'xxl' => 0,
             'xl' => 0,
             'lg' => 0,
@@ -51,32 +51,32 @@ class row extends base_element
             'sm' => 0,
             'xs' => 0,
         ];
-        $componentIndex = 0;
-        $prevColIndex = null;
+        $component_index = 0;
+        $prev_col_index = null;
 
-        foreach ($this->_data['cols'] as $colIndex => $col) {
+        foreach ($this->_data['cols'] as $col_index => $col) {
             $column = new column($col, $this->section, $this, $this->role);
-            $columns[$colIndex] = $column;
+            $columns[$col_index] = $column;
             $column->render();
             if ($column->component) {
-                $componentIndex = $colIndex;
+                $component_index = $col_index;
             }
         }
 
         if (isset($this->_data['fill']) && $this->_data['fill']) {
-            foreach ($columns as $colIndex => $column) {
+            foreach ($columns as $col_index => $column) {
                 if (empty($column->content)) {
                     foreach ($column->size as $key => $size) {
-                        $bufferSize[$key] += $column->size[$key];
+                        $buffer_size[$key] += $column->size[$key];
                     }
-                    unset($columns[$colIndex]);
+                    unset($columns[$col_index]);
                 } else {
                     if ($this->section->hasComponent) {
-                        foreach ($columns[$componentIndex]->size as $key => $size) {
-                            $columns[$componentIndex]->size[$key] += $bufferSize[$key];
-                            if ($columns[$componentIndex]->size[$key] > 12) $columns[$componentIndex]->size[$key] = 12;
+                        foreach ($columns[$component_index]->size as $key => $size) {
+                            $columns[$component_index]->size[$key] += $buffer_size[$key];
+                            if ($columns[$component_index]->size[$key] > 12) $columns[$component_index]->size[$key] = 12;
                         }
-                        $bufferSize = [
+                        $buffer_size = [
                             'xxl' => 0,
                             'xl' => 0,
                             'lg' => 0,
@@ -85,18 +85,18 @@ class row extends base_element
                             'xs' => 0,
                         ];
                     } else {
-                        if (isset($columns[$prevColIndex])) {
-                            foreach ($columns[$prevColIndex]->size as $key => $size) {
-                                $columns[$prevColIndex]->size[$key] += $bufferSize[$key];
-                                if ($columns[$prevColIndex]->size[$key] > 12) $columns[$prevColIndex]->size[$key] = 12;
+                        if (isset($columns[$prev_col_index])) {
+                            foreach ($columns[$prev_col_index]->size as $key => $size) {
+                                $columns[$prev_col_index]->size[$key] += $buffer_size[$key];
+                                if ($columns[$prev_col_index]->size[$key] > 12) $columns[$prev_col_index]->size[$key] = 12;
                             }
                         } else {
-                            foreach ($columns[$colIndex]->size as $key => $size) {
-                                $columns[$colIndex]->size[$key] += $bufferSize[$key];
-                                if ($columns[$colIndex]->size[$key] > 12) $columns[$colIndex]->size[$key] = 12;
+                            foreach ($columns[$col_index]->size as $key => $size) {
+                                $columns[$col_index]->size[$key] += $buffer_size[$key];
+                                if ($columns[$col_index]->size[$key] > 12) $columns[$col_index]->size[$key] = 12;
                             }
                         }
-                        $bufferSize = [
+                        $buffer_size = [
                             'xxl' => 0,
                             'xl' => 0,
                             'lg' => 0,
@@ -105,7 +105,7 @@ class row extends base_element
                             'xs' => 0,
                         ];
                     }
-                    $prevColIndex = $colIndex;
+                    $prev_col_index = $col_index;
                 }
             }
         }
@@ -113,17 +113,17 @@ class row extends base_element
         if (!empty($columns)) {
             if (isset($this->_data['fill']) && $this->_data['fill']) {
                 if ($this->section->hasComponent) {
-                    foreach ($columns[$componentIndex]->size as $key => $size) {
-                        if ($bufferSize[$key]) {
-                            $columns[$componentIndex]->size[$key] += $bufferSize[$key];
-                            if ($columns[$componentIndex]->size[$key] > 12) $columns[$componentIndex]->size[$key] = 12;
+                    foreach ($columns[$component_index]->size as $key => $size) {
+                        if ($buffer_size[$key]) {
+                            $columns[$component_index]->size[$key] += $buffer_size[$key];
+                            if ($columns[$component_index]->size[$key] > 12) $columns[$component_index]->size[$key] = 12;
                         }
                     }
-                } else if ($prevColIndex !== null) {
-                    foreach ($columns[$prevColIndex]->size as $key => $size) {
-                        if ($bufferSize[$key]) {
-                            $columns[$prevColIndex]->size[$key] += $bufferSize[$key];
-                            if ($columns[$prevColIndex]->size[$key]>12) $columns[$prevColIndex]->size[$key] = 12;
+                } else if ($prev_col_index !== null) {
+                    foreach ($columns[$prev_col_index]->size as $key => $size) {
+                        if ($buffer_size[$key]) {
+                            $columns[$prev_col_index]->size[$key] += $buffer_size[$key];
+                            if ($columns[$prev_col_index]->size[$key]>12) $columns[$prev_col_index]->size[$key] = 12;
                         }
                     }
                 }

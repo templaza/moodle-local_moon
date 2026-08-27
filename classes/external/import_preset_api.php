@@ -67,8 +67,8 @@ class import_preset_api extends api {
         ]);
     }
 
-    public static function execute($theme, $task, $title, $desc, $fileInfo = null) {
-        $params = self::validate_parameters(self::execute_parameters(), ['theme' => $theme, 'task' => $task, 'title' => $title, 'desc' => $desc, 'fileInfo' => $fileInfo]);
+    public static function execute($theme, $task, $title, $desc, $file_info = null) {
+        $params = self::validate_parameters(self::execute_parameters(), ['theme' => $theme, 'task' => $task, 'title' => $title, 'desc' => $desc, 'fileInfo' => $file_info]);
         $exec = self::action($params);
         try {
             if (!method_exists($exec, $params['task'])) {

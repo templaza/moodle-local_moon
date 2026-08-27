@@ -22,6 +22,7 @@
  */
 
 $string['pluginname'] = 'Moon Framework';
+$string['pluginname_subfix'] = ' - Moon Framework';
 $string['settings_desc'] = 'Global configuration for Moon Framework';
 $string['moon:view'] = 'View Moon';
 $string['moon:manage'] = 'Manage Moon';

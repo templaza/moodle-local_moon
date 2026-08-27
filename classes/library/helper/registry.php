@@ -824,7 +824,7 @@ class registry implements \JsonSerializable, \ArrayAccess, \IteratorAggregate, \
      *
      * @since   1.0.0
      */
-    protected function bind_data($parent, $data, $recursive = true, $allowNull = true)
+    protected function bind_data($parent, $data, $recursive = true, $allow_null = true)
     {
         // The data object is now initialized
         $this->initialized = true;
@@ -833,7 +833,7 @@ class registry implements \JsonSerializable, \ArrayAccess, \IteratorAggregate, \
         $data = \is_object($data) ? \get_object_vars($data) : (array) $data;
 
         foreach ($data as $k => $v) {
-            if (!$allowNull && !(($v !== null) && ($v !== ''))) {
+            if (!$allow_null && !(($v !== null) && ($v !== ''))) {
                 continue;
             }
 

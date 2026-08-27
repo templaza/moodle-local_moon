@@ -116,7 +116,7 @@ if ($sidebar_position == 'right') {
     $class[] = 'order-xl-1';
 }
 $nav_class = ['nav', 'moon-nav', 'd-none', 'd-lg-flex'];
-$navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-lg-block'];
+$nav_wrapper_class = ['align-self-center', 'px-2', 'd-none', 'd-lg-block'];
 
 $templatecontext = [
     'output' => $OUTPUT,
@@ -126,7 +126,7 @@ $templatecontext = [
     'langmenu' => $primarymenu['lang'],
     'class' => implode(' ', $class),
     'nav_class' => implode(' ', $nav_class),
-    'navWrapperClass' => implode(' ', $navWrapperClass),
+    'navWrapperClass' => implode(' ', $nav_wrapper_class),
     'is_topbar' => $is_topbar,
     'block_1' => $block_1,
     'block_2' => $block_2,
