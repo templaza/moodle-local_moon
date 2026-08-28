@@ -55,7 +55,7 @@ $meta_position=  $params->get('meta_position', 'before');
 $meta_border    =   json_decode($params->get('meta_border', ''), true);
 
 if (!empty($meta_border)) {
-    style::add_border_style('#'. $element->id . ' .heading-meta', $meta_border, 'global', $element->isRoot);
+    style::add_border_style('#'. $element->id . ' .heading-meta', $meta_border, 'global', $element->is_root);
 }
 $meta_radius=  $params->get('meta_radius', '');
 if (!empty($meta_radius)) {
@@ -96,13 +96,13 @@ $template_context['has_title_clone'] = !empty($title_clone);
 $template_context['title_clone_txt'] = $title_clone_txt;
 
 if (!empty($font_style)) {
-    style::render_typography('#'.$this->id.' .heading', $font_style, null, $this->isRoot);
+    style::render_typography('#'.$this->id.' .heading', $font_style, null, $this->is_root);
 }
 if (!empty($title_heading_margin)) {
     style::set_spacing_style($this->style->child('.heading'), $title_heading_margin, 'margin');
 }
 if (!empty($meta_font_style)) {
-    style::render_typography('#'.$this->id.' .heading-meta', $meta_font_style, null, $this->isRoot);
+    style::render_typography('#'.$this->id.' .heading-meta', $meta_font_style, null, $this->is_root);
 }
 if (!empty($meta_heading_margin)) {
     style::set_spacing_style($this->style->child('.heading-meta'), $meta_heading_margin, 'margin');
@@ -118,7 +118,7 @@ if (!empty($title_clone_margin)) {
 
 $clone_font_style     = $params->get('title_clone_font_style', null);
 if (!empty($clone_font_style)) {
-    style::render_typography('#'.$this->id.' .heading-clone', $clone_font_style, null, $this->isRoot);
+    style::render_typography('#'.$this->id.' .heading-clone', $clone_font_style, null, $this->is_root);
 }
 
 echo $OUTPUT->render_from_template('local_moon/elements/heading/default', $template_context);

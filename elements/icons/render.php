@@ -73,7 +73,7 @@ foreach ($icons->data as $key => $icon) {
 
     $title_font_style =   $icon->params->get('title_font_style');
     if (!empty($title_font_style)) {
-        style::render_typography('#'.$element->id.' #icon-' . $icon->id , $title_font_style, null, $element->isRoot);
+        style::render_typography('#'.$element->id.' #icon-' . $icon->id , $title_font_style, null, $element->is_root);
     }
     $icons_data[] = $icon_data;
 }
@@ -86,7 +86,7 @@ if (trim($button_size) == 'custom') {
     }
     $button_font_style =   $params->get('button_font_style');
     if (!empty($button_font_style)) {
-        style::render_typography('#'.$element->id.' .btn', $button_font_style, null, $element->isRoot);
+        style::render_typography('#'.$element->id.' .btn', $button_font_style, null, $element->is_root);
     }
 }
 $icon_size        =   $params->get('icon_size', '30');
@@ -118,11 +118,11 @@ if (!empty($icon_radius)) {
 }
 $icon_border    =   json_decode($params->get('icon_border', ''), true);
 if (!empty($icon_border)) {
-    style::add_border_style('#'. $element->id . ' .moon-icon', $icon_border, 'global', $element->isRoot);
+    style::add_border_style('#'. $element->id . ' .moon-icon', $icon_border, 'global', $element->is_root);
 }
 $icon_border_hover    =   json_decode($params->get('icon_border_hover', ''), true);
 if (!empty($icon_border_hover)) {
-    style::add_border_style('#'. $element->id . ' .moon-icon:hover', $icon_border_hover, 'global', $element->isRoot);
+    style::add_border_style('#'. $element->id . ' .moon-icon:hover', $icon_border_hover, 'global', $element->is_root);
 }
 $icons_color     = style::get_color($params->get('icons_color', ''));
 $element->style->child('.moon-icon')->add_css('color', $icons_color['light']);

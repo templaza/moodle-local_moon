@@ -111,7 +111,7 @@ foreach ($buttons->data as $key => $button) {
 
     $btn_font_style =   $button->params->get('btn_font_style');
     if (!empty($btn_font_style)) {
-        style::render_typography('#'.$element->id.' #btn-' . $button->id , $btn_font_style, null, $element->isRoot);
+        style::render_typography('#'.$element->id.' #btn-' . $button->id , $btn_font_style, null, $element->is_root);
     }
 }
 $template_context['buttons'] = $buttons_data;
@@ -123,7 +123,7 @@ if (trim($button_size) == 'custom') {
     }
     $button_font_style =   $params->get('button_font_style');
     if (!empty($button_font_style)) {
-        style::render_typography('#'.$element->id.' .btn', $button_font_style, null, $element->isRoot);
+        style::render_typography('#'.$element->id.' .btn', $button_font_style, null, $element->is_root);
     }
 }
 echo $OUTPUT->render_from_template('local_moon/elements/button/default', $template_context);

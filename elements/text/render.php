@@ -58,7 +58,7 @@ $template_context['title'] = $title;
 $template_context['content'] = $content;
 
 if (!empty($font_style)) {
-    style::render_typography('#'.$this->id.' .moon-content-heading', $font_style, null, $this->isRoot);
+    style::render_typography('#'.$this->id.' .moon-content-heading', $font_style, null, $this->is_root);
 }
 if (!empty($heading_margin)) {
     $heading_style = $this->style->child('.moon-content-heading');
@@ -66,8 +66,8 @@ if (!empty($heading_margin)) {
 }
 
 if (!empty($content_font_style)) {
-    style::render_typography('#'.$this->id.' .moon-content-text', $content_font_style, null, $this->isRoot);
-    style::render_typography('#'.$this->id.' .moon-content-text *', $content_font_style, null, $this->isRoot);
+    style::render_typography('#'.$this->id.' .moon-content-text', $content_font_style, null, $this->is_root);
+    style::render_typography('#'.$this->id.' .moon-content-text *', $content_font_style, null, $this->is_root);
 }
 
 echo $OUTPUT->render_from_template('local_moon/elements/text/default', $template_context);
