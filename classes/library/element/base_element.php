@@ -68,15 +68,15 @@ class base_element
         $this->add_class('moon-' . text::slugify($this->type));
         $this->_id();
         $this->_tag         =   $this->params->get('moon_element_tag', 'div');
-        $this->isRoot       =   $this->role === 'root';
-        $this->style        =   new style('#' . $this->get_attribute('id'), '', $this->isRoot);
-        $this->style_dark   =   new style('#' . $this->get_attribute('id'), 'dark', $this->isRoot);
+        $this->is_root       =   $this->role === 'root';
+        $this->style        =   new style('#' . $this->get_attribute('id'), '', $this->is_root);
+        $this->style_dark   =   new style('#' . $this->get_attribute('id'), 'dark', $this->is_root);
 
     }
 
     protected function wrap(): string
     {
-        if (empty($this->content) || !$this->state || !$this->isAssigned) {
+        if (empty($this->content) || !$this->state || !$this->is_assigned) {
             return '';
         }
 //        $assignment_type =   $this->params->get('assignment_type', 1);
@@ -271,9 +271,9 @@ class base_element
         $border = json_decode($this->params->get('border_style', ''), true);
         if (!empty($border)) {
             if ($this->has_maxwidth) {
-                $this->style->child('>[class*=as-width]')->add_border($border, 'global', $this->isRoot);
+                $this->style->child('>[class*=as-width]')->add_border($border, 'global', $this->is_root);
             } else {
-                $this->style->add_border($border, 'global', $this->isRoot);
+                $this->style->add_border($border, 'global', $this->is_root);
             }
 
         }
@@ -366,11 +366,11 @@ class base_element
                 case 'color':
                     $background_image_overlay_color     =   style::get_color($this->params->get('background_image_overlay_color', ''));
                     if (!empty($background_image_overlay_color)) {
-                        $overlay_style   =   new style('#' . $this->get_attribute('id') . $overlay_style_cls . ':before', '', $this->isRoot);
+                        $overlay_style   =   new style('#' . $this->get_attribute('id') . $overlay_style_cls . ':before', '', $this->is_root);
                         $overlay_style->add_css('background-color', $background_image_overlay_color['light']);
                         $overlay_style->render();
 
-                        $overlay_style   =   new style('#' . $this->get_attribute('id') . $overlay_style_cls . ':before', 'dark', $this->isRoot);
+                        $overlay_style   =   new style('#' . $this->get_attribute('id') . $overlay_style_cls . ':before', 'dark', $this->is_root);
                         $overlay_style->add_css('background-color', $background_image_overlay_color['dark']);
                         $overlay_style->render();
                     }
@@ -378,7 +378,7 @@ class base_element
                 case 'gradient':
                     $background_image_overlay_gradient  =   $this->params->get('background_image_overlay_gradient', '');
                     if (!empty($background_image_overlay_gradient)) {
-                        $overlay_style   =   new style('#' . $this->get_attribute('id') . $overlay_style_cls . ':before', '', $this->isRoot);
+                        $overlay_style   =   new style('#' . $this->get_attribute('id') . $overlay_style_cls . ':before', '', $this->is_root);
                         $overlay_style->add_css('background-image', style::get_gradient_value($background_image_overlay_gradient));
                         $overlay_style->render();
                     }
@@ -387,9 +387,9 @@ class base_element
                     $background_image_overlay_pattern   =   $this->params->get('background_image_overlay_pattern', '');
                     $background_image_overlay_color     =   style::get_color($this->params->get('background_image_overlay_color', ''));
                     if (!empty($background_image_overlay_pattern)) {
-                        $overlay_style   =   new style('#' . $this->get_attribute('id') . $overlay_style_cls . ':before', '', $this->isRoot);
+                        $overlay_style   =   new style('#' . $this->get_attribute('id') . $overlay_style_cls . ':before', '', $this->is_root);
                         if ($background_image_overlay_color) {
-                            $overlay_style_dark   =   new style('#' . $this->get_attribute('id') . $overlay_style_cls . ':before', 'dark', $this->isRoot);
+                            $overlay_style_dark   =   new style('#' . $this->get_attribute('id') . $overlay_style_cls . ':before', 'dark', $this->is_root);
                             $overlay_style->add_css('background-color', $background_image_overlay_color['light']);
                             $overlay_style_dark->add_css('background-color', $background_image_overlay_color['dark']);
                             $overlay_style_dark->render();

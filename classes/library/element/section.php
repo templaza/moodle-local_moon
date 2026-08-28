@@ -57,7 +57,7 @@ class section extends base_element
         $custom_class = $this->params->get('custom_container_class', '');
         switch ($container) {
             case '':
-                if ($this->isRoot) {
+                if ($this->is_root) {
                     $container = 'container';
                 } else {
                     $container = '';

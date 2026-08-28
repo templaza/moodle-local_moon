@@ -45,7 +45,7 @@ class element extends base_element
             $this->content = layout::render_sublayout($this->params->get('source', ''), 'layouts', [], 'sublayout');
         } else {
             $this->prepare_content();
-            if (empty($this->state) || !$this->isAssigned) {
+            if (empty($this->state) || !$this->is_assigned) {
                 return '';
             }
             $dynamic_data = $this->get_dynamic_content();

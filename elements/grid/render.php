@@ -142,13 +142,13 @@ $title_html_element =   $params->get('title_html_element', 'h3');
 $template_context['title_html_element'] = $title_html_element;
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
-    style::render_typography('#'.$element->id.' .moon-heading', $title_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .moon-heading', $title_font_style, null, $element->is_root);
 }
 $title_heading_margin=  $params->get('title_heading_margin', '');
 
 $meta_font_style    =   $params->get('meta_font_style');
 if (!empty($meta_font_style)) {
-    style::render_typography('#'.$element->id.' .moon-meta', $meta_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .moon-meta', $meta_font_style, null, $element->is_root);
 }
 
 $meta_heading_margin=   $params->get('meta_heading_margin', '');
@@ -158,7 +158,7 @@ $meta_position      =   $params->get('meta_position', 'before');
 $template_context['meta_position'] = $meta_position;
 $content_font_style =   $params->get('content_font_style');
 if (!empty($content_font_style)) {
-    style::render_typography('#'.$element->id.' .moon-text', $content_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .moon-text', $content_font_style, null, $element->is_root);
 }
 
 $button_style       =   $params->get('button_style', 'primary');
@@ -349,7 +349,7 @@ if ($params->get('card_style', '') == 'custom') {
 
     $card_border    =   json_decode($params->get('card_border', ''), true);
     if (!empty($card_border)) {
-        style::add_border_style('#'. $element->id . ' .moon-grid > .card', $card_border, 'global', $element->isRoot);
+        style::add_border_style('#'. $element->id . ' .moon-grid > .card', $card_border, 'global', $element->is_root);
     }
 }
 switch ($overlay_type) {
@@ -392,7 +392,7 @@ $style_dark->child('.card:hover .btn')->add_css('color', $card_button_color_hove
 
 $button_font_style   =   $params->get('button_font_style');
 if (!empty($button_font_style)) {
-    style::render_typography('#'.$element->id.' .btn, #'.$element->id.' .as-btn-text', $button_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .btn, #'.$element->id.' .as-btn-text', $button_font_style, null, $element->is_root);
 }
 
 $button_color     = style::get_color($params->get('button_color', ''));

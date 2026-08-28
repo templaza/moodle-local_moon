@@ -48,6 +48,7 @@ class layout
             ]
         ];
         $content = '';
+
         foreach ($data['sections'] as $section) {
             $section = new section($section, $devices, [], $role);
             $content .= $section->render();

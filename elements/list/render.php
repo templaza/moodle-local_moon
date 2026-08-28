@@ -41,13 +41,13 @@ $title_html_element =   $params->get('title_html_element', 'h3');
 $template_context['title_html_element'] = $title_html_element;
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
-    style::render_typography('#'.$element->id.' .as-list-title', $title_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .as-list-title', $title_font_style, null, $element->is_root);
 }
 $title_heading_margin=  $params->get('title_heading_margin', '');
 
 $content_font_style =   $params->get('content_font_style');
 if (!empty($content_font_style)) {
-    style::render_typography('#'.$element->id.' .as-list-desc', $content_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .as-list-desc', $content_font_style, null, $element->is_root);
 }
 
 $item_margin    =   $params->get('item_margin', '');
@@ -179,7 +179,7 @@ if (json_last_error() === JSON_ERROR_NONE && is_array($icon_height_data)) {
 }
 $icon_border    =   json_decode($params->get('icon_border', ''), true);
 if (!empty($icon_border)) {
-    style::add_border_style('#'. $element->id . ' .as-list-icon', $icon_border, 'global', $element->isRoot);
+    style::add_border_style('#'. $element->id . ' .as-list-icon', $icon_border, 'global', $element->is_root);
 }
 $icon_radius=  $params->get('icon_radius', '');
 if (!empty($icon_radius)) {
@@ -187,7 +187,7 @@ if (!empty($icon_radius)) {
 }
 $heading_font_style   =   $params->get('heading_font_style');
 if (!empty($heading_font_style)) {
-    style::render_typography('#'.$element->id.' .list-heading', $heading_font_style, null, $element->isRoot);
+    style::render_typography('#'.$element->id.' .list-heading', $heading_font_style, null, $element->is_root);
 }
 $heading_margin=  $params->get('heading_margin', '');
 if (!empty($heading_margin)) {
