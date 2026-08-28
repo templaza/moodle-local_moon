@@ -1,0 +1,29 @@
+{{#has_content}}
+    <div class="moon-contact-info as-gutter-x-lg">
+        {{#has_address}}
+            <span class="moon-contact-address">
+                {{#is_icon}}<i class="{{address.prefix}}"></i>{{/is_icon}}{{^is_icon}}{{address.prefix}}{{/is_icon}}{{address.value}}
+            </span>
+        {{/has_address}}
+        {{#has_phone}}
+            <span class="moon-contact-phone">
+                {{#is_icon}}<i class="{{phone.prefix}}"></i>{{/is_icon}}{{^is_icon}}{{phone.prefix}}{{/is_icon}}<a href="{{phone.link}}">{{phone.value}}</a>
+            </span>
+        {{/has_phone}}
+        {{#has_mobile}}
+            <span class="moon-contact-mobile">
+                {{#is_icon}}<i class="{{mobile.prefix}}"></i>{{/is_icon}}{{^is_icon}}{{mobile.prefix}}{{/is_icon}}<a href="{{mobile.link}}">{{mobile.value}}</a>
+            </span>
+        {{/has_mobile}}
+        {{#has_email}}
+            <span class="moon-contact-email">
+                {{#is_icon}}<i class="{{email.prefix}}"></i>{{/is_icon}}{{^is_icon}}{{email.prefix}}{{/is_icon}}<a href="{{email.link}}">{{email.value}}</a>
+            </span>
+        {{/has_email}}
+        {{#has_openhours}}
+            <span class="moon-contact-email">
+                {{#is_icon}}<i class="{{openhours.prefix}}"></i>{{/is_icon}}{{^is_icon}}{{openhours.prefix}}{{/is_icon}}{{openhours.value}}
+            </span>
+        {{/has_openhours}}
+    </div>
+{{/has_content}}

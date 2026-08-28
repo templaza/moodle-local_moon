@@ -1,0 +1,40 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+    @package   local_moon
+    @copyright 2026 Moon Framework
+}}
+{{!
+    @template local_moon/manage
+    This template renders the manage page.
+}}
+<!DOCTYPE html>
+<html id="astroid-html" data-bs-theme="{{color_mode_theme}}">
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Moon Framework | Theme Manager" />
+    <title>{{title}}</title>
+    <link rel="shortcut icon" href="{{favicon}}">
+    <link href="{{favicon}}" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {{{stylesheets}}}
+    <script type="application/json" id="astroid-script-options">{{{script_options}}}</script>
+    {{{head_scripts}}}
+</head>
+<body>
+<div id="astroid-app"></div>
+{{{body_scripts}}}
+</body>
+</html>

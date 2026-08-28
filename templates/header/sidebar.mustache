@@ -1,0 +1,58 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+    @package   local_moon
+    @copyright 2026 Moon Framework
+}}
+{{!
+    @template local_moon/header/sidebar
+    This template renders the sidebar header.
+}}
+{{#is_topbar}}
+    <div class="moon-header moon-sidebar-header moon-sidebar-header-topbar">
+        <div class="moon-sidebar-header-inner row">
+            <div class="moon-sidebar-logo col-12 col-lg-auto d-flex align-items-center">
+                {{> local_moon/header/includes/boots_burger }}
+                <div class="flex-grow-1">{{> local_moon/header/includes/logo }}</div>
+                <div class="d-{{header.header_breakpoint}}-none" style="min-width: 30px;"></div>
+            </div>
+            {{{ block_1 }}}
+        </div>
+    </div>
+{{/is_topbar}}
+<div class="{{class}}">
+    <div class="moon-sidebar-content sticky-top">
+        {{^is_topbar}}
+            <div class="moon-sidebar-logo mb-xl-4">
+                {{> local_moon/header/includes/boots_burger }}
+                <div class="flex-grow-1">{{> local_moon/header/includes/logo }}</div>
+                <div class="d-{{header.header_breakpoint}}-none" style="min-width: 30px;"></div>
+            </div>
+            {{{ block_1 }}}
+        {{/is_topbar}}
+        {{#is_topbar}}
+            {{{ block_2 }}}
+        {{/is_topbar}}
+        <nav class="moon-sidebar-menu-wrap navbar navbar-expand shadow-none">
+            {{> local_moon/header/includes/primary_menu }}
+        </nav>
+        {{#is_topbar}}
+            {{{ block_3 }}}
+        {{/is_topbar}}
+        {{^is_topbar}}
+            {{{ block_2 }}}
+        {{/is_topbar}}
+    </div>
+</div>

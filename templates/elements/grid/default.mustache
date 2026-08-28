@@ -1,0 +1,53 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+    @package   local_moon
+    @copyright 2026 Moon Framework
+}}
+{{!
+    @template local_moon/elements/grid/default
+    This template renders the grid widget.
+}}
+{{#enable_slider}}<div class="p-0 uk-position-relative uk-visible-toggle" tabindex="-1" {{attrs_slider}}>{{/enable_slider}}
+<div class="{{row_class}}">
+    {{#grids_data}}
+        <div id="{{grid_id}}" class="moon-grid">
+            <div class="{{grid_class}}">
+                {{#is_left_right}}<div class="{{left_right_wrap_class}}"><div class="{{media_width_class}}">{{/is_left_right}}
+                {{#media_on_cover}}{{> local_moon/elements/grid/media }}{{/media_on_cover}}
+                {{#is_left_right}}</div><div class="col order-1">{{/is_left_right}}
+                {{#is_media_position_cover}}<div class="{{content_position}} {{content_hover_transition}}">{{/is_media_position_cover}}
+                <div class="{{card_body_class}}">
+                    {{#is_media_inside}}{{> local_moon/elements/grid/media }}{{/is_media_inside}}
+                    {{#is_meta_before}}<div class="moon-meta {{meta_position}}">{{{meta}}}</div>{{/is_meta_before}}
+                    {{#has_title}}
+                        {{#is_left_title}}<div class="d-flex justify-content-start"><{{title_html_element}} class="moon-heading">{{{title}}}</{{title_html_element}}></div>{{/is_left_title}}
+                        {{^is_left_title}}<{{title_html_element}} class="moon-heading">{{{title}}}</{{title_html_element}}>{{/is_left_title}}
+                    {{/has_title}}
+                    {{#is_meta_after}}<div class="moon-meta {{meta_position}}">{{{meta}}}</div>{{/is_meta_after}}
+                    {{#has_description}}<div class="moon-text">{{{description}}}</div>{{/has_description}}
+                    {{#has_button}}<a class="{{button_class}}" href="{{link}}" role="button"{{link_target}}>{{{button_title}}}</a>{{/has_button}}
+                </div>
+                {{#is_media_position_cover}}</div>{{/is_media_position_cover}}
+                {{#is_left_right}}</div></div>{{/is_left_right}}
+            </div>
+        </div>
+    {{/grids_data}}
+</div>
+{{#enable_slider}}
+    {{#navigation}}<a class="uk-position-center-left uk_slider_preview uk-position-small uk-hidden-hover" href data-uk-slidenav-previous data-uk-slider-item="previous"></a><a class="uk-position-center-right uk_slider_next  uk-position-small uk-hidden-hover" href data-uk-slidenav-next data-uk-slider-item="next"></a>{{/navigation}}
+    {{#dot}}<ul class="uk-slider-nav uk-dotnav uk-flex-center"></ul>{{/dot}}
+    </div>
+{{/enable_slider}}

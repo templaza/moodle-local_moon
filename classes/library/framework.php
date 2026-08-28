@@ -1,0 +1,48 @@
+<?php
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle. If not, see <https://www.gnu.org/licenses/>.
+
+/**
+ * @package   Moon Framework
+ * @author    Moon Framework Team https://moonframe.work
+ * @copyright Copyright (C) 2026 MoonFrame.work.
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
+ */
+
+namespace local_moon\library;
+defined('MOODLE_INTERNAL') || die;
+class framework {
+    protected static $document = null;
+    protected static $theme = null;
+    public static function init($theme = null) {
+        define('_MOON', 1); // define moon framework
+        self::$theme = new theme($theme);
+        self::$document = new document();
+    }
+    public static function get_theme($theme = null) : theme
+    {
+        if (!self::$theme) {
+            self::$theme = new theme($theme);
+        }
+        return self::$theme;
+    }
+    public static function get_document() : document
+    {
+        if (!self::$document) {
+            self::$document = new document();
+        }
+        return self::$document;
+    }
+}
