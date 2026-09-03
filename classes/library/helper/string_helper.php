@@ -296,17 +296,17 @@ abstract class string_helper
      * Pad a string to a certain length with another string.
      * $padStr may contain multi-byte characters.
      *
-     * @param   string   $input   The input string.
-     * @param   integer  $length  If the value is negative, less than, or equal to the length of the input string, no padding takes place.
-     * @param   string   $padStr  The string may be truncated if the number of padding characters can't be evenly divided by the string's length.
-     * @param   integer  $type    The type of padding to apply
+     * @param string $input The input string.
+     * @param integer $length If the value is negative, less than, or equal to the length of the input string, no padding takes place.
+     * @param string $pad_str
+     * @param integer $type The type of padding to apply
      *
      * @return  string
      *
      * @link    https://www.php.net/str_pad
      * @since   1.4.0
      */
-    public static function str_pad($input, $length, $pad_str = ' ', $type = STR_PAD_RIGHT)
+    public static function str_pad(string $input, int $length, string $pad_str = ' ', int $type = STR_PAD_RIGHT): string
     {
         return utf8_str_pad($input, $length, $pad_str, $type);
     }
@@ -317,14 +317,14 @@ abstract class string_helper
      * Convert a string to an array.
      *
      * @param   string   $str       UTF-8 encoded string to process
-     * @param   integer  $splitLen  Number to characters to split string by
+     * @param   integer  $split_len  Number to characters to split string by
      *
-     * @return  array|string|boolean
+     * @return  array
      *
      * @link    https://www.php.net/str_split
      * @since   1.3.0
      */
-    public static function str_split($str, $split_len = 1)
+    public static function str_split(string $str, int $split_len = 1): array
     {
         return utf8_str_split($str, $split_len);
     }

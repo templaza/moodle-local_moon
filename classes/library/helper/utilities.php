@@ -145,6 +145,10 @@ class utilities
 
     /**
      * Get config value.
+     * @param string $name Config name
+     * @param string $plugin Plugin name (e.g., local_moon or theme_moon)
+     * @param mixed $default Default value if config is not set
+     * @return mixed Config value
      */
     public static function get_config(string $name, string $plugin = 'local_moon', $default = null): mixed {
         $value = get_config($plugin, $name);
@@ -157,7 +161,12 @@ class utilities
         return (json_last_error() === JSON_ERROR_NONE) ? $decoded : $value;
     }
 
-    public static function get_form_template($mode = ''): array
+    /**
+     * Get form template.
+     * @param string $mode Mode (default '')
+     * @return array Form template
+     */
+    public static function get_form_template(string $mode = ''): array
     {
         $form_template = array();
         $moon_elements = self::get_all_moon_elements($mode);
@@ -173,7 +182,7 @@ class utilities
         return $form_template;
     }
 
-    public static function get_all_moon_elements($mode = ''): array
+    public static function get_all_moon_elements(string $mode = ''): array
     {
         global $CFG;
         $template = framework::get_theme();

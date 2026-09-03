@@ -46,6 +46,7 @@ class constants
 
     /**
      * Return configurations of Manager
+     * @params string $mode
      * @return array
      */
     public static function manager_configs($mode = '') : array

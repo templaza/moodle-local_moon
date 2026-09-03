@@ -815,11 +815,10 @@ class registry implements \JsonSerializable, \ArrayAccess, \IteratorAggregate, \
     /**
      * Method to recursively bind data to a parent object.
      *
-     * @param  object   $parent     The parent object on which to attach the data values.
-     * @param  mixed    $data       An array or object of data to bind to the parent object.
-     * @param  boolean  $recursive  True to support recursive bindData.
-     * @param  boolean  $allowNull  True to allow null values.
-     *
+     * @param object $parent The parent object on which to attach the data values.
+     * @param mixed $data An array or object of data to bind to the parent object.
+     * @param boolean $recursive True to support recursive bindData.
+     * @param bool $allow_null True to allow null values.
      * @return  void
      *
      * @since   1.0.0
