@@ -57,6 +57,68 @@
         <license>MIT</license>
     </library>
     <library>
+        <location>assets/animate/animate.min.js</location>
+        <name>Astroid Animate JS</name>
+        <version>3.4.3</version>
+        <license>GPL</license>
+        <licenseversion>3.0</licenseversion>
+    </library>
+    <library>
+        <location>assets/animate/animate.min.css</location>
+        <name>Animate CSS</name>
+        <version>4.1.1</version>
+        <license>MIT</license>
+    </library>
+    <library>
+        <location>assets/art_slider/index.min.js</location>
+        <name>Astroid Art Slider</name>
+        <version>3.4.3</version>
+        <license>GPL</license>
+        <licenseversion>3.0</licenseversion>
+    </library>
+    <library>
+        <location>assets/videobg/videobg.min.js</location>
+        <name>Astroid Video Background</name>
+        <version>3.4.3</version>
+        <license>GPL</license>
+        <licenseversion>3.0</licenseversion>
+    </library>
+    <library>
+        <location>assets/gmap/gmap.min.js</location>
+        <name>Astroid GMap</name>
+        <version>3.4.3</version>
+        <license>GPL</license>
+        <licenseversion>3.0</licenseversion>
+    </library>
+    <library>
+        <location>assets/transform/index.min.js</location>
+        <name>Astroid Transform</name>
+        <version>3.4.3</version>
+        <license>GPL</license>
+        <licenseversion>3.0</licenseversion>
+    </library>
+    <library>
+        <location>assets/parallax/parallax.min.js</location>
+        <name>Astroid Parallax</name>
+        <version>3.4.3</version>
+        <license>GPL</license>
+        <licenseversion>3.0</licenseversion>
+    </library>
+    <library>
+        <location>assets/art_slider/index.min.js</location>
+        <name>Astroid Art Slider</name>
+        <version>3.4.3</version>
+        <license>GPL</license>
+        <licenseversion>3.0</licenseversion>
+    </library>
+    <library>
+        <location>assets/linearicons/AstroidIcons.ttf</location>
+        <name>Linearicons</name>
+        <version>1.0.0</version>
+        <license>CC</license>
+        <licenseversion>4.0</licenseversion>
+    </library>
+    <library>
         <location>vendor/phenx/php-font-lib/</location>
         <name>php-font-lib</name>
         <version>1.0.2</version>
