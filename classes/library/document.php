@@ -15,7 +15,7 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package   Moon Framework
+ * @package   local_moon
  * @author    Moon Framework Team https://moonframe.work
  * @copyright Copyright (C) 2026 MoonFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
@@ -172,10 +172,10 @@ class document {
 
     /**
      * @param $url
-     * @param true $addRoot
+     * @param bool $add_root
      * @return string
      */
-    protected function _system_url($url, true $add_root = true): string
+    protected function _system_url($url, bool $add_root = true): string
     {
         global $CFG;
         $template = framework::get_theme();

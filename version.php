@@ -15,7 +15,7 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package   Moon Framework
+ * @package   local_moon
  * @author    Moon Framework Team https://moonframe.work
  * @copyright Copyright (C) 2026 MoonFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
@@ -24,7 +24,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_moon';
-$plugin->version   = 2026082801;
+$plugin->version   = 2026082700;
 $plugin->requires  = 2024010100; // Targeting Moodle 5.0+ (adjust if needed)
 $plugin->release   = '1.0.6';
 $plugin->maturity  = MATURITY_STABLE;

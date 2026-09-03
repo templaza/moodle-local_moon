@@ -14,7 +14,7 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package   Moon Framework
+ * @module    local_moon/colortransform
  * @author    Moon Framework Team https://moonframe.work
  * @copyright Copyright (C) 2026 MoonFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
@@ -76,8 +76,8 @@ define([], function() {
 
             // Attach a single passive scroll listener and also listen to resize
             const handler = () => colorTransform(from, to, normalizedOffset);
-            window.addEventListener('scroll', handler, { passive: true });
-            window.addEventListener('resize', handler, { passive: true });
+            window.addEventListener('scroll', handler, {passive: true});
+            window.addEventListener('resize', handler, {passive: true});
         }
     };
 });

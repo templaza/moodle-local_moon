@@ -14,12 +14,12 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package   Moon Framework
+ * @module    local_moon/stickymenu
  * @author    Moon Framework Team https://moonframe.work
  * @copyright Copyright (C) 2026 MoonFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
  */
-define([], function () {
+define([], function (){
     /**
      * Sticky Menu function
      * @param {HTMLElement} el The element to get the offset top for
@@ -42,16 +42,16 @@ define([], function () {
 
     let lastScrollTop = 0;
 
-    let initLastScrollTop = function () {
+    let initLastScrollTop = function (){
         lastScrollTop = window.scrollY;
     };
 
     let isScrollDown = () => window.scrollY > lastScrollTop;
 
-    let deviceBreakpoint = function () {
+    let deviceBreakpoint = function (){
         const _sizes = ['xs', 'sm', 'md', 'lg', 'xl'];
         let _device = 'undefined';
-        _sizes.forEach(function (_size) {
+        _sizes.forEach(function (_size){
             const el = document.querySelector('.moon-breakpoints .device-' + _size);
             if (el && getComputedStyle(el).display === 'block') {
                 _device = _size;
@@ -66,7 +66,7 @@ define([], function () {
      * @param {string} stickyHeaderType The sticky header type
      * @return {void}
      */
-    let toggleStickyHeader = function (status, stickyHeaderType) {
+    let toggleStickyHeader = function (status, stickyHeaderType){
         if (status === 'active') {
             header.classList.add('sticky-header-active');
             if (stickyHeaderType === 'stickyonscroll' && header.classList.contains('inactive')) {
@@ -93,7 +93,7 @@ define([], function () {
      * Init header
      * @return {void}
      */
-    function initHeader() {
+    function initHeader(){
         if (!header) {
             return;
         }
