@@ -427,9 +427,9 @@ class base_element
         $link_hover->add_css('color', $link_hover_color['light']);
 
         $link_dark      = $this->style_dark->add_child('a');
-        $linkHover_dark = $this->style_dark->add_child('a:hover');
+        $link_hover_dark = $this->style_dark->add_child('a:hover');
         $link_dark->add_css('color', $link_color['dark']);
-        $linkHover_dark->add_css('color', $link_hover_color['dark']);
+        $link_hover_dark->add_css('color', $link_hover_color['dark']);
     }
 
     protected function _animation(): void
