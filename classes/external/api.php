@@ -96,6 +96,11 @@ class api extends external_api {
         ]);
     }
 
+    /**
+     * @param array $params
+     * @return action
+     * @throws \moodle_exception
+     */
     public static function action($params): action
     {
         \require_login();
@@ -114,6 +119,9 @@ class api extends external_api {
         $requiredcapability = in_array($task, $readonlytasks, true) ? 'local/moon:view' : 'local/moon:manage';
         \require_capability($requiredcapability, $context);
         framework::init($params['theme'] ?? null);
+        if (!framework::get_theme()->is_moon()) {
+            throw new \moodle_exception('themenotmoon', 'local_moon');
+        }
         return new action($params);
     }
 

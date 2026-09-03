@@ -344,6 +344,7 @@ class action extends client {
             $item['thumbnail']  = $preset['thumbnail'];
             $item['demo']       = !empty($preset['demo']) ? $preset['demo'] : '';
             $item['name']       = $preset['name'];
+            $item['source']     = $preset['source'];
             $data[]             = $item;
         }
         return $data;
@@ -353,9 +354,21 @@ class action extends client {
     {
         global $CFG;
         try {
+            $file           = $this->params['name'];
+            if (media::exists($file.'.json', '/', 'presets', 0)) {
+                $preset = media::data($file.'.json', '/', 'presets', 0);
+                if (!$preset) {
+                    throw new \Exception(text::_('error_loading_presets').': '.$file.'.json');
+                }
+                $data = \json_decode($preset, true);
+                if (!isset($data['preset']) || empty($data['preset'])) {
+                    throw new \Exception(text::_('error_data_json_invalid'));
+                }
+                return $data['preset'];
+            }
+
             $theme = framework::get_theme();
             $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
-            $file           = $this->params['name'];
             $file_name      = $presets_path.$file.'.json';
             if (file_exists($file_name)) {
                 $json           = file_get_contents($presets_path.$file.'.json');
@@ -377,10 +390,8 @@ class action extends client {
 
     public function import_preset() : string
     {
-        global $CFG;
         try {
             $theme = framework::get_theme();
-            $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
             $preset = [
                 'title' => $this->params['title'],
                 'desc' => $this->params['desc'],
@@ -415,15 +426,7 @@ class action extends client {
                 throw new \Exception(text::_('error_data_json_invalid'));
             }
 
-            $upload_path = $presets_path . $preset_name . '.json';
-            if (!is_dir($presets_path)) {
-                if (!mkdir($presets_path, 0755, true) && !is_dir($presets_path)) {
-                    throw new \Exception('Failed to create presets directory: ' . $presets_path);
-                }
-            }
-            if (file_put_contents($upload_path, \json_encode($preset)) === false) {
-                throw new \Exception('Failed to write preset file: ' . $upload_path);
-            }
+            media::create_from_string(\json_encode($preset), $preset_name . '.json', '/', 'presets', 0, 'theme_'.$theme->name);
             $file->delete();
             return $preset_name;
         } catch (\Exception $e) {
@@ -437,8 +440,14 @@ class action extends client {
         try {
             // Check for request forgeries.
             $theme = framework::get_theme();
-            $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
             $file           = $this->params['name'];
+
+            if (media::exists($file.'.json', '/', 'presets', 0)) {
+                media::delete($file.'.json', '/', 'presets', 0);
+            }
+
+            $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
+
             $file_name      = $presets_path.$file.'.json';
             if (file_exists($file_name)) {
                 if (!@unlink($file_name)) {

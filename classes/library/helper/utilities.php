@@ -222,6 +222,15 @@ class utilities
         return $return;
     }
 
+    /**
+     * @param $dir
+     * @param string $filter
+     * @param bool $recurse
+     * @param bool $full
+     * @param array $exclude
+     * @param array $exclude_filter
+     * @return array
+     */
     public static function folders($dir, $filter = '.', $recurse = false, $full = false, $exclude = ['.svn', 'CVS', '.DS_Store', '__MACOSX'], $exclude_filter = ['^\..*']) : array
     {
         $elements = [];
@@ -911,17 +920,18 @@ class utilities
         return $params_data;
     }
 
-    public static function save_layout_preset($filearea, $itemid = 0, $theme_name = ''): bool
+    /**
+     * @param $filearea
+     * @param $theme_name
+     * @param $itemid
+     * @return bool
+     * @throws \coding_exception
+     * @throws \dml_exception
+     */
+    public static function save_layout_preset($filearea, $theme_name = '', $itemid = 0): bool
     {
-        global $CFG;
         if (empty($theme_name)) {
             $theme_name = framework::get_theme()->name;
-        }
-        $presets_path = $CFG -> dirroot . "/theme/{$theme_name}/moon/{$filearea}/";
-        if (!is_dir($presets_path)) {
-            if (!mkdir($presets_path, 0755, true) && !is_dir($presets_path)) {
-                return false;
-            }
         }
         $context = context_system::instance();
         $fs = get_file_storage();
@@ -932,10 +942,7 @@ class utilities
                 continue;
             }
             if (!$file->is_directory() && str_contains($file->get_mimetype(), 'json')) {
-                $file_url = $presets_path . $file->get_filename();
-                if (file_put_contents($file_url, $file->get_content()) === false) {
-                    return false;
-                }
+                media::create_from_string($file->get_content(), $file->get_filename(), $filearea, 'presets', 0, 'theme_'.$theme_name);
             }
         }
         return true;

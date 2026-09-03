@@ -70,6 +70,7 @@ class media {
      * @param string $filepath  Path within the file area (e.g., "/settings/")
      * @param string $filearea  File area (e.g., "media")
      * @param int    $itemid    Item ID (default 0)
+     * @param string $theme_name
      * @return stored_file|null
      */
     public static function create_from_string(
@@ -77,13 +78,14 @@ class media {
         string $filename,
         string $filepath = '/',
         string $filearea = 'media',
-        int $itemid = 0
+        int $itemid = 0,
+        string $theme_name = ''
     ): ?stored_file {
         global $USER;
 
         $fs = get_file_storage();
         $context = \context_system::instance();
-        $component = framework::get_theme()->get_name();
+        $component = empty($theme_name) ? framework::get_theme()->get_name() : $theme_name;
 
         // Normalize file name and path.
         $filename = clean_param($filename, PARAM_FILE);
@@ -281,13 +283,14 @@ class media {
      * @param int $itemid The item ID (default 0).
      * @param string $filepath The folder path (default '/').
      * @param string $filter Optional filter for mimetype (e.g., 'image/', 'video/').
+     * @param bool $includedirs
      * @return array List of files with details (filename, isdir, url, filepath, size, time, mimetype, content).
      */
-    public static function list(string $filearea = 'media', int $itemid = 0, string $filepath = '/', string $filter = ''): array {
+    public static function list(string $filearea = 'media', int $itemid = 0, string $filepath = '/', string $filter = '', bool $includedirs = true): array {
         $context = context_system::instance();
         $fs = get_file_storage();
 
-        $files = $fs->get_area_files($context->id, framework::get_theme()->get_name(), $filearea, $itemid, 'timemodified DESC', true);
+        $files = $fs->get_area_files($context->id, framework::get_theme()->get_name(), $filearea, $itemid, 'timemodified DESC', $includedirs);
         $list = [];
         foreach ($files as $file) {
             if ($file->get_filepath() !== $filepath) {
