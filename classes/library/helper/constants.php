@@ -27,7 +27,6 @@ use local_moon\library\framework;
 
 class constants
 {
-    public static $moon_version = '1.0.5';
     public static $fontawesome_version = '7.3.1';
     public static $fancybox_version = '6.0';
     public static $animatecss_version = '3.7.0';
@@ -78,6 +77,10 @@ class constants
             );
             $cache->set('local_moon_upload_token', $upload_token);
         }
+
+        $plugininfo = \core_plugin_manager::instance()
+            ->get_plugin_info('local_moon');
+
         return [
             'site_url'              =>  $CFG->wwwroot . '/',
             'base_url'              =>  $CFG->wwwroot,
@@ -87,7 +90,7 @@ class constants
             'tpl_template_name'     => $theme->name,
             'template_title'        => get_string('pluginname', 'theme_' . $theme->name),
             'enable_widget'         => $enable_widget,
-            'astroid_version'       => self::$moon_version,
+            'astroid_version'       => $plugininfo->release,
             'astroid_link'          => self::$moon_link,
             'document_link'         => self::$documentation_link,
             'video_tutorial'        => self::$video_tutorial_link,
