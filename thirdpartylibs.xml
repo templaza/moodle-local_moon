@@ -70,7 +70,7 @@
         <license>MIT</license>
     </library>
     <library>
-        <location>assets/art_slider/index.min.js</location>
+        <location>assets/art_slider/js/index.min.js</location>
         <name>Astroid Art Slider</name>
         <version>3.4.3</version>
         <license>GPL</license>
@@ -91,7 +91,7 @@
         <licenseversion>3.0</licenseversion>
     </library>
     <library>
-        <location>assets/transform/index.min.js</location>
+        <location>assets/transform/js/index.min.js</location>
         <name>Astroid Transform</name>
         <version>3.4.3</version>
         <license>GPL</license>
@@ -100,13 +100,6 @@
     <library>
         <location>assets/parallax/parallax.min.js</location>
         <name>Astroid Parallax</name>
-        <version>3.4.3</version>
-        <license>GPL</license>
-        <licenseversion>3.0</licenseversion>
-    </library>
-    <library>
-        <location>assets/art_slider/index.min.js</location>
-        <name>Astroid Art Slider</name>
         <version>3.4.3</version>
         <license>GPL</license>
         <licenseversion>3.0</licenseversion>
