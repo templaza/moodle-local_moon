@@ -15,7 +15,7 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package   Moon Framework
+ * @package   local_moon
  * @author    Moon Framework Team https://moonframe.work
  * @copyright Copyright (C) 2026 MoonFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
@@ -87,6 +87,7 @@ $forceblockdraweropen = method_exists($OUTPUT, 'firstview_fakeblocks') ? $OUTPUT
 $buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions() && !$PAGE->has_secondary_navigation();
 // If the settings menu will be included in the header then don't add it here.
 $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settings_menu() : false;
+
 $templatecontext = [
     'output' => $OUTPUT,
     'sidepreblocks' => $blockshtml,

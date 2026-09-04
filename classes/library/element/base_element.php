@@ -15,7 +15,7 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package   Moon Framework
+ * @package   local_moon
  * @author    Moon Framework Team https://moonframe.work
  * @copyright Copyright (C) 2026 MoonFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
@@ -427,9 +427,9 @@ class base_element
         $link_hover->add_css('color', $link_hover_color['light']);
 
         $link_dark      = $this->style_dark->add_child('a');
-        $linkHover_dark = $this->style_dark->add_child('a:hover');
+        $link_hover_dark = $this->style_dark->add_child('a:hover');
         $link_dark->add_css('color', $link_color['dark']);
-        $linkHover_dark->add_css('color', $link_hover_color['dark']);
+        $link_hover_dark->add_css('color', $link_hover_color['dark']);
     }
 
     protected function _animation(): void

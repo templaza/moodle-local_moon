@@ -14,12 +14,12 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package   Moon Framework
+ * @module    local_moon/stickymenu
  * @author    Moon Framework Team https://moonframe.work
  * @copyright Copyright (C) 2026 MoonFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
  */
-define([], function () {
+define([], function() {
     /**
      * Sticky Menu function
      * @param {HTMLElement} el The element to get the offset top for
@@ -42,16 +42,16 @@ define([], function () {
 
     let lastScrollTop = 0;
 
-    let initLastScrollTop = function () {
+    let initLastScrollTop = function() {
         lastScrollTop = window.scrollY;
     };
 
     let isScrollDown = () => window.scrollY > lastScrollTop;
 
-    let deviceBreakpoint = function () {
+    let deviceBreakpoint = function() {
         const _sizes = ['xs', 'sm', 'md', 'lg', 'xl'];
         let _device = 'undefined';
-        _sizes.forEach(function (_size) {
+        _sizes.forEach(function(_size) {
             const el = document.querySelector('.moon-breakpoints .device-' + _size);
             if (el && getComputedStyle(el).display === 'block') {
                 _device = _size;
@@ -66,7 +66,7 @@ define([], function () {
      * @param {string} stickyHeaderType The sticky header type
      * @return {void}
      */
-    let toggleStickyHeader = function (status, stickyHeaderType) {
+    let toggleStickyHeader = function(status, stickyHeaderType) {
         if (status === 'active') {
             header.classList.add('sticky-header-active');
             if (stickyHeaderType === 'stickyonscroll' && header.classList.contains('inactive')) {
@@ -93,56 +93,73 @@ define([], function () {
      * Init header
      * @return {void}
      */
+    /**
+     * Toggle sticky header by current scroll state.
+     * @param {number} winScroll Current window scroll position
+     * @param {string} stickyHeaderType Sticky header type
+     * @return {void}
+     */
+    function toggleByScrollState(winScroll, stickyHeaderType) {
+        if (winScroll > headerBottom) {
+            if (stickyHeaderType === 'sticky' || (stickyHeaderType === 'stickyonscroll' && !isScrollDown())) {
+                toggleStickyHeader('active', stickyHeaderType);
+            } else if (stickyHeaderType === 'stickyonscroll' && header.classList.contains('sticky-header-active')) {
+                toggleStickyHeader('inactive', stickyHeaderType);
+            }
+        } else if (winScroll <= headerTop) {
+            toggleStickyHeader('default', stickyHeaderType);
+        }
+    }
+
+    /**
+     * Handle static sticky header mode.
+     * @param {string} stickyHeaderType Sticky header type
+     * @return {boolean} True if static mode was handled
+     */
+    function toggleStaticHeader(stickyHeaderType) {
+        if (stickyHeaderType === 'static') {
+            if (header.classList.contains('sticky-header-active')) {
+                toggleStickyHeader('default', stickyHeaderType);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Resolve sticky header type by breakpoint.
+     * @param {string} breakpoint Active device breakpoint
+     * @return {string} Sticky header type
+     */
+    function getStickyHeaderType(breakpoint) {
+        if (breakpoint === 'xl' || breakpoint === 'lg') {
+            return stickyheader;
+        }
+
+        if (breakpoint === 'sm' || breakpoint === 'md') {
+            return stickyheadertablet;
+        }
+
+        return stickyheadermobile;
+    }
+
+    /**
+     * Init header.
+     * @return {void}
+     */
     function initHeader() {
         if (!header) {
             return;
         }
         const winScroll = window.scrollY;
         const _breakpoint = deviceBreakpoint();
+        const stickyHeaderType = getStickyHeaderType(_breakpoint);
 
-        if (_breakpoint === 'xl' || _breakpoint === 'lg') {
-            if (winScroll > headerBottom) {
-                if (stickyheader === 'sticky' || (stickyheader === 'stickyonscroll' && !isScrollDown())) {
-                    toggleStickyHeader('active', stickyheader);
-                } else if (stickyheader === 'stickyonscroll' && header.classList.contains('sticky-header-active')) {
-                    toggleStickyHeader('inactive', stickyheader);
-                }
-            } else if (winScroll <= headerTop) {
-                toggleStickyHeader('default', stickyheader);
-            }
-        } else if (_breakpoint === 'sm' || _breakpoint === 'md') {
-            if (stickyheadertablet === 'static') {
-                if (header.classList.contains('sticky-header-active')) {
-                    toggleStickyHeader('default', stickyheadertablet);
-                }
-                return;
-            }
-            if (winScroll > headerBottom) {
-                if (stickyheadertablet === 'sticky' || (stickyheadertablet === 'stickyonscroll' && !isScrollDown())) {
-                    toggleStickyHeader('active', stickyheadertablet);
-                } else if (stickyheadertablet === 'stickyonscroll' && header.classList.contains('sticky-header-active')) {
-                    toggleStickyHeader('inactive', stickyheadertablet);
-                }
-            } else if (winScroll <= headerTop) {
-                toggleStickyHeader('default', stickyheadertablet);
-            }
-        } else {
-            if (stickyheadermobile === 'static') {
-                if (header.classList.contains('sticky-header-active')) {
-                    toggleStickyHeader('default', stickyheadermobile);
-                }
-                return;
-            }
-            if (winScroll > headerBottom) {
-                if (stickyheadermobile === 'sticky' || (stickyheadermobile === 'stickyonscroll' && !isScrollDown())) {
-                    toggleStickyHeader('active', stickyheadermobile);
-                } else if (stickyheadermobile === 'stickyonscroll' && header.classList.contains('sticky-header-active')) {
-                    toggleStickyHeader('inactive', stickyheadermobile);
-                }
-            } else if (winScroll <= headerTop) {
-                toggleStickyHeader('default', stickyheadermobile);
-            }
+        if (_breakpoint !== 'xl' && _breakpoint !== 'lg' && toggleStaticHeader(stickyHeaderType)) {
+            return;
         }
+
+        toggleByScrollState(winScroll, stickyHeaderType);
     }
     return {
         /**

@@ -15,7 +15,7 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package   Moon Framework
+ * @package   local_moon
  * @author    Moon Framework Team https://moonframe.work
  * @copyright Copyright (C) 2026 MoonFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
@@ -64,11 +64,7 @@ class upload_media_api extends api {
             ),
 
             'fileInfo' => new external_single_structure([
-                'contextid' => new external_value(PARAM_INT, 'File context ID'),
-                'component' => new external_value(PARAM_ALPHANUMEXT, 'File component'),
-                'filearea' => new external_value(PARAM_ALPHANUMEXT, 'File area'),
                 'itemid' => new external_value(PARAM_INT, 'File item ID'),
-                'filepath' => new external_value(PARAM_PATH, 'File path'),
                 'filename' => new external_value(PARAM_FILE, 'File name'),
             ], 'File Info'),
         ]);

@@ -14,7 +14,7 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package   Moon Framework
+ * @module    local_moon/backtotop
  * @author    Moon Framework Team https://moonframe.work
  * @copyright Copyright (C) 2026 MoonFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
@@ -43,7 +43,7 @@ define([], function() {
                     return;
                 }
 
-                const fadeDuration = 200; // ms
+                const fadeDuration = 200;
                 btn.style.transition = `opacity ${fadeDuration}ms`;
                 btn.style.opacity = '0';
                 btn.style.display = 'none';
@@ -55,7 +55,7 @@ define([], function() {
                 function show() {
                     if (btn.style.display !== 'block') {
                         btn.style.display = 'block';
-                        // force reflow so transition always runs
+                        // Force reflow so transition always runs
                         // eslint-disable-next-line @babel/no-unused-expressions
                         btn.offsetHeight;
                     }
@@ -102,13 +102,13 @@ define([], function() {
                  */
                 function onClick(e) {
                     e.preventDefault();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({top: 0, behavior: 'smooth'});
                 }
 
-                window.addEventListener('scroll', onScroll, { passive: true });
+                window.addEventListener('scroll', onScroll, {passive: true});
                 btn.addEventListener('click', onClick);
 
-                // initialize based on current scroll position
+                // Initialize based on current scroll position
                 onScroll();
 
                 _cleanup = function() {
@@ -120,7 +120,7 @@ define([], function() {
             }
 
             if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', setup, { once: true });
+                document.addEventListener('DOMContentLoaded', setup, {once: true});
             } else {
                 setup();
             }

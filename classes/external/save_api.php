@@ -15,7 +15,7 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package   Moon Framework
+ * @package   local_moon
  * @author    Moon Framework Team https://moonframe.work
  * @copyright Copyright (C) 2026 MoonFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
@@ -28,6 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 use external_function_parameters;
 use external_value;
 use local_moon\library\helper\utilities;
+use local_moon\library\helper\media;
 
 class save_api extends api {
     public static function execute_parameters(): external_function_parameters {
@@ -38,7 +39,7 @@ class save_api extends api {
                 'Parameters'
             ),
             'theme' => new external_value(
-                PARAM_TEXT,
+                PARAM_ALPHANUMEXT,
                 'Theme Name',
                 VALUE_DEFAULT,
                 $PAGE->theme->name
@@ -84,24 +85,13 @@ class save_api extends api {
                 ];
                 $preset_name = uniqid('preset-');
 
-                global $CFG;
-                $presets_path = $CFG -> dirroot . "/theme/{$value['theme']}/moon/presets/";
-                if (!is_dir($presets_path)) {
-                    if (!mkdir($presets_path, 0755, true) && !is_dir($presets_path)) {
-                        throw new \Exception('Failed to create presets directory: ' . $presets_path);
-                    }
-                }
-
-                $file = $presets_path . $preset_name . '.json';
-                if (file_put_contents($file, \json_encode($preset)) === false) {
-                    throw new \Exception('Failed to write preset file: ' . $file);
-                }
+                media::create_from_string(\json_encode($preset), $preset_name . '.json', '/', 'presets', 0, 'theme_'.$value['theme']);
 
                 // Save Main Layout Preset
-                utilities::save_layout_preset('main_layouts', 0, $value['theme']);
+                utilities::save_layout_preset('main_layouts', $value['theme']);
 
                 // Save Sub-layouts Preset
-                utilities::save_layout_preset('layouts', 0, $value['theme']);
+                utilities::save_layout_preset('layouts', $value['theme']);
                 return self::response($preset_name);
             } else {
                 foreach ($data as $field => $val) {

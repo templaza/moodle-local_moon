@@ -15,7 +15,7 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package   Moon Framework
+ * @package   local_moon
  * @author    Moon Framework Team https://moonframe.work
  * @copyright Copyright (C) 2026 MoonFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
@@ -35,14 +35,13 @@ class media {
      * Serve files from the component file areas.
      *
      * @param string $component
-     * @param stdClass $course
-     * @param stdClass $cm
-     * @param context $context
+     * @param int $context
      * @param string $filearea
      * @param array $args
      * @param bool $forcedownload
      * @param array $options
      * @return bool
+     * @throws \coding_exception
      */
     public static function plugin_file($component, $context, $filearea, $args, $forcedownload, array $options = []) {
         if ($context->contextlevel != CONTEXT_SYSTEM) {
@@ -71,6 +70,7 @@ class media {
      * @param string $filepath  Path within the file area (e.g., "/settings/")
      * @param string $filearea  File area (e.g., "media")
      * @param int    $itemid    Item ID (default 0)
+     * @param string $theme_name
      * @return stored_file|null
      */
     public static function create_from_string(
@@ -78,13 +78,14 @@ class media {
         string $filename,
         string $filepath = '/',
         string $filearea = 'media',
-        int $itemid = 0
+        int $itemid = 0,
+        string $theme_name = ''
     ): ?stored_file {
         global $USER;
 
         $fs = get_file_storage();
         $context = \context_system::instance();
-        $component = framework::get_theme()->get_name();
+        $component = empty($theme_name) ? framework::get_theme()->get_name() : $theme_name;
 
         // Normalize file name and path.
         $filename = clean_param($filename, PARAM_FILE);
@@ -117,6 +118,11 @@ class media {
 
     /**
      * Upload a media file (image/video) to the plugin file area.
+     * @param array $file The $_FILES['file'] array from the upload form.
+     * @param string $filepath The path within the file area (e.g., '/gallery/subfolder/').
+     * @param string $filearea The file area name (default 'media').
+     * @param int $itemid The item ID (default 0).
+     * @return stored_file|null The stored_file object if successful, or null on failure.
      */
     public static function upload(array $file, string $filepath = '/', string $filearea = 'media', int $itemid = 0): ?stored_file {
         global $USER;
@@ -141,6 +147,14 @@ class media {
         return $fs->create_file_from_pathname($record, $file['tmp_name']);
     }
 
+    /**
+     * @param string $folderpath
+     * @param string $filearea
+     * @param int $itemid
+     * @return bool
+     * @throws \dml_exception
+     * @throws \file_exception
+     */
     public static function create_folder(string $folderpath, string $filearea = 'media', int $itemid = 0): bool {
         global $USER;
         $context = \context_system::instance();
@@ -249,6 +263,8 @@ class media {
 
     /**
      * Get the access URL (pluginfile.php) for a file.
+     * @param stored_file $file The stored_file object.
+     * @return string The URL to access the file.
      */
     public static function url(stored_file $file): string {
         return moodle_url::make_pluginfile_url(
@@ -263,12 +279,18 @@ class media {
 
     /**
      * Get the list of files in a file area (e.g., gallery, videos).
+     * @param string $filearea The file area name (default 'media').
+     * @param int $itemid The item ID (default 0).
+     * @param string $filepath The folder path (default '/').
+     * @param string $filter Optional filter for mimetype (e.g., 'image/', 'video/').
+     * @param bool $includedirs
+     * @return array List of files with details (filename, isdir, url, filepath, size, time, mimetype, content).
      */
-    public static function list(string $filearea = 'media', int $itemid = 0, string $filepath = '/', string $filter = ''): array {
+    public static function list(string $filearea = 'media', int $itemid = 0, string $filepath = '/', string $filter = '', bool $includedirs = true): array {
         $context = context_system::instance();
         $fs = get_file_storage();
 
-        $files = $fs->get_area_files($context->id, framework::get_theme()->get_name(), $filearea, $itemid, 'timemodified DESC', true);
+        $files = $fs->get_area_files($context->id, framework::get_theme()->get_name(), $filearea, $itemid, 'timemodified DESC', $includedirs);
         $list = [];
         foreach ($files as $file) {
             if ($file->get_filepath() !== $filepath) {
@@ -444,6 +466,11 @@ class media {
 
     /**
      * Delete a file in the file area by name.
+     * @param string $filename The name of the file to delete.
+     * @param string $filepath The path of the file (default '/').
+     * @param string $filearea The file area name (default 'media').
+     * @param int $itemid The item ID (default 0).
+     * @return array Result of the delete operation.
      */
     public static function delete(string $filename, string $filepath = '/', string $filearea = 'media', int $itemid = 0): array {
         $context = context_system::instance();
@@ -475,6 +502,11 @@ class media {
 
     /**
      * Check whether a file exists in the file area.
+     * @param string $filename The name of the file to check.
+     * @param string $filepath The path of the file (default '/').
+     * @param string $filearea The file area name (default 'media').
+     * @param int $itemid The item ID (default 0).
+     * @return bool True if the file exists, false otherwise.
      */
     public static function exists(string $filename, string $filepath = '/', string $filearea = 'media', int $itemid = 0): bool {
         $context = context_system::instance();
@@ -500,6 +532,11 @@ class media {
 
     /**
      * Get data of a file
+     * @param string $filename The name of the file to get data from.
+     * @param string $filepath The path of the file (default '/').
+     * @param string $filearea The file area name (default 'media').
+     * @param int $itemid The item ID (default 0).
+     * @return string|null The file data or null if the file does not exist.
      */
     public static function data(string $filename, string $filepath = '/', string $filearea = 'media', int $itemid = 0): ?string {
         $context = context_system::instance();
@@ -515,6 +552,11 @@ class media {
 
     /**
      * Get data of a file
+     * @param string $filename The name of the file to get data from.
+     * @param string $filepath The path of the file (default '/').
+     * @param string $filearea The file area name (default 'media').
+     * @param int $itemid The item ID (default 0).
+     * @return stored_file|null The stored file or null if the file does not exist.
      */
     public static function file(string $filename, string $filepath = '/', string $filearea = 'media', int $itemid = 0): ?stored_file {
         $context = context_system::instance();

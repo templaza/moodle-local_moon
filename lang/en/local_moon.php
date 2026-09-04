@@ -15,7 +15,7 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package   Moon Framework
+ * @package   local_moon
  * @author    Moon Framework Team https://moonframe.work
  * @copyright Copyright (C) 2026 MoonFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
@@ -24,11 +24,11 @@
 $string['pluginname'] = 'Moon Framework';
 $string['pluginname_subfix'] = ' - Moon Framework';
 $string['settings_desc'] = 'Global configuration for Moon Framework';
-$string['moon:view'] = 'View Moon';
-$string['moon:manage'] = 'Manage Moon';
+$string['upload_token'] = 'Upload Token';
 $string['local/moon:view'] = 'View Moon';
 $string['local/moon:manage'] = 'Manage Moon';
 $string['moon_framework_settings'] = 'Moon Framework Settings';
+$string['themenotmoon'] = 'The selected theme is not a Moon Framework theme. Please select a Moon Framework theme to access the settings.';
 
 // General
 $string['wide'] = 'Wide';
@@ -922,7 +922,11 @@ $string['error_loading_presets'] = 'Error loading presets';
 $string['error_data_json_invalid'] = 'Error: Invalid JSON data';
 $string['error_invalid_extension'] = 'Error: Invalid file extension';
 $string['error_file_not_found'] = 'Error: File not found';
+$string['error_file_exists'] = 'Error: File already exists';
+$string['error_draft_file_not_found'] = 'Error: Draft file not found';
 $string['error_layout_is_empty'] = 'Error: Layout is empty';
+$string['error_can_not_save_file'] = 'Error: Can not save file';
+$string['error_can_not_delete_file'] = 'Error: Can not delete file';
 
 // Slideshow
 $string['slideshow'] = 'Slideshow';

@@ -15,7 +15,7 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package   Moon Framework
+ * @package   local_moon
  * @author    Moon Framework Team https://moonframe.work
  * @copyright Copyright (C) 2026 MoonFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
@@ -95,11 +95,10 @@ final class array_helper
     /**
      * Utility function to map an array to a string.
      *
-     * @param   array    $array         The array to map.
-     * @param   string   $innerGlue     The glue (optional, defaults to '=') between the key and the value.
-     * @param   string   $outerGlue     The glue (optional, defaults to ' ') between array elements.
-     * @param   boolean  $keepOuterKey  True if final key should be kept.
-     *
+     * @param array $array The array to map.
+     * @param string $inner_glue
+     * @param string $outer_glue
+     * @param bool $keep_outer_key
      * @return  string
      *
      * @since   1.0
@@ -189,11 +188,10 @@ final class array_helper
     /**
      * Adds a column to an array of arrays or objects
      *
-     * @param   array   $array    The source array
-     * @param   array   $column   The array to be used as new column
-     * @param   string  $colName  The index of the new column or name of the new object property
-     * @param   string  $keyCol   The index of the column or name of object property to be used for mapping with the new column
-     *
+     * @param array $array The source array
+     * @param array $column The array to be used as new column
+     * @param $col_name
+     * @param null $key_col
      * @return  array  An array with the new column added to the source array
      *
      * @since   1.5.0
@@ -239,9 +237,8 @@ final class array_helper
     /**
      * Remove a column from an array of arrays or objects
      *
-     * @param   array   $array    The source array
-     * @param   string  $colName  The index of the column or name of object property to be removed
-     *
+     * @param array $array The source array
+     * @param $col_name
      * @return  array  Column of values from the source array
      *
      * @since   1.5.0
@@ -267,12 +264,9 @@ final class array_helper
     /**
      * Extracts a column from an array of arrays or objects
      *
-     * @param   array   $array     The source array
-     * @param   string  $valueCol  The index of the column or name of object property to be used as value
-     *                             It may also be NULL to return complete arrays or objects (this is
-     *                             useful together with <var>$keyCol</var> to reindex the array).
-     * @param   string  $keyCol    The index of the column or name of object property to be used as key
-     *
+     * @param array $array The source array
+     * @param $value_col
+     * @param null $key_col
      * @return  array  Column of values from the source array
      *
      * @since   1.0
@@ -528,11 +522,11 @@ final class array_helper
     /**
      * Utility function to sort an array of objects on a given field
      *
-     * @param   array  $a              An array of objects
-     * @param   mixed  $k              The key (string) or an array of keys to sort on
-     * @param   mixed  $direction      Direction (integer) or an array of direction to sort in [1 = Ascending] [-1 = Descending]
-     * @param   mixed  $caseSensitive  Boolean or array of booleans to let sort occur case sensitive or insensitive
-     * @param   mixed  $locale         Boolean or array of booleans to let sort occur using the locale language or not
+     * @param array $a An array of objects
+     * @param mixed $k The key (string) or an array of keys to sort on
+     * @param mixed $direction Direction (integer) or an array of direction to sort in [1 = Ascending] [-1 = Descending]
+     * @param bool $case_sensitive
+     * @param mixed $locale Boolean or array of booleans to let sort occur using the locale language or not
      *
      * @return  array
      *
@@ -614,10 +608,9 @@ final class array_helper
     /**
      * An improved array_search that allows for partial matching of strings values in associative arrays.
      *
-     * @param   string   $needle         The text to search for within the array.
-     * @param   array    $haystack       Associative array to search in to find $needle.
-     * @param   boolean  $caseSensitive  True to search case sensitive, false otherwise.
-     *
+     * @param string $needle The text to search for within the array.
+     * @param array $haystack Associative array to search in to find $needle.
+     * @param bool $case_sensitive
      * @return  mixed    Returns the matching array $key if found, otherwise false.
      *
      * @since   1.0

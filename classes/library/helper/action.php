@@ -15,7 +15,7 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package   Moon Framework
+ * @package   local_moon
  * @author    Moon Framework Team https://moonframe.work
  * @copyright Copyright (C) 2026 MoonFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
@@ -99,12 +99,14 @@ class action extends client {
     }
 
     public function upload() : array {
+        global $USER;
         $fs = \get_file_storage();
-        if (!$fs->file_exists($this->params['fileInfo']['contextid'], $this->params['fileInfo']['component'], $this->params['fileInfo']['filearea'], $this->params['fileInfo']['itemid'], $this->params['fileInfo']['filepath'], $this->params['fileInfo']['filename'])) {
-            throw new \moodle_exception(text::_('error_file_not_found'));
+        $usercontext = \context_user::instance($USER->id, MUST_EXIST);
+        if (!$fs->file_exists($usercontext->id, 'user', 'draft', $this->params['fileInfo']['itemid'], '/', $this->params['fileInfo']['filename'])) {
+            throw new \moodle_exception(text::_('error_draft_file_not_found'));
         }
 
-        $file = $fs->get_file($this->params['fileInfo']['contextid'], $this->params['fileInfo']['component'], $this->params['fileInfo']['filearea'], $this->params['fileInfo']['itemid'], $this->params['fileInfo']['filepath'], $this->params['fileInfo']['filename']);
+        $file = $fs->get_file($usercontext->id, 'user', 'draft', $this->params['fileInfo']['itemid'], '/', $this->params['fileInfo']['filename']);
 
         $folder = $this->params['folder'];
         if (!empty($folder) && $folder != '/') {
@@ -113,7 +115,6 @@ class action extends client {
             $folder = '/';
         }
 
-        global $USER;
         $context = \context_system::instance();
         $storedfile = $fs->create_file_from_storedfile([
             'contextid' => $context->id,
@@ -128,7 +129,7 @@ class action extends client {
         $file->delete();
 
         if (!$storedfile) {
-            return $this->response_data(['status' => 'error', 'message' => 'Failed to store file']);
+            return $this->response_data(['status' => 'error', 'message' => text::_('error_can_not_save_file')]);
         }
 
         // Get access URL.
@@ -344,6 +345,7 @@ class action extends client {
             $item['thumbnail']  = $preset['thumbnail'];
             $item['demo']       = !empty($preset['demo']) ? $preset['demo'] : '';
             $item['name']       = $preset['name'];
+            $item['source']     = $preset['source'];
             $data[]             = $item;
         }
         return $data;
@@ -353,9 +355,21 @@ class action extends client {
     {
         global $CFG;
         try {
+            $file           = $this->params['name'];
+            if (media::exists($file.'.json', '/', 'presets', 0)) {
+                $preset = media::data($file.'.json', '/', 'presets', 0);
+                if (!$preset) {
+                    throw new \Exception(text::_('error_loading_presets').': '.$file.'.json');
+                }
+                $data = \json_decode($preset, true);
+                if (!isset($data['preset']) || empty($data['preset'])) {
+                    throw new \Exception(text::_('error_data_json_invalid'));
+                }
+                return $data['preset'];
+            }
+
             $theme = framework::get_theme();
             $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
-            $file           = $this->params['name'];
             $file_name      = $presets_path.$file.'.json';
             if (file_exists($file_name)) {
                 $json           = file_get_contents($presets_path.$file.'.json');
@@ -377,10 +391,10 @@ class action extends client {
 
     public function import_preset() : string
     {
-        global $CFG;
+        global $USER;
         try {
+            $usercontext = \context_user::instance($USER->id, MUST_EXIST);
             $theme = framework::get_theme();
-            $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
             $preset = [
                 'title' => $this->params['title'],
                 'desc' => $this->params['desc'],
@@ -390,41 +404,34 @@ class action extends client {
             $preset_name = uniqid('preset-');
 
             $fs = \get_file_storage();
-            if (!$fs->file_exists($this->params['fileInfo']['contextid'], $this->params['fileInfo']['component'], $this->params['fileInfo']['filearea'], $this->params['fileInfo']['itemid'], $this->params['fileInfo']['filepath'], $this->params['fileInfo']['filename'])) {
+            if (!$fs->file_exists($usercontext->id, 'user', 'draft', $this->params['itemid'], '/', $this->params['filename'])) {
                 throw new \Exception(text::_('error_file_not_found'));
             }
 
-            $file = $fs->get_file($this->params['fileInfo']['contextid'], $this->params['fileInfo']['component'], $this->params['fileInfo']['filearea'], $this->params['fileInfo']['itemid'], $this->params['fileInfo']['filepath'], $this->params['fileInfo']['filename']);
+            $file = $fs->get_file($usercontext->id, 'user', 'draft', $this->params['itemid'], '/', $this->params['filename']);
+            if ($file) {
+                $pathinfo = pathinfo($file->get_filename());
+                $uploaded_file_extension = $pathinfo['extension'];
+                $uploaded_file_extension = strtolower($uploaded_file_extension);
+                if ($uploaded_file_extension != 'json') {
+                    throw new \Exception(text::_('error_invalid_extension'));
+                }
 
-            $pathinfo = pathinfo($this->params['fileInfo']['filename']);
-            $uploaded_file_extension = $pathinfo['extension'];
-            $uploaded_file_extension = strtolower($uploaded_file_extension);
-            if ($uploaded_file_extension != 'json') {
-                throw new \Exception(text::_('error_invalid_extension'));
-            }
-
-            $json           = $file->get_content();
-            $config         = json_decode($json, true);
-            if (json_last_error() === JSON_ERROR_NONE) {
-                if (!isset($config['preset'])) {
-                    $preset['preset'] = $json;
+                $json           = $file->get_content();
+                $config         = json_decode($json, true);
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    if (!isset($config['preset'])) {
+                        $preset['preset'] = $json;
+                    } else {
+                        $preset['preset'] = $config['preset'];
+                    }
                 } else {
-                    $preset['preset'] = $config['preset'];
+                    throw new \Exception(text::_('error_data_json_invalid'));
                 }
-            } else {
-                throw new \Exception(text::_('error_data_json_invalid'));
-            }
 
-            $upload_path = $presets_path . $preset_name . '.json';
-            if (!is_dir($presets_path)) {
-                if (!mkdir($presets_path, 0755, true) && !is_dir($presets_path)) {
-                    throw new \Exception('Failed to create presets directory: ' . $presets_path);
-                }
+                media::create_from_string(\json_encode($preset), $preset_name . '.json', '/', 'presets', 0, 'theme_'.$theme->name);
+                $file->delete();
             }
-            if (file_put_contents($upload_path, \json_encode($preset)) === false) {
-                throw new \Exception('Failed to write preset file: ' . $upload_path);
-            }
-            $file->delete();
             return $preset_name;
         } catch (\Exception $e) {
             $this->error_response($e);
@@ -437,8 +444,14 @@ class action extends client {
         try {
             // Check for request forgeries.
             $theme = framework::get_theme();
-            $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
             $file           = $this->params['name'];
+
+            if (media::exists($file.'.json', '/', 'presets', 0)) {
+                media::delete($file.'.json', '/', 'presets', 0);
+            }
+
+            $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
+
             $file_name      = $presets_path.$file.'.json';
             if (file_exists($file_name)) {
                 if (!@unlink($file_name)) {

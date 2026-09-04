@@ -15,7 +15,7 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package   Moon Framework
+ * @package   local_moon
  * @author    Moon Framework Team https://moonframe.work
  * @copyright Copyright (C) 2026 MoonFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
@@ -815,11 +815,10 @@ class registry implements \JsonSerializable, \ArrayAccess, \IteratorAggregate, \
     /**
      * Method to recursively bind data to a parent object.
      *
-     * @param  object   $parent     The parent object on which to attach the data values.
-     * @param  mixed    $data       An array or object of data to bind to the parent object.
-     * @param  boolean  $recursive  True to support recursive bindData.
-     * @param  boolean  $allowNull  True to allow null values.
-     *
+     * @param object $parent The parent object on which to attach the data values.
+     * @param mixed $data An array or object of data to bind to the parent object.
+     * @param boolean $recursive True to support recursive bindData.
+     * @param bool $allow_null True to allow null values.
      * @return  void
      *
      * @since   1.0.0

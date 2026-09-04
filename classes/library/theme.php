@@ -15,7 +15,7 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package   Moon Framework
+ * @package   local_moon
  * @author    Moon Framework Team https://moonframe.work
  * @copyright Copyright (C) 2026 MoonFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
@@ -279,7 +279,7 @@ class theme {
         foreach ($files as $file) {
             $json = file_get_contents($file);
             $data = \json_decode($json, true);
-            $preset = ['title' => pathinfo($file)['filename'], 'desc' => '', 'thumbnail' => '', 'demo' => '', 'preset' => [], 'name' => pathinfo($file)['filename']];
+            $preset = ['title' => pathinfo($file)['filename'], 'desc' => '', 'thumbnail' => '', 'demo' => '', 'preset' => [], 'name' => pathinfo($file)['filename'], 'source' => 'theme'];
             if (!empty($data['title'])) {
                 $preset['title'] = text::_($data['title']);
             }
@@ -297,6 +297,27 @@ class theme {
             }
             $presets[] = $preset;
         }
+
+        $files = helper\media::list('presets', 0, '/', '', false);
+        foreach ($files as $file) {
+            $json = $file['content'];
+            $data = \json_decode($json, true);
+            $preset = ['title' => pathinfo($file['filename'])['filename'], 'desc' => '', 'thumbnail' => '', 'demo' => '', 'preset' => [], 'name' => pathinfo($file['filename'])['filename'], 'source' => 'database'];
+            if (!empty($data['title'])) {
+                $preset['title'] = text::_($data['title']);
+            }
+            if (isset($data['desc'])) {
+                $preset['desc'] = text::_($data['desc']);
+            }
+            if (isset($data['demo'])) {
+                $preset['demo'] = $data['demo'];
+            }
+            if (isset($data['preset'])) {
+                $preset['preset'] = $data['preset'];
+            }
+            $presets[] = $preset;
+        }
+
         return $presets;
     }
 }
