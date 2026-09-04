@@ -99,12 +99,14 @@ class action extends client {
     }
 
     public function upload() : array {
+        global $USER;
         $fs = \get_file_storage();
-        if (!$fs->file_exists($this->params['fileInfo']['contextid'], $this->params['fileInfo']['component'], $this->params['fileInfo']['filearea'], $this->params['fileInfo']['itemid'], $this->params['fileInfo']['filepath'], $this->params['fileInfo']['filename'])) {
-            throw new \moodle_exception(text::_('error_file_not_found'));
+        $usercontext = \context_user::instance($USER->id, MUST_EXIST);
+        if (!$fs->file_exists($usercontext->id, 'user', 'draft', $this->params['fileInfo']['itemid'], '/', $this->params['fileInfo']['filename'])) {
+            throw new \moodle_exception(text::_('error_draft_file_not_found'));
         }
 
-        $file = $fs->get_file($this->params['fileInfo']['contextid'], $this->params['fileInfo']['component'], $this->params['fileInfo']['filearea'], $this->params['fileInfo']['itemid'], $this->params['fileInfo']['filepath'], $this->params['fileInfo']['filename']);
+        $file = $fs->get_file($usercontext->id, 'user', 'draft', $this->params['fileInfo']['itemid'], '/', $this->params['fileInfo']['filename']);
 
         $folder = $this->params['folder'];
         if (!empty($folder) && $folder != '/') {
@@ -113,7 +115,6 @@ class action extends client {
             $folder = '/';
         }
 
-        global $USER;
         $context = \context_system::instance();
         $storedfile = $fs->create_file_from_storedfile([
             'contextid' => $context->id,
@@ -128,7 +129,7 @@ class action extends client {
         $file->delete();
 
         if (!$storedfile) {
-            return $this->response_data(['status' => 'error', 'message' => 'Failed to store file']);
+            return $this->response_data(['status' => 'error', 'message' => text::_('error_can_not_save_file')]);
         }
 
         // Get access URL.
@@ -390,7 +391,9 @@ class action extends client {
 
     public function import_preset() : string
     {
+        global $USER;
         try {
+            $usercontext = \context_user::instance($USER->id, MUST_EXIST);
             $theme = framework::get_theme();
             $preset = [
                 'title' => $this->params['title'],
@@ -401,33 +404,34 @@ class action extends client {
             $preset_name = uniqid('preset-');
 
             $fs = \get_file_storage();
-            if (!$fs->file_exists($this->params['fileInfo']['contextid'], $this->params['fileInfo']['component'], $this->params['fileInfo']['filearea'], $this->params['fileInfo']['itemid'], $this->params['fileInfo']['filepath'], $this->params['fileInfo']['filename'])) {
+            if (!$fs->file_exists($usercontext->id, 'user', 'draft', $this->params['itemid'], '/', $this->params['filename'])) {
                 throw new \Exception(text::_('error_file_not_found'));
             }
 
-            $file = $fs->get_file($this->params['fileInfo']['contextid'], $this->params['fileInfo']['component'], $this->params['fileInfo']['filearea'], $this->params['fileInfo']['itemid'], $this->params['fileInfo']['filepath'], $this->params['fileInfo']['filename']);
-
-            $pathinfo = pathinfo($this->params['fileInfo']['filename']);
-            $uploaded_file_extension = $pathinfo['extension'];
-            $uploaded_file_extension = strtolower($uploaded_file_extension);
-            if ($uploaded_file_extension != 'json') {
-                throw new \Exception(text::_('error_invalid_extension'));
-            }
-
-            $json           = $file->get_content();
-            $config         = json_decode($json, true);
-            if (json_last_error() === JSON_ERROR_NONE) {
-                if (!isset($config['preset'])) {
-                    $preset['preset'] = $json;
-                } else {
-                    $preset['preset'] = $config['preset'];
+            $file = $fs->get_file($usercontext->id, 'user', 'draft', $this->params['itemid'], '/', $this->params['filename']);
+            if ($file) {
+                $pathinfo = pathinfo($file->get_filename());
+                $uploaded_file_extension = $pathinfo['extension'];
+                $uploaded_file_extension = strtolower($uploaded_file_extension);
+                if ($uploaded_file_extension != 'json') {
+                    throw new \Exception(text::_('error_invalid_extension'));
                 }
-            } else {
-                throw new \Exception(text::_('error_data_json_invalid'));
-            }
 
-            media::create_from_string(\json_encode($preset), $preset_name . '.json', '/', 'presets', 0, 'theme_'.$theme->name);
-            $file->delete();
+                $json           = $file->get_content();
+                $config         = json_decode($json, true);
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    if (!isset($config['preset'])) {
+                        $preset['preset'] = $json;
+                    } else {
+                        $preset['preset'] = $config['preset'];
+                    }
+                } else {
+                    throw new \Exception(text::_('error_data_json_invalid'));
+                }
+
+                media::create_from_string(\json_encode($preset), $preset_name . '.json', '/', 'presets', 0, 'theme_'.$theme->name);
+                $file->delete();
+            }
             return $preset_name;
         } catch (\Exception $e) {
             $this->error_response($e);

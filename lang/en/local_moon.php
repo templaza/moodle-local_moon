@@ -922,7 +922,11 @@ $string['error_loading_presets'] = 'Error loading presets';
 $string['error_data_json_invalid'] = 'Error: Invalid JSON data';
 $string['error_invalid_extension'] = 'Error: Invalid file extension';
 $string['error_file_not_found'] = 'Error: File not found';
+$string['error_file_exists'] = 'Error: File already exists';
+$string['error_draft_file_not_found'] = 'Error: Draft file not found';
 $string['error_layout_is_empty'] = 'Error: Layout is empty';
+$string['error_can_not_save_file'] = 'Error: Can not save file';
+$string['error_can_not_delete_file'] = 'Error: Can not delete file';
 
 // Slideshow
 $string['slideshow'] = 'Slideshow';

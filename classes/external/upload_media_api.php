@@ -64,11 +64,7 @@ class upload_media_api extends api {
             ),
 
             'fileInfo' => new external_single_structure([
-                'contextid' => new external_value(PARAM_INT, 'File context ID'),
-                'component' => new external_value(PARAM_ALPHANUMEXT, 'File component'),
-                'filearea' => new external_value(PARAM_ALPHANUMEXT, 'File area'),
                 'itemid' => new external_value(PARAM_INT, 'File item ID'),
-                'filepath' => new external_value(PARAM_PATH, 'File path'),
                 'filename' => new external_value(PARAM_FILE, 'File name'),
             ], 'File Info'),
         ]);
