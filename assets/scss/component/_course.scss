@@ -1,6 +1,15 @@
 #frontpage-available-course-list .coursebox, #frontpage-course-list .coursebox, .course-search-result .coursebox, .course-section .section-item, .page-mycourses .block_myoverview .block-cards {
   border-color: var(--bs-border-color);
 }
+body:not(.editing) .activity-item {
+  border-color: var(--bs-border-color);
+}
+.btn-icon.icons-collapse-expand {
+  background-color: var(--bs-primary-bg-subtle);
+}
+.block .block-cards span.categoryname, .block .block-cards .btn-link {
+  color: var(--bs-body-color);
+}
 .courseindex .courseindex-item {
   color: var(--mf-offcanvas-link-color);
   &:hover, &:focus {
@@ -14,5 +23,17 @@
     &:hover, &:focus {
       color: var(--mf-offcanvas-link-hover-color);
     }
+  }
+}
+
+.course-section {
+  .sectionname > a {
+    color: inherit;
+  }
+}
+
+.course-card {
+  .card-footer {
+    background-color: var(--bs-body-bg) !important;
   }
 }
