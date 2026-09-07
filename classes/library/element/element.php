@@ -98,44 +98,33 @@ class element extends base_element
     public function get_dynamic_content() {
         $dynamic_data = [];
 //        if (Helper::isPro()) {
-            $dynamic_params = $this->params->get('dynamic_content_settings');
-            if (!empty($dynamic_params)) {
-                $dynamic_content = new DynamicContent(
-                    $dynamic_params->source,
-                    $dynamic_params->start,
-                    $dynamic_params->quantity,
-                    $dynamic_params->conditions,
-                    $dynamic_params->order,
-                    $dynamic_params->order_dir,
-                    $dynamic_params->dynamic_content,
-                    $dynamic_params->options
-                );
-                $dynamic_data = $dynamic_content->getContent();
-            }
+//            $dynamic_params = $this->params->get('dynamic_content_settings');
+//            if (!empty($dynamic_params)) {
+//                $dynamic_content = new DynamicContent(
+//                    $dynamic_params->source,
+//                    $dynamic_params->start,
+//                    $dynamic_params->quantity,
+//                    $dynamic_params->conditions,
+//                    $dynamic_params->order,
+//                    $dynamic_params->order_dir,
+//                    $dynamic_params->dynamic_content,
+//                    $dynamic_params->options
+//                );
+//                $dynamic_data = $dynamic_content->getContent();
+//            }
 //        }
         return $dynamic_data;
     }
 
     public function _decorate_section()
     {
-        $params = framework::get_theme()->get_params();
         if ($this->type == 'header') {
-            $this->section->hasHeader = true;
+            $this->section->has_header = true;
             $this->section->add_class('moon-header-section');
         }
-        if ($this->type == "module_position") {
-            if ($params->get('header_module_position', '') === $this->params->get('position', '')) {
-                $this->section->hasHeader = true;
-                $this->section->add_class('moon-header-section');
-            }
-            if ($params->get('footer_module_position', '') === $this->params->get('position', '')) {
-                $this->section->hasFooter = true;
-                $this->section->add_class('moon-footer-section');
-            }
-        }
 
-        if ($this->type == "component") {
-            $this->section->hasComponent = true;
+        if ($this->type == "main_content") {
+            $this->section->has_component = true;
             $this->column->component = true;
             $this->section->add_class('moon-component-section');
         }

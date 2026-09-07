@@ -27,7 +27,10 @@ defined('MOODLE_INTERNAL') || die;
 
 class column extends base_element
 {
-    public $section, $row, $size = 12, $component = false;
+    public section $section;
+    public row $row;
+    public array $size = ['xxl' => 12, 'xl' => 12, 'lg' => 12, 'md' => 12, 'sm' => 12, 'xs' => 12];
+    public bool $component = false;
     public function __construct($data, $section, $row, $role = '')
     {
         $this->section = $section;

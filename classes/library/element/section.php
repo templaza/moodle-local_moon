@@ -29,9 +29,8 @@ defined('MOODLE_INTERNAL') || die;
 
 class section extends base_element
 {
-    public $has_component = false;
-    public $has_header = false;
-    public $has_footer = false;
+    public bool $has_component = false;
+    public bool $has_header = false;
 
     public function render()
     {

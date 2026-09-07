@@ -1,0 +1,24 @@
+.modchooser .modal-body .optionsummary {
+  background-color: var(--bs-body-bg);
+}
+.modchoosernav {
+  .nav-link {
+    --bs-nav-link-color: var(--bs-link-color);
+    --bs-nav-link-hover-color: var(--bs-link-hover-color);
+    &:not(.active):hover {
+      background-color: transparent;
+      border-color: var(--bs-border-color);
+    }
+  }
+}
+.modchoosercontent {
+  .optionscontainer .option{
+    &:not(.selected):hover {
+      background-color: transparent;
+      border-color: var(--bs-border-color);
+    }
+    &.selected {
+      background-color: var(--bs-tertiary-bg);
+    }
+  }
+}

@@ -1,4 +1,4 @@
-.drawer.drawer-right {
+.drawer {
   background-color: var(--mf-offcanvas-backgroundcolor);
   color: var(--mf-offcanvas-text-color);
   h1, h2, h3, h4, h5, h6 {
@@ -17,10 +17,15 @@
     color: var(--mf-offcanvas-toggle-color);
   }
 }
-.drawer-toggles .drawer-right-toggle .btn {
-  background-color: var(--mf-offcanvas-backgroundcolor);
-  color: var(--mf-offcanvas-toggle-color);
+.drawer-toggles {
+  .drawer-left-toggle, .drawer-right-toggle {
+    .btn {
+      background-color: var(--mf-offcanvas-backgroundcolor);
+      color: var(--mf-offcanvas-toggle-color);
+    }
+  }
 }
+
 #moon-header {
   .navbar-toggler[data-target="theme_boost-drawers-primary"] {
     transform: translateX(0) !important;

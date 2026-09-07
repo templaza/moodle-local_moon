@@ -71,7 +71,7 @@ class row extends base_element
                     }
                     unset($columns[$col_index]);
                 } else {
-                    if ($this->section->hasComponent) {
+                    if ($this->section->has_component) {
                         foreach ($columns[$component_index]->size as $key => $size) {
                             $columns[$component_index]->size[$key] += $buffer_size[$key];
                             if ($columns[$component_index]->size[$key] > 12) $columns[$component_index]->size[$key] = 12;
@@ -112,7 +112,7 @@ class row extends base_element
 
         if (!empty($columns)) {
             if (isset($this->_data['fill']) && $this->_data['fill']) {
-                if ($this->section->hasComponent) {
+                if ($this->section->has_component) {
                     foreach ($columns[$component_index]->size as $key => $size) {
                         if ($buffer_size[$key]) {
                             $columns[$component_index]->size[$key] += $buffer_size[$key];
