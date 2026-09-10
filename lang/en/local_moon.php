@@ -24,9 +24,13 @@
 $string['pluginname'] = 'Moon Framework';
 $string['pluginname_subfix'] = ' - Moon Framework';
 $string['settings_desc'] = 'Global configuration for Moon Framework';
+
 $string['upload_token'] = 'Upload Token';
 $string['local/moon:view'] = 'View Moon';
 $string['local/moon:manage'] = 'Manage Moon';
+$string['moon:view'] = 'View Moon';
+$string['moon:manage'] = 'Manage Moon';
+$string['cachedef_upload_token'] = 'Upload Token Cache';
 $string['moon_framework_settings'] = 'Moon Framework Settings';
 $string['themenotmoon'] = 'The selected theme is not a Moon Framework theme. Please select a Moon Framework theme to access the settings.';
 
