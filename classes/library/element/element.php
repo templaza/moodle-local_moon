@@ -29,7 +29,9 @@ defined('MOODLE_INTERNAL') || die;
 
 class element extends base_element
 {
-    public $section, $row, $column;
+    public section $section;
+    public row $row;
+    public column $column;
     public function __construct($data, $section, $row, $column, $role = '')
     {
         $this->section = $section;
