@@ -90,7 +90,7 @@ class constants
             'tpl_template_name'     => $theme->name,
             'template_title'        => get_string('pluginname', 'theme_' . $theme->name),
             'enable_widget'         => $enable_widget,
-            'astroid_version'       => $plugininfo->release,
+            'version'               => $plugininfo->release,
             'astroid_link'          => self::$moon_link,
             'document_link'         => self::$documentation_link,
             'video_tutorial'        => self::$video_tutorial_link,
