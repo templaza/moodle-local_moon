@@ -235,18 +235,18 @@ class action extends client {
 //        if (\is_array($thumbnail_file)) {
 //            // Make sure that file uploads are enabled in php.
 //            if (!(bool) \ini_get('file_uploads')) {
-//                throw new \Exception('File upload is not enabled in PHP', 400);
+//                throw new \moodle_exception('File upload is not enabled in PHP', 400);
 //            }
 //            // Is the PHP tmp directory missing?
 //            if ($thumbnail_file['error'] && ($thumbnail_file['error'] == UPLOAD_ERR_NO_TMP_DIR)) {
-//                throw new \Exception('There was an error uploading this thumbnail to the server.', 400);
+//                throw new \moodle_exception('There was an error uploading this thumbnail to the server.', 400);
 //            }
 //            $pathinfo = pathinfo($thumbnail_file['name']);
 //            $uploadedFileExtension = $pathinfo['extension'];
 //            $uploadedFileExtension = strtolower($uploadedFileExtension);
 //            $validExts  =   ['jpg', 'jpeg', 'png', 'bmp'];
 //            if (!in_array($uploadedFileExtension, $validExts)) {
-//                throw new \Exception(Text::_('INVALID EXTENSION'));
+//                throw new \moodle_exception(Text::_('INVALID EXTENSION'));
 //            }
 //
 //            $fileTemp       = $thumbnail_file['tmp_name'];
@@ -258,7 +258,7 @@ class action extends client {
 //            $storedfile = Media::create_from_string($thumbnail, $layout_name.'.'.$uploadedFileExtension, '/', $this->filearea, $this->itemid);
 //            $layout['thumbnail'] = Media::thumbnail($layout_name.'.'.$uploadedFileExtension, '/', $this->filearea, $this->itemid);
 //            if (!$storedfile) {
-//                throw new \Exception('Failed to store file');
+//                throw new \moodle_exception('Failed to store file');
 //            }
 //        }
         $layout['name'] = $layout_name;
@@ -300,7 +300,7 @@ class action extends client {
     // Font actions
     public function get_fonts() : array
     {
-        return $this->response_data(['data' => font::get_all_fonts()]);
+        return $this->response_data(['data' => \json_encode(font::get_all_fonts())]);
     }
 
     public function get_icons() : array
@@ -324,7 +324,7 @@ class action extends client {
         return $this->response_data(['message' => text::_('theme_cache_cleared')]);
     }
 
-    public function get_presets() : array
+    public function get_presets() : false|string
     {
         $theme = framework::get_theme();
         $presets = $theme->get_presets();
@@ -348,119 +348,125 @@ class action extends client {
             $item['source']     = $preset['source'];
             $data[]             = $item;
         }
-        return $data;
+        return \json_encode($data);
     }
 
     public function load_preset() : array|string
     {
         global $CFG;
-        try {
-            $file           = $this->params['name'];
-            if (media::exists($file.'.json', '/', 'presets', 0)) {
-                $preset = media::data($file.'.json', '/', 'presets', 0);
-                if (!$preset) {
-                    throw new \Exception(text::_('error_loading_presets').': '.$file.'.json');
-                }
-                $data = \json_decode($preset, true);
-                if (!isset($data['preset']) || empty($data['preset'])) {
-                    throw new \Exception(text::_('error_data_json_invalid'));
-                }
-                return $data['preset'];
+        $file           = $this->params['name'];
+        if (media::exists($file.'.json', '/', 'presets', 0)) {
+            $preset = media::data($file.'.json', '/', 'presets', 0);
+            if (!$preset) {
+                throw new \moodle_exception(text::_('error_loading_presets').': '.$file.'.json');
             }
+            $data = \json_decode($preset, true);
+            if (!isset($data['preset']) || empty($data['preset'])) {
+                throw new \moodle_exception(text::_('error_data_json_invalid'));
+            }
+            return \json_encode($data['preset']);
+        }
 
-            $theme = framework::get_theme();
-            $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
-            $file_name      = $presets_path.$file.'.json';
-            if (file_exists($file_name)) {
-                $json           = file_get_contents($presets_path.$file.'.json');
-                if (!$json) {
-                    throw new \Exception(text::_('error_loading_presets').': '.$presets_path.$file.'.json');
-                }
-                $data = \json_decode($json, true);
-                if (!isset($data['preset']) || empty($data['preset'])) {
-                    throw new \Exception(text::_('error_data_json_invalid'));
-                }
-                return $data['preset'];
-            } else {
-                throw new \Exception(text::_('error_file_not_found').': '.$presets_path.$file.'.json');
+        $theme = framework::get_theme();
+        $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
+        $file_name      = $presets_path.$file.'.json';
+        if (file_exists($file_name)) {
+            $json           = file_get_contents($presets_path.$file.'.json');
+            if (!$json) {
+                throw new \moodle_exception(text::_('error_loading_presets').': '.$file.'.json');
             }
-        } catch (\Exception $e) {
-            $this->error_response($e);
+            $data = \json_decode($json, true);
+            if (!isset($data['preset']) || empty($data['preset'])) {
+                throw new \moodle_exception(text::_('error_data_json_invalid'));
+            }
+            return \json_encode($data['preset']);
+        } else {
+            throw new \moodle_exception(text::_('error_file_not_found').': '.$file.'.json');
         }
     }
 
     public function import_preset() : string
     {
         global $USER;
-        try {
-            $usercontext = \context_user::instance($USER->id, MUST_EXIST);
-            $theme = framework::get_theme();
-            $preset = [
-                'title' => $this->params['title'],
-                'desc' => $this->params['desc'],
-                'thumbnail' => '', 'demo' => '',
-                'preset' => ''
-            ];
-            $preset_name = uniqid('preset-');
+        $usercontext = \context_user::instance($USER->id, MUST_EXIST);
+        $theme = framework::get_theme();
+        $preset = [
+            'title' => $this->params['title'],
+            'desc' => $this->params['desc'],
+            'thumbnail' => '', 'demo' => '',
+            'preset' => ''
+        ];
+        $preset_name = uniqid('preset-');
 
-            $fs = \get_file_storage();
-            if (!$fs->file_exists($usercontext->id, 'user', 'draft', $this->params['itemid'], '/', $this->params['filename'])) {
-                throw new \Exception(text::_('error_file_not_found'));
-            }
-
-            $file = $fs->get_file($usercontext->id, 'user', 'draft', $this->params['itemid'], '/', $this->params['filename']);
-            if ($file) {
-                $pathinfo = pathinfo($file->get_filename());
-                $uploaded_file_extension = $pathinfo['extension'];
-                $uploaded_file_extension = strtolower($uploaded_file_extension);
-                if ($uploaded_file_extension != 'json') {
-                    throw new \Exception(text::_('error_invalid_extension'));
-                }
-
-                $json           = $file->get_content();
-                $config         = json_decode($json, true);
-                if (json_last_error() === JSON_ERROR_NONE) {
-                    if (!isset($config['preset'])) {
-                        $preset['preset'] = $json;
-                    } else {
-                        $preset['preset'] = $config['preset'];
-                    }
-                } else {
-                    throw new \Exception(text::_('error_data_json_invalid'));
-                }
-
-                media::create_from_string(\json_encode($preset), $preset_name . '.json', '/', 'presets', 0, 'theme_'.$theme->name);
-                $file->delete();
-            }
-            return $preset_name;
-        } catch (\Exception $e) {
-            $this->error_response($e);
+        $fs = \get_file_storage();
+        if (!$fs->file_exists($usercontext->id, 'user', 'draft', $this->params['itemid'], '/', $this->params['filename'])) {
+            throw new \moodle_exception(text::_('error_file_not_found'));
         }
+
+        $file = $fs->get_file($usercontext->id, 'user', 'draft', $this->params['itemid'], '/', $this->params['filename']);
+        if ($file) {
+            $pathinfo = pathinfo($file->get_filename());
+            $uploaded_file_extension = $pathinfo['extension'];
+            $uploaded_file_extension = strtolower($uploaded_file_extension);
+            if ($uploaded_file_extension != 'json') {
+                throw new \moodle_exception(text::_('error_invalid_extension'));
+            }
+
+            $json           = $file->get_content();
+            $config         = json_decode($json, true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                if (!isset($config['preset'])) {
+                    $preset['preset'] = $json;
+                } else {
+                    $preset['preset'] = $config['preset'];
+                }
+            } else {
+                throw new \moodle_exception(text::_('error_data_json_invalid'));
+            }
+
+            media::create_from_string(\json_encode($preset), $preset_name . '.json', '/', 'presets', 0, 'theme_'.$theme->name);
+            $file->delete();
+        }
+        return $preset_name;
     }
 
     public function delete_preset() : bool
     {
         global $CFG;
-        try {
-            // Check for request forgeries.
-            $theme = framework::get_theme();
-            $file           = $this->params['name'];
+        // Check for request forgeries.
+        $theme = framework::get_theme();
+        $file = $this->params['name'];
 
-            if (media::exists($file.'.json', '/', 'presets', 0)) {
-                media::delete($file.'.json', '/', 'presets', 0);
+        if (media::exists($file.'.json', '/', 'presets', 0)) {
+            media::delete($file.'.json', '/', 'presets', 0);
+        }
+
+        $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
+
+        $file_name      = $presets_path.$file.'.json';
+        if (file_exists($file_name)) {
+            if (!@unlink($file_name)) {
+                throw new \moodle_exception('Failed to delete preset file: ' . $file_name);
             }
+        }
+        return true;
+    }
 
-            $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
+    public function export_preset() : string
+    {
+        global $CFG;
+        $theme = framework::get_theme();
+        $file = $this->params['name'];
+        if (media::exists($file.'.json', '/', 'presets', 0)) {
+            return media::data($file.'.json', '/', 'presets', 0, true);
+        }
 
-            $file_name      = $presets_path.$file.'.json';
-            if (file_exists($file_name)) {
-                if (!@unlink($file_name)) {
-                    throw new \Exception('Failed to delete preset file: ' . $file_name);
-                }
-            }
-            return true;
-        } catch (\Exception $e) {
-            $this->error_response($e);
+        $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
+        $file_name      = $presets_path.$file.'.json';
+        if (file_exists($file_name)) {
+            return $CFG -> wwwroot . "/theme/{$theme->name}/moon/presets/{$file}.json";
+        } else {
+            throw new \moodle_exception(text::_('error_file_not_found').': '.$file.'.json');
         }
     }
 }

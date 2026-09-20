@@ -58,7 +58,7 @@ class preset_api extends api {
                 throw new \Exception('Method not found');
             }
             $return = $exec->{$params['task']}();
-            return self::response(\json_encode($return));
+            return self::response($return);
         } catch (\Exception $e) {
             return self::response('', 'error', $e->getCode(), $e->getMessage());
         }

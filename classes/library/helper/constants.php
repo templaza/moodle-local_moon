@@ -102,6 +102,7 @@ class constants
             'upload_token'          => $upload_token,
             'astroid_action'        => $CFG->wwwroot . '/lib/ajax/service.php',
             'form_template'         => utilities::get_form_template($mode),
+            'typography'            => font::get_all_fonts(),
             'tiny_mce_license'      => empty($tiny_mce_license) ? 'gpl' : $tiny_mce_license,
             'is_pro'                => false,
             'dynamic_source'        => self::$dynamic_sources,

@@ -96,42 +96,6 @@ class client
         header('Content-Type: ' . $type);
     }
 
-    public function response($data, $raw = false)
-    {
-        $this->response_mime();
-        switch ($this->format) {
-            case 'json':
-                if (!$raw) {
-                    $return = $this->response_data(['data' => $data]);
-                } else {
-                    $return = $data;
-                }
-                $data = \json_encode($return);
-                break;
-        }
-        echo $data;
-        exit();
-    }
-
-    public function error_response(\Exception $e)
-    {
-        $this->response_mime();
-        switch ($this->format) {
-            case 'json':
-                $return = [];
-                $return['status'] = 'error';
-                $return['code'] = $e->getCode();
-                $return['message'] = $e->getMessage();
-                $data = \json_encode($return);
-                break;
-            default:
-                $data = $e->getCode() . ' : ' . $e->getMessage();
-                break;
-        }
-        echo $data;
-        exit();
-    }
-
     public function response_data ($array = []): array
     {
         $return = [
