@@ -269,14 +269,14 @@ class document {
 
     public function add_script_options($key, $options, $merge = true): static
     {
-        if (empty($this->scriptOptions[$key])) {
-            $this->scriptOptions[$key] = [];
+        if (empty($this->script_options[$key])) {
+            $this->script_options[$key] = [];
         }
 
         if ($merge && \is_array($options)) {
-            $this->scriptOptions[$key] = array_replace_recursive($this->scriptOptions[$key], $options);
+            $this->script_options[$key] = array_replace_recursive($this->script_options[$key], $options);
         } else {
-            $this->scriptOptions[$key] = $options;
+            $this->script_options[$key] = $options;
         }
 
         return $this;
@@ -285,10 +285,10 @@ class document {
     public function get_script_options($key = null)
     {
         if ($key) {
-            return (empty($this->scriptOptions[$key])) ? [] : $this->scriptOptions[$key];
+            return (empty($this->script_options[$key])) ? [] : $this->script_options[$key];
         }
 
-        return $this->scriptOptions;
+        return $this->script_options;
     }
 
     public function move_file(&$array, $a, $b): void
