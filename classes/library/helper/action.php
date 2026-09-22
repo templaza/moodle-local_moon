@@ -33,7 +33,6 @@ class action extends client {
     public array $params = [];
     public function __construct($params)
     {
-        parent::__construct();
         $this->params = $params;
         $this->filearea = $params['filearea'] ?? 'media';
         $this->itemid = $params['itemid'] ?? 0;

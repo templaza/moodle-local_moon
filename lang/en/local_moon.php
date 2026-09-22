@@ -931,6 +931,7 @@ $string['error_draft_file_not_found'] = 'Error: Draft file not found';
 $string['error_layout_is_empty'] = 'Error: Layout is empty';
 $string['error_can_not_save_file'] = 'Error: Can not save file';
 $string['error_can_not_delete_file'] = 'Error: Can not delete file';
+$string['error_can_not_delete_core_file'] = 'Error: Can not delete core file';
 
 // Slideshow
 $string['slideshow'] = 'Slideshow';

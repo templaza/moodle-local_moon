@@ -58,7 +58,6 @@ $document->add_script('/local/moon/assets/manage/index.js', ['version' => $confi
 
 echo $OUTPUT->header();
 echo $OUTPUT->render_from_template('local_moon/manage', [
-    'color_mode_theme' => 'light',
-    'script_options' => json_encode($document->get_script_options()),
+    'script_options' => json_encode($document->get_script_options(), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT),
 ]);
 echo $OUTPUT->footer();
