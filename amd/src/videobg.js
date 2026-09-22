@@ -12,15 +12,19 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
+
 /**
- * @package   Astroid Framework
- * @author    Astroid Framework Team https://astroidframe.work
- * @copyright Copyright (C) 2026 AstroidFrame.work.
+ * @module    local_moon/videobg
+ * @author    Moon Framework Team https://moonframe.work
+ * @copyright Copyright (C) 2026 MoonFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
  */
-(function () {
-    function initASVideoBG(root = document) {
-        const nodes = root.querySelectorAll('[data-as-video-bg]');
+define([], function() {
+    /**
+     * Initialize the video background
+     */
+    function initASVideoBG() {
+        const nodes = document.querySelectorAll('[data-as-video-bg]');
         nodes.forEach(function (el) {
             const url = el.dataset.asVideoBg;
             const poster = el.dataset.asVideoPoster;
@@ -78,7 +82,9 @@
             }
 
             // Parallax
-            if (el.dataset.parallax && parallax.type === 'video' && typeof gsap !== 'undefined') {
+            const gsapApi = window.gsap;
+            const scrollTriggerApi = window.ScrollTrigger;
+            if (el.dataset.parallax && parallax.type === 'video' && gsapApi && scrollTriggerApi) {
                 // parse options from data-parallax (already parsed into `parallax` object)
                 const speed = Number(parallax.speed) || 0.3;
                 const startPercent = -70;
@@ -89,41 +95,50 @@
                 // determine scrub: allow boolean or numeric value
                 let scrub = true;
                 if (typeof parallax.scrub !== 'undefined') {
-                    if (parallax.scrub === false || parallax.scrub === 'false') scrub = false;
-                    else if (parallax.scrub === true || parallax.scrub === 'true') scrub = true;
-                    else scrub = Number(parallax.scrub) || true;
+                    if (parallax.scrub === false || parallax.scrub === 'false') {
+                        scrub = false;
+                    } else if (parallax.scrub === true || parallax.scrub === 'true') {
+                        scrub = true;
+                    } else {
+                        scrub = Number(parallax.scrub) || true;
+                    }
                 }
 
                 // Only proceed if ScrollTrigger is available
-                if (typeof ScrollTrigger !== 'undefined') {
-                    // register plugin once
-                    if (!initASVideoBG._scrollTriggerRegistered) {
-                        gsap.registerPlugin(ScrollTrigger);
-                        initASVideoBG._scrollTriggerRegistered = true;
-                    }
-                    video.style.minHeight = `${120 + (speed * 50)}%`;
-                    // Use will-change for smoother animations
-                    gsap.set(video, { xPercent: -50, yPercent: startPercent, y: 0, willChange: 'transform' });
-
-                    gsap.to(video, {
-                        yPercent: endPercent,
-                        ease: 'none',
-                        scrollTrigger: {
-                            trigger: el,
-                            start: startTrigger,
-                            end: endTrigger,
-                            scrub: scrub,
-                            invalidateOnRefresh: true
-                        }
-                    });
+                // register plugin once
+                if (!initASVideoBG._scrollTriggerRegistered) {
+                    gsapApi.registerPlugin(scrollTriggerApi);
+                    initASVideoBG._scrollTriggerRegistered = true;
                 }
+                video.style.minHeight = `${120 + (speed * 50)}%`;
+                // Use will-change for smoother animations
+                gsapApi.set(video, { xPercent: -50, yPercent: startPercent, y: 0, willChange: 'transform' });
+
+                gsapApi.to(video, {
+                    yPercent: endPercent,
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: el,
+                        start: startTrigger,
+                        end: endTrigger,
+                        scrub: scrub,
+                        invalidateOnRefresh: true
+                    }
+                });
             }
         });
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function () { initASVideoBG(); });
-    } else {
-        initASVideoBG();
-    }
-}());
+    return {
+        /**
+         * Initialize the video background
+         */
+        init: function() {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function () { initASVideoBG(); });
+            } else {
+                initASVideoBG();
+            }
+        }
+    };
+});

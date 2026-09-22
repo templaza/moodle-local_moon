@@ -12,13 +12,14 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
+
 /**
- * @package   Astroid Framework
- * @author    Astroid Framework Team https://astroidframe.work
- * @copyright Copyright (C) 2025 AstroidFrame.work.
+ * @module    local_moon/animate
+ * @author    Moon Framework Team https://moonframe.work
+ * @copyright Copyright (C) 2026 MoonFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
  */
-(function () {
+define([], function() {
     class Animation {
         constructor(el) {
             this.DOM = {
@@ -35,9 +36,7 @@
             if (el.dataset.animationElement) {
                 this.DOM.target = el.querySelectorAll(el.dataset.animationElement);
             }
-            window.addEventListener('load', () => {
-                this.defaultAnimation();
-            });
+            this.defaultAnimation();
         }
 
         elementInRow = {};
@@ -96,7 +95,8 @@
                                 el.style.visibility = 'visible';
                             }, _delay);
                             el.classList.add(`${_prefix}animated`, `${_prefix}${_animation}`);
-                        }, (i % this.elementInRow[el.getBoundingClientRect().top + window.scrollY].length) * this.animateOptions.stagger);
+                        }, (i % this.elementInRow[el.getBoundingClientRect().top + window.scrollY].length)
+                            * this.animateOptions.stagger);
                         if (!this.DOM.el.classList.contains('animated')) {
                             this.DOM.el.classList.add('animated');
                         }
@@ -117,8 +117,24 @@
             }
         }
     }
-    document.addEventListener('DOMContentLoaded', () => {
-        const elements = document.querySelectorAll('[data-animation]');
-        elements.forEach(el => new Animation(el));
-    });
-})();
+
+    return {
+        /**
+         * Initialize the animations
+         */
+        init: function() {
+            /**
+             * Run the animation initialization
+             */
+            function run() {
+                const elements = document.querySelectorAll('[data-animation]');
+                elements.forEach(el => new Animation(el));
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', run, {once: true});
+            } else {
+                run();
+            }
+        }
+    };
+});
