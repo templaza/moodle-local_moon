@@ -439,14 +439,11 @@ class action extends client {
 
         if (media::exists($file.'.json', '/', 'presets', 0)) {
             media::delete($file.'.json', '/', 'presets', 0);
-        }
-
-        $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
-
-        $file_name      = $presets_path.$file.'.json';
-        if (file_exists($file_name)) {
-            if (!@unlink($file_name)) {
-                throw new \moodle_exception('Failed to delete preset file: ' . $file_name);
+        } else {
+            $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
+            $file_name    = $presets_path.$file.'.json';
+            if (file_exists($file_name)) {
+                throw new \moodle_exception(text::_('error_can_not_delete_core_file').': '.$file.'.json');
             }
         }
         return true;

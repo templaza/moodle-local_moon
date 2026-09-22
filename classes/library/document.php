@@ -368,7 +368,7 @@ class document {
         if (!isset($this->_is_loaded['animation'])) {
             global $PAGE;
             $PAGE->requires->css('/local/moon/assets/animate/animate.min.css');
-            $PAGE->requires->js('/local/moon/assets/animate/animate.min.js');
+            $PAGE->requires->js_call_amd('local_moon/animate', 'init', []);
             $this->_is_loaded['animation'] = true;
         }
     }
@@ -576,7 +576,8 @@ class document {
     public function load_video_bg(): void
     {
         if (!isset($this->_is_loaded['video_bg'])) {
-            $this->add_script('/local/moon/assets/videobg/videobg.min.js');
+            global $PAGE;
+            $PAGE->requires->js_call_amd('local_moon/videobg', 'init', []);
             $this->_is_loaded['video_bg'] = true;
         }
     }
@@ -584,7 +585,8 @@ class document {
     public function load_parallax(): void
     {
         if (!isset($this->_is_loaded['parallax'])) {
-            $this->add_script('/local/moon/assets/parallax/parallax.min.js');
+            global $PAGE;
+            $PAGE->requires->js_call_amd('local_moon/parallax', 'init', []);
             $this->_is_loaded['parallax'] = true;
         }
     }
@@ -592,7 +594,8 @@ class document {
     public function load_transform(): void
     {
         if (!isset($this->_is_loaded['transform'])) {
-            $this->add_script('/local/moon/assets/transform/js/index.min.js');
+            global $PAGE;
+            $PAGE->requires->js_call_amd('local_moon/transform', 'init', []);
             $this->_is_loaded['transform'] = true;
         }
     }
