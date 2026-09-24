@@ -12,6 +12,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
+
 /**
  * @package   Astroid Framework
  * @author    Astroid Framework Team https://astroidframe.work

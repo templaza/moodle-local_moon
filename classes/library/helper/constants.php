@@ -81,6 +81,9 @@ class constants
         $plugininfo = \core_plugin_manager::instance()
             ->get_plugin_info('local_moon');
 
+        // Get configure of local_moon plugin
+        $hide_preview_font = get_config('local_moon', 'hide_preview_font');
+
         return [
             'site_url'              =>  $CFG->wwwroot . '/',
             'base_url'              =>  $CFG->wwwroot,
@@ -94,7 +97,6 @@ class constants
             'astroid_link'          => self::$moon_link,
             'document_link'         => self::$documentation_link,
             'video_tutorial'        => self::$video_tutorial_link,
-            'donate_link'           => self::$donate_link,
             'github_link'           => self::$github_link,
             'jed_link'              => self::$jed_link,
             'jtemplate_link'        => parse_url($CFG->wwwroot, PHP_URL_PATH) .'/admin/themeselector.php',
@@ -103,6 +105,7 @@ class constants
             'astroid_action'        => $CFG->wwwroot . '/lib/ajax/service.php',
             'form_template'         => utilities::get_form_template($mode),
             'typography'            => font::get_all_fonts(),
+            'hide_preview_font'     => $hide_preview_font,
             'tiny_mce_license'      => empty($tiny_mce_license) ? 'gpl' : $tiny_mce_license,
             'is_pro'                => false,
             'dynamic_source'        => self::$dynamic_sources,
@@ -111,7 +114,14 @@ class constants
             'astroid_legacy'        => false,
             'cms_name'              => 'moodle',
             'layouts'               => self::get_layouts(),
-            'theme_config'          => $theme->get_theme_configs()
+            'theme_config'          => $theme->get_theme_configs(),
+            'monaco_editor_path'    => $CFG->wwwroot . '/local/moon/assets/monaco_editor/vs',
+            'tiny_mce_path'         => $CFG->wwwroot . '/local/moon/assets/tinymce/tinymce.min.js',
+            'donate'                => [
+                'link' => self::$donate_link,
+                'text' => get_string('buy_me_a_coffee', 'local_moon'),
+                'image'=> $CFG->wwwroot . '/local/moon/assets/images/cup-border.webp',
+            ]
         ];
     }
 
