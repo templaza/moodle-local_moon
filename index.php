@@ -53,7 +53,6 @@ $PAGE->requires->css('/local/moon/assets/manage/index.css');
 $PAGE->requires->css('/local/moon/assets/fontawesome/css/all.min.css');
 $PAGE->requires->css('/local/moon/assets/linearicons/font.min.css');
 $document->add_script('/local/moon/assets/bootstrap/js/bootstrap.bundle.min.js', ['version' => $config['version']], true);
-$document->add_script('/local/moon/assets/tinymce/tinymce.min.js', ['version' => $config['version']], true);
 $document->add_script('/local/moon/assets/manage/index.js', ['version' => $config['version']]);
 
 echo $OUTPUT->header();
