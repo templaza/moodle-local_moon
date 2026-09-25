@@ -96,12 +96,7 @@ class api extends external_api {
         ]);
     }
 
-    /**
-     * @param array $params
-     * @return action
-     * @throws \moodle_exception
-     */
-    public static function action($params): action
+    public static function validate_action($params): void
     {
         \require_login();
         $context = \context_system::instance();
@@ -122,6 +117,16 @@ class api extends external_api {
         if (!framework::get_theme()->is_moon()) {
             throw new \moodle_exception('themenotmoon', 'local_moon');
         }
+    }
+
+    /**
+     * @param array $params
+     * @return action
+     * @throws \moodle_exception
+     */
+    public static function action($params): action
+    {
+        self::validate_action($params);
         return new action($params);
     }
 
