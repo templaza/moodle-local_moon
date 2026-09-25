@@ -528,16 +528,6 @@ class document {
         }
     }
 
-    public function load_art_slider(): void
-    {
-        if (!isset($this->_is_loaded['art_slider'])) {
-            global $PAGE;
-            $PAGE->requires->css('/local/moon/assets/art_slider/css/base.min.css');
-            $PAGE->requires->js('/local/moon/assets/art_slider/js/index.min.js');
-            $this->_is_loaded['art_slider'] = true;
-        }
-    }
-
     public function load_fancy_box(): void
     {
         if (!isset($this->_is_loaded['fancybox'])) {
