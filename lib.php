@@ -23,36 +23,10 @@
 
 defined('MOODLE_INTERNAL') || die();
 use local_moon\library\framework;
-/**
- * Optional event hooks or callbacks for local_moon.
- * Keep this file lightweight; most logic should be in classes/.
- */
+
 $autoload = __DIR__ . '/vendor/autoload.php';
 if (file_exists($autoload)) {
     require_once($autoload);
-}
-function local_moon_extend_navigation(global_navigation $nav) {
-    // Find Home node (in Moodle 5.0 the id is still 'home').
-    $homenode = $nav->find('home', navigation_node::TYPE_ROOTNODE);
-    if ($homenode) {
-        // Add Submenu 1.
-        $homenode->add(
-            'submenu1',
-            new moodle_url('/local/home_moon/page1.php'),
-            navigation_node::TYPE_CUSTOM,
-            null,
-            'subpage1'
-        );
-
-        // Add Submenu 2.
-        $homenode->add(
-            'submenu2',
-            new moodle_url('/local/home_moon/page2.php'),
-            navigation_node::TYPE_CUSTOM,
-            null,
-            'subpage2'
-        );
-    }
 }
 function local_moon_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
     if ($context->contextlevel != CONTEXT_SYSTEM) {

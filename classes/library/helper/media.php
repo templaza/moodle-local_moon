@@ -536,15 +536,20 @@ class media {
      * @param string $filepath The path of the file (default '/').
      * @param string $filearea The file area name (default 'media').
      * @param int $itemid The item ID (default 0).
+     * @param bool $returnurl Whether to return the URL instead of the file content (default false).
      * @return string|null The file data or null if the file does not exist.
      */
-    public static function data(string $filename, string $filepath = '/', string $filearea = 'media', int $itemid = 0): ?string {
+    public static function data(string $filename, string $filepath = '/', string $filearea = 'media', int $itemid = 0, bool $returnurl = false): ?string {
         $context = context_system::instance();
         $fs = get_file_storage();
         $file = $fs->get_file($context->id, framework::get_theme()->get_name(), $filearea, $itemid, $filepath, $filename);
 
         if (!$file) {
             return null;
+        }
+
+        if ($returnurl) {
+            return self::url($file);
         }
 
         return $file->get_content();

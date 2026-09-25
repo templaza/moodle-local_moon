@@ -32,6 +32,7 @@ $context = context_system::instance();
 require_capability('local/moon:manage', $context);
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/local/moon/index.php'));
+$PAGE->set_pagelayout('admin');
 $PAGE->set_title(get_string('moon_framework_settings', 'local_moon'));
 $PAGE->set_heading(get_string('moon_framework_settings', 'local_moon'));
 $theme_name = optional_param('theme', $PAGE->theme->name, PARAM_ALPHANUMEXT);
@@ -48,13 +49,14 @@ $document->add_script_options('astroid_lib', $config);
 $document->add_script_options('astroid_content', settings::prepare_manager_form($theme->get_fields()));
 // Get Language
 $document->add_script_options('astroid_lang', settings::load_language());
+$PAGE->requires->css('/local/moon/assets/manage/index.css');
+$PAGE->requires->css('/local/moon/assets/fontawesome/css/all.min.css');
+$PAGE->requires->css('/local/moon/assets/linearicons/font.min.css');
+$document->add_script('/local/moon/assets/bootstrap/js/bootstrap.bundle.min.js', ['version' => $config['version']], true);
+$document->add_script('/local/moon/assets/manage/index.js', ['version' => $config['version']]);
 
+echo $OUTPUT->header();
 echo $OUTPUT->render_from_template('local_moon/manage', [
-    'title' => get_string('pluginname', $theme->get_name()) . get_string('pluginname_subfix', 'local_moon'),
-    'favicon' => $OUTPUT->image_url('favicon', 'theme'),
-    'color_mode_theme' => 'light',
-    'script_options' => json_encode($document->get_script_options()),
-    'stylesheets' => '<link href="' . parse_url($CFG->wwwroot, PHP_URL_PATH) . '/local/moon/assets/manage/index.css' . '" rel="stylesheet" type="text/css" /><link href="' . parse_url($CFG->wwwroot, PHP_URL_PATH) . '/local/moon/assets/fontawesome/css/all.min.css' . '" rel="stylesheet" type="text/css" /><link href="' . parse_url($CFG->wwwroot, PHP_URL_PATH) . '/local/moon/assets/linearicons/font.min.css' . '" rel="stylesheet" type="text/css" />',
-    'head_scripts' => '<script src="'. parse_url($CFG->wwwroot, PHP_URL_PATH) . '/local/moon/assets/bootstrap/js/bootstrap.bundle.min.js' .'"></script><script src="'. parse_url($CFG->wwwroot, PHP_URL_PATH) . '/local/moon/assets/tinymce/tinymce.min.js' .'"></script>',
-    'body_scripts' => '<script src="'. parse_url($CFG->wwwroot, PHP_URL_PATH) . '/local/moon/assets/manage/index.js' .'"></script>',
+    'script_options' => json_encode($document->get_script_options(), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT),
 ]);
+echo $OUTPUT->footer();

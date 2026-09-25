@@ -29,6 +29,9 @@ use external_function_parameters;
 use external_value;
 use local_moon\library\helper\utilities;
 use local_moon\library\helper\media;
+use local_moon\library\helper\text;
+use local_moon\library\helper\settings;
+use local_moon\library\framework;
 
 class save_api extends api {
     public static function execute_parameters(): external_function_parameters {
@@ -67,40 +70,39 @@ class save_api extends api {
 
     public static function execute($params, $theme, $astroid_preset_name, $astroid_preset_desc, $astroid_preset) {
         $value = self::validate_parameters(self::execute_parameters(), ['params' => $params, 'theme' => $theme, 'astroid_preset_name' => $astroid_preset_name, 'astroid_preset_desc' => $astroid_preset_desc, 'astroid_preset' => $astroid_preset]);
-        require_login();
-        $context = \context_system::instance();
-        self::validate_context($context);
-        require_capability('local/moon:manage', $context);
-        try {
-            $data = \json_decode($value['params'], true);
-            if (!is_array($data)) {
-                throw new \Exception('Invalid JSON data');
-            }
-            if ($value['astroid_preset']) {
-                $preset = [
-                    'title' => $value['astroid_preset_name'],
-                    'desc' => $value['astroid_preset_desc'],
-                    'thumbnail' => '',
-                    'preset' => $data
-                ];
-                $preset_name = uniqid('preset-');
+        self::validate_action($value);
+        $data = \json_decode($value['params'], true);
+        if (!is_array($data)) {
+            throw new \moodle_exception(text::_('error_data_json_invalid'), 'local_moon');
+        }
+        if ($value['astroid_preset']) {
+            $preset = [
+                'title' => $value['astroid_preset_name'],
+                'desc' => $value['astroid_preset_desc'],
+                'thumbnail' => '',
+                'preset' => $data
+            ];
+            $preset_name = uniqid('preset-');
 
-                media::create_from_string(\json_encode($preset), $preset_name . '.json', '/', 'presets', 0, 'theme_'.$value['theme']);
+            media::create_from_string(\json_encode($preset), $preset_name . '.json', '/', 'presets', 0, 'theme_'.$value['theme']);
 
-                // Save Main Layout Preset
-                utilities::save_layout_preset('main_layouts', $value['theme']);
+            // Save Main Layout Preset
+            utilities::save_layout_preset('main_layouts', $value['theme']);
 
-                // Save Sub-layouts Preset
-                utilities::save_layout_preset('layouts', $value['theme']);
-                return self::response($preset_name);
-            } else {
-                foreach ($data as $field => $val) {
+            // Save Sub-layouts Preset
+            utilities::save_layout_preset('layouts', $value['theme']);
+            return self::response($preset_name);
+        } else {
+            global $CFG;
+            $theme = framework::get_theme();
+            settings::load_options($CFG->dirroot . '/local/moon/options');
+            $theme->load_settings();
+            foreach ($data as $field => $val) {
+                if ($theme->is_valid_field($field)) {
                     utilities::save_config($field, $val, 'theme_' . $value['theme']);
                 }
-                return self::response('Theme Saved');
             }
-        } catch (\Exception $e) {
-            return self::response('', 'error', $e->getCode(), $e->getMessage());
+            return self::response('Theme Saved');
         }
     }
 }

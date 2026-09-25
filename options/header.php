@@ -58,9 +58,9 @@ framework::get_theme()->add_fields(
                     "role" => "image"
                 ],
                 "options" => [
-                    'horizontal' => '/local/moon/assets/images/header/horizontal-left.svg',
-                    'stacked' => '/local/moon/assets/images/header/stacked_style1.svg',
-                    'sidebar' => '/local/moon/assets/images/header/sidebar-1.svg',
+                    'horizontal' => 'local/moon/assets/images/header/horizontal-left.svg',
+                    'stacked' => 'local/moon/assets/images/header/stacked_style1.svg',
+                    'sidebar' => 'local/moon/assets/images/header/sidebar-1.svg',
                 ],
                 "conditions" => "[header]==true"
             ],
@@ -75,9 +75,9 @@ framework::get_theme()->add_fields(
                     "role" => "image"
                 ],
                 "options" => [
-                    'left'   => '/local/moon/assets/images/header/horizontal-left.svg',
-                    'center' => '/local/moon/assets/images/header/horizontal-center.svg',
-                    'right'  => '/local/moon/assets/images/header/horizontal-right.svg',
+                    'left'   => 'local/moon/assets/images/header/horizontal-left.svg',
+                    'center' => 'local/moon/assets/images/header/horizontal-center.svg',
+                    'right'  => 'local/moon/assets/images/header/horizontal-right.svg',
                 ],
                 "conditions" => "[header]==true AND [header_mode]=='horizontal'",
             ],
@@ -92,9 +92,9 @@ framework::get_theme()->add_fields(
                     "role" => "image"
                 ],
                 "options" => [
-                    'left'   => '/local/moon/assets/images/header/sidebar-1.svg',
-                    'right'  => '/local/moon/assets/images/header/sidebar-2.svg',
-                    'topbar' => '/local/moon/assets/images/header/sidebar-topbar.svg',
+                    'left'   => 'local/moon/assets/images/header/sidebar-1.svg',
+                    'right'  => 'local/moon/assets/images/header/sidebar-2.svg',
+                    'topbar' => 'local/moon/assets/images/header/sidebar-topbar.svg',
                 ],
                 "conditions" => "[header]==true AND [header_mode]=='sidebar'",
             ],
@@ -109,11 +109,11 @@ framework::get_theme()->add_fields(
                     "role" => "image"
                 ],
                 "options" => [
-                    'center-balance'     => '/local/moon/assets/images/header/stacked_style0.svg',
-                    'center'             => '/local/moon/assets/images/header/stacked_style1.svg',
-                    'seperated'          => '/local/moon/assets/images/header/stacked_style2.svg',
-                    'divided'            => '/local/moon/assets/images/header/stacked_style3.svg',
-                    'divided-logo-left'  => '/local/moon/assets/images/header/stacked_style4.svg',
+                    'center-balance'     => 'local/moon/assets/images/header/stacked_style0.svg',
+                    'center'             => 'local/moon/assets/images/header/stacked_style1.svg',
+                    'seperated'          => 'local/moon/assets/images/header/stacked_style2.svg',
+                    'divided'            => 'local/moon/assets/images/header/stacked_style3.svg',
+                    'divided-logo-left'  => 'local/moon/assets/images/header/stacked_style4.svg',
                 ],
                 "conditions" => "[header]==true AND [header_mode]=='stacked'",
             ],

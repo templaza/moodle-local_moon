@@ -140,7 +140,7 @@ class font
         return $options;
     }
 
-    public static function get_all_fonts(): false|string
+    public static function get_all_fonts(): array
     {
         $google_fonts = self::google_fonts();
         $rt_fonts   =   array(
@@ -184,7 +184,7 @@ class font
                 ];
             }
         }
-        return \json_encode($rt_fonts);
+        return $rt_fonts;
     }
 
     public static function get_uploaded_fonts($template): array

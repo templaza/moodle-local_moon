@@ -57,7 +57,7 @@ class delete_layout_api extends api {
             ),
 
             'layouts' => new external_multiple_structure(
-                new external_value(PARAM_TEXT, 'Layout name'),
+                new external_value(PARAM_ALPHANUMEXT, 'Layout name'),
                 'List of layouts'
             ),
         ]);

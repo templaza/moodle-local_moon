@@ -269,14 +269,14 @@ class document {
 
     public function add_script_options($key, $options, $merge = true): static
     {
-        if (empty($this->scriptOptions[$key])) {
-            $this->scriptOptions[$key] = [];
+        if (empty($this->script_options[$key])) {
+            $this->script_options[$key] = [];
         }
 
         if ($merge && \is_array($options)) {
-            $this->scriptOptions[$key] = array_replace_recursive($this->scriptOptions[$key], $options);
+            $this->script_options[$key] = array_replace_recursive($this->script_options[$key], $options);
         } else {
-            $this->scriptOptions[$key] = $options;
+            $this->script_options[$key] = $options;
         }
 
         return $this;
@@ -285,10 +285,10 @@ class document {
     public function get_script_options($key = null)
     {
         if ($key) {
-            return (empty($this->scriptOptions[$key])) ? [] : $this->scriptOptions[$key];
+            return (empty($this->script_options[$key])) ? [] : $this->script_options[$key];
         }
 
-        return $this->scriptOptions;
+        return $this->script_options;
     }
 
     public function move_file(&$array, $a, $b): void
@@ -368,7 +368,7 @@ class document {
         if (!isset($this->_is_loaded['animation'])) {
             global $PAGE;
             $PAGE->requires->css('/local/moon/assets/animate/animate.min.css');
-            $PAGE->requires->js('/local/moon/assets/animate/animate.min.js');
+            $PAGE->requires->js_call_amd('local_moon/animate', 'init', []);
             $this->_is_loaded['animation'] = true;
         }
     }
@@ -528,16 +528,6 @@ class document {
         }
     }
 
-    public function load_art_slider(): void
-    {
-        if (!isset($this->_is_loaded['art_slider'])) {
-            global $PAGE;
-            $PAGE->requires->css('/local/moon/assets/art_slider/css/base.min.css');
-            $PAGE->requires->js('/local/moon/assets/art_slider/js/index.min.js');
-            $this->_is_loaded['art_slider'] = true;
-        }
-    }
-
     public function load_fancy_box(): void
     {
         if (!isset($this->_is_loaded['fancybox'])) {
@@ -576,7 +566,8 @@ class document {
     public function load_video_bg(): void
     {
         if (!isset($this->_is_loaded['video_bg'])) {
-            $this->add_script('/local/moon/assets/videobg/videobg.min.js');
+            global $PAGE;
+            $PAGE->requires->js_call_amd('local_moon/videobg', 'init', []);
             $this->_is_loaded['video_bg'] = true;
         }
     }
@@ -584,7 +575,8 @@ class document {
     public function load_parallax(): void
     {
         if (!isset($this->_is_loaded['parallax'])) {
-            $this->add_script('/local/moon/assets/parallax/parallax.min.js');
+            global $PAGE;
+            $PAGE->requires->js_call_amd('local_moon/parallax', 'init', []);
             $this->_is_loaded['parallax'] = true;
         }
     }
@@ -592,7 +584,8 @@ class document {
     public function load_transform(): void
     {
         if (!isset($this->_is_loaded['transform'])) {
-            $this->add_script('/local/moon/assets/transform/js/index.min.js');
+            global $PAGE;
+            $PAGE->requires->js_call_amd('local_moon/transform', 'init', []);
             $this->_is_loaded['transform'] = true;
         }
     }

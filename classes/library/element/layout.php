@@ -190,26 +190,11 @@ class layout
 
     public static function delete_datalayouts($layouts = [], $type = '')
     {
-        global $CFG;
         if (empty($layouts)) {
             return false;
         }
-        $template = framework::get_theme()->name;
 
-        $layouts_path = path::clean($CFG->dirroot . "/theme/{$template}/moon/{$type}/");
-        $images_path = path::clean($CFG->dirroot . "/theme/{$template}/images/{$type}/");
-
-        $delete_file = function ($path, $layout) use ($images_path) {
-            if (file_exists($path . $layout . '.json')) {
-                $json = file_get_contents($path . $layout . '.json');
-                $data = \json_decode($json, true);
-                @unlink($path . $layout . '.json');
-                if (!empty($data['thumbnail']) && file_exists($images_path . $data['thumbnail'])) {
-                    @unlink($images_path . $data['thumbnail']);
-                }
-            }
-        };
-        array_map(function ($layout) use ($type, $layouts_path, $delete_file) {
+        array_map(function ($layout) use ($type) {
             if (media::exists($layout . '.json', '/', $type, 0)) {
                 $json = media::data($layout . '.json', '/', $type, 0);
                 $data = \json_decode($json, true);
@@ -218,7 +203,6 @@ class layout
                     media::delete($data['thumbnail'], '/', $type, 0);
                 }
             }
-            $delete_file($layouts_path, $layout);
         }, $layouts);
 
         return true;

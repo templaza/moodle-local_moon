@@ -33,7 +33,7 @@ use local_moon\library\helper\text;
 class theme {
     public string $name = 'moon';
     public object $theme;
-    protected array $fields = [];
+protected array $fields = [], $valid_fields = [];
     protected object|null $params = null;
     protected array|null $config = null;
     public function __construct($theme = null) {
@@ -104,13 +104,19 @@ class theme {
                     continue;
                 }
                 $this->fields[$key]['fields'][$fieldname]['value'] = $this->params->get($fieldname, $this->fields[$key]['fields'][$fieldname]['default'] ?? '');
+                $this->valid_fields[$fieldname] = true;
             }
         }
     }
 
+    public function is_valid_field($fieldname): bool
+    {
+        return isset($this->valid_fields[$fieldname]) && $this->valid_fields[$fieldname] === true;
+    }
+
     public function get_layouts(): array
     {
-        return layout::get_datalayouts(framework::get_theme()->get_name(), 'main_layouts');
+        return layout::get_datalayouts($this->name, 'main_layouts');
     }
 
     public function get_layout($layout = '') : array|false

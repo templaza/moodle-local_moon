@@ -39,6 +39,12 @@
         <license>MIT</license>
     </library>
     <library>
+        <location>assets/monaco_editor/</location>
+        <name>Monaco Editor</name>
+        <version>v0.55.1</version>
+        <license>MIT</license>
+    </library>
+    <library>
         <location>assets/masonry/masonry.pkgd.min.js</location>
         <name>Masonry</name>
         <version>v4.2.2</version>
@@ -57,52 +63,10 @@
         <license>MIT</license>
     </library>
     <library>
-        <location>assets/animate/animate.min.js</location>
-        <name>Astroid Animate JS</name>
-        <version>3.4.3</version>
-        <license>GPL</license>
-        <licenseversion>3.0</licenseversion>
-    </library>
-    <library>
         <location>assets/animate/animate.min.css</location>
         <name>Animate CSS</name>
         <version>4.1.1</version>
         <license>MIT</license>
-    </library>
-    <library>
-        <location>assets/art_slider/js/index.min.js</location>
-        <name>Astroid Art Slider</name>
-        <version>3.4.3</version>
-        <license>GPL</license>
-        <licenseversion>3.0</licenseversion>
-    </library>
-    <library>
-        <location>assets/videobg/videobg.min.js</location>
-        <name>Astroid Video Background</name>
-        <version>3.4.3</version>
-        <license>GPL</license>
-        <licenseversion>3.0</licenseversion>
-    </library>
-    <library>
-        <location>assets/gmap/gmap.min.js</location>
-        <name>Astroid GMap</name>
-        <version>3.4.3</version>
-        <license>GPL</license>
-        <licenseversion>3.0</licenseversion>
-    </library>
-    <library>
-        <location>assets/transform/js/index.min.js</location>
-        <name>Astroid Transform</name>
-        <version>3.4.3</version>
-        <license>GPL</license>
-        <licenseversion>3.0</licenseversion>
-    </library>
-    <library>
-        <location>assets/parallax/parallax.min.js</location>
-        <name>Astroid Parallax</name>
-        <version>3.4.3</version>
-        <license>GPL</license>
-        <licenseversion>3.0</licenseversion>
     </library>
     <library>
         <location>assets/linearicons/AstroidIcons.ttf</location>

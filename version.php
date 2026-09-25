@@ -24,7 +24,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_moon';
-$plugin->version   = 2026091001;
-$plugin->requires  = 2024010100; // Targeting Moodle 5.0+ (adjust if needed)
-$plugin->release   = '1.0.9';
+$plugin->version   = 2026092500;
+$plugin->requires  = 2023100900;
+$plugin->supported = [403, 522];
+$plugin->release   = '1.0.10';
 $plugin->maturity  = MATURITY_STABLE;

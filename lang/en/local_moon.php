@@ -33,6 +33,11 @@ $string['moon:manage'] = 'Manage Moon';
 $string['cachedef_upload_token'] = 'Upload Token Cache';
 $string['moon_framework_settings'] = 'Moon Framework Settings';
 $string['themenotmoon'] = 'The selected theme is not a Moon Framework theme. Please select a Moon Framework theme to access the settings.';
+$string['buy_me_a_coffee'] = 'Buy me a coffee';
+
+$string['local_moon/hide_preview_font'] = 'Hide Preview Font';
+$string['hide_preview_font'] = 'Hide Preview Font';
+$string['hide_preview_font_desc'] = 'Hide the preview font option.';
 
 // General
 $string['wide'] = 'Wide';
@@ -931,6 +936,7 @@ $string['error_draft_file_not_found'] = 'Error: Draft file not found';
 $string['error_layout_is_empty'] = 'Error: Layout is empty';
 $string['error_can_not_save_file'] = 'Error: Can not save file';
 $string['error_can_not_delete_file'] = 'Error: Can not delete file';
+$string['error_can_not_delete_core_file'] = 'Error: Can not delete core file';
 
 // Slideshow
 $string['slideshow'] = 'Slideshow';

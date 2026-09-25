@@ -26,5 +26,9 @@ defined('MOODLE_INTERNAL') || die();
 if ($hassiteconfig) {
     $settings = new admin_settingpage('local_moon', get_string('pluginname', 'local_moon'));
     $settings->add(new admin_setting_heading('local_moon_heading', '', get_string('settings_desc', 'local_moon')));
+    $settings->add(new admin_setting_configselect('local_moon/hide_preview_font', get_string('hide_preview_font', 'local_moon') , get_string('hide_preview_font_desc', 'local_moon') , null, array(
+        '0' => 'Visible',
+        '1' => 'Hidden'
+    )));
     $ADMIN->add('localplugins', $settings);
 }
