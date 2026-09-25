@@ -33,7 +33,7 @@ use local_moon\library\helper\text;
 class theme {
     public string $name = 'moon';
     public object $theme;
-    protected array $fields, $valid_fields = [];
+protected array $fields = [], $valid_fields = [];
     protected object|null $params = null;
     protected array|null $config = null;
     public function __construct($theme = null) {
