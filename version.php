@@ -24,7 +24,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_moon';
-$plugin->version   = 2026092501;
+$plugin->version   = 2026093000;
 $plugin->requires  = 2023100900;
 $plugin->release   = '1.0.10';
 $plugin->maturity  = MATURITY_STABLE;
