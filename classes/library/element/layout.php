@@ -175,10 +175,10 @@ class layout
                 }
             } elseif (media::exists($filename . '.bak.json', '/draft/', $type, 0)) {
                 $json = media::data($filename . '.bak.json', '/draft/', $type, 0);
-            } elseif (media::exists($default . '.json', '/', $type, 0)) {
-                $json = media::data($default . '.json', '/', $type, 0);
             } elseif (file_exists(path::clean($CFG->dirroot . "/theme/{$template}/moon/{$type}/" . $filename . '.json'))){
                 $json = file_get_contents(path::clean($CFG->dirroot . "/theme/{$template}/moon/{$type}/" . $filename . '.json'));
+            } elseif (media::exists($default . '.json', '/', $type, 0)) {
+                $json = media::data($default . '.json', '/', $type, 0);
             } elseif (file_exists(path::clean($CFG->dirroot . "/theme/{$template}/moon/{$type}/" . $default . '.json'))){
                 $json = file_get_contents(path::clean($CFG->dirroot . "/theme/{$template}/moon/{$type}/" . $default . '.json'));
             } else {
