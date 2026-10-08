@@ -105,7 +105,7 @@ class constants
             'astroid_action'        => $CFG->wwwroot . '/lib/ajax/service.php',
             'form_template'         => utilities::get_form_template($mode),
             'typography'            => font::get_all_fonts(),
-            'hide_preview_font'     => $hide_preview_font,
+            'hide_preview_font'     => (int) $hide_preview_font,
             'tiny_mce_license'      => empty($tiny_mce_license) ? 'gpl' : $tiny_mce_license,
             'is_pro'                => false,
             'dynamic_source'        => self::$dynamic_sources,

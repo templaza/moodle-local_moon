@@ -102,7 +102,7 @@ class action extends client {
         $fs = \get_file_storage();
         $usercontext = \context_user::instance($USER->id, MUST_EXIST);
         if (!$fs->file_exists($usercontext->id, 'user', 'draft', $this->params['fileInfo']['itemid'], '/', $this->params['fileInfo']['filename'])) {
-            throw new \moodle_exception(text::_('error_draft_file_not_found'));
+            throw new \moodle_exception('error_draft_file_not_found', 'local_moon');
         }
 
         $file = $fs->get_file($usercontext->id, 'user', 'draft', $this->params['fileInfo']['itemid'], '/', $this->params['fileInfo']['filename']);
@@ -304,7 +304,6 @@ class action extends client {
 
     public function get_icons() : array
     {
-        $this->format = 'html';
         $source       = $this->params['source'];
         $return = ['success' => true];
         if ($source === 'astroid') {
@@ -357,11 +356,11 @@ class action extends client {
         if (media::exists($file.'.json', '/', 'presets', 0)) {
             $preset = media::data($file.'.json', '/', 'presets', 0);
             if (!$preset) {
-                throw new \moodle_exception(text::_('error_loading_presets').': '.$file.'.json');
+                throw new \moodle_exception('error_loading_presets', 'local_moon', '', $file.'.json');
             }
             $data = \json_decode($preset, true);
             if (!isset($data['preset']) || empty($data['preset'])) {
-                throw new \moodle_exception(text::_('error_data_json_invalid'));
+                throw new \moodle_exception('error_data_json_invalid', 'local_moon');
             }
             return \json_encode($data['preset']);
         }
@@ -372,15 +371,15 @@ class action extends client {
         if (file_exists($file_name)) {
             $json           = file_get_contents($presets_path.$file.'.json');
             if (!$json) {
-                throw new \moodle_exception(text::_('error_loading_presets').': '.$file.'.json');
+                throw new \moodle_exception('error_loading_presets', 'local_moon', '', $file.'.json');
             }
             $data = \json_decode($json, true);
             if (!isset($data['preset']) || empty($data['preset'])) {
-                throw new \moodle_exception(text::_('error_data_json_invalid'));
+                throw new \moodle_exception('error_data_json_invalid', 'local_moon');
             }
             return \json_encode($data['preset']);
         } else {
-            throw new \moodle_exception(text::_('error_file_not_found').': '.$file.'.json');
+            throw new \moodle_exception('error_file_not_found', 'local_moon', '', $file.'.json');
         }
     }
 
@@ -399,7 +398,7 @@ class action extends client {
 
         $fs = \get_file_storage();
         if (!$fs->file_exists($usercontext->id, 'user', 'draft', $this->params['itemid'], '/', $this->params['filename'])) {
-            throw new \moodle_exception(text::_('error_file_not_found'));
+            throw new \moodle_exception('error_file_not_found', 'local_moon', '', $this->params['filename']);
         }
 
         $file = $fs->get_file($usercontext->id, 'user', 'draft', $this->params['itemid'], '/', $this->params['filename']);
@@ -408,7 +407,7 @@ class action extends client {
             $uploaded_file_extension = $pathinfo['extension'];
             $uploaded_file_extension = strtolower($uploaded_file_extension);
             if ($uploaded_file_extension != 'json') {
-                throw new \moodle_exception(text::_('error_invalid_extension'));
+                throw new \moodle_exception('error_invalid_extension', 'local_moon', '', $uploaded_file_extension);
             }
 
             $json           = $file->get_content();
@@ -420,7 +419,7 @@ class action extends client {
                     $preset['preset'] = $config['preset'];
                 }
             } else {
-                throw new \moodle_exception(text::_('error_data_json_invalid'));
+                throw new \moodle_exception('error_data_json_invalid', 'local_moon');
             }
 
             media::create_from_string(\json_encode($preset), $preset_name . '.json', '/', 'presets', 0, 'theme_'.$theme->name);
@@ -442,7 +441,7 @@ class action extends client {
             $presets_path = $CFG -> dirroot . "/theme/{$theme->name}/moon/presets/";
             $file_name    = $presets_path.$file.'.json';
             if (file_exists($file_name)) {
-                throw new \moodle_exception(text::_('error_can_not_delete_core_file').': '.$file.'.json');
+                throw new \moodle_exception('error_can_not_delete_core_file', 'local_moon', '', $file.'.json');
             }
         }
         return true;
@@ -462,7 +461,7 @@ class action extends client {
         if (file_exists($file_name)) {
             return $CFG -> wwwroot . "/theme/{$theme->name}/moon/presets/{$file}.json";
         } else {
-            throw new \moodle_exception(text::_('error_file_not_found').': '.$file.'.json');
+            throw new \moodle_exception('error_file_not_found', 'local_moon', '', $file.'.json');
         }
     }
 }

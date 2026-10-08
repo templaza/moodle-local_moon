@@ -35,7 +35,6 @@ use local_moon\library\framework;
 
 class save_api extends api {
     public static function execute_parameters(): external_function_parameters {
-        global $PAGE;
         return new external_function_parameters([
             'params' => new external_value(
                 PARAM_RAW,
@@ -43,9 +42,7 @@ class save_api extends api {
             ),
             'theme' => new external_value(
                 PARAM_ALPHANUMEXT,
-                'Theme Name',
-                VALUE_DEFAULT,
-                $PAGE->theme->name
+                'Theme Name'
             ),
             'astroid_preset_name' => new external_value(
                 PARAM_TEXT,
@@ -73,7 +70,7 @@ class save_api extends api {
         self::validate_action($value);
         $data = \json_decode($value['params'], true);
         if (!is_array($data)) {
-            throw new \moodle_exception(text::_('error_data_json_invalid'), 'local_moon');
+            throw new \moodle_exception('error_data_json_invalid', 'local_moon');
         }
         if ($value['astroid_preset']) {
             $preset = [

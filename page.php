@@ -37,12 +37,12 @@ if (!$filename) {
 }
 $layout = $theme->get_layout($filename);
 if (!$layout) {
-    throw new \moodle_exception("File '{$filename}' not found in the theme layout");
+    throw new \moodle_exception('layoutnotfound', 'local_moon', '', $filename);
 }
 
 $registeredlayouts = array_keys($theme->theme->layouts ?? []);
 if (!in_array($filename, $registeredlayouts, true)) {
-    throw new \moodle_exception("Page layout '{$filename}' is not registered in the active theme");
+    throw new \moodle_exception('layoutnotregistered', 'local_moon', '', $filename);
 }
 
 $PAGE->set_url(new moodle_url('/local/moon/page.php?id=' . $filename));
