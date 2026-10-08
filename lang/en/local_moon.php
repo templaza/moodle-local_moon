@@ -35,9 +35,10 @@ $string['moon_framework_settings'] = 'Moon Framework Settings';
 $string['themenotmoon'] = 'The selected theme is not a Moon Framework theme. Please select a Moon Framework theme to access the settings.';
 $string['buy_me_a_coffee'] = 'Buy me a coffee';
 
-$string['local_moon/hide_preview_font'] = 'Hide Preview Font';
 $string['hide_preview_font'] = 'Hide Preview Font';
 $string['hide_preview_font_desc'] = 'Hide the preview font option.';
+$string['visible'] = 'Visible';
+$string['hidden'] = 'Hidden';
 
 // General
 $string['wide'] = 'Wide';
