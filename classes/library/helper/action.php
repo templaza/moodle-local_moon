@@ -304,7 +304,6 @@ class action extends client {
 
     public function get_icons() : array
     {
-        $this->format = 'html';
         $source       = $this->params['source'];
         $return = ['success' => true];
         if ($source === 'astroid') {
