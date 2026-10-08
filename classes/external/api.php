@@ -38,13 +38,10 @@ use local_moon\library\helper\action;
 
 class api extends external_api {
     public static function execute_parameters(): external_function_parameters {
-        global $PAGE;
         return new external_function_parameters([
             'theme' => new external_value(
                 PARAM_ALPHANUMEXT,
-                'Theme Name',
-                VALUE_DEFAULT,
-                $PAGE->theme->name
+                'Theme Name'
             ),
 
             'task' => new external_value(
