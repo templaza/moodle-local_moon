@@ -928,16 +928,24 @@ $string['add_profile'] = 'Add Profile';
 $string['add_custom_profile'] = 'Add Custom Profile';
 
 // Errors
-$string['error_loading_presets'] = 'Error loading presets';
+$string['error_loading_presets'] = 'Error loading presets: "{$a}"';
 $string['error_data_json_invalid'] = 'Error: Invalid JSON data';
-$string['error_invalid_extension'] = 'Error: Invalid file extension';
-$string['error_file_not_found'] = 'Error: File not found';
+$string['error_invalid_extension'] = 'Error: Invalid file extension: "{$a}"';
+$string['error_file_not_found'] = 'Error: File not found: "{$a}"';
 $string['error_file_exists'] = 'Error: File already exists';
 $string['error_draft_file_not_found'] = 'Error: Draft file not found';
 $string['error_layout_is_empty'] = 'Error: Layout is empty';
 $string['error_can_not_save_file'] = 'Error: Can not save file';
 $string['error_can_not_delete_file'] = 'Error: Can not delete file';
-$string['error_can_not_delete_core_file'] = 'Error: Can not delete core file';
+$string['error_can_not_delete_core_file'] = 'Error: Can not delete core file: "{$a}"';
+$string['layoutnotfound'] = 'Layout "{$a}" was not found in the active theme.';
+$string['layoutnotregistered'] = 'Page layout "{$a}" is not registered in the active theme.';
+$string['filenotfoundinpath'] = 'File "{$a->oldname}" not found in "{$a->filepath}"';
+$string['fileisalreadyexists'] = 'A file named "{$a}" already exists.';
+$string['folder_not_found'] = 'Folder "{$a}" not found';
+$string['folder_already_exists'] = 'Folder "{$a}" already exists.';
+$string['themenotfound'] = 'Theme "{$a}" not found';
+$string['themenotmoon'] = 'Theme "{$a}" is not a Moon theme';
 
 // Slideshow
 $string['slideshow'] = 'Slideshow';

@@ -73,7 +73,7 @@ class save_api extends api {
         self::validate_action($value);
         $data = \json_decode($value['params'], true);
         if (!is_array($data)) {
-            throw new \moodle_exception(text::_('error_data_json_invalid'), 'local_moon');
+            throw new \moodle_exception('error_data_json_invalid', 'local_moon');
         }
         if ($value['astroid_preset']) {
             $preset = [

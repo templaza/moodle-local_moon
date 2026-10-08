@@ -363,12 +363,15 @@ class media {
         $file = $fs->get_file($context->id, framework::get_theme()->get_name(), $filearea, $itemid, $filepath, $oldname);
 
         if (!$file) {
-            throw new \moodle_exception("File '{$oldname}' not found in '{$filepath}'");
+            $a = new \stdClass();
+            $a->oldname = $oldname;
+            $a->filepath = $filepath;
+            throw new \moodle_exception('filenotfoundinpath', 'local_moon', '', $a);
         }
 
         // Check whether the new name already exists.
         if ($fs->file_exists($context->id, framework::get_theme()->get_name(), $filearea, $itemid, $filepath, $newname)) {
-            throw new \moodle_exception("A file named '{$newname}' already exists.");
+            throw new \moodle_exception('fileisalreadyexists', 'local_moon', '', $newname);
         }
 
         // Create new file from old file.
@@ -412,12 +415,12 @@ class media {
 
         // Check whether the old folder exists.
         if (!$fs->file_exists($context->id, $component, $filearea, $itemid, $oldpath, '.')) {
-            throw new \moodle_exception("Folder '{$oldfolder}' not found");
+            throw new \moodle_exception('folder_not_found', 'local_moon', '', $oldfolder);
         }
 
         // If the new folder already exists, throw an error.
         if ($fs->file_exists($context->id, $component, $filearea, $itemid, $newpath, '.')) {
-            throw new \moodle_exception("Folder '{$newfolder}' already exists");
+            throw new \moodle_exception('folder_already_exists', 'local_moon', '', $newfolder);
         }
 
         // Create new folder.
