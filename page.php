@@ -23,7 +23,7 @@
 
 require_once(__DIR__ . '/../../config.php');
 defined('MOODLE_INTERNAL') || die();
-require_login();
+//require_login();
 
 $context = context_system::instance();
 $PAGE->set_context($context);
