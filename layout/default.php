@@ -88,8 +88,17 @@ $buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_action
 // If the settings menu will be included in the header then don't add it here.
 $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settings_menu() : false;
 
+$coursefullname = ($PAGE->course?->fullname) ? format_string(
+    $PAGE->course->fullname,
+    true,
+    ['context' => context_course::instance($PAGE->course->id), 'escape' => false],
+) : '';
+$courseurl = $PAGE->course ? new \core\url('/course/view.php', ['id' => $PAGE->course->id]) : null;
+
 $templatecontext = [
     'output' => $OUTPUT,
+    'coursefullname' => $coursefullname,
+    'courseurl' => $courseurl ? $courseurl->out(false) : null,
     'sidepreblocks' => $blockshtml,
     'hasblocks' => $hasblocks,
     'bodyattributes' => $bodyattributes,

@@ -74,7 +74,7 @@ function local_moon_render_navbar_output() {
             }
             $html = html_writer::div(
                 html_writer::div(html_writer::empty_tag('input', $attributes), 'form-check form-switch'),
-                'd-flex align-items-center moon-color-mode px-2'
+                'd-flex align-items-center moon-color-mode'
             );
         }
     }

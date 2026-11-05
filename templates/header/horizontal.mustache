@@ -44,14 +44,14 @@
                 {{{ output.page_heading_menu }}}
             </ul>
             {{{ header.block_1 }}}
-            <div id="usernavigation" class="navbar-nav h-100">
+            <div id="usernavigation" class="navbar-nav h-100 as-gutter-x-md d-flex align-items-center">
                 {{# output.search_box }}
                     {{{ output.search_box }}}
-                    <div class="divider border-start h-75 align-self-center mx-1"></div>
+                    <div class="divider border-start h-75 align-self-center"></div>
                 {{/output.search_box}}
                 {{#langmenu}}
                     {{> theme_boost/language_menu }}
-                    <div class="divider border-start h-75 align-self-center mx-1"></div>
+                    <div class="divider border-start h-75 align-self-center"></div>
                 {{/langmenu}}
                 {{{ output.navbar_plugin_output }}}
                 <div class="d-flex align-items-stretch usermenu-container" data-region="usermenu">
@@ -59,6 +59,7 @@
                         {{> core/user_menu }}
                     {{/usermenu}}
                 </div>
+                {{> local_moon/header/includes/offcanvas }}
             </div>
         </div>
     </div>

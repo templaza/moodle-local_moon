@@ -431,6 +431,26 @@ $string['gray']        = 'Gray';
 $string['gray_dark']   = 'Gray Dark';
 $string['sass_overrides'] = 'Sass Overrides';
 
+// Course Color
+$string['link_hover_background'] = 'Link Hover Background';
+$string['course_color_desc'] = 'Select the course color for the theme.';
+$string['course_index_bg_color_desc'] = 'Select the background color for the course index block.';
+$string['course_index_link_color_desc'] = 'Select the link color for the course index block.';
+$string['course_index_link_bg_color_desc'] = 'Select the link background color for the course index block.';
+$string['course_index_link_hover_color_desc'] = 'Select the link hover color for the course index block.';
+$string['course_index_link_bg_hover_color_desc'] = 'Select the link background hover color for the course index block.';
+$string['button_color'] = 'Button Color';
+$string['button_hover_color'] = 'Button Hover Color';
+$string['button_background'] = 'Button Background';
+$string['button_hover_background'] = 'Button Hover Background';
+$string['course_index_button_color_desc'] = 'Select the button color for the course index block.';
+$string['course_index_button_hover_color_desc'] = 'Select the button hover color for the course index block.';
+$string['course_index_button_bg_color_desc'] = 'Select the button background color for the course index block.';
+$string['course_index_button_hover_bg_color_desc'] = 'Select the button hover background color for the course index block.';
+$string['course_index_link_active_color_desc'] = 'Select the link active color for the course index block.';
+$string['link_active_background'] = 'Link Active Background';
+$string['course_index_link_bg_active_color_desc'] = 'Select the link active background color for the course index block.';
+
 // Hover transition
 $string['scale_up'] = 'Scale Up';
 $string['scale_down'] = 'Scale Down';
@@ -533,6 +553,9 @@ $string['sticky_on_scrollup'] = 'Sticky on Scroll Up';
 $string['static'] = 'Static';
 $string['enable_sticky_menu'] = 'Enable Sticky Menu';
 $string['enable_sticky_menu_desc'] = 'Enable or disable the sticky menu.';
+$string['offcanvas_heading_text'] = 'Offcanvas Heading Text';
+$string['offcanvas_heading_text_desc'] = 'Enter the heading text for the offcanvas menu.';
+$string['drawer_options_desc'] = 'Customize Off-Canvas style for your site. You must publish content to the <b><i>Off-Canvas</i></b> module position or you\'ll see a blank off-canvas menu.';
 
 // Basic Settings
 $string['basic'] = 'Basic';
@@ -683,7 +706,7 @@ $string['second_menu'] = 'Second Menu';
 $string['second_menu_color_desc'] = 'Select the second menu color.';
 $string['dropdown_menu'] = 'Dropdown Menu';
 $string['dropdown_menu_color_desc'] = 'Select the dropdown menu color.';
-$string['block_drawer'] = 'Block Drawer';
+$string['block_drawer'] = 'Drawer Block';
 $string['off_canvas'] = 'Off Canvas';
 $string['off_canvas_color_desc'] = 'Select the off canvas color.';
 $string['mobilemenu'] = 'Mobile Menu';

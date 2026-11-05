@@ -104,6 +104,10 @@ if ($logo->link_type === 'custom') {
 }
 
 $header_options = new header($mode);
+
+$addblockbutton = $OUTPUT->addblockbutton('side-pre');
+$drawer_html = $OUTPUT->blocks('side-pre');
+$has_drawer = (strpos($drawer_html, 'data-block=') !== false || !empty($addblockbutton));
 $templatecontext = [
     'output' => $OUTPUT,
     'primarymoremenu' => $primarymenu['moremenu'],
@@ -113,6 +117,8 @@ $templatecontext = [
     'header_mode' => $header_mode,
     'header' => $header_options->get_options(),
     'logo' => $logo,
+    'has_drawer' => $has_drawer,
+    'drawer_html' => $drawer_html,
 ];
 
 echo $OUTPUT->render_from_template('local_moon/header', $templatecontext);

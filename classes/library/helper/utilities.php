@@ -549,6 +549,43 @@ class utilities
         $root->add_css('--mf-stick-header-mobile-menu-icon-color', $stick_header_mobile_menu_icon_color['light']);
         $root_dark->add_css('--mf-stick-header-mobile-menu-icon-color', $stick_header_mobile_menu_icon_color['dark']);
 
+        // Course Color
+        $course_index_bg_color = style::get_color($params->get('course_index_bg_color', ''));
+        $course_index_link_color = style::get_color($params->get('course_index_link_color', ''));
+        $course_index_link_bg_color = style::get_color($params->get('course_index_link_bg_color', ''));
+        $course_index_link_hover_color = style::get_color($params->get('course_index_link_hover_color', ''));
+        $course_index_link_bg_hover_color = style::get_color($params->get('course_index_link_bg_hover_color', ''));
+        $course_index_button_color = style::get_color($params->get('course_index_button_color', ''));
+        $course_index_button_bg_color = style::get_color($params->get('course_index_button_bg_color', ''));
+        $course_index_button_hover_color = style::get_color($params->get('course_index_button_hover_color', ''));
+        $course_index_button_hover_bg_color = style::get_color($params->get('course_index_button_hover_bg_color', ''));
+        $course_index_link_active_color = style::get_color($params->get('course_index_link_active_color', ''));
+        $course_index_link_bg_active_color = style::get_color($params->get('course_index_link_bg_active_color', ''));
+
+        $root->add_css('--mf-course-index-bg-color', $course_index_bg_color['light']);
+        $root->add_css('--mf-course-index-link-color', $course_index_link_color['light']);
+        $root->add_css('--mf-course-index-link-bg-color', $course_index_link_bg_color['light']);
+        $root->add_css('--mf-course-index-link-hover-color', $course_index_link_hover_color['light']);
+        $root->add_css('--mf-course-index-link-bg-hover-color', $course_index_link_bg_hover_color['light']);
+        $root->add_css('--mf-course-index-button-color', $course_index_button_color['light']);
+        $root->add_css('--mf-course-index-button-bg-color', $course_index_button_bg_color['light']);
+        $root->add_css('--mf-course-index-button-hover-color', $course_index_button_hover_color['light']);
+        $root->add_css('--mf-course-index-button-hover-bg-color', $course_index_button_hover_bg_color['light']);
+        $root->add_css('--mf-course-index-link-active-color', $course_index_link_active_color['light']);
+        $root->add_css('--mf-course-index-link-bg-active-color', $course_index_link_bg_active_color['light']);
+
+        $root_dark->add_css('--mf-course-index-bg-color', $course_index_bg_color['dark']);
+        $root_dark->add_css('--mf-course-index-link-color', $course_index_link_color['dark']);
+        $root_dark->add_css('--mf-course-index-link-bg-color', $course_index_link_bg_color['dark']);
+        $root_dark->add_css('--mf-course-index-link-hover-color', $course_index_link_hover_color['dark']);
+        $root_dark->add_css('--mf-course-index-link-bg-hover-color', $course_index_link_bg_hover_color['dark']);
+        $root_dark->add_css('--mf-course-index-button-color', $course_index_button_color['dark']);
+        $root_dark->add_css('--mf-course-index-button-bg-color', $course_index_button_bg_color['dark']);
+        $root_dark->add_css('--mf-course-index-button-hover-color', $course_index_button_hover_color['dark']);
+        $root_dark->add_css('--mf-course-index-button-hover-bg-color', $course_index_button_hover_bg_color['dark']);
+        $root_dark->add_css('--mf-course-index-link-active-color', $course_index_link_active_color['dark']);
+        $root_dark->add_css('--mf-course-index-link-bg-active-color', $course_index_link_bg_active_color['dark']);
+
         // Offcanvas Menu
         $offcanvas_background_color = style::get_color($params->get('offcanvas_backgroundcolor', ''));
         $offcanvas_link_color = style::get_color($params->get('offcanvas_link_color', ''));
