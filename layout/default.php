@@ -33,6 +33,7 @@ $params = framework::get_theme()->get_params();
 
 $header = $params->get('header', TRUE);
 $header_mode = $params->get('header_mode', 'horizontal');
+$offcanvas_heading_text = $params->get('offcanvas_heading_text', '');
 $layout_container_class = ['moon-layout-container']; // container class
 $layout_content_class = ['moon-layout-content'];
 $sidebar_content = '';
@@ -99,6 +100,7 @@ $templatecontext = [
     'output' => $OUTPUT,
     'coursefullname' => $coursefullname,
     'courseurl' => $courseurl ? $courseurl->out(false) : null,
+    'offcanvas_heading_text' => $offcanvas_heading_text,
     'sidepreblocks' => $blockshtml,
     'hasblocks' => $hasblocks,
     'bodyattributes' => $bodyattributes,
