@@ -707,8 +707,15 @@ class utilities
         $document = framework::get_document();
         $apple_touch_icon = $params->get('apple_touch_icon', '');
         if (!empty($apple_touch_icon)) {
-            $image_type =   getimagesize($apple_touch_icon);
-            $document->add_link($apple_touch_icon, 'apple-touch-icon', ['type' => $image_type['mime'], 'sizes' => 'any']);
+            try {
+                // getimagesize() emits a warning (not an exception) on failure, so suppress it.
+                $image_type = @getimagesize($apple_touch_icon);
+            } catch (\Throwable $e) {
+                $image_type = false;
+            }
+            if (!empty($image_type['mime'])) {
+                $document->add_link($apple_touch_icon, 'apple-touch-icon', ['type' => $image_type['mime'], 'sizes' => 'any']);
+            }
         }
 
         $site_webmanifest = $params->get('site_webmanifest', '');
