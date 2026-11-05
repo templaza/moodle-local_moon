@@ -22,19 +22,21 @@
  */
 
 require_once(__DIR__ . '/../../config.php');
+
 defined('MOODLE_INTERNAL') || die();
-require_login();
 
 $context = context_system::instance();
 $PAGE->set_context($context);
+
 require_capability('local/moon:view', $context);
 
 use local_moon\library\framework;
-$theme = framework::get_theme();
 $filename = optional_param('id', '', PARAM_ALPHANUMEXT);
+
 if (!$filename) {
     redirect(new moodle_url('/'));
 }
+$theme = framework::get_theme();
 $layout = $theme->get_layout($filename);
 if (!$layout) {
     throw new \moodle_exception('layoutnotfound', 'local_moon', '', $filename);

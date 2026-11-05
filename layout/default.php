@@ -33,6 +33,7 @@ $params = framework::get_theme()->get_params();
 
 $header = $params->get('header', TRUE);
 $header_mode = $params->get('header_mode', 'horizontal');
+$offcanvas_heading_text = $params->get('offcanvas_heading_text', '');
 $layout_container_class = ['moon-layout-container']; // container class
 $layout_content_class = ['moon-layout-content'];
 $sidebar_content = '';
@@ -88,8 +89,18 @@ $buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_action
 // If the settings menu will be included in the header then don't add it here.
 $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settings_menu() : false;
 
+$coursefullname = ($PAGE->course?->fullname) ? format_string(
+    $PAGE->course->fullname,
+    true,
+    ['context' => context_course::instance($PAGE->course->id), 'escape' => false],
+) : '';
+$courseurl = $PAGE->course ? new \core\url('/course/view.php', ['id' => $PAGE->course->id]) : null;
+
 $templatecontext = [
     'output' => $OUTPUT,
+    'coursefullname' => $coursefullname,
+    'courseurl' => $courseurl ? $courseurl->out(false) : null,
+    'offcanvas_heading_text' => $offcanvas_heading_text,
     'sidepreblocks' => $blockshtml,
     'hasblocks' => $hasblocks,
     'bodyattributes' => $bodyattributes,

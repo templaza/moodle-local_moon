@@ -24,6 +24,7 @@
 namespace local_moon\library\helper;
 defined('MOODLE_INTERNAL') || die;
 use local_moon\library\framework;
+Use \core_external\util;
 
 class constants
 {
@@ -68,7 +69,7 @@ class constants
 
             $validuntil = time() + $CFG->sessiontimeout;
 
-            $upload_token = \external_generate_token(
+            $upload_token = util::generate_token(
                 EXTERNAL_TOKEN_PERMANENT,
                 $service,
                 $USER->id,

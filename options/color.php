@@ -37,6 +37,7 @@ framework::get_theme()->add_fields(
             'sticky_header' => ["type" => "group", "label" => "sticky_header", "description" => "sticky_header_color_desc"],
             'main_menu' => ["type" => "group", "label" => "main_menu", "description" => "main_menu_color_desc"],
             'dropdown_menu' => ["type" => "group", "label" => "dropdown_menu", "description" => "dropdown_menu_color_desc"],
+            'course_color_options' => ["type" => "group", "label" => "course", "description" => "course_color_desc"],
             'off_canvas' => ["type" => "group", "label" => "block_drawer", "description" => "off_canvas_color_desc"],
             'mobilemenu' => ["type" => "group", "label" => "mobilemenu", "description" => "mobilemenu_color_desc"],
 
@@ -206,6 +207,73 @@ framework::get_theme()->add_fields(
                 "type" => "color",
                 "label" => "hover_background",
                 "description" => "dropdown_menu_hover_bg_color_desc",
+            ],
+
+            'course_index_bg_color' => [
+                "group" => "course_color_options",
+                "type" => "color",
+                "label" => "background_color",
+                "description" => "course_index_bg_color_desc",
+            ],
+            'course_index_link_color' => [
+                "group" => "course_color_options",
+                "type" => "color",
+                "label" => "link_color",
+                "description" => "course_index_link_color_desc",
+            ],
+            'course_index_link_bg_color' => [
+                "group" => "course_color_options",
+                "type" => "color",
+                "label" => "link_background",
+                "description" => "course_index_link_bg_color_desc",
+            ],
+            'course_index_link_hover_color' => [
+                "group" => "course_color_options",
+                "type" => "color",
+                "label" => "link_hover_color",
+                "description" => "course_index_link_hover_color_desc",
+            ],
+            'course_index_link_bg_hover_color' => [
+                "group" => "course_color_options",
+                "type" => "color",
+                "label" => "link_hover_background",
+                "description" => "course_index_link_bg_hover_color_desc",
+            ],
+            'course_index_link_active_color' => [
+                "group" => "course_color_options",
+                "type" => "color",
+                "label" => "link_active_color",
+                "description" => "course_index_link_active_color_desc",
+            ],
+            'course_index_link_bg_active_color' => [
+                "group" => "course_color_options",
+                "type" => "color",
+                "label" => "link_active_background",
+                "description" => "course_index_link_bg_active_color_desc",
+            ],
+            'course_index_button_color' => [
+                "group" => "course_color_options",
+                "type" => "color",
+                "label" => "button_color",
+                "description" => "course_index_button_color_desc",
+            ],
+            'course_index_button_bg_color' => [
+                "group" => "course_color_options",
+                "type" => "color",
+                "label" => "button_background",
+                "description" => "course_index_button_bg_color_desc",
+            ],
+            'course_index_button_hover_color' => [
+                "group" => "course_color_options",
+                "type" => "color",
+                "label" => "button_hover_color",
+                "description" => "course_index_button_hover_color_desc",
+            ],
+            'course_index_button_hover_bg_color' => [
+                "group" => "course_color_options",
+                "type" => "color",
+                "label" => "button_hover_background",
+                "description" => "course_index_button_hover_bg_color_desc",
             ],
 
             'offcanvas_backgroundcolor' => [

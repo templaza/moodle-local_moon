@@ -36,6 +36,7 @@ framework::get_theme()->add_fields(
             'header_element' => ["type" => "group", "label" => "header", "description" => ""],
             'header_logo_options_element' => ["type" => "group", "label" => "logo_options", "description" => "logo_options_desc"],
             'header_sticky_options_element' => ["type" => "group", "label" => "sticky_header", "description" => "sticky_header_desc"],
+            'header_drawer_options_element' => ["type" => "group", "label" => "block_drawer", "description" => "drawer_options_desc"],
 
             'header' => [
                 "group" => "header_element",
@@ -678,6 +679,14 @@ framework::get_theme()->add_fields(
                     'sticky' => 'sticky',
                     'stickyonscroll' => 'sticky_on_scrollup',
                 ],
+            ],
+
+            'offcanvas_heading_text' => [
+                "group" => "header_drawer_options_element",
+                "type" => "text",
+                "label" => "offcanvas_heading_text",
+                "description" => "offcanvas_heading_text_desc",
+                "default" => ''
             ],
         ]
     ]

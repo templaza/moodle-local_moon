@@ -49,84 +49,19 @@
         "addblockbutton": ""
     }
 }}
+{{{ output.doctype }}}
+<html {{{ output.htmlattributes }}} data-bs-theme="{{ document.get_theme_mode }}">
 {{> local_moon/head }}
-
 <body {{{ bodyattributes }}}>
 {{> core/local/toast/wrapper}}
 <div id="page-wrapper" class="d-print-block">
     {{{ output.standard_top_of_body_html }}}
-
-    {{!{{> local_moon/header }}
-    {{#courseindex}}
-        {{< theme_boost/drawer }}
-            {{$id}}theme_boost-drawers-courseindex{{/id}}
-            {{$drawerheadercontent}}
-                {{> theme_boost/courseindexdrawercontrols}}
-            {{/drawerheadercontent}}
-            {{$drawerclasses}}drawer drawer-left {{#courseindexopen}}show{{/courseindexopen}}{{/drawerclasses}}
-            {{$drawercontent}}
-                {{{courseindex}}}
-            {{/drawercontent}}
-            {{$drawerpreferencename}}drawer-open-index{{/drawerpreferencename}}
-            {{$drawerstate}}show-drawer-left{{/drawerstate}}
-            {{$tooltipplacement}}right{{/tooltipplacement}}
-            {{$closebuttontext}}{{#str}}closecourseindex, core{{/str}}{{/closebuttontext}}
-        {{/ theme_boost/drawer}}
-    {{/courseindex}}
-    {{#hasblocks}}
-        {{< theme_boost/drawer }}
-            {{$id}}theme_boost-drawers-blocks{{/id}}
-            {{$drawerclasses}}drawer drawer-right{{#blockdraweropen}} show{{/blockdraweropen}}{{/drawerclasses}}
-            {{$drawercontent}}
-                <div class="d-print-none">
-                    {{{ addblockbutton }}}
-                    {{{ sidepreblocks }}}
-                </div>
-            {{/drawercontent}}
-            {{$drawerpreferencename}}drawer-open-block{{/drawerpreferencename}}
-            {{$forceopen}}{{#forceblockdraweropen}}1{{/forceblockdraweropen}}{{/forceopen}}
-            {{$drawerstate}}show-drawer-right{{/drawerstate}}
-            {{$tooltipplacement}}left{{/tooltipplacement}}
-            {{$drawercloseonresize}}1{{/drawercloseonresize}}
-            {{$closebuttontext}}{{#str}}closeblockdrawer, core{{/str}}{{/closebuttontext}}
-        {{/ theme_boost/drawer}}
-    {{/hasblocks}}
     <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
         <div id="topofscroll" class="moon-content">
             <div class="drawer-toggles d-flex">
                 {{#courseindex}}
-                    <div class="drawer-toggler drawer-left-toggle open-nav d-print-none">
-                        <button
-                                class="btn icon-no-margin"
-                                data-toggler="drawers"
-                                data-action="toggle"
-                                data-target="theme_boost-drawers-courseindex"
-                                data-bs-toggle="tooltip"
-                                data-bs-placement="right"
-                                title="{{#str}}opendrawerindex, core{{/str}}"
-                        >
-                            <span class="visually-hidden">{{#str}}opendrawerindex, core{{/str}}</span>
-                            {{#pix}} t/index_drawer, moodle {{/pix}}
-                        </button>
-                    </div>
+                    {{> local_moon/header/includes/courseindex }}
                 {{/courseindex}}
-                {{#hasblocks}}
-                    <div class="drawer-toggler drawer-right-toggle ms-auto d-print-none">
-                        <button
-                                class="btn icon-no-margin"
-                                data-toggler="drawers"
-                                data-action="toggle"
-                                data-target="theme_boost-drawers-blocks"
-                                data-bs-toggle="tooltip"
-                                data-bs-placement="right"
-                                title="{{#str}}opendrawerblocks, core{{/str}}"
-                        >
-                            <span class="visually-hidden">{{#str}}opendrawerblocks, core{{/str}}</span>
-                            <span class="dir-rtl-hide">{{#pix}}t/blocks_drawer, core{{/pix}}</span>
-                            <span class="dir-ltr-hide">{{#pix}}t/blocks_drawer_rtl, core{{/pix}}</span>
-                        </button>
-                    </div>
-                {{/hasblocks}}
             </div>
             <div id="page-content" class="d-print-block">
                 <div id="region-main-box">
@@ -148,6 +83,44 @@
         {{{ output.standard_footer_html }}}
         {{{ output.edit_switch }}}
         {{{ document.renderFooter }}}
+        {{#hasblocks}}
+            <div class="moon-offcanvas offcanvas offcanvas-end" tabindex="-1" id="moon-offcanvas-sidepre" aria-labelledby="moon-offcanvas-sidepre-label" data-lenis-prevent>
+                <div class="offcanvas-header burger-menu-button">
+                    <h3 class="offcanvas-title" id="moon-offcanvas-sidepre-label">{{offcanvas_heading_text}}</h3>
+                    <button type="button" class="button close-offcanvas offcanvas-close-btn" data-bs-dismiss="offcanvas" aria-label="Close">
+                        <span class="box">
+                            <span class="inner">
+                                <span class="visually-hidden">{{#str}}opendrawerblocks, core{{/str}}</span>
+                            </span>
+                        </span>
+                    </button>
+                </div>
+                <div class="offcanvas-body">
+                    <div class="d-print-none">
+                        {{{ addblockbutton }}}
+                        {{{ sidepreblocks }}}
+                    </div>
+                </div>
+            </div>
+        {{/hasblocks}}
+        {{#courseindex}}
+            <div class="moon-offcanvas offcanvas offcanvas-start" tabindex="-1" id="moon-offcanvas-courseindex" aria-labelledby="moon-offcanvas-courseindex-label" data-lenis-prevent>
+                <div class="offcanvas-header burger-menu-button">
+                    <h5 class="offcanvas-title" id="moon-offcanvas-courseindex-label">{{> theme_boost/courseindexdrawerheading}}</h5>
+                    <button type="button" class="button close-offcanvas offcanvas-close-btn" data-bs-dismiss="offcanvas" aria-label="Close">
+                        <span class="box">
+                            <span class="inner">
+                                <span class="visually-hidden">{{#str}}opendrawerblocks, core{{/str}}</span>
+                            </span>
+                        </span>
+                    </button>
+                </div>
+                <div class="offcanvas-body">
+                    {{> theme_boost/courseindexdrawercontrols}}
+                    {{{ courseindex }}}
+                </div>
+            </div>
+        {{/courseindex}}
         <div class="footer-content-debugging footer-dark bg-dark text-light">
             <div class="container-fluid footer-dark-inner">
                 {{{ output.debug_footer_html }}}
@@ -159,10 +132,3 @@
 <div class="moon-breakpoints d-none"><div class="d-block d-sm-none device-xs"></div><div class="d-none d-sm-block d-md-none device-sm"></div><div class="d-none d-md-block d-lg-none device-md"></div><div class="d-none d-lg-block d-xl-none device-lg"></div><div class="d-none d-xl-block device-xl"></div></div>
 </body>
 </html>
-{{#js}}
-    M.util.js_pending('theme_boost/loader');
-    require(['theme_boost/loader', 'theme_boost/drawer'], function(Loader, Drawer) {
-    Drawer.init();
-    M.util.js_complete('theme_boost/loader');
-    });
-{{/js}}
