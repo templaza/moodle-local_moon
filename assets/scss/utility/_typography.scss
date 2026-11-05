@@ -1,8 +1,0 @@
-.text-small {
-  font-size: $font-size-sm;
-}
-@each $alignment in left, right, center, justify {
-  .ql-align-#{$alignment} {
-    text-align: #{$alignment};
-  }
-}
