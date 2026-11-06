@@ -45,9 +45,7 @@ $header_mode = [
 // Logo options
 $logo = new \stdClass();
 $logo_type = $params->get('logo_type', 'image'); // Logo Type
-if (!$OUTPUT->should_display_navbar_logo()) {
-    $logo_type = 'text';
-}
+
 $logo->class = 'moon-logo-' . $logo_type;
 $logo->text = $params->get('logo_text', \format_string($SITE->shortname, true, ['context' => \context_course::instance(SITEID), "escape" => false]));
 if ($logo_type == 'text') {
@@ -62,7 +60,7 @@ if ($logo_type == 'text') {
     // Logo file
     $logo->is_text = false;
     $logo->class .= ' d-flex align-items-center';
-    $system_logo = $OUTPUT->get_compact_logo_url();
+    $system_logo = $OUTPUT->should_display_navbar_logo() ? $OUTPUT->get_compact_logo_url() : '';
     $logo->default = $params->get('default_logo', $system_logo);
     $logo->default_dark = $params->get('default_logo_dark', $system_logo);
     $logo->mobile = $params->get('mobile_logo', $system_logo);
