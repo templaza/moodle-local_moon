@@ -198,6 +198,7 @@ foreach ($slides->get_data() as $key => $slide) {
         echo '<div class="uk-card-media-top">';
         echo '<img src="'. $slide->params->get('image') .'" class="w-100 h-100" alt="'.$slide->params->get('title').'">';
         echo '</div>';
+        if (!empty($slide->params->get('title')) || !empty($slide->params->get('meta')) || !empty($slide->params->get('description'))) {
         echo '<div class="uk-card-body">';
             if (!empty($slide->params->get('meta')) && $meta_position == 'before') {
                 echo '<div class="moon-meta">' . $slide->params->get('meta') . '</div>';
@@ -213,7 +214,7 @@ foreach ($slides->get_data() as $key => $slide) {
                 echo '<div class="moon-text">' . $content . '</div>';
             }
         echo '</div>';
-
+        }
     echo '</div>';
     echo '</div>';
 }
