@@ -227,8 +227,8 @@ if ($enable_slider) {
 echo '<div class="moon-grid '.($enable_slider ? 'swiper-wrapper' : $row_column_cls.$gutter_cls . ($use_masonry ? ' as-masonry as-loading' : '')).$overlay_text_color.'">';
 foreach ($testimonials->get_data() as $key => $testimonial) {
     $item_bg_color   =   style::get_color($testimonial->params->get('item_bg_color', ''));
-    $element->style->child('#testimonial-'. $testimonial -> id .' .card-body')->add_css('background-color', $item_bg_color['light']);
-    $element->style_dark->child('#testimonial-'. $testimonial -> id .' .card-body')->add_css('background-color', $item_bg_color['dark']);
+    $element->style->child('#testimonial-'. $testimonial -> id .' .card')->add_css('background-color', $item_bg_color['light']);
+    $element->style_dark->child('#testimonial-'. $testimonial -> id .' .card')->add_css('background-color', $item_bg_color['dark']);
 
     $avatar =   $testimonial->params->get('avatar', '');
     $rating =   $testimonial->params->get('rating', 5);
