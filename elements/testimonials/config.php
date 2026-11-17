@@ -398,11 +398,11 @@ class moon_element_testimonials extends moon_element {
             'options'    => [
                 ''  => 'inherit',
                 '0' => 'Collapse',
-                '10' => 'X-Small',
-                '20' => 'Small',
-                '30' => 'Medium',
-                '40' => 'Large',
-                '50' => 'X-Large',
+                '1' => 'X-Small',
+                '2' => 'Small',
+                '3' => 'Medium',
+                '4' => 'Large',
+                '5' => 'X-Large',
             ],
         ]);
 
@@ -415,11 +415,11 @@ class moon_element_testimonials extends moon_element {
             'options'    => [
                 ''  => 'inherit',
                 '0' => 'Collapse',
-                '10' => 'X-Small',
-                '20' => 'Small',
-                '30' => 'Medium',
-                '40' => 'Large',
-                '50' => 'X-Large',
+                '1' => 'X-Small',
+                '2' => 'Small',
+                '3' => 'Medium',
+                '4' => 'Large',
+                '5' => 'X-Large',
             ],
         ]);
 
@@ -432,11 +432,11 @@ class moon_element_testimonials extends moon_element {
             'options'    => [
                 ''  => 'inherit',
                 '0' => 'Collapse',
-                '10' => 'X-Small',
-                '20' => 'Small',
-                '30' => 'Medium',
-                '40' => 'Large',
-                '50' => 'X-Large',
+                '1' => 'X-Small',
+                '2' => 'Small',
+                '3' => 'Medium',
+                '4' => 'Large',
+                '5' => 'X-Large',
             ],
         ]);
 
@@ -449,11 +449,11 @@ class moon_element_testimonials extends moon_element {
             'options'    => [
                 ''  => 'inherit',
                 '0' => 'Collapse',
-                '10' => 'X-Small',
-                '20' => 'Small',
-                '30' => 'Medium',
-                '40' => 'Large',
-                '50' => 'X-Large',
+                '1' => 'X-Small',
+                '2' => 'Small',
+                '3' => 'Medium',
+                '4' => 'Large',
+                '5' => 'X-Large',
             ],
         ]);
 
@@ -466,11 +466,11 @@ class moon_element_testimonials extends moon_element {
             'options'    => [
                 ''  => 'inherit',
                 '0' => 'Collapse',
-                '10' => 'X-Small',
-                '20' => 'Small',
-                '30' => 'Medium',
-                '40' => 'Large',
-                '50' => 'X-Large',
+                '1' => 'X-Small',
+                '2' => 'Small',
+                '3' => 'Medium',
+                '4' => 'Large',
+                '5' => 'X-Large',
             ],
         ]);
 
@@ -482,11 +482,11 @@ class moon_element_testimonials extends moon_element {
             'conditions' => "[column_responsive]=='xs'",
             'options'    => [
                 '0' => 'Collapse',
-                '10' => 'X-Small',
-                '20' => 'Small',
-                '30' => 'Medium',
-                '40' => 'Large',
-                '50' => 'X-Large',
+                '1' => 'X-Small',
+                '2' => 'Small',
+                '3' => 'Medium',
+                '4' => 'Large',
+                '5' => 'X-Large',
             ],
         ]);
 
